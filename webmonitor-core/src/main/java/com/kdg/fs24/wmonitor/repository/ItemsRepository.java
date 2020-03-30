@@ -8,6 +8,7 @@ package com.kdg.fs24.wmonitor.repository;
 import com.kdg.fs24.spring.core.api.ApplicationRepository;
 import com.kdg.fs24.spring.core.api.ApplicationJpaRepository;
 import com.kdg.fs24.wmonitor.entity.HibernateItem;
+import com.kdg.fs24.wmonitor.query.KeyWordRecords;
 import org.springframework.stereotype.Repository;
 import java.util.Collection;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -25,7 +26,8 @@ public interface ItemsRepository extends ApplicationJpaRepository<HibernateItem,
     Collection<HibernateItem> findByLinkHeader(String link_header3);
 
     //@Query("select w from HibernateItem w where lower(w.linkHeader) like %:keyword%")
-    @Query(value = "select w.* from w_items w where lower(w.link_header) like %:keyword%", nativeQuery = true)
-    Collection<HibernateItem> findByKeyWord(@Param("keyword") String keyword);
+    @Query(value = "select w.* from w_items w where lower(w.link_header) like %:p_keyword%", nativeQuery = true)
+    Collection<HibernateItem> findByKeyWord(@Param("p_keyword") final String keyword);
+
 
 }

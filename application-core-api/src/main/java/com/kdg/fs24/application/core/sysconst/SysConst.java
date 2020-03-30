@@ -114,6 +114,8 @@ public final class SysConst {
     public static final Object OBJECT_NULL = null;
 
     public final static String STRING_NULL = null;
+    public final static String STRING_TRUE = "true";
+    public final static String STRING_FALSE = "false";
     public final static String STRING_YES = "yes";
     public final static String STRING_NO = "no";
     //==========================================================================

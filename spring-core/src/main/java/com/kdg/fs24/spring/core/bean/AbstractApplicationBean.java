@@ -6,11 +6,13 @@
 package com.kdg.fs24.spring.core.bean;
 
 import com.kdg.fs24.spring.core.api.ApplicationBean;
+import javax.annotation.PostConstruct;
 
 /**
  *
  * @author N76VB
  */
 public abstract class AbstractApplicationBean implements ApplicationBean {
+    
 
 }

@@ -12,6 +12,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 import com.kdg.fs24.wmonitor.config.WebMonitorConfig;
 import com.kdg.fs24.wmonitor.entity.HibernateItem;
+import com.kdg.fs24.wmonitor.query.KeyWordRecords;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -19,6 +20,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import com.kdg.fs24.wmonitor.repository.ItemsRepository;
+import com.kdg.fs24.wmonitor.repository.KeyWordsRepository;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import java.util.Optional;
 import java.util.Collection;
@@ -31,7 +33,7 @@ import java.util.Collection;
 @ComponentScan
 @PropertySource("classpath:application.properties")
 @EnableJpaRepositories(basePackages = "com.kdg.fs24.wmonitor.repository")
-@EntityScan(basePackages = "com.kdg.fs24.wmonitor.entity")
+@EntityScan(basePackages = "com.kdg.fs24.wmonitor")
 public class WebMonitorBoot extends AbstractSpringBootApplication {
 
     public static void main(final String[] args) {
@@ -39,14 +41,6 @@ public class WebMonitorBoot extends AbstractSpringBootApplication {
         AbstractSpringBootApplication.runSpringBootApplication(args, WebMonitorBoot.class);
         // инициализация контейнера
         AbstractSpringBootApplication.initializeContext(WebMonitorConfig.class);
-
-        // первичный запуск
-//       final WebMonitorBean webMonitorBean =  getApplicationContext().getBean(WebMonitorBean.class);
-//       
-//       webMonitorBean.getBonuses();
-//        final PersistanceEntityManager persistanceEntityManager = getApplicationContext().getBean("entityManager", PersistanceEntityManager.class);
-//       
-        //       persistanceEntityManager.getEmfProperties();
     }
 
     @Bean
@@ -54,16 +48,16 @@ public class WebMonitorBoot extends AbstractSpringBootApplication {
         return (args) -> {
             // save a few customers
 
-            final String kw = "аист";
+            final String kw = "980";
 
             final Optional<HibernateItem> op = entityRepository.findById(50878);
-            final Collection<HibernateItem> op1 = entityRepository.findByKeyWord(kw);
+            final Collection<HibernateItem> op1 = entityRepository.findByKeyWord(kw.toLowerCase());
+
+            LogService.LogInfo(this.getClass(), () -> String.format("%s: %d entries ",
+                    kw,
+                    op1.size()));
 
             if (op1.size() > 0) {
-
-                LogService.LogInfo(this.getClass(), () -> String.format("%s: %d ",
-                        kw,
-                        op1.size()));
 
                 op1.forEach(item -> LogService.LogInfo(this.getClass(), () -> String.format("findAll->item: %s (%s)'",
                         item.getItem_url(),
@@ -82,6 +76,19 @@ public class WebMonitorBoot extends AbstractSpringBootApplication {
 //                        item.getLinkHeader()));
 //
 //            });
+        };
+    }
+
+    //==========================================================================
+    @Bean
+    public CommandLineRunner demo2(final KeyWordsRepository keyWordsRepository) {
+        return (args) -> {
+
+            final Collection<KeyWordRecords> op2 = keyWordsRepository.findKeyWords();
+
+            LogService.LogInfo(this.getClass(), () -> String.format("KeyWordRecords: %d entries ",
+                    op2.size()));
+
         };
     }
 

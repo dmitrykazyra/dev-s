@@ -35,18 +35,14 @@ public class WebMonitorConfig extends AbstractApplicationConfiguration {
     }
 
     //@Autowired
-    private volatile PersistanceEntityManager persistanceEntityManager;
-
+    //private volatile PersistanceEntityManager persistanceEntityManager;
     @Bean
     @Scope(value = "singleton")
     public PersistanceEntityManager entityManager() {
         //return NullSafe.createObject(PersistanceEntityManager.class, "wmonitor");
 
-        if (NullSafe.isNull(persistanceEntityManager)) {
-            this.persistanceEntityManager = NullSafe.createObject(PersistanceEntityManager.class, "wmonitor");
-        }
+        return NullSafe.createObject(PersistanceEntityManager.class);
 
-        return persistanceEntityManager;
     }
 
     @Bean

@@ -23,7 +23,9 @@ import com.kdg.fs24.spring.core.bean.AbstractApplicationBean;
 import java.util.Collection;
 import com.kdg.fs24.persistence.api.QueryExecutor;
 import com.kdg.fs24.persistence.api.PersistenceQuery;
+import javax.annotation.PostConstruct;
 import javax.persistence.Query;
+import org.springframework.beans.factory.annotation.Value;
 
 /**
  *
@@ -34,27 +36,36 @@ public class PersistanceEntityManager extends AbstractApplicationBean {
     private final AtomicBoolean safeMode = NullSafe.createObject(AtomicBoolean.class);
     private volatile EntityManager entityManager;
     private volatile EntityManagerFactory factory;
+    @Value("${persistenceUnitName}")
     private volatile String persistenceUnitName;
     //private static SessionFactory sessionFactory;
     private volatile Map<String, Object> properties;
     //private static final QueryExecutor QUERY_EXECUTOR_NULL = null;
+    @Value("${debug}")
+    private String debugMode; // = SysConst.STRING_FALSE;
 
     public PersistanceEntityManager() {
 
     }
 
-    public PersistanceEntityManager(final String persistenceUnitName) {
+    //public PersistanceEntityManager(final String persistenceUnitName) {
+    @PostConstruct
+    public void postEntityManager() {
 
         NullSafe.create(persistenceUnitName)
                 .execute(() -> {
 //sessionFactory = new Configuration().configure().buildSessionFactory();
-                    LogService.LogInfo(this.getClass(), () -> String.format("Try 2 create persistence '%s'",
-                            persistenceUnitName));
+                    if (this.debugMode.equals(SysConst.STRING_TRUE)) {
+                        LogService.LogInfo(this.getClass(), () -> String.format("Try 2 create persistence '%s'",
+                                persistenceUnitName));
+                    }
 
                     this.factory = Persistence.createEntityManagerFactory(persistenceUnitName);
 
-                    LogService.LogInfo(this.getClass(), () -> String.format("Persistence '%s' is created",
-                            persistenceUnitName));
+                    if (this.debugMode.equals(SysConst.STRING_TRUE)) {
+                        LogService.LogInfo(this.getClass(), () -> String.format("Persistence '%s' is created",
+                                persistenceUnitName));
+                    }
 
                     createOrUpdateEntityManager();
 
@@ -74,9 +85,11 @@ public class PersistanceEntityManager extends AbstractApplicationBean {
             NullSafe.create()
                     .execute(() -> {
 
-                        LogService.LogInfo(this.getClass(), ()
-                                -> String.format("%s: try to create/recreate entity manager ",
-                                        this.persistenceUnitName));
+                        if (this.debugMode.equals(SysConst.STRING_TRUE)) {
+                            LogService.LogInfo(this.getClass(), ()
+                                    -> String.format("%s: try to create/recreate entity manager ",
+                                            this.persistenceUnitName));
+                        }
 
                         if (NullSafe.notNull(this.getEntityManager())) {
 
@@ -93,12 +106,14 @@ public class PersistanceEntityManager extends AbstractApplicationBean {
                             this.entityManager = factory.createEntityManager();
                         }
 
-                        LogService.LogInfo(this.getClass(), () -> String.format("%s: Successfully create entity manager (%s) ",
-                                this.persistenceUnitName,
-                                this.getEntityManager().getClass().getCanonicalName()));
+                        if (this.debugMode.equals(SysConst.STRING_TRUE)) {
+                            LogService.LogInfo(this.getClass(), () -> String.format("%s: Successfully create entity manager (%s) ",
+                                    this.persistenceUnitName,
+                                    this.getEntityManager().getClass().getCanonicalName()));
 
-                        LogService.LogInfo(this.getClass(), () -> String.format("EMF Properties \n %s ",
-                                this.getEmfProperties()));
+                            LogService.LogInfo(this.getClass(), () -> String.format("EMF Properties \n %s ",
+                                    this.getEmfProperties()));
+                        }
 
                     });
 
@@ -108,6 +123,12 @@ public class PersistanceEntityManager extends AbstractApplicationBean {
     }
 
     //==========================================================================
+    @Override
+    public void beforeDestroy() {
+        this.closeAll();
+        super.beforeDestroy();
+    }
+
     private void closeAll() {
         if (NullSafe.notNull(this.getEntityManager())) {
             this.getEntityManager().clear();

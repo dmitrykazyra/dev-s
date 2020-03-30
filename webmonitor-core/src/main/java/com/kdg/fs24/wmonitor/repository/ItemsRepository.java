@@ -24,8 +24,8 @@ public interface ItemsRepository extends ApplicationJpaRepository<HibernateItem,
 //    HibernateItem findById(Integer id);
     Collection<HibernateItem> findByLinkHeader(String link_header3);
 
-    @Query("select w from HibernateItem w where lower(w.linkHeader) like %:keyword%")
-    //@Query(value = "select w.* from w_items w where lower(w.link_header) like %:keyword%", nativeQuery = true)
+    //@Query("select w from HibernateItem w where lower(w.linkHeader) like %:keyword%")
+    @Query(value = "select w.* from w_items w where lower(w.link_header) like %:keyword%", nativeQuery = true)
     Collection<HibernateItem> findByKeyWord(@Param("keyword") String keyword);
 
 }

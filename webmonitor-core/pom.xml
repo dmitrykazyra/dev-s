@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.kdg.fs24</groupId>
+        <artifactId>fs24</artifactId>
+        <version>1.0</version>
+    </parent>
+    <artifactId>webmonitor-core</artifactId>
+    <packaging>jar</packaging>
+  
+    <properties>
+        <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+    
+    <build>
+        <finalName>webmonitor-core</finalName> 
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <!--                <includes>
+                    <include>**/*.properties</include>
+                </includes>-->
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${spring.boot.version}</version>
+            </plugin>
+        </plugins>
+    </build>    
+    
+    <dependencies>
+        <!--        <dependency>
+            <groupId>com.kdg.fs24</groupId>
+            <artifactId>services-core</artifactId>
+            <version>1.0</version>            
+        </dependency>-->
+        <!--        <dependency>
+            <groupId>com.kdg.fs24</groupId>
+            <artifactId>mail-core</artifactId>
+            <version>1.0</version>            
+        </dependency>        -->
+        <dependency>
+            <groupId>com.kdg.fs24</groupId>
+            <artifactId>test-junit-api</artifactId>
+            <version>1.0</version>            
+        </dependency>         
+        <dependency>
+            <groupId>com.kdg.fs24</groupId>
+            <artifactId>test-core</artifactId>
+            <version>1.0</version>            
+        </dependency>         
+        <dependency>
+            <groupId>com.kdg.fs24</groupId>
+            <artifactId>entity-core</artifactId>
+            <version>1.0</version>            
+        </dependency> 
+        <dependency>
+            <groupId>com.kdg.fs24</groupId>
+            <artifactId>persistence-core</artifactId>
+            <version>1.0</version>            
+        </dependency> 
+        <!--        <dependency>
+            <groupId>com.kdg.fs24</groupId>
+            <artifactId>log-gate</artifactId>
+            <version>1.0</version>            
+        </dependency>        -->
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.11.3</version>
+        </dependency>
+        <!--        <dependency>
+            <groupId>com.kdg.fs24</groupId>
+            <artifactId>reflection-api</artifactId>
+            <version>1.0</version>            
+        </dependency>
+        <dependency>
+            <groupId>com.kdg.fs24</groupId>
+            <artifactId>persistence-api</artifactId>
+            <version>1.0</version>            
+        </dependency>         
+        <dependency>
+            <groupId>com.kdg.fs24</groupId>
+            <artifactId>persistence-service-api</artifactId>
+            <version>1.0</version>            
+        </dependency> -->
+        <dependency>
+            <groupId>com.kdg.fs24</groupId>
+            <artifactId>spring-boot-api</artifactId>
+            <version>1.0</version>            
+        </dependency>                   
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>            
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency> 
+        <dependency>
+            <groupId>javax.persistence</groupId>
+            <artifactId>javax.persistence-api</artifactId>
+            <version>${jpa.version}</version>
+        </dependency>  
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>${postgres.version}</version>
+        </dependency> 
+        <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+        <!--        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.12</version>
+            <scope>provided</scope>
+        </dependency>-->
+
+    </dependencies>
+    <name>webmonitor-core</name>
+</project>

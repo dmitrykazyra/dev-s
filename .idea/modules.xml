@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/application-core-api/application-core-api.iml" filepath="$PROJECT_DIR$/application-core-api/application-core-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/attribute-api/attribute-api.iml" filepath="$PROJECT_DIR$/attribute-api/attribute-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/entity-core/entity-core.iml" filepath="$PROJECT_DIR$/entity-core/entity-core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/entity-core-api/entity-core-api.iml" filepath="$PROJECT_DIR$/entity-core-api/entity-core-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/entity-marks/entity-marks.iml" filepath="$PROJECT_DIR$/entity-marks/entity-marks.iml" />
+      <module fileurl="file://$PROJECT_DIR$/entity-marks-api/entity-marks-api.iml" filepath="$PROJECT_DIR$/entity-marks-api/entity-marks-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/entity-references/entity-references.iml" filepath="$PROJECT_DIR$/entity-references/entity-references.iml" />
+      <module fileurl="file://$PROJECT_DIR$/entity-references-api/entity-references-api.iml" filepath="$PROJECT_DIR$/entity-references-api/entity-references-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/fs24s.iml" filepath="$PROJECT_DIR$/fs24s.iml" />
+      <module fileurl="file://$PROJECT_DIR$/listeners-api/listeners-api.iml" filepath="$PROJECT_DIR$/listeners-api/listeners-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/persistence-api/persistence-api.iml" filepath="$PROJECT_DIR$/persistence-api/persistence-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/persistence-core/persistence-core.iml" filepath="$PROJECT_DIR$/persistence-core/persistence-core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/references-api/references-api.iml" filepath="$PROJECT_DIR$/references-api/references-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/references-application/references-application.iml" filepath="$PROJECT_DIR$/references-application/references-application.iml" />
+      <module fileurl="file://$PROJECT_DIR$/references-application-api/references-application-api.iml" filepath="$PROJECT_DIR$/references-application-api/references-application-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/references-core/references-core.iml" filepath="$PROJECT_DIR$/references-core/references-core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rest-api/rest-api.iml" filepath="$PROJECT_DIR$/rest-api/rest-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spring-boot-api/spring-boot-api.iml" filepath="$PROJECT_DIR$/spring-boot-api/spring-boot-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spring-core/spring-core.iml" filepath="$PROJECT_DIR$/spring-core/spring-core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spring-core-api/spring-core-api.iml" filepath="$PROJECT_DIR$/spring-core-api/spring-core-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spring-fw-test/spring-fw-test.iml" filepath="$PROJECT_DIR$/spring-fw-test/spring-fw-test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spring-jdbc-api/spring-jdbc-api.iml" filepath="$PROJECT_DIR$/spring-jdbc-api/spring-jdbc-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spring-orm-api/spring-orm-api.iml" filepath="$PROJECT_DIR$/spring-orm-api/spring-orm-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/test-api/test-api.iml" filepath="$PROJECT_DIR$/test-api/test-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/test-core/test-core.iml" filepath="$PROJECT_DIR$/test-core/test-core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/test-junit-api/test-junit-api.iml" filepath="$PROJECT_DIR$/test-junit-api/test-junit-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/webmonitor-core/webmonitor-core.iml" filepath="$PROJECT_DIR$/webmonitor-core/webmonitor-core.iml" />
+    </modules>
+  </component>
+</project>

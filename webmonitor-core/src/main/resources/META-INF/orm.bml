@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="http://xmlns.jcp.org/xml/ns/persistence/orm"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence/orm
+      http://xmlns.jcp.org/xml/ns/persistence/orm_2_1.xsd"
+                 version="2.1">
+    
+    <mapped-superclass class="com.kdg.fs24.wmonitor.entity.Item" metadata-complete="true"/>
+        
+    <entity class="com.kdg.fs24.wmonitor.entity.HibernateItem" access="PROPERTY" metadata-complete="true">
+        <table name="w_items">
+            
+        </table>
+
+        <attributes>
+            <id name="id">     
+                <generated-value strategy="SEQUENCE" generator="sequence"/>
+                <sequence-generator name="sequence" sequence-name="seq_items" allocation-size="1"/>                
+            </id>
+        </attributes>
+    </entity>
+</entity-mappings>

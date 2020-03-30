@@ -18,7 +18,7 @@ import org.springframework.data.repository.query.Param;
  *
  * @author N76VB
  */
-//@Repository
+@Repository
 public interface ItemsRepository extends ApplicationJpaRepository<HibernateItem, Integer> {
 
 //    HibernateItem findById(Integer id);

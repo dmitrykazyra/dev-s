@@ -62,7 +62,7 @@
         </dependency> 
         <dependency>
             <groupId>com.kdg.fs24</groupId>
-            <artifactId>persistence-core</artifactId>
+            <artifactId>spring-config</artifactId>
             <version>1.0</version>            
         </dependency> 
         <!--        <dependency>

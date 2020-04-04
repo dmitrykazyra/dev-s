@@ -1,3 +1,5 @@
 /querydsl-api/target/
 /spring-security-api/target/
 /spring-security/target/
+/spring-config/target/
+/spring-junit/target/

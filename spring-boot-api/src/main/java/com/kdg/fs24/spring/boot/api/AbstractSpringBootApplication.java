@@ -23,7 +23,8 @@ public abstract class AbstractSpringBootApplication {
 
     private static volatile ApplicationContext applicationContext;
 
-    protected static void runSpringBootApplication(final String[] args, final Class springBootClass) {
+    protected static void runSpringBootApplication(final String[] args, 
+            final Class springBootClass) {
         //SpringApplication.run(SpringBootApplication.class, args);
         SpringApplication.run(springBootClass, args);
     }

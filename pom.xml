@@ -60,6 +60,8 @@
         <module>querydsl-api</module>
         <module>spring-security-api</module>
         <module>spring-security</module>
+        <module>spring-config</module>
+        <module>spring-junit</module>
     </modules>
 
     <dependencies>

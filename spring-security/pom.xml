@@ -23,6 +23,11 @@
             <groupId>com.kdg.fs24</groupId>
             <artifactId>spring-core-api</artifactId>
             <version>1.0</version>            
-        </dependency>        
+        </dependency>   
+        <dependency>
+            <groupId>com.kdg.fs24</groupId>
+            <artifactId>entity-core</artifactId>
+            <version>1.0</version>            
+        </dependency>              
     </dependencies>  
 </project>

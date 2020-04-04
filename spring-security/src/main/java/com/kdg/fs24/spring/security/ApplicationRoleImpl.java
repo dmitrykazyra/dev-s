@@ -6,11 +6,26 @@
 package com.kdg.fs24.spring.security;
 
 import com.kdg.fs24.spring.security.api.ApplicationRole;
+import com.kdg.fs24.spring.security.api.ApplicationUser;
+import java.util.Collection;
+import lombok.Data;
+import javax.persistence.*;
+import com.kdg.fs24.entity.core.AbstractActionEntity;
 
 /**
  *
  * @author N76VB
  */
-public class ApplicationRoleImpl implements ApplicationRole {
+@Data
+@Entity
+@Table(name = "core_Roles")
+public class ApplicationRoleImpl extends AbstractActionEntity 
+        implements ApplicationRole {
+    @Id
+    private Long roleId;
+    private String roleCode;
+    private String roleName;
+
+    private Collection<ApplicationUser> roleUsers;
 
 }

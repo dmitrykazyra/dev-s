@@ -19,11 +19,12 @@ import java.util.Collection;
 import java.util.function.Function;
 import com.kdg.fs24.application.core.service.funcs.ServiceFuncs;
 import org.springframework.beans.factory.annotation.Value;
-
+import lombok.Data;
 /**
  *
  * @author N76VB
  */
+@Data
 public class MailManager extends AbstractApplicationBean {
 
     private final Properties props = NullSafe.createObject(Properties.class);
@@ -39,10 +40,6 @@ public class MailManager extends AbstractApplicationBean {
     private String mailDefaultSender;
     @Value("${mailRecipientsList}")
     private String mailRecipientsList;
-
-    public MailManager() {
-        super();
-    }
 
     //==========================================================================
     public void send(final String subject, final String text, final String address) {
@@ -113,58 +110,5 @@ public class MailManager extends AbstractApplicationBean {
                             )),
                             mailRecord.getAddress());
                 });
-
-    }
-
-    public Properties getProps() {
-        return props;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getHost() {
-        return host;
-    }
-
-    public void setHost(String host) {
-        this.host = host;
-    }
-
-    public String getPort() {
-        return port;
-    }
-
-    public void setPort(String port) {
-        this.port = port;
-    }
-
-    public String getMailDefaultSender() {
-        return mailDefaultSender;
-    }
-
-    public void setMailDefaultSender(String mailDefaultSender) {
-        this.mailDefaultSender = mailDefaultSender;
-    }
-
-    public String getMailRecipientsList() {
-        return mailRecipientsList;
-    }
-
-    public void setMailRecipientsList(String mailRecipientsList) {
-        this.mailRecipientsList = mailRecipientsList;
     }
 }

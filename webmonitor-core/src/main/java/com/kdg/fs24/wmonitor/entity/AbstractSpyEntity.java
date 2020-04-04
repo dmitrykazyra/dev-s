@@ -28,12 +28,14 @@ import javax.persistence.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.kdg.fs24.persistence.api.PersistenceEntity;
 import org.hibernate.Session;
+import lombok.Data;
 
 /**
  *
  * @author N76VB
  */
 @MappedSuperclass
+@Data
 public abstract class AbstractSpyEntity<T extends Item> extends AbstractRefRecord
         implements ReferenceRec, PersistenceEntity {
 
@@ -48,9 +50,6 @@ public abstract class AbstractSpyEntity<T extends Item> extends AbstractRefRecor
     private String keyword;
     private Integer page_add;
 
-    public AbstractSpyEntity() {
-
-    }
 
     @Transient
     private final Map<Integer, String> EXISTS_LINKS = ServiceFuncs.<Integer, String>getOrCreateMap(ServiceFuncs.MAP_NULL);

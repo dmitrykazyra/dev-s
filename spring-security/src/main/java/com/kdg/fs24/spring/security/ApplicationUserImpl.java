@@ -5,22 +5,30 @@
  */
 package com.kdg.fs24.spring.security;
 
+import com.kdg.fs24.entity.core.AbstractActionEntity;
 import org.springframework.security.core.userdetails.User;
 import com.kdg.fs24.spring.security.api.ApplicationUser;
 import java.util.Collection;
+import javax.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
+import com.kdg.fs24.spring.security.api.ApplicationRole;
+import lombok.Data;
 
 /**
  *
  * @author N76VB
  */
-public class ApplicationUserImpl extends User implements ApplicationUser {
+@Data
+@Entity
+@Table(name = "core_Users")
+public class ApplicationUserImpl extends AbstractActionEntity implements ApplicationUser {
 
-    public ApplicationUserImpl(String username, String password, Collection<? extends GrantedAuthority> authorities) {
-        super(username, password, authorities);
-    }
-
-    public ApplicationUserImpl(String username, String password, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities) {
-        super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
-    }
+    private Long userId;
+    private String password; // BASE-256
+    private String name;
+    private String phone;
+    private String mail;
+    
+    @ManyToMany(mappedBy = "core_User2Role")
+    private Collection<ApplicationRole> userRoles;
 }

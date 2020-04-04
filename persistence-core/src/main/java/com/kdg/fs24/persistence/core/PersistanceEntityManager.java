@@ -262,6 +262,10 @@ public class PersistanceEntityManager extends AbstractApplicationBean {
                     final Query query = this.getEntityManager()
                             .createNativeQuery(sql, clazz.getSimpleName());
 
+                    if (this.debugMode.equals(SysConst.STRING_TRUE)) {
+                        LogService.LogInfo(this.getClass(), () -> String.format("executeNativeQuery: (%s)", sql));
+                    }
+
                     if (NullSafe.notNull(queryExecutor)) {
                         queryExecutor.execute(query);
                     }

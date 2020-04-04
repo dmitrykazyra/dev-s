@@ -16,10 +16,14 @@ import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import com.kdg.fs24.application.core.nullsafe.NullSafe;
+import org.springframework.beans.factory.annotation.Value;
 
 public final class NLS extends ObjectRoot {
 
     //public static final String DATE_FORMAT = "dd.MM.yyyy";
+    @Value("${NEW_DATE_FORMAT}")
+    public static final String NEW_DATE_FORMAT = SysConst.EMPTY_STRING;
+    
     public static final String DATE_FORMAT = NLS.getNlsParam("DATE_FORMAT", "dd.MM.yyyy");
     public static final String DATETIME_MS_FORMAT = NLS.getNlsParam("DATETIME_MS_FORMAT", "dd.MM.yyyy HH:mm:ss.SSS");
     public static final String DATETIME_FORMAT = NLS.getNlsParam("DATETIME_FORMAT", "dd.MM.yyyy HH:mm:ss");

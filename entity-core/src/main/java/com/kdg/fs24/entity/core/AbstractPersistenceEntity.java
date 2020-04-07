@@ -24,7 +24,9 @@ import lombok.Data;
 @Entity
 @Table(name = "core_Entities")
 @Data
-public class AbstractPersistenceEntity {
+@Inheritance( strategy = InheritanceType.TABLE_PER_CLASS )
+@DiscriminatorColumn( name = "entity_type_id" )
+public class AbstractPersistenceEntity implements ActionEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_action_id")

@@ -16,12 +16,14 @@ import java.util.function.BinaryOperator;
 import java.util.stream.Collectors;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.Optional;
+
 /**
  *
  * @author N76VB
  */
 public final class ServiceFuncs {
-    
+
     public static final Collection COLLECTION_NULL = null;
     public static final Map MAP_NULL = null;
     public static final Boolean THROW_WHEN_NOT_FOUND = Boolean.TRUE;
@@ -247,6 +249,7 @@ public final class ServiceFuncs {
     }
 
     //==========================================================================
+    @Deprecated
     public static <K, V> V getMapValue_silent(final Map<K, V> collection,
             final MapComparator<K, V> mapComparator) {
         synchronized (collection) {
@@ -257,9 +260,7 @@ public final class ServiceFuncs {
                                 .entrySet()
                                 .stream()
                                 .unordered()
-                                .filter((mapEntry) -> {
-                                    return mapComparator.filterMap(mapEntry);
-                                })
+                                .filter((mapEntry) -> mapComparator.filterMap(mapEntry))
                                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue))
                                 .entrySet()
                                 .iterator()
@@ -267,6 +268,28 @@ public final class ServiceFuncs {
                                 .getValue();
                     })
                     .<V>getObject();
+        }
+    }
+
+    public static <K, V> Optional<V> getMapValue(final Map<K, V> collection,
+            final MapComparator<K, V> mapComparator) {
+        synchronized (collection) {
+
+            return Optional.ofNullable(NullSafe.create(SysConst.OBJECT_NULL, !ServiceFuncs.SF_DONT_THROW_EXC)
+                    .execute2result(() -> {
+
+                        return collection
+                                .entrySet()
+                                .stream()
+                                .unordered()
+                                .filter((mapEntry) -> mapComparator.filterMap(mapEntry))
+                                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue))
+                                .entrySet()
+                                .iterator()
+                                .next()
+                                .getValue();
+                    })
+                    .<V>getObject());
         }
     }
 

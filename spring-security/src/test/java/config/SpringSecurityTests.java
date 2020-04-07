@@ -5,19 +5,19 @@
  */
 package config;
 
-import com.kdg.fs24.spring.unit.SpringBoot4Test;
+import com.kdg.fs24.spring.unit.Unit4Test;
 import org.junit.Test;
-
 
 /**
  *
  * @author N76VB
  */
-public final class SpringSecurityTests extends SpringBoot4Test<SpringSecurityTestConfig> {
-    
+//public class SpringSecurityTests extends SpringBoot4Test<SpringSecurityTestConfig> {
+public final class SpringSecurityTests extends Unit4Test<SpringSecurityBoot, SpringSecurityTestConfig> {
+
     @Test
     public void test1() {
-        this.doTest();
+        //this.initializeTest();
     }
 
 }

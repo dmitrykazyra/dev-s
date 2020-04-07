@@ -21,7 +21,6 @@ import com.kdg.fs24.entity.core.AbstractActionEntity;
 @Table(name = "core_Roles")
 public class ApplicationRoleImpl extends AbstractActionEntity 
         implements ApplicationRole {
-    @Id
     private Long roleId;
     private String roleCode;
     private String roleName;

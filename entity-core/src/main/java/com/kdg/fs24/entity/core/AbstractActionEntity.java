@@ -43,7 +43,6 @@ import lombok.Data;
 //@MappedSuperclass
 @Data
 public abstract class AbstractActionEntity
-        extends AbstractPersistenceEntity
-        implements ActionEntity {
+        extends AbstractPersistenceEntity {
 
 }

@@ -15,7 +15,7 @@
         <resteasy.version>3.6.2.Final</resteasy.version> 
         <hibernate.version>5.4.12.Final</hibernate.version> 
         <jpa.version>2.2</jpa.version>     
-        <spring.boot.version>2.2.5.RELEASE</spring.boot.version>  
+        <spring.boot.version>2.2.6.RELEASE</spring.boot.version>  
         <spring.data.jpa>2.2.5.RELEASE</spring.data.jpa>  
         <spring.core.version>5.2.5.RELEASE</spring.core.version>  
         <root.dir>d:/fs24/DEV-S</root.dir>   
@@ -27,6 +27,7 @@
         <querydsl.version>4.3.1</querydsl.version>
         <spring.security.version>5.3.1.RELEASE</spring.security.version>
         <lombok.version>1.18.10</lombok.version>
+        <app.version>1.0</app.version>
         <!--        <skipTests>true</skipTests>               -->
     </properties>
 

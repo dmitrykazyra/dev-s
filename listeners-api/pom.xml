@@ -13,22 +13,22 @@
         <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>application-core-api</artifactId>
-            <version>1.0</version>            
+            <version>${app.version}</version>            
         </dependency>
 <!--         <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>services-api</artifactId>
-            <version>1.0</version>            
+            <version>${app.version}</version>            
         </dependency>  
          <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>reflection-api</artifactId>
-            <version>1.0</version>            
+            <version>${app.version}</version>            
         </dependency>      
          <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>annotation-api</artifactId>
-            <version>1.0</version>            
+            <version>${app.version}</version>            
         </dependency>                    -->
     </dependencies>
         

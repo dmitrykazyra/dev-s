@@ -26,10 +26,10 @@ public final class GenericFuncs {
     @SuppressWarnings("unchecked")
     public static Class<?> getTypeParameterClass(final Class<?> parametrizedType, final int paramNum) {
 
-        LogService.LogInfo(parametrizedType, () -> String.format("%s: process '%s' type (paramNum - %d )",
-                LogService.getCurrentObjProcName(GenericFuncs.class),
-                parametrizedType.getCanonicalName(),
-                paramNum));
+//        LogService.LogInfo(parametrizedType, () -> String.format("%s: process '%s' type (paramNum - %d )",
+//                LogService.getCurrentObjProcName(GenericFuncs.class),
+//                parametrizedType.getCanonicalName(),
+//                paramNum));
 
         return NullSafe.create()
                 .execute2result(() -> {

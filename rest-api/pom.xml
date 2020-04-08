@@ -17,7 +17,7 @@
 <!--        <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>exception-api</artifactId>
-            <version>1.0</version>            
+            <version>${app.version}</version>            
         </dependency>         -->
         <dependency>
             <groupId>org.jboss.resteasy</groupId>
@@ -82,32 +82,32 @@
                 <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>application-core-api</artifactId>
-            <version>1.0</version>            
+            <version>${app.version}</version>            
         </dependency>
 <!--        <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>log-mgmt</artifactId>
-            <version>1.0</version>            
+            <version>${app.version}</version>            
         </dependency>        
         <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>generics-api</artifactId>
-            <version>1.0</version>            
+            <version>${app.version}</version>            
         </dependency>          
         <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>tce-api</artifactId>
-            <version>1.0</version>            
+            <version>${app.version}</version>            
         </dependency>              
         <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>object-api</artifactId>
-            <version>1.0</version>            
+            <version>${app.version}</version>            
         </dependency>                 -->
 <!--        <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>common-api</artifactId>
-            <version>1.0</version>            
+            <version>${app.version}</version>            
         </dependency>          -->
         <!--        <dependency>
             <groupId>com.google.code.gson</groupId>

@@ -12,7 +12,7 @@
         <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>references-core</artifactId>
-            <version>1.0</version>            
+            <version>${app.version}</version>            
         </dependency>        
     </dependencies>
 

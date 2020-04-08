@@ -8,16 +8,17 @@
     </parent>
     <artifactId>spring-config</artifactId>
     <packaging>jar</packaging>
+    <version>1.0</version>
     <dependencies>
         <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>persistence-core</artifactId>
-            <version>1.0</version>
+            <version>${app.version}</version>
         </dependency>
         <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>spring-core</artifactId>
-            <version>1.0</version>
+            <version>${app.version}</version>
         </dependency>        
     </dependencies>
 </project>

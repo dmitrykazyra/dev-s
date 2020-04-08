@@ -23,4 +23,10 @@ public final class SpringSecurityTests2 extends Unit4Test<SpringSecurityBoot, Sp
                 this.getClass().getCanonicalName()));
     }
 
+    @Test
+    public void test3() {
+        //this.initializeTest();
+        LogService.LogInfo(this.getClass(), () -> String.format("Unit test '%s' is running ",
+                this.getClass().getCanonicalName()));
+    }
 }

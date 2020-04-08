@@ -12,22 +12,22 @@
 <!--        <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>exception-api</artifactId>
-            <version>1.0</version>            
+            <version>${app.version}</version>            
         </dependency>         -->
         <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>application-core-api</artifactId>
-            <version>1.0</version>            
+            <version>${app.version}</version>            
         </dependency>               
 <!--        <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>thread-api</artifactId>
-            <version>1.0</version>            
+            <version>${app.version}</version>            
         </dependency>                       -->
 <!--        <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>locale-api</artifactId>
-            <version>1.0</version>            
+            <version>${app.version}</version>            
         </dependency>                 -->
     </dependencies>
     <build>

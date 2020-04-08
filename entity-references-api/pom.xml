@@ -20,32 +20,32 @@
         <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>references-api</artifactId>
-            <version>1.0</version>            
+            <version>${app.version}</version>            
         </dependency>
         <!--        <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>log-mgmt</artifactId>
-            <version>1.0</version>            
+            <version>${app.version}</version>            
         </dependency>     
         <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>exception-api</artifactId>
-            <version>1.0</version>            
+            <version>${app.version}</version>            
         </dependency>           -->
         <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>references-core</artifactId>
-            <version>1.0</version>            
+            <version>${app.version}</version>            
         </dependency> 
         <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>attribute-api</artifactId>
-            <version>1.0</version>            
+            <version>${app.version}</version>            
         </dependency>   
         <!--         <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>reflection-api</artifactId>
-            <version>1.0</version>            
+            <version>${app.version}</version>            
         </dependency>-->
         <dependency>
             <groupId>org.hibernate</groupId>

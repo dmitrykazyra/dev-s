@@ -8,21 +8,22 @@
     </parent>
     <artifactId>persistence-core</artifactId>
     <packaging>jar</packaging>
+    <version>1.0</version>
     <dependencies>
         <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>persistence-api</artifactId>
-            <version>1.0</version>            
+            <version>${app.version}</version>            
         </dependency>         
         <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>application-core-api</artifactId>
-            <version>1.0</version>            
+            <version>${app.version}</version>            
         </dependency> 
         <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>spring-core</artifactId>
-            <version>1.0</version>            
+            <version>${app.version}</version>            
         </dependency>         
     </dependencies>
 </project>

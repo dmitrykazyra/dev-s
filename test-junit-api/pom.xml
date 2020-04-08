@@ -17,51 +17,51 @@
 <!--        <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>log-gate</artifactId>
-            <version>1.0</version>
+            <version>${app.version}</version>
         </dependency>-->
         <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>test-api</artifactId>
-            <version>1.0</version>
+            <version>${app.version}</version>
         </dependency>   
 <!--        <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>registry-api</artifactId>
-            <version>1.0</version>
+            <version>${app.version}</version>
         </dependency>        -->
 <!--        <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>generics-api</artifactId>
-            <version>1.0</version>
+            <version>${app.version}</version>
         </dependency>  
         <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>services-api</artifactId>
-            <version>1.0</version>
+            <version>${app.version}</version>
             <type>jar</type>          
         </dependency> 
         <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>jdbc-api</artifactId>
-            <version>1.0</version>
+            <version>${app.version}</version>
             <type>jar</type>          
         </dependency>                   -->
 <!--        <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>jdbc-service-api</artifactId>
-            <version>1.0</version>
+            <version>${app.version}</version>
             <type>jar</type>          
         </dependency>
         <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>locale-api</artifactId>
-            <version>1.0</version>
+            <version>${app.version}</version>
             <type>jar</type>          
         </dependency>  
         <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>reflection-api</artifactId>
-            <version>1.0</version>            
+            <version>${app.version}</version>            
         </dependency>                      -->
     </dependencies>
 </project>

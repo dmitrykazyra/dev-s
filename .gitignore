@@ -4,3 +4,4 @@
 /spring-config/target/
 /spring-junit/target/
 /target/
+*.log

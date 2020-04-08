@@ -13,22 +13,22 @@
 <!--        <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>log-mgmt</artifactId>
-            <version>1.0</version>            
+            <version>${app.version}</version>            
         </dependency>     
         <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>exception-api</artifactId>
-            <version>1.0</version>            
+            <version>${app.version}</version>            
         </dependency>    -->              
         <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>entity-references-api</artifactId>
-            <version>1.0</version>            
+            <version>${app.version}</version>            
         </dependency>
 <!--        <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>services-api</artifactId>
-            <version>1.0</version>            
+            <version>${app.version}</version>            
         </dependency>        -->
     </dependencies>
     

@@ -17,22 +17,22 @@
         <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>application-core-api</artifactId>
-            <version>1.0</version>            
+            <version>${app.version}</version>            
         </dependency>     
 <!--        <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>exception-api</artifactId>
-            <version>1.0</version>            
+            <version>${app.version}</version>            
         </dependency>     
         <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>tce-api</artifactId>
-            <version>1.0</version>            
+            <version>${app.version}</version>            
         </dependency>    
         <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>jdbc-api</artifactId>
-            <version>1.0</version>            
+            <version>${app.version}</version>            
         </dependency>                               
         <dependency>
             <groupId>javax</groupId>

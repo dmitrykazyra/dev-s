@@ -38,37 +38,37 @@
         <!--        <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>services-core</artifactId>
-            <version>1.0</version>            
+            <version>${app.version}</version>            
         </dependency>-->
         <!--        <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>mail-core</artifactId>
-            <version>1.0</version>            
+            <version>${app.version}</version>            
         </dependency>        -->
         <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>test-junit-api</artifactId>
-            <version>1.0</version>            
+            <version>${app.version}</version>            
         </dependency>         
         <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>test-core</artifactId>
-            <version>1.0</version>            
+            <version>${app.version}</version>            
         </dependency>         
         <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>entity-core</artifactId>
-            <version>1.0</version>            
+            <version>${app.version}</version>            
         </dependency> 
         <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>spring-config</artifactId>
-            <version>1.0</version>            
+            <version>${app.version}</version>            
         </dependency> 
         <!--        <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>log-gate</artifactId>
-            <version>1.0</version>            
+            <version>${app.version}</version>            
         </dependency>        -->
         <dependency>
             <groupId>org.jsoup</groupId>
@@ -78,22 +78,22 @@
         <!--        <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>reflection-api</artifactId>
-            <version>1.0</version>            
+            <version>${app.version}</version>            
         </dependency>
         <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>persistence-api</artifactId>
-            <version>1.0</version>            
+            <version>${app.version}</version>            
         </dependency>         
         <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>persistence-service-api</artifactId>
-            <version>1.0</version>            
+            <version>${app.version}</version>            
         </dependency> -->
         <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>spring-boot-api</artifactId>
-            <version>1.0</version>            
+            <version>${app.version}</version>            
         </dependency>                   
         <dependency>
             <groupId>org.hibernate</groupId>

@@ -12,17 +12,17 @@
         <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>spring-core-api</artifactId>
-            <version>1.0</version>
+            <version>${app.version}</version>
         </dependency>
         <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>application-core-api</artifactId>
-            <version>1.0</version>
+            <version>${app.version}</version>
         </dependency>
 <!--        <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>persistence-core</artifactId>
-            <version>1.0</version>
+            <version>${app.version}</version>
         </dependency>-->
     </dependencies>  
 </project>

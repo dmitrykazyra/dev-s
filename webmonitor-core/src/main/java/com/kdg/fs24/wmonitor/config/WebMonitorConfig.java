@@ -30,9 +30,9 @@ import com.kdg.fs24.spring.core.mail.MailManager;
 //@PropertySource("classpath:application.properties")
 public class WebMonitorConfig extends MainApplicationConfig {
 
-//    public WebMonitorConfig() {
-//        super();
-//    }
+    public WebMonitorConfig() {
+        super();
+    }
     //@Autowired
     //private volatile PersistanceEntityManager persistanceEntityManager;
     //==========================================================================

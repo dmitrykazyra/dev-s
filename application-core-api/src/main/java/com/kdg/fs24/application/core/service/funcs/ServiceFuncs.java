@@ -83,6 +83,7 @@ public final class ServiceFuncs {
         }
     }
 
+    @Deprecated
     //==========================================================================
     public static <T> T getCollectionElement_silent(final Collection<T> collection,
             final FilterComparator<T> filterComparator) {
@@ -216,6 +217,7 @@ public final class ServiceFuncs {
         }
     }
 
+    @Deprecated
     //==========================================================================
     public static <K, V> V getMapValue(final Map<K, V> collection,
             final MapComparator<K, V> mapComparator,
@@ -271,6 +273,7 @@ public final class ServiceFuncs {
         }
     }
 
+    //==========================================================================
     public static <K, V> Optional<V> getMapValue(final Map<K, V> collection,
             final MapComparator<K, V> mapComparator) {
         synchronized (collection) {
@@ -290,6 +293,27 @@ public final class ServiceFuncs {
                                 .getValue();
                     })
                     .<V>getObject());
+        }
+    }
+    //==========================================================================
+
+    public static <T> Optional<T> getCollectionElement(final Collection<T> collection,
+            final FilterComparator<T> filterComparator) {
+
+        synchronized (collection) {
+
+            return Optional.ofNullable(NullSafe.create(SysConst.OBJECT_NULL, !ServiceFuncs.SF_DONT_THROW_EXC)
+                    .execute2result(() -> {
+
+                        return collection
+                                .stream()
+                                .unordered()
+                                .filter((fltr) -> filterComparator.getFilter(fltr))
+                                .collect(Collectors.toList())
+                                .get(0);
+
+                    })
+                    .<T>getObject());
         }
     }
 

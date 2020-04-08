@@ -30,6 +30,7 @@ public class AbstractPersistenceEntity implements ActionEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_action_id")
+    @SequenceGenerator(name = "seq_action_id", sequenceName = "seq_action_id", allocationSize = 1)
     private Long entity_id;
     @JoinColumn
     private EntityType entityType;

@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package config;
+package test.boot;
 
+import com.kdg.fs24.spring.boot.api.AbstractSpringBootApplication;
 import com.kdg.fs24.spring.unit.SpringBoot4Test;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
@@ -17,6 +18,7 @@ import org.springframework.context.annotation.PropertySource;
 @SpringBootApplication
 @ComponentScan
 @PropertySource("classpath:application.properties")
+//public class SpringSecurityBoot extends AbstractSpringBootApplication {
 public class SpringSecurityBoot extends SpringBoot4Test {
-    
+
 }

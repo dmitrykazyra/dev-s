@@ -23,7 +23,7 @@ public abstract class AbstractSpringBootApplication {
 
     private static volatile ApplicationContext applicationContext;
 
-    public static void runSpringBootApplication(final String[] args, 
+    public static void runSpringBootApplication(final String[] args,
             final Class springBootClass) {
         //SpringApplication.run(SpringBootApplication.class, args);
         SpringApplication.run(springBootClass, args);
@@ -34,8 +34,8 @@ public abstract class AbstractSpringBootApplication {
 //    }
 
     public static void initializeContext(final Class<? extends ApplicationConfiguration> clazz) {
-       // AbstractSpringBootApplication.ctx = NullSafe.createObject(AnnotationConfigApplicationContext.class, clazz);
-       AbstractSpringBootApplication.applicationContext = new AnnotationConfigApplicationContext(clazz); 
+        // AbstractSpringBootApplication.ctx = NullSafe.createObject(AnnotationConfigApplicationContext.class, clazz);
+        AbstractSpringBootApplication.applicationContext = new AnnotationConfigApplicationContext(clazz);
     }
 
     public static ApplicationContext getApplicationContext() {

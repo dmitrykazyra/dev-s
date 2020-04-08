@@ -29,6 +29,6 @@ public class ApplicationUserImpl extends AbstractActionEntity implements Applica
     private String phone;
     private String mail;
     
-    @ManyToMany(mappedBy = "core_User2Role")
-    private Collection<ApplicationRole> userRoles;
+//    @ManyToMany(mappedBy = "core_User2Role")
+//    private Collection<ApplicationRoleImpl> userRoles;
 }

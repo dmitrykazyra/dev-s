@@ -42,6 +42,11 @@
             <artifactId>attribute-api</artifactId>
             <version>${app.version}</version>            
         </dependency>   
+        <dependency>
+            <groupId>com.kdg.fs24</groupId>
+            <artifactId>spring-core-api</artifactId>
+            <version>${app.version}</version>            
+        </dependency> 
         <!--         <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>reflection-api</artifactId>

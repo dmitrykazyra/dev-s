@@ -32,14 +32,10 @@ public class AbstractPersistenceEntity implements ActionEntity {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_action_id")
     @SequenceGenerator(name = "seq_action_id", sequenceName = "seq_action_id", allocationSize = 1)
     private Long entity_id;
-//    @ManyToOne(targetEntity = com.kdg.fs24.entity.type.EntityType.class, cascade = {
-//        CascadeType.ALL
-//    })
-//    @JoinColumn(name = "entity_type_id", updatable = false)
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL , fetch = FetchType.LAZY)
     @JoinColumn(name = "entity_type_id", updatable = false)
     private EntityType entityType;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL , fetch = FetchType.LAZY)
     @JoinColumn(name = "entity_status_id")
     private EntityStatus entityStatus;
     @Column(name = "creation_date", updatable = false)

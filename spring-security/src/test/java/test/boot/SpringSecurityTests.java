@@ -21,6 +21,7 @@ import org.springframework.context.annotation.Import;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.boot.test.context.SpringBootTest;
+import com.kdg.fs24.repository.EntityTypesRepository;
 
 
 /**
@@ -36,6 +37,9 @@ public final class SpringSecurityTests extends Unit4Test<SpringSecurityBoot, Spr
 
     @Autowired
     private PersistanceEntityManager persistanceEntityManager;
+    
+    @Autowired
+    private EntityTypesRepository entityTypesRepository;
 
     @Test
     public void test1() {
@@ -58,7 +62,7 @@ public final class SpringSecurityTests extends Unit4Test<SpringSecurityBoot, Spr
                     user.setPhone(testUserName);
                     user.setPassword(testUserName);
                     
-                    
+                    user.setEntityType(entityTypesRepository.getOne(100));
 
                     entityManager.persist(user);
 

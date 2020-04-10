@@ -21,12 +21,15 @@ import lombok.Data;
 @Data
 public class EntityType  extends AbstractRefRecord implements ReferenceRec {
     @Id
-    private Integer entity_type_id;
-    private String entity_type_name;
-    private String entity_app_name;
+    @Column(name="entity_type_id")
+    private Integer entityTypeId;
+    @Column(name="entity_type_name")
+    private String entityTypeName;
+    @Column(name="entity_app_name")
+    private String entityAppName;
 
     @Override
     public void record2Map(final Map<String, Integer> map) {
-        map.put(String.format("%d - %s", this.getEntity_type_id(), this.getEntity_type_name()), this.getEntity_type_id());
+        map.put(this.toString(), this.getEntityTypeId());
     }
 }

@@ -11,12 +11,15 @@ import com.kdg.fs24.spring.core.mail.MailManager;
 import com.kdg.fs24.persistence.core.PersistanceEntityManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Scope;
+import com.kdg.fs24.spring.core.repository.JpaRepositoriesCoolection;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 /**
  *
  * @author N76VB
  */
 public abstract class MainApplicationConfig extends AbstractApplicationConfiguration {
+
     @Bean
     @Scope(value = "singleton")
     public PersistanceEntityManager entityManager() {
@@ -34,5 +37,10 @@ public abstract class MainApplicationConfig extends AbstractApplicationConfigura
     @Bean
     public MailManager mailManager() {
         return NullSafe.createObject(MailManager.class);
+    }
+
+    @Bean
+    public JpaRepositoriesCoolection repoManager() {
+        return NullSafe.createObject(JpaRepositoriesCoolection.class);
     }
 }

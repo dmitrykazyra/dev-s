@@ -17,7 +17,7 @@ public class EntityTypesRef<T extends EntityType> extends AbstractReference<Enti
     //==========================================================================
     public String getEntityTypeNameById(final Integer type_id) throws ReferenceNotFound {
 
-        return this.findEntityTypeById(type_id).getEntity_type_name();
+        return this.findEntityTypeById(type_id).getEntityTypeName();
     }
 
     //==========================================================================
@@ -31,7 +31,7 @@ public class EntityTypesRef<T extends EntityType> extends AbstractReference<Enti
     //==========================================================================
     private T findEntityTypeById(final Integer type_id) {
 
-        return (T) this.findCachedRecords((object) -> ((T) object).getEntity_type_id().equals(type_id));
+        return (T) this.findCachedRecords((object) -> ((T) object).getEntityTypeId().equals(type_id));
 
     }
 }

@@ -11,11 +11,13 @@ import com.kdg.fs24.spring.config.MainApplicationConfig;
 import lombok.Data;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @Configuration
-@ComponentScan(basePackages = "com.kdg.fs24.spring.security")
+//@ComponentScan(basePackages = "com.kdg.fs24.spring.security")
 @EntityScan(basePackages = "com.kdg.fs24.entity.type")
 @PropertySource("classpath:application.properties")
+@EnableJpaRepositories(basePackages = "com.kdg.fs24.repository")
 @Data
 /**
  *

@@ -23,6 +23,7 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target> 
         <version.compiler.plugin>3.8.1</version.compiler.plugin>
+        <maven.jar.plugin>3.2.0</maven.jar.plugin>
         <postgres.version>42.2.8</postgres.version>
         <querydsl.version>4.3.1</querydsl.version>
         <spring.security.version>5.3.1.RELEASE</spring.security.version>
@@ -134,14 +135,13 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>3.0.2</version>
-<!--                <configuration>
+                <version>${maven.jar.plugin}</version>
+                <configuration>
                     <excludes>
                         <exclude>**/*.properties</exclude>
                     </excludes>
                     <outputDirectory>${root.dir}/libs</outputDirectory>        
-                </configuration>-->
-                
+                </configuration>                
             </plugin>            
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -182,6 +182,7 @@
                     </configuration>
                 </plugin>
             </plugins>
+            
         </pluginManagement>
     </build>
     <name>fs24</name>

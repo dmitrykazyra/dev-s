@@ -24,19 +24,25 @@ import lombok.Data;
 @Entity
 @Table(name = "core_Entities")
 @Data
-@Inheritance( strategy = InheritanceType.TABLE_PER_CLASS )
-@DiscriminatorColumn( name = "entity_type_id" )
+@Inheritance(strategy = InheritanceType.JOINED)
+//@DiscriminatorColumn( name = "entity_type_id" )
 public class AbstractPersistenceEntity implements ActionEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_action_id")
     @SequenceGenerator(name = "seq_action_id", sequenceName = "seq_action_id", allocationSize = 1)
     private Long entity_id;
-    @JoinColumn
+//    @ManyToOne(targetEntity = com.kdg.fs24.entity.type.EntityType.class, cascade = {
+//        CascadeType.ALL
+//    })
+//    @JoinColumn(name = "entity_type_id", updatable = false)
+    @ManyToOne
+    @JoinColumn(name = "entity_type_id", updatable = false)
     private EntityType entityType;
-    @JoinColumn
+    @ManyToOne
+    @JoinColumn(name = "entity_status_id")
     private EntityStatus entityStatus;
-    @Column(name = "creation_date")
+    @Column(name = "creation_date", updatable = false)
     private LocalDateTime creation_date;
     @Column(name = "close_date")
     private LocalDate close_date;

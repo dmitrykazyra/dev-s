@@ -25,7 +25,7 @@ public class ApplicationRoleImpl extends AbstractActionEntity
     private Long roleId;
     private String roleCode;
     private String roleName;
-//    @ManyToMany(mappedBy = "core_User2Role")
-//    private Collection<ApplicationUserImpl> roleUsers;
+    @ManyToMany(mappedBy = "userRoles", cascade = CascadeType.ALL , fetch = FetchType.LAZY)
+    private Collection<ApplicationUserImpl> roleUsers;
 
 }

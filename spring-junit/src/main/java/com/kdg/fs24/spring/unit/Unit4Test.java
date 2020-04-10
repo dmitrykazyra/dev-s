@@ -10,11 +10,8 @@ import com.kdg.fs24.application.core.nullsafe.NullSafe;
 import com.kdg.fs24.spring.boot.api.AbstractSpringBootApplication;
 import com.kdg.fs24.spring.core.api.ApplicationConfiguration;
 import com.kdg.fs24.application.core.service.funcs.GenericFuncs;
-import java.util.Optional;
 import com.kdg.fs24.application.core.service.funcs.ServiceFuncs;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CopyOnWriteArrayList;
+
 
 /**
  *
@@ -41,12 +38,18 @@ public abstract class Unit4Test<BOOT extends AbstractSpringBootApplication, CONF
         if (!ServiceFuncs.<Class<? extends AbstractSpringBootApplication>>getCollectionElement(BOOT_CLASSES, bootClass -> bootClass.equals(sbClass))
                 .isPresent()) {
 
-            AbstractSpringBootApplication.runSpringBootApplication(EMPTY_ARGS, sbClass);
-            // инициализация контейнера
-            AbstractSpringBootApplication.initializeContext(appConfigClass);
+            NullSafe.create()
+                    .execute(() -> {
 
-            //BOOT_APPS.put(sbClass, this);
-            BOOT_CLASSES.add(sbClass);
+                        AbstractSpringBootApplication.runSpringBootApplication(EMPTY_ARGS, sbClass);
+                        // инициализация контейнера
+                        AbstractSpringBootApplication.initializeContext(appConfigClass);
+
+                        //BOOT_APPS.put(sbClass, this);
+                    }).finallyBlock(() -> {
+                BOOT_CLASSES.add(sbClass);
+            })
+                    .throwException();
         }
     }
 }

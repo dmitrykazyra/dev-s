@@ -28,7 +28,9 @@ public class ApplicationUserImpl extends AbstractActionEntity implements Applica
     private String name;
     private String phone;
     private String mail;
-    
-//    @ManyToMany(mappedBy = "core_User2Role")
-//    private Collection<ApplicationRoleImpl> userRoles;
+
+    @ManyToMany(cascade = CascadeType.ALL , fetch = FetchType.LAZY)
+    @JoinTable(name = "core_User2Role", joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Collection<ApplicationRoleImpl> userRoles;
 }

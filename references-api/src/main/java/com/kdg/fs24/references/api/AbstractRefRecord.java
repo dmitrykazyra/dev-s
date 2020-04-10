@@ -7,13 +7,13 @@ package com.kdg.fs24.references.api;
 
 import java.lang.reflect.Field;
 import com.kdg.fs24.application.core.nullsafe.NullSafe;
-import java.io.Serializable;
+import com.kdg.fs24.persistence.api.PersistenceEntity;
 
 /**
  *
  * @author kazyra_d
  */
-public abstract class AbstractRefRecord implements Serializable {
+public abstract class AbstractRefRecord implements PersistenceEntity {
 
     public final long calcRecordHash() {
 

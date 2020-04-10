@@ -5,3 +5,4 @@
 /spring-junit/target/
 /target/
 *.log
+*.jar

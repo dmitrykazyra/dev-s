@@ -8,19 +8,19 @@ package test.config;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import com.kdg.fs24.spring.config.MainApplicationConfig;
+import lombok.Data;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.PropertySource;
 
 @Configuration
 @ComponentScan(basePackages = "com.kdg.fs24.spring.security")
+@EntityScan(basePackages = "com.kdg.fs24.entity.type")
 @PropertySource("classpath:application.properties")
+@Data
 /**
  *
  * @author N76VB
  */
 public class SpringSecurityTestConfig extends MainApplicationConfig {
-    
-    public SpringSecurityTestConfig() {
-        
-    }
-    
+
 }

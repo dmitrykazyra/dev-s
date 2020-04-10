@@ -18,8 +18,13 @@
             <groupId>com.kdg.fs24</groupId>
             <artifactId>application-core-api</artifactId>
             <version>${app.version}</version>            
-        </dependency>     
-<!--        <dependency>
+        </dependency>   
+        <dependency>
+            <groupId>com.kdg.fs24</groupId>
+            <artifactId>persistence-api</artifactId>
+            <version>${app.version}</version>            
+        </dependency>          
+        <!--        <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>exception-api</artifactId>
             <version>${app.version}</version>            

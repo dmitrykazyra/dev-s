@@ -23,13 +23,20 @@ import lombok.Data;
 @Table(name = "core_Users")
 public class ApplicationUserImpl extends AbstractActionEntity implements ApplicationUser {
 
+    @Column(name = "user_id")
     private Long userId;
+    @Column(name = "login")
+    private String login;
+    @Column(name = "password")
     private String password; // BASE-256
+    @Column(name = "name")
     private String name;
+    @Column(name = "phone")
     private String phone;
+    @Column(name = "mail")
     private String mail;
 
-    @ManyToMany(cascade = CascadeType.ALL , fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name = "core_User2Role", joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Collection<ApplicationRoleImpl> userRoles;

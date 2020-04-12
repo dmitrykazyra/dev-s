@@ -17,7 +17,7 @@ public class EntityStatusesRef<T extends EntityStatus> extends AbstractReference
     //==========================================================================
     public String getEntityStatusNameById(final Integer type_id, final Integer status_id) throws ReferenceNotFound {
 
-        return this.getEntityStatusById(type_id, status_id).getEntity_status_name();
+        return this.getEntityStatusById(type_id, status_id).getEntityStatusName();
     }
 
     //==========================================================================
@@ -32,8 +32,8 @@ public class EntityStatusesRef<T extends EntityStatus> extends AbstractReference
     private T findEntityStatusById(final Integer type_id, final Integer status_id) {
 
         return (T) this.findCachedRecords((
-                (object) -> (((T) object).getEntity_type_id().equals(type_id)
-                && ((T) object).getEntity_status_id().equals(status_id))));
+                (object) -> (((T) object).getEntityTypeId().equals(type_id)
+                && ((T) object).getEntityStatusId().equals(status_id))));
 
     }
 }

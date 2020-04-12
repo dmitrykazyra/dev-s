@@ -32,11 +32,15 @@ public class AbstractPersistenceEntity implements ActionEntity {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_action_id")
     @SequenceGenerator(name = "seq_action_id", sequenceName = "seq_action_id", allocationSize = 1)
     private Long entity_id;
-    @ManyToOne(cascade = CascadeType.ALL , fetch = FetchType.LAZY)
-    @JoinColumn(name = "entity_type_id", updatable = false)
-    private EntityType entityType;
-    @ManyToOne(cascade = CascadeType.ALL , fetch = FetchType.LAZY)
-    @JoinColumn(name = "entity_status_id")
+//    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    @JoinColumn(name = "entity_type_id")
+//    private EntityType entityType;
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    //@JoinColumn(name = "entity_type_id", updatable = false, insertable = true)
+    @JoinColumns({
+        @JoinColumn(name = "entity_status_id", referencedColumnName = "entity_status_id")
+        ,
+    @JoinColumn(name = "entity_type_id", referencedColumnName = "entity_type_id")})
     private EntityStatus entityStatus;
     @Column(name = "creation_date", updatable = false)
     private LocalDateTime creation_date;

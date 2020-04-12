@@ -38,8 +38,7 @@
         <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>spring-config</artifactId>
-            <version>${app.version}</version> 
-            <scope>test</scope>            
+            <version>${app.version}</version>            
         </dependency>
         <dependency>
             <groupId>com.kdg.fs24</groupId>

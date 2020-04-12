@@ -8,13 +8,13 @@ package test.boot;
 import com.kdg.fs24.application.core.log.LogService;
 import com.kdg.fs24.spring.unit.Unit4Test;
 import org.junit.Test;
-import test.config.SpringSecurityTestConfig;
+import com.kdg.fs24.config.SecurityConfig;
 
 /**
  *
  * @author N76VB
  */
-public final class SpringSecurityTests2 extends Unit4Test<SpringSecurityBoot, SpringSecurityTestConfig> {
+public final class SpringSecurityTests2 extends Unit4Test<SpringSecurityBoot, SecurityConfig> {
 
     @Test
     public void test2() {

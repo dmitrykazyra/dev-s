@@ -62,7 +62,7 @@ public abstract class AbstractAction<T extends ActionEntity>
     public static Boolean isAllowed(final AbstractActionEntity entity, final Integer allowedStatus) {
 
         return (NullSafe.create()
-                .execute2result(() -> (entity.getEntityStatus().getEntity_status_id().equals(allowedStatus))))
+                .execute2result(() -> (entity.getEntityStatus().getEntityStatusId().equals(allowedStatus))))
                 .catchException2result((e) -> SysConst.IS_NOT_ALLOWED_ACTION)
                 .<Boolean>getObject();
 

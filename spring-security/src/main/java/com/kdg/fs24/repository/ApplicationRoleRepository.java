@@ -6,14 +6,14 @@
 package com.kdg.fs24.repository;
 
 import com.kdg.fs24.spring.core.api.ApplicationJpaRepository;
-import com.kdg.fs24.spring.security.api.ApplicationRole;
+import com.kdg.fs24.spring.security.ApplicationRoleImpl;
 import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author N76VB
  */
-@Repository
-public interface ApplicationRoleRepository extends ApplicationJpaRepository<ApplicationRole, Long> {
+//@Repository
+public interface ApplicationRoleRepository { //extends ApplicationJpaRepository<ApplicationRoleImpl, Long> {
 
 }

@@ -5,7 +5,6 @@
  */
 package com.kdg.fs24.entity.type;
 
-
 import java.util.Map;
 import com.kdg.fs24.references.api.ReferenceRec;
 import com.kdg.fs24.references.api.AbstractRefRecord;
@@ -19,13 +18,14 @@ import lombok.Data;
 @Entity
 @Table(name = "core_EntityTypesRef")
 @Data
-public class EntityType  extends AbstractRefRecord implements ReferenceRec {
+public class EntityType extends AbstractRefRecord implements ReferenceRec {
+
     @Id
-    @Column(name="entity_type_id")
+    @Column(name = "entity_type_id")
     private Integer entityTypeId;
-    @Column(name="entity_type_name")
+    @Column(name = "entity_type_name")
     private String entityTypeName;
-    @Column(name="entity_app_name")
+    @Column(name = "entity_app_name")
     private String entityAppName;
 
     @Override

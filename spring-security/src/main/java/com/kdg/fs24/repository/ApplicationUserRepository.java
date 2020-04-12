@@ -5,14 +5,17 @@
  */
 package com.kdg.fs24.repository;
 
-import com.kdg.fs24.spring.security.api.ApplicationUser;
+import com.kdg.fs24.spring.security.ApplicationUserImpl;
 import com.kdg.fs24.spring.core.api.ApplicationJpaRepository;
 import org.springframework.stereotype.Repository;
+
 /**
  *
  * @author N76VB
  */
 @Repository
-public interface ApplicationUserRepository extends ApplicationJpaRepository<ApplicationUser, Long> {
-    
+public interface ApplicationUserRepository extends ApplicationJpaRepository<ApplicationUserImpl, Long> {
+
+    //public Integer findByPassword(String pwd);
+
 }

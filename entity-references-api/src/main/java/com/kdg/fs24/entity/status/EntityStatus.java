@@ -8,9 +8,7 @@ package com.kdg.fs24.entity.status;
 import java.util.Map;
 import com.kdg.fs24.references.api.ReferenceRec;
 import com.kdg.fs24.references.api.AbstractRefRecord;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import lombok.Data;
 
 /**
@@ -20,15 +18,20 @@ import lombok.Data;
 @Entity
 @Table(name = "core_EntityStatusesRef")
 @Data
+@IdClass(EntityStatusPK.class)
 public class EntityStatus extends AbstractRefRecord implements ReferenceRec {
 
     @Id
-    private Integer entity_status_id;
-    private Integer entity_type_id;
-    private String entity_status_name;
+    @Column(name="entity_status_id")
+    private Integer entityStatusId;
+    @Id
+    @Column(name="entity_type_id")
+    private Integer entityTypeId;
+    @Column(name="entity_status_name")
+    private String entityStatusName;
 
     @Override
     public void record2Map(final Map<String, Integer> map) {
-        map.put(String.format("%d - %s", this.getEntity_status_id(), this.getEntity_status_name()), this.getEntity_status_id());
+        map.put(this.toString(), this.getEntityStatusId());
     }
 }

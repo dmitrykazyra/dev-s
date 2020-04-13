@@ -8,12 +8,14 @@ package com.kdg.fs24.repository;
 import com.kdg.fs24.spring.core.api.ApplicationJpaRepository;
 import com.kdg.fs24.spring.security.ApplicationRoleImpl;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author N76VB
  */
 @Repository
+@Transactional(readOnly = true)
 public interface ApplicationRoleRepository extends ApplicationJpaRepository<ApplicationRoleImpl, Long> {
 
 }

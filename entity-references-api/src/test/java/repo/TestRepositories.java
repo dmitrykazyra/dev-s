@@ -52,11 +52,11 @@ public class TestRepositories {
     @Test
     public void test1() {
         //this.initializeTest();
-        LogService.LogInfo(this.getClass(), () -> String.format("Unit test '%s' is running ",
+        LogService.LogInfo(this.getClass(), () -> String.format("1. Unit test '%s' is running ",
                 this.getClass().getCanonicalName()));
         persistanceEntityManager
                 .executeTransaction((entityManager) -> {
-
+                    this.printAllRepositories();
                     final EntityType entityType = NullSafe.createObject(EntityType.class);
 
                     final String testUserName = UUID.randomUUID().toString();
@@ -68,32 +68,57 @@ public class TestRepositories {
                     entityManager.merge(entityType);
 
                 });
-        
     }
 
     @Test
     public void test2() {
         //==========================================================
-        entityTypesRepository
-                .findAll()
-                .forEach(es -> {
 
-                    LogService.LogInfo(this.getClass(), () -> String.format("es: %s ",
-                            es.toString()));
+        LogService.LogInfo(this.getClass(), () -> String.format("2. Unit test '%s' is running ",
+                this.getClass().getCanonicalName()));
+        persistanceEntityManager
+                .executeTransaction((entityManager) -> {
+                    this.printAllRepositories();
+                    final EntityType entityType = entityManager.find(EntityType.class, 0);
+
+                    entityManager.remove(entityType);
+
                 });
-
-        LogService.LogInfo(this.getClass(), () -> String.format("entityStatusesRepository sie = %d ",
-                entityStatusesRepository.count()));
-        LogService.LogInfo(this.getClass(), () -> String.format("entityTypesRepository sie = %d ",
-                entityTypesRepository.count()));
-
-        EntityType entityType4Get = entityTypesRepository.getOne(100);
     }
 
+    @Test
+    public void test3() {
+        //==========================================================
+
+        LogService.LogInfo(this.getClass(), () -> String.format("3. Unit test '%s' is running ",
+                this.getClass().getCanonicalName()));
+        this.printAllRepositories();
+    }
 //    @Test
 //    public void testXX() {
 //        //this.initializeTest();
 //        LogService.LogInfo(this.getClass(), () -> String.format("Unit test '%s' is running ",
 //                this.getClass().getCanonicalName()));
 //    }
+
+    private void printAllRepositories() {
+        LogService.LogInfo(this.getClass(), () -> String.format("\\ %s: %d ================================================",
+                "entityTypesRepository", entityTypesRepository.count()));
+        entityTypesRepository
+                .findAll()
+                .forEach(es -> {
+
+                    LogService.LogInfo(this.getClass(), () -> String.format("EntityType: %s ",
+                            es.toString()));
+                });
+        LogService.LogInfo(this.getClass(), () -> String.format("\\ %s: %d ================================================",
+                "entityStatusesRepositoryy", entityStatusesRepository.count()));
+        entityStatusesRepository
+                .findAll()
+                .forEach(es -> {
+
+                    LogService.LogInfo(this.getClass(), () -> String.format("EntityStatuses: %s ",
+                            es.toString()));
+                });
+    }
 }

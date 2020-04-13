@@ -12,6 +12,7 @@ import com.kdg.fs24.references.core.AbstractReference;
  *
  * @author kazyra_d
  */
+@Deprecated
 public class EntityStatusesRef<T extends EntityStatus> extends AbstractReference<EntityStatus> {
 
     //==========================================================================

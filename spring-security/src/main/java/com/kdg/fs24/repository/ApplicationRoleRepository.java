@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
  *
  * @author N76VB
  */
-//@Repository
-public interface ApplicationRoleRepository { //extends ApplicationJpaRepository<ApplicationRoleImpl, Long> {
+@Repository
+public interface ApplicationRoleRepository extends ApplicationJpaRepository<ApplicationRoleImpl, Long> {
 
 }

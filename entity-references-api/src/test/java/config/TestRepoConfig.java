@@ -3,31 +3,29 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.kdg.fs24.config;
-
-import lombok.Data;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.beans.factory.annotation.Autowired;
-import com.kdg.fs24.repository.*;
-import com.kdg.fs24.spring.config.AbstractApplicationConfiguration;
-import org.springframework.context.annotation.Bean;
-import com.kdg.fs24.application.core.nullsafe.NullSafe;
+package config;
 
 /**
  *
  * @author N76VB
  */
+import lombok.Data;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.Profile;
+import org.springframework.context.annotation.PropertySource;
+import com.kdg.fs24.config.*;
+import com.kdg.fs24.repository.EntityTypesRepository;
+import com.kdg.fs24.spring.config.MainApplicationConfig;
+import org.springframework.beans.factory.annotation.Autowired;
+
 @Configuration
 //@ComponentScan(basePackages = "com.kdg.fs24.service")
 //@EntityScan(basePackages = {"com.kdg.fs24.spring.security", "com.kdg.fs24.entity"})
 @PropertySource("classpath:application.properties")
 //@EnableJpaRepositories(basePackages = "com.kdg.fs24.repository")
 @Data
-public class SecurityConfig extends AbstractApplicationConfiguration {
-
-//    @Bean
-//    SecurityRepository securityRepository() {
-//        return NullSafe.createObject(SecurityRepository.class);
-//    }
+@Import({EntityReferencesConfig.class})
+public class TestRepoConfig extends MainApplicationConfig {
+    
 }

@@ -12,9 +12,12 @@ package test.config;
 import lombok.Data;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.Profile;
 import org.springframework.context.annotation.PropertySource;
 import com.kdg.fs24.config.*;
+import com.kdg.fs24.repository.EntityTypesRepository;
 import com.kdg.fs24.spring.config.MainApplicationConfig;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Configuration
 //@ComponentScan(basePackages = "com.kdg.fs24.service")
@@ -23,6 +26,8 @@ import com.kdg.fs24.spring.config.MainApplicationConfig;
 //@EnableJpaRepositories(basePackages = "com.kdg.fs24.repository")
 @Data
 @Import({SecurityConfig.class, EntityReferencesConfig.class})
+//@Import({EntityReferencesConfig.class})
+//Profile("development")
 public class SecurityTestConfig extends MainApplicationConfig {
 
 }

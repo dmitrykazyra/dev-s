@@ -9,29 +9,17 @@
     <artifactId>entity-references-api</artifactId>
     <packaging>jar</packaging>
     <name>entity-references-api</name>
-    <repositories>
-        <repository>
-            <id>unknown-jars-temp-repo</id>
-            <name>A temporary repository created by NetBeans for libraries and jars it could not identify. Please replace the dependencies in this repository with correct ones and delete this repository.</name>
-            <url>file:${project.basedir}/lib</url>
-        </repository>
-    </repositories>
     <dependencies>
         <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>references-api</artifactId>
             <version>${app.version}</version>            
         </dependency>
-        <!--        <dependency>
-            <groupId>com.kdg.fs24</groupId>
-            <artifactId>log-mgmt</artifactId>
-            <version>${app.version}</version>            
-        </dependency>     
         <dependency>
             <groupId>com.kdg.fs24</groupId>
-            <artifactId>exception-api</artifactId>
+            <artifactId>spring-config</artifactId>
             <version>${app.version}</version>            
-        </dependency>           -->
+        </dependency>
         <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>references-core</artifactId>
@@ -46,25 +34,65 @@
             <groupId>com.kdg.fs24</groupId>
             <artifactId>spring-core-api</artifactId>
             <version>${app.version}</version>            
-        </dependency> 
-        <!--         <dependency>
+        </dependency>
+        <dependency>
             <groupId>com.kdg.fs24</groupId>
-            <artifactId>reflection-api</artifactId>
+            <artifactId>spring-boot-api</artifactId>
             <version>${app.version}</version>            
-        </dependency>-->
+        </dependency>  
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>            
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
             <version>${hibernate.version}</version>
-        </dependency>
+        </dependency> 
         <dependency>
-            <groupId>unknown.binary</groupId>
-            <artifactId>hibernate-jpamodelgen-4.3.1.Final</artifactId>
-            <version>SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
+            <groupId>javax.persistence</groupId>
+            <artifactId>javax.persistence-api</artifactId>
+            <version>${jpa.version}</version>
+        </dependency> 
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <version>${spring.boot.version}</version>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>  
+        <dependency>
+            <groupId>com.kdg.fs24</groupId>
+            <artifactId>spring-junit</artifactId>
+            <version>${app.version}</version>   
+            <scope>test</scope>
+        </dependency> 
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>${postgres.version}</version>
+        </dependency> 
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${spring.core.version}</version>
+            <scope>test</scope>
+        </dependency> 
     </dependencies>
     <build>
         <finalName>entity-references-api</finalName> 
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${spring.boot.version}</version>
+            </plugin>
+        </plugins>
     </build> 
 </project>

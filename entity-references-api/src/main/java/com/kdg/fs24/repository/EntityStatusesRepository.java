@@ -6,6 +6,7 @@
 package com.kdg.fs24.repository;
 
 import com.kdg.fs24.entity.status.EntityStatus;
+import com.kdg.fs24.entity.status.EntityStatus;
 import com.kdg.fs24.spring.core.api.ApplicationJpaRepository;
 import org.springframework.stereotype.Repository;
 

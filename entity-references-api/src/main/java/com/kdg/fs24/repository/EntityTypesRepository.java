@@ -15,7 +15,6 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface EntityTypesRepository extends ApplicationJpaRepository<EntityType, Integer> {
-    
+
     //EntityType findByEntityTypeId(Integer entityTypeId);
-    
 }

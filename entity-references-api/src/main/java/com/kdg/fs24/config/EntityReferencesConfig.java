@@ -5,11 +5,14 @@
  */
 package com.kdg.fs24.config;
 
+import com.kdg.fs24.application.core.nullsafe.NullSafe;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import com.kdg.fs24.repository.*;
+import org.springframework.context.annotation.Bean;
+import com.kdg.fs24.spring.config.AbstractApplicationConfiguration;
 
 /**
  *
@@ -21,10 +24,7 @@ import com.kdg.fs24.repository.*;
 @PropertySource("classpath:application.properties")
 //@EnableJpaRepositories(basePackages = "com.kdg.fs24.repository")
 @Data
-public class EntityReferencesConfig {
+public class EntityReferencesConfig extends AbstractApplicationConfiguration {
 
-    @Autowired
-    EntityStatusesRepository entityStatusesRepository;
-    @Autowired
-    EntityTypesRepository entityTypesRepository;
+
 }

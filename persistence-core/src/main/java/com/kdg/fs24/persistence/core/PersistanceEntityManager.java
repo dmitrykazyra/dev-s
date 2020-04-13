@@ -114,6 +114,7 @@ public class PersistanceEntityManager extends AbstractApplicationBean {
                             LogService.LogInfo(this.getClass(), () -> String.format("EMF Properties \n %s ",
                                     this.getEmfProperties()));
                         }
+                        
 
                     });
 

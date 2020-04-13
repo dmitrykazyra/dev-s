@@ -23,7 +23,7 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import com.kdg.fs24.repository.EntityTypesRepository;
+import com.kdg.fs24.repository.*;
 import com.kdg.fs24.repository.EntityStatusesRepository;
 import lombok.Data;
 
@@ -35,14 +35,19 @@ import lombok.Data;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @Import(SecurityTestConfig.class)
+//@DataJpaTest
 @Data
-public final class SpringSecurityTests extends Unit4Test<SpringSecurityBoot, SecurityTestConfig> {
+//public final class SpringSecurityTests extends Unit4Test<SpringSecurityBoot, SecurityTestConfig> {
+public class SpringSecurityTests {
 
     @Autowired
     private PersistanceEntityManager persistanceEntityManager;
 
-    @Autowired(required = false)
+    @Autowired
     private EntityTypesRepository entityTypesRepository;
+
+    @Autowired
+    private EntityStatusesRepository entityStatusesRepository;
 //
 //    @Autowired(required = false)
 //    private EntityStatusesRepository entityStatusesRepository;
@@ -68,8 +73,20 @@ public final class SpringSecurityTests extends Unit4Test<SpringSecurityBoot, Sec
                     user.setPhone(testUserName);
                     user.setPassword(testUserName);
 
-                    EntityType entityType = entityTypesRepository.getOne(100);
+                    entityTypesRepository
+                            .findAll()
+                            .forEach(es -> {
 
+                                LogService.LogInfo(this.getClass(), () -> String.format("es: %s ",
+                                        es.toString()));
+                            });
+
+                    LogService.LogInfo(this.getClass(), () -> String.format("entityStatusesRepository sie = %d ",
+                            entityStatusesRepository.count()));
+                    LogService.LogInfo(this.getClass(), () -> String.format("entityTypesRepository sie = %d ",
+                            entityTypesRepository.count()));
+
+                    EntityType entityType = entityTypesRepository.getOne(100);
 //            user.setEntityType(entityTypesRepository.getOne(100));
 //                    user.setEntityStatus(entityStatusesRepository.getOne(1));
                     entityManager.persist(user);

@@ -31,6 +31,7 @@ public class AbstractPersistenceEntity implements ActionEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_action_id")
     @SequenceGenerator(name = "seq_action_id", sequenceName = "seq_action_id", allocationSize = 1)
+    @Column(name = "entity_id", updatable = false)
     private Long entity_id;
 //    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 //    @JoinColumn(name = "entity_type_id")

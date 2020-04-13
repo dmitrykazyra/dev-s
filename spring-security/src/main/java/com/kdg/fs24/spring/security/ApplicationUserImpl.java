@@ -12,6 +12,7 @@ import java.util.Collection;
 import javax.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import com.kdg.fs24.spring.security.api.ApplicationRole;
+import com.kdg.fs24.entity.core.AbstractPersistenceEntity;
 import lombok.Data;
 
 /**
@@ -21,10 +22,9 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "core_Users")
+@PrimaryKeyJoinColumn(name = "user_id", referencedColumnName = "entity_id")
 public class ApplicationUserImpl extends AbstractActionEntity implements ApplicationUser {
 
-    @Column(name = "user_id")
-    private Long userId;
     @Column(name = "login")
     private String login;
     @Column(name = "password")
@@ -40,4 +40,8 @@ public class ApplicationUserImpl extends AbstractActionEntity implements Applica
     @JoinTable(name = "core_User2Role", joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Collection<ApplicationRoleImpl> userRoles;
+
+    public Long getUser_id() {
+        return super.getEntity_id();
+    }
 }

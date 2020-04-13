@@ -7,8 +7,8 @@ package test.boot;
 
 import com.kdg.fs24.application.core.log.LogService;
 import com.kdg.fs24.repository.ApplicationUserRepository;
+import com.kdg.fs24.repository.ApplicationRoleRepository;
 import com.kdg.fs24.spring.unit.SpringBoot4Test;
-import java.util.Collection;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -61,5 +61,25 @@ public class SpringSecurityBoot extends SpringBoot4Test {
         };
 
     }
+    //==========================================================================
+    @Bean
+    public CommandLineRunner clrRoleRepository(final ApplicationRoleRepository applicationRoleRepository) {
+        return (args) -> {
+
+            //applicationUserRepository.findByPassword("dd");
+            // final Collection<KeyWordRecords> op2 = keyWordsRepository.findKeyWords();
+            LogService.LogInfo(this.getClass(), () -> String.format("applicationRoleRepository: %d entries, %s ",
+                    applicationRoleRepository.count(),
+                    applicationRoleRepository.getClass().getCanonicalName()));
+
+//            applicationUserRepository
+//                    .findAll()
+//                    .forEach(user -> {
+//                        LogService.LogInfo(this.getClass(), () -> String.format("applicationUserRepository: %s, %s ",
+//                                user.getName(),
+//                                user.getClass().getCanonicalName()));
+        };
+
+    }    
 
 }

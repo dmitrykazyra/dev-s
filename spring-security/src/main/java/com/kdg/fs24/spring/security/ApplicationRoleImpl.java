@@ -19,15 +19,19 @@ import com.kdg.fs24.entity.core.AbstractActionEntity;
 @Data
 @Entity
 @Table(name = "core_Roles")
+@PrimaryKeyJoinColumn(name = "role_id", referencedColumnName = "entity_id")
 public class ApplicationRoleImpl extends AbstractActionEntity
         implements ApplicationRole {
-  
-    private Long roleId;
-    @Column(name="role_code")
+
+    @Column(name = "role_code")
     private String roleCode;
-    @Column(name="role_name")
+    @Column(name = "role_name")
     private String roleName;
-    @ManyToMany(mappedBy = "userRoles", cascade = CascadeType.ALL , fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "userRoles", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Collection<ApplicationUserImpl> roleUsers;
 
+    public Long getRole_id() {
+        return super.getEntity_id();
+    }    
+    
 }

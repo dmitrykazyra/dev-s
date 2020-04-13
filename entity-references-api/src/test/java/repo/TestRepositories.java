@@ -3,6 +3,7 @@ package repo;
 import com.kdg.fs24.application.core.log.LogService;
 import com.kdg.fs24.application.core.nullsafe.NullSafe;
 import com.kdg.fs24.entity.type.EntityType;
+import com.kdg.fs24.entity.status.EntityStatus;
 import com.kdg.fs24.persistence.core.PersistanceEntityManager;
 import java.time.LocalDateTime;
 import org.hibernate.Session;
@@ -19,6 +20,7 @@ import com.kdg.fs24.repository.EntityStatusesRepository;
 import lombok.Data;
 import com.kdg.fs24.application.core.sysconst.SysConst;
 import config.TestRepoConfig;
+import com.kdg.fs24.entity.status.EntityStatusPK;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -45,10 +47,12 @@ public class TestRepositories {
 
     @Autowired
     private EntityStatusesRepository entityStatusesRepository;
+
+    final private Integer v4Statuses = 100;
+
 //
 //    @Autowired(required = false)
 //    private EntityStatusesRepository entityStatusesRepository;
-
     @Test
     public void test1() {
         //this.initializeTest();
@@ -68,12 +72,6 @@ public class TestRepositories {
                     entityManager.merge(entityType);
 
                 });
-    }
-
-    @Test
-    public void test2() {
-        //==========================================================
-
         LogService.LogInfo(this.getClass(), () -> String.format("2. Unit test '%s' is running ",
                 this.getClass().getCanonicalName()));
         persistanceEntityManager
@@ -84,13 +82,47 @@ public class TestRepositories {
                     entityManager.remove(entityType);
 
                 });
+        LogService.LogInfo(this.getClass(), () -> String.format("3. Unit test '%s' is running ",
+                this.getClass().getCanonicalName()));
+        this.printAllRepositories();
     }
 
     @Test
-    public void test3() {
-        //==========================================================
+    public void test2() {
+        //this.initializeTest();
+        LogService.LogInfo(this.getClass(), () -> String.format("4. Unit test '%s' is running ",
+                this.getClass().getCanonicalName()));
+        persistanceEntityManager
+                .executeTransaction((entityManager) -> {
+                    this.printAllRepositories();
+                    final EntityStatus entityStatus = NullSafe.createObject(EntityStatus.class);
 
-        LogService.LogInfo(this.getClass(), () -> String.format("3. Unit test '%s' is running ",
+                    final String testUserName = UUID.randomUUID().toString().substring(1, 30);
+
+                    entityStatus.setEntityStatusId(v4Statuses);
+                    entityStatus.setEntityStatusName(testUserName);
+                    entityStatus.setEntityTypeId(v4Statuses);
+
+                    entityManager.merge(entityStatus);
+
+                });
+        LogService.LogInfo(this.getClass(), () -> String.format("5. Unit test '%s' is running ",
+                this.getClass().getCanonicalName()));
+        persistanceEntityManager
+                .executeTransaction((entityManager) -> {
+                    this.printAllRepositories();
+
+                    final EntityStatusPK entityStatusPK = NullSafe.createObject(EntityStatusPK.class);
+
+                    entityStatusPK.setEntityStatusId(v4Statuses);
+                    entityStatusPK.setEntityTypeId(v4Statuses);
+
+                    final EntityStatus entityStatus = entityManager.find(EntityStatus.class, entityStatusPK);
+
+                    entityManager.remove(entityStatus);
+
+                });
+        LogService.LogInfo(this.getClass(), () -> String.format("6. Unit test '%s' is running ",
                 this.getClass().getCanonicalName()));
         this.printAllRepositories();
     }

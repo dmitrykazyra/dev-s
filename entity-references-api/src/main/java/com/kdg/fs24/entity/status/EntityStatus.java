@@ -22,12 +22,12 @@ import lombok.Data;
 public class EntityStatus extends AbstractRefRecord implements ReferenceRec {
 
     @Id
-    @Column(name="entity_status_id")
+    @Column(name = "entity_status_id")
     private Integer entityStatusId;
     @Id
-    @Column(name="entity_type_id")
+    @Column(name = "entity_type_id")
     private Integer entityTypeId;
-    @Column(name="entity_status_name")
+    @Column(name = "entity_status_name", length = 30)
     private String entityStatusName;
 
     @Override

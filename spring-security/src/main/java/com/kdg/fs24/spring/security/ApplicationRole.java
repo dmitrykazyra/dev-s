@@ -5,7 +5,6 @@
  */
 package com.kdg.fs24.spring.security;
 
-import com.kdg.fs24.spring.security.api.ApplicationRole;
 import com.kdg.fs24.spring.security.api.ApplicationUser;
 import java.util.Collection;
 import lombok.Data;
@@ -20,15 +19,14 @@ import com.kdg.fs24.entity.core.AbstractActionEntity;
 @Entity
 @Table(name = "core_Roles")
 @PrimaryKeyJoinColumn(name = "role_id", referencedColumnName = "entity_id")
-public class ApplicationRoleImpl extends AbstractActionEntity
-        implements ApplicationRole {
+public class ApplicationRole extends AbstractActionEntity {
 
     @Column(name = "role_code")
     private String roleCode;
     @Column(name = "role_name")
     private String roleName;
     @ManyToMany(mappedBy = "userRoles", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Collection<ApplicationUserImpl> roleUsers;
+    private Collection<ApplicationUser> roleUsers;
 
     public Long getRole_id() {
         return super.getEntity_id();

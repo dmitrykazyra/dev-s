@@ -14,8 +14,9 @@ import org.springframework.context.annotation.Import;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.boot.test.context.SpringBootTest;
-import com.kdg.fs24.spring.unit.Unit4Test;
+import com.kdg.fs24.application.core.service.funcs.TestFuncs;
 import com.kdg.fs24.repository.*;
+import com.kdg.fs24.service.EntityReferencesService;
 import com.kdg.fs24.repository.EntityStatusesRepository;
 import lombok.Data;
 import com.kdg.fs24.application.core.sysconst.SysConst;
@@ -42,89 +43,70 @@ public class TestRepositories {
     @Autowired
     private PersistanceEntityManager persistanceEntityManager;
 
+//    @Autowired
+//    private EntityTypesRepository entityTypesRepository;
+//
+//    @Autowired
+//    private EntityStatusesRepository entityStatusesRepository;
     @Autowired
-    private EntityTypesRepository entityTypesRepository;
+    private EntityReferencesService entityReferencesService;
 
-    @Autowired
-    private EntityStatusesRepository entityStatusesRepository;
-
-    final private Integer v4Statuses = 100;
+    final private Integer entityStatusId4Test = 999;
+    final private Integer entityType4Test = 999;
 
 //
 //    @Autowired(required = false)
 //    private EntityStatusesRepository entityStatusesRepository;
     @Test
-    public void test1() {
+    public void testTypeAndStatuses() {
         //this.initializeTest();
-        LogService.LogInfo(this.getClass(), () -> String.format("1. Unit test '%s' is running ",
-                this.getClass().getCanonicalName()));
         persistanceEntityManager
                 .executeTransaction((entityManager) -> {
-                    this.printAllRepositories();
-                    final EntityType entityType = NullSafe.createObject(EntityType.class);
+                    //this.printAllRepositories();
 
-                    final String testUserName = UUID.randomUUID().toString();
+                    final String testString = TestFuncs.generateTestString20();
 
-                    entityType.setEntityTypeId(SysConst.INTEGER_ZERO);
-                    entityType.setEntityAppName(testUserName);
-                    entityType.setEntityTypeName(testUserName);
+                    final EntityType entityType = entityReferencesService.createNewEntityType(entityType4Test, testString, testString);
 
-                    entityManager.merge(entityType);
+                    entityManager.persist(entityType);
 
                 });
-        LogService.LogInfo(this.getClass(), () -> String.format("2. Unit test '%s' is running ",
-                this.getClass().getCanonicalName()));
+//        this.printAllRepositories();
+
         persistanceEntityManager
                 .executeTransaction((entityManager) -> {
-                    this.printAllRepositories();
-                    final EntityType entityType = entityManager.find(EntityType.class, 0);
-
-                    entityManager.remove(entityType);
-
-                });
-        LogService.LogInfo(this.getClass(), () -> String.format("3. Unit test '%s' is running ",
-                this.getClass().getCanonicalName()));
-        this.printAllRepositories();
-    }
-
-    @Test
-    public void test2() {
-        //this.initializeTest();
-        LogService.LogInfo(this.getClass(), () -> String.format("4. Unit test '%s' is running ",
-                this.getClass().getCanonicalName()));
-        persistanceEntityManager
-                .executeTransaction((entityManager) -> {
-                    this.printAllRepositories();
-                    final EntityStatus entityStatus = NullSafe.createObject(EntityStatus.class);
-
-                    final String testUserName = UUID.randomUUID().toString().substring(1, 30);
-
-                    entityStatus.setEntityStatusId(v4Statuses);
-                    entityStatus.setEntityStatusName(testUserName);
-                    entityStatus.setEntityTypeId(v4Statuses);
+//                    this.printAllRepositories();
+                    final String testString = TestFuncs.generateTestString20();
+                    final EntityStatus entityStatus = entityReferencesService.createNewEntityStatus(entityStatusId4Test, entityType4Test, testString);
 
                     entityManager.merge(entityStatus);
 
                 });
-        LogService.LogInfo(this.getClass(), () -> String.format("5. Unit test '%s' is running ",
-                this.getClass().getCanonicalName()));
+
         persistanceEntityManager
                 .executeTransaction((entityManager) -> {
-                    this.printAllRepositories();
+                    //this.printAllRepositories();
 
                     final EntityStatusPK entityStatusPK = NullSafe.createObject(EntityStatusPK.class);
 
-                    entityStatusPK.setEntityStatusId(v4Statuses);
-                    entityStatusPK.setEntityTypeId(v4Statuses);
+                    entityStatusPK.setEntityStatusId(entityStatusId4Test);
+                    entityStatusPK.setEntityTypeId(entityType4Test);
 
                     final EntityStatus entityStatus = entityManager.find(EntityStatus.class, entityStatusPK);
 
                     entityManager.remove(entityStatus);
 
                 });
-        LogService.LogInfo(this.getClass(), () -> String.format("6. Unit test '%s' is running ",
-                this.getClass().getCanonicalName()));
-        this.printAllRepositories();
+
+        persistanceEntityManager
+                .executeTransaction((entityManager) -> {
+//                    this.printAllRepositories();
+                    //final EntityType entityType = entityManager.find(EntityType.class, entityType4Test);
+
+                    entityManager.remove(entityManager.find(EntityType.class, entityType4Test));
+
+                });
+        //this.printAllRepositories();
     }
 //    @Test
 //    public void testXX() {
@@ -132,25 +114,4 @@ public class TestRepositories {
 //        LogService.LogInfo(this.getClass(), () -> String.format("Unit test '%s' is running ",
 //                this.getClass().getCanonicalName()));
 //    }
-
-    private void printAllRepositories() {
-        LogService.LogInfo(this.getClass(), () -> String.format("\\ %s: %d ================================================",
-                "entityTypesRepository", entityTypesRepository.count()));
-        entityTypesRepository
-                .findAll()
-                .forEach(es -> {
-
-                    LogService.LogInfo(this.getClass(), () -> String.format("EntityType: %s ",
-                            es.toString()));
-                });
-        LogService.LogInfo(this.getClass(), () -> String.format("\\ %s: %d ================================================",
-                "entityStatusesRepositoryy", entityStatusesRepository.count()));
-        entityStatusesRepository
-                .findAll()
-                .forEach(es -> {
-
-                    LogService.LogInfo(this.getClass(), () -> String.format("EntityStatuses: %s ",
-                            es.toString()));
-                });
-    }
 }

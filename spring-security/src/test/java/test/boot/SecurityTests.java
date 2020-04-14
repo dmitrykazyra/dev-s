@@ -10,8 +10,8 @@ import com.kdg.fs24.application.core.nullsafe.NullSafe;
 import com.kdg.fs24.entity.status.EntityStatusPK;
 import com.kdg.fs24.entity.status.EntityStatus;
 import com.kdg.fs24.persistence.core.PersistanceEntityManager;
-import com.kdg.fs24.spring.security.ApplicationUserImpl;
-import com.kdg.fs24.spring.security.ApplicationRoleImpl;
+import com.kdg.fs24.spring.security.ApplicationUser;
+import com.kdg.fs24.spring.security.ApplicationRole;
 import test.config.SecurityTestConfig;
 import java.time.LocalDateTime;
 import org.junit.Test;
@@ -24,6 +24,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.kdg.fs24.repository.*;
 import com.kdg.fs24.repository.EntityStatusesRepository;
 import lombok.Data;
+import com.kdg.fs24.service.SecurityService;
 
 /**
  *
@@ -37,6 +38,9 @@ import lombok.Data;
 @Data
 //public final class SpringSecurityTests extends Unit4Test<SpringSecurityBoot, SecurityTestConfig> {
 public class SecurityTests {
+
+    @Autowired
+    private SecurityService securityService;
 
     @Autowired
     private PersistanceEntityManager persistanceEntityManager;
@@ -58,37 +62,14 @@ public class SecurityTests {
         persistanceEntityManager
                 .executeTransaction((entityManager) -> {
 
-//                    entityManager
-//                            .unwrap(Session.class)
-//                            .setJdbcBatchSize(Math.min(100, collection.size()));
-                    // создание тестового пользователя
-                    final ApplicationUserImpl user = NullSafe.createObject(ApplicationUserImpl.class);
-
                     final String testValue = UUID.randomUUID().toString().substring(1, 20);
 
-                    user.setName(testValue);
-                    user.setMail("testmai@nomail.com");
-                    user.setPhone(testValue);
-                    user.setPassword(testValue);
-                    user.setCreation_date(LocalDateTime.now());
-                    user.setLogin(testValue);
-
-                    //==========================================================
-                    final EntityStatusPK entityStatusPK = NullSafe.createObject(EntityStatusPK.class);
-
-                    entityStatusPK.setEntityStatusId(1);
-                    entityStatusPK.setEntityTypeId(100);
-
-                    final EntityStatus userStatus = entityManager.find(EntityStatus.class, entityStatusPK);
-
-                    user.setEntityStatus(userStatus);
-
-                    entityManager.persist(user);
+                    entityManager.persist(securityService.createUser(testValue));
 
                     //==========================================================
                     //  добавляем роли
                     // создание тестовой роли
-                    final ApplicationRoleImpl role1 = NullSafe.createObject(ApplicationRoleImpl.class);
+                    final ApplicationRole role1 = NullSafe.createObject(ApplicationRole.class);
                     role1.setRoleCode(testValue);
                     role1.setRoleName(testValue);
                     role1.setCreation_date(LocalDateTime.now());

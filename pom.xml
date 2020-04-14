@@ -64,6 +64,9 @@
         <module>spring-security</module>
         <module>spring-config</module>
         <module>spring-junit</module>
+        <module>entity-contracts</module>
+        <module>entity-contract-references-api</module>
+        <module>retail-loan-contracts</module>
     </modules>
 
     <dependencies>

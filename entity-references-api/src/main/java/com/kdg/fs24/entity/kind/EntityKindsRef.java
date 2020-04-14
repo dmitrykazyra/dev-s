@@ -12,12 +12,13 @@ import com.kdg.fs24.references.core.AbstractReference;
  *
  * @author kazyra_d
  */
+@Deprecated
 public class EntityKindsRef<T extends EntityKind> extends AbstractReference<EntityKind> {
 
     //==========================================================================
     public String getEntityKindTitleById(final Integer entity_kind_id) throws ReferenceNotFound {
 
-        return this.getEntityKindById(entity_kind_id).getEntity_kind_name();
+        return this.getEntityKindById(entity_kind_id).getEntityKindName();
     }
 
     //==========================================================================
@@ -30,6 +31,6 @@ public class EntityKindsRef<T extends EntityKind> extends AbstractReference<Enti
     //==========================================================================
     private T findEntityKindById(final Integer entity_kind_id) {
 
-        return (T) this.findCachedRecords((object) -> ((T) object).getEntity_kind_id().equals(entity_kind_id));
+        return (T) this.findCachedRecords((object) -> ((T) object).getEntityKindId().equals(entity_kind_id));
     }
 }

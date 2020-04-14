@@ -7,7 +7,6 @@ package com.kdg.fs24.spring.security;
 
 import com.kdg.fs24.entity.core.AbstractActionEntity;
 import org.springframework.security.core.userdetails.User;
-import com.kdg.fs24.spring.security.api.ApplicationUser;
 import java.util.Collection;
 import javax.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -23,7 +22,7 @@ import lombok.Data;
 @Entity
 @Table(name = "core_Users")
 @PrimaryKeyJoinColumn(name = "user_id", referencedColumnName = "entity_id")
-public class ApplicationUserImpl extends AbstractActionEntity implements ApplicationUser {
+public class ApplicationUser extends AbstractActionEntity  {
 
     @Column(name = "login")
     private String login;
@@ -39,7 +38,7 @@ public class ApplicationUserImpl extends AbstractActionEntity implements Applica
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name = "core_User2Role", joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Collection<ApplicationRoleImpl> userRoles;
+    private Collection<ApplicationRole> userRoles;
 
     public Long getUser_id() {
         return super.getEntity_id();

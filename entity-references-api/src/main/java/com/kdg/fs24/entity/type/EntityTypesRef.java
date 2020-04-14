@@ -12,6 +12,7 @@ import com.kdg.fs24.exception.references.ReferenceNotFound;
  *
  * @author kazyra_d
  */
+@Deprecated
 public class EntityTypesRef<T extends EntityType> extends AbstractReference<EntityType> {
 
     //==========================================================================

@@ -5,7 +5,7 @@
  */
 package com.kdg.fs24.repository;
 
-import com.kdg.fs24.spring.security.ApplicationUserImpl;
+import com.kdg.fs24.spring.security.ApplicationUser;
 import com.kdg.fs24.spring.core.api.ApplicationJpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Repository
 @Transactional(readOnly = true)
-public interface ApplicationUserRepository extends ApplicationJpaRepository<ApplicationUserImpl, Long> {
+public interface ApplicationUserRepository extends ApplicationJpaRepository<ApplicationUser, Long> {
 
     //public Integer findByPassword(String pwd);
 

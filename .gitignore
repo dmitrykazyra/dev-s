@@ -6,3 +6,7 @@
 /target/
 *.log
 *.jar
+/entity-contract-references-api/target/
+/entity-contract-references/target/
+/entity-contracts/target/
+/retail-loan-contracts/target/

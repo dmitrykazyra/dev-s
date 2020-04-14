@@ -5,11 +5,14 @@
  */
 package com.kdg.fs24.entity.type;
 
+import com.kdg.fs24.application.core.nullsafe.NullSafe;
 import java.util.Map;
 import com.kdg.fs24.references.api.ReferenceRec;
 import com.kdg.fs24.references.api.AbstractRefRecord;
 import javax.persistence.*;
 import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 /**
  *

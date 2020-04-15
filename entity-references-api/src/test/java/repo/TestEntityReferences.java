@@ -4,6 +4,7 @@ import com.kdg.fs24.application.core.log.LogService;
 import com.kdg.fs24.application.core.nullsafe.NullSafe;
 import com.kdg.fs24.entity.type.EntityType;
 import com.kdg.fs24.entity.status.EntityStatus;
+import com.kdg.fs24.entity.action.ActionCode;
 import com.kdg.fs24.persistence.core.PersistanceEntityManager;
 import java.time.LocalDateTime;
 import org.hibernate.Session;
@@ -37,7 +38,7 @@ import com.kdg.fs24.entity.status.EntityStatusPK;
 @Import(TestRepoConfig.class)
 //@DataJpaTest
 @Data
-public class TestRepositories {
+public class TestEntityReferences {
 
 //public class TestRepositories extends Unit4Test<TestSpringBoot, TestRepoConfig> {
     @Autowired
@@ -53,6 +54,7 @@ public class TestRepositories {
 
     final private Integer entityStatusId4Test = 999;
     final private Integer entityType4Test = 999;
+    final private Integer entityActionCode4Test = 999;
 
 //
 //    @Autowired(required = false)
@@ -108,10 +110,29 @@ public class TestRepositories {
                 });
         //this.printAllRepositories();
     }
-//    @Test
-//    public void testXX() {
-//        //this.initializeTest();
-//        LogService.LogInfo(this.getClass(), () -> String.format("Unit test '%s' is running ",
-//                this.getClass().getCanonicalName()));
-//    }
+
+    @Test
+    public void testActionCodes() {
+        //this.initializeTest();
+        persistanceEntityManager
+                .executeTransaction((entityManager) -> {
+                    //this.printAllRepositories();
+
+                    final String testString = TestFuncs.generateTestString20();
+
+                    final ActionCode actionCode = entityReferencesService.createNewActionCode(entityActionCode4Test, testString, testString, Boolean.FALSE);
+
+                    entityManager.persist(actionCode);
+
+                });
+        
+        persistanceEntityManager
+                .executeTransaction((entityManager) -> {
+//                    this.printAllRepositories();
+                    //final EntityType entityType = entityManager.find(EntityType.class, entityType4Test);
+
+                    entityManager.remove(entityManager.find(ActionCode.class, entityActionCode4Test));
+
+                });        
+    }
 }

@@ -13,6 +13,8 @@ import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.kdg.fs24.entity.type.EntityType;
 import com.kdg.fs24.entity.status.EntityStatus;
+import com.kdg.fs24.entity.action.ActionCode;
+import javax.persistence.Column;
 
 /**
  *
@@ -25,6 +27,7 @@ public class EntityReferencesService implements ApplicationRepositoryService {
     @Autowired
     private PersistanceEntityManager persistanceEntityManager;
 
+    //==========================================================================
     public EntityType createNewEntityType(final Integer entityTypeId,
             final String entityTypeName,
             final String entityAppName) {
@@ -39,6 +42,7 @@ public class EntityReferencesService implements ApplicationRepositoryService {
 
     }
 
+    //==========================================================================
     public EntityStatus createNewEntityStatus(final Integer entityStatusId,
             final Integer entityTypeId,
             final String entityStatusName) {
@@ -50,5 +54,22 @@ public class EntityReferencesService implements ApplicationRepositoryService {
         entityStatus.setEntityTypeId(entityTypeId);
 
         return entityStatus;
+    }
+    //==========================================================================
+
+    public ActionCode createNewActionCode(final Integer actionCode,
+            final String actionName,
+            final String appName,
+            final Boolean isClosed) {
+       
+        
+        final ActionCode newActionCode = NullSafe.createObject(ActionCode.class);
+
+        newActionCode.setActionCode(actionCode);
+        newActionCode.setActionName(actionName);
+        newActionCode.setAppName(appName);
+        newActionCode.setIsClosed(isClosed);
+
+        return newActionCode;
     }
 }

@@ -14,12 +14,13 @@ import com.kdg.fs24.application.core.nullsafe.NullSafe;
  *
  * @author kazyra_d
  */
+@Deprecated
 public class ActionCodesRef<T extends ActionCode> extends AbstractReference<ActionCode> {
 
     //==========================================================================
     public String getActionNameById(final Integer action_code) throws ReferenceNotFound {
 
-        return this.getActionCodeById(action_code).getAction_name();
+        return this.getActionCodeById(action_code).getActionName();
     }
 
     //==========================================================================
@@ -34,7 +35,7 @@ public class ActionCodesRef<T extends ActionCode> extends AbstractReference<Acti
 
         T ac = null;
 
-        ac = (T) this.findCachedRecords((object) -> ((T) object).getAction_code().equals(action_code));
+        ac = (T) this.findCachedRecords((object) -> ((T) object).getActionCode().equals(action_code));
 
         if (NullSafe.isNull(ac)) {
 

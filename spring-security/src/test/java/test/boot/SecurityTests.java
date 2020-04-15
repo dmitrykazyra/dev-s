@@ -64,7 +64,24 @@ public class SecurityTests {
 
                     final String testValue = UUID.randomUUID().toString().substring(1, 20);
 
-                    entityManager.persist(securityService.createUser(testValue));
+                    //==========================================================
+                    final EntityStatusPK entityStatusPK = NullSafe.createObject(EntityStatusPK.class);
+
+                    entityStatusPK.setEntityStatusId(1);
+                    entityStatusPK.setEntityTypeId(100);
+
+                    final EntityStatus userStatus = persistanceEntityManager
+                            .getEntityManager()
+                            .find(EntityStatus.class, entityStatusPK);
+
+                    ApplicationUser user = securityService.createUser(testValue,
+                            testValue,
+                            testValue,
+                            testValue,
+                            testValue,
+                            userStatus);
+
+                    entityManager.persist(user);
 
                     //==========================================================
                     //  добавляем роли

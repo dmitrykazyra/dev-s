@@ -4,15 +4,30 @@ import com.kdg.fs24.entity.core.api.Action;
 import com.kdg.fs24.entity.core.api.ActionEntity;
 import com.kdg.fs24.application.core.sysconst.SysConst;
 import com.kdg.fs24.application.core.nullsafe.NullSafe;
-
+import com.kdg.fs24.application.core.service.funcs.ServiceFuncs;
+import com.kdg.fs24.persistence.api.PersistenceEntity;
+import java.util.Collection;
+import javax.persistence.Transient;
+import lombok.Data;
 
 /**
  *
  * @author kazyra_d
  */
+@Data
 public abstract class AbstractAction<T extends ActionEntity>
-        extends AbstractPersistenceAction<T>
-        implements Action<T> {
+        extends AbstractPersistenceAction<T> {
+
+    // объекты для персистенса
+    @Transient
+    private Collection<PersistenceEntity> persistenceObjects
+            = ServiceFuncs.<PersistenceEntity>getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);
+
+    public void execute() {
+        if (this.isValid()) {
+
+        }
+    }
 
     protected void doUpdate() {
 

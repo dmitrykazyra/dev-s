@@ -77,7 +77,7 @@ public final class EntityReferencesService extends AbstractReferencesList {
 
     // код действия (справочник кодов действий - ActionCodesRef)
     public <T extends ActionCode> String getActionNameById(final Integer action_code) {
-        return ((T) this.getActionCodeById(action_code)).getAction_name();
+        return ((T) this.getActionCodeById(action_code)).getActionName();
     }
 
     //==========================================================================

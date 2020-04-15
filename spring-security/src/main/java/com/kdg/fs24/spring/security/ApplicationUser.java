@@ -10,9 +10,9 @@ import org.springframework.security.core.userdetails.User;
 import java.util.Collection;
 import javax.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
-import com.kdg.fs24.spring.security.api.ApplicationRole;
 import com.kdg.fs24.entity.core.AbstractPersistenceEntity;
 import lombok.Data;
+import com.kdg.fs24.entity.core.api.ActionClassesPackages;
 
 /**
  *
@@ -22,7 +22,8 @@ import lombok.Data;
 @Entity
 @Table(name = "core_Users")
 @PrimaryKeyJoinColumn(name = "user_id", referencedColumnName = "entity_id")
-public class ApplicationUser extends AbstractActionEntity  {
+@ActionClassesPackages(pkgList = {"com.kdg.fs24.actions"})
+public class ApplicationUser extends AbstractActionEntity {
 
     @Column(name = "login")
     private String login;

@@ -29,14 +29,13 @@ import com.kdg.fs24.entity.core.api.Action4Test;
 //import com.kdg.fs24.entity.core.attr.AttrsCollection;
 import javax.annotation.PostConstruct;
 import com.kdg.fs24.application.core.nullsafe.NullSafe;
+import com.kdg.fs24.persistence.api.PersistenceEntity;
 //import com.kdg.fs24.listeners.api.ListenersCollection;
 //import com.kdg.fs24.entity.core.api.EntityEventListener;
 //import com.kdg.fs24.listeners.api.Event;
 //import com.kdg.fs24.persistence.api.PersistenceEntity;
 //import com.kdg.fs24.tce.api.StopWatcher;
-import com.kdg.fs24.entity.marks.EntityMarkList;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+
 import lombok.Data;
 
 // абстрактная сущность
@@ -44,5 +43,12 @@ import lombok.Data;
 @Data
 public abstract class AbstractActionEntity
         extends AbstractPersistenceEntity {
+    
+    private final Collection<Class<? extends AbstractAction>> actClasses = 
+            ServiceFuncs.getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);    
+    
+    public void executeAction(final Integer actionId) {
+        
+    }
 
 }

@@ -3,15 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.kdg.fs24.entity.core.api;
-
-import com.kdg.fs24.persistence.api.PersistenceEntity;
-
+package com.kdg.fs24.config;
 
 /**
  *
- * @author kazyra_d
+ * @author N76VB
  */
-public interface ActionEntity extends PersistenceEntity {
+public final class SecurityConst {
+
+    public static final int ACT_CREATE_OR_MODIFY_USER = 1001001; // регистрация пользователя
 
 }

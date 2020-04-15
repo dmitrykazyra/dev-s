@@ -5,7 +5,6 @@
  */
 package com.kdg.fs24.spring.security;
 
-import com.kdg.fs24.spring.security.api.ApplicationUser;
 import java.util.Collection;
 import lombok.Data;
 import javax.persistence.*;

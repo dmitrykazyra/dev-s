@@ -17,6 +17,7 @@ import com.kdg.fs24.repository.*;
 import com.kdg.fs24.spring.security.ApplicationUser;
 import java.time.LocalDateTime;
 import java.util.UUID;
+import javax.persistence.Column;
 import lombok.Data;
 
 /**
@@ -30,29 +31,21 @@ public class SecurityService implements ApplicationRepositoryService {
     @Autowired
     private PersistanceEntityManager persistanceEntityManager;
 
-    public ApplicationUser createUser(final String userName) {
+    public ApplicationUser createUser(final String login,
+            final String password,
+            final String name,
+            final String phone,
+            final String mail,
+            final EntityStatus userStatus) {
 
         final ApplicationUser user = NullSafe.createObject(ApplicationUser.class);
 
-        final String testValue = UUID.randomUUID().toString().substring(1, 20);
-
-        user.setName(testValue);
-        user.setMail("testmai@nomail.com");
-        user.setPhone(testValue);
-        user.setPassword(testValue);
+        user.setName(name);
+        user.setMail(mail);
+        user.setPhone(phone);
+        user.setPassword(password);
         user.setCreation_date(LocalDateTime.now());
-        user.setLogin(testValue);
-
-        //==========================================================
-        final EntityStatusPK entityStatusPK = NullSafe.createObject(EntityStatusPK.class);
-
-        entityStatusPK.setEntityStatusId(1);
-        entityStatusPK.setEntityTypeId(100);
-
-        final EntityStatus userStatus = persistanceEntityManager
-                .getEntityManager()
-                .find(EntityStatus.class, entityStatusPK);
-
+        user.setLogin(login);
         user.setEntityStatus(userStatus);
 
         return user;

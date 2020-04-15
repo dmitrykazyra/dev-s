@@ -6,6 +6,7 @@ import com.kdg.fs24.application.core.sysconst.SysConst;
 import com.kdg.fs24.application.core.nullsafe.NullSafe;
 import com.kdg.fs24.application.core.service.funcs.ServiceFuncs;
 import com.kdg.fs24.persistence.api.PersistenceEntity;
+import com.kdg.fs24.persistence.core.PersistanceEntityManager;
 import java.util.Collection;
 import javax.persistence.Transient;
 import lombok.Data;
@@ -19,13 +20,37 @@ public abstract class AbstractAction<T extends ActionEntity>
         extends AbstractPersistenceAction<T> {
 
     // объекты для персистенса
-    @Transient
+    //@Transient
+    private PersistanceEntityManager persistanceEntityManager;
+
     private Collection<PersistenceEntity> persistenceObjects
             = ServiceFuncs.<PersistenceEntity>getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);
 
     public void execute() {
+
+        this.doCalculation();
+        this.afterCalculation();
+
         if (this.isValid()) {
 
+            this.beforeUpdate();
+            // наполнение в предках объектов для персистенса
+            this.doUpdate();
+
+            // сохранили действие
+            persistanceEntityManager
+                    .executeTransaction(em -> {
+                        em.persist(this);
+                    });
+
+            // сохранили объекты
+            persistanceEntityManager
+                    .executeTransaction(em -> {
+                        persistenceObjects
+                                .forEach((entity) -> em.merge(entity));
+                    });
+
+            this.afterCommit();
         }
     }
 

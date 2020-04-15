@@ -18,6 +18,7 @@ import javax.annotation.PostConstruct;
 import com.kdg.fs24.entity.core.api.EntityClassesPackages;
 import com.kdg.fs24.entity.core.api.ActionClassesPackages;
 import com.kdg.fs24.application.core.exception.api.InternalAppException;
+import com.kdg.fs24.application.core.nullsafe.NullSafe;
 import com.kdg.fs24.application.core.service.funcs.ReflectionFuncs;
 import com.kdg.fs24.application.core.service.funcs.ServiceFuncs;
 import com.kdg.fs24.application.core.sysconst.SysConst;
@@ -27,6 +28,7 @@ import com.kdg.fs24.entity.core.api.EntityTypeId;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
 import java.util.Map;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Value;
 
 /**
@@ -35,18 +37,37 @@ import org.springframework.beans.factory.annotation.Value;
  */
 @Data
 //@Service
-public abstract class ActionExecutionService<E extends AbstractActionEntity, A extends AbstractAction> implements ApplicationRepositoryService {
+public abstract class ActionExecutionService<E extends AbstractActionEntity, A extends AbstractAction>
+        implements ApplicationRepositoryService {
 
-    private final Map<Class<E>, Class<A>> ENT_CLASSES
+    private final Map<Class<E>, Class<A>> CLASS_ENT2ACTION
             = ServiceFuncs.<Class<E>, Class<A>>getOrCreateMap(ServiceFuncs.MAP_NULL);
+
+    private final Map<Integer, Class<A>> CLASS_INT2ACTION
+            = ServiceFuncs.<Integer, Class<A>>getOrCreateMap(ServiceFuncs.MAP_NULL);
+
     @Value("${debug}")
     private String debugMode; // = SysConst.STRING_FALSE;
 
     @Autowired
     private PersistanceEntityManager persistanceEntityManager;
 
+    //==========================================================================
     // выполнение действия над сущностью
-    public void executeAction(final AbstractActionEntity entity, final Integer actionId) {
+    public void executeAction(final AbstractActionEntity entity, final Integer action_code) {
+        final Optional<Class<A>> optActClass = ServiceFuncs.getMapValue(CLASS_INT2ACTION, mapEntry -> mapEntry.getKey().equals(action_code));
+
+        if (!optActClass.isPresent()) {
+            throw new UnknownActionCode(String.format("Unknown action_code (%d)", action_code));
+        }
+
+        final Class<A> actClass = optActClass.get();
+
+        final A action = NullSafe.createObject(actClass);
+
+        action.setEntity(entity);
+        action.setPersistanceEntityManager(persistanceEntityManager);
+        action.execute();
 
     }
 
@@ -89,31 +110,34 @@ public abstract class ActionExecutionService<E extends AbstractActionEntity, A e
                                                     .filter(p -> !Modifier.isAbstract(p.getModifiers()))
                                                     .filter(p -> AnnotationFuncs.isAnnotated(p, ActionCodeId.class))
                                                     .forEach((actClazz) -> {
-                                                        this.registerEntClass((Class<E>) entClazz, (Class<A>) actClazz);
+                                                        this.registerEntClass((Class<E>) entClazz,
+                                                                (Class<A>) actClazz,
+                                                                AnnotationFuncs.getAnnotation(actClazz, ActionCodeId.class).action_code());
                                                     });
                                         });
                             });
                 });
 
-        if (this.ENT_CLASSES.isEmpty()) {
+        if (this.CLASS_ENT2ACTION.isEmpty()) {
             throw new NoActionClassesDefined(String.format("Action classes is empty for '%s' ",
                     thisClass.getCanonicalName()));
         }
 
         // post
         LogService.LogInfo(thisClass, () -> String.format("There %d pair(s) (entities/action): '%s' ",
-                this.ENT_CLASSES.size(),
+                this.CLASS_ENT2ACTION.size(),
                 this.getClass().getCanonicalName()));
     }
     //==========================================================================
 
-    private void registerEntClass(final Class<E> entClass, final Class<A> actClass) {
+    private void registerEntClass(final Class<E> entClass, final Class<A> actClass, final Integer action_code) {
         if (this.debugMode.equals(SysConst.STRING_TRUE)) {
             LogService.LogInfo(this.getClass(), () -> String.format("Add entity class/action: %s->%s",
                     entClass.getCanonicalName(),
                     actClass.getCanonicalName()));
         }
-        this.ENT_CLASSES.put(entClass, actClass);
+        this.CLASS_ENT2ACTION.put(entClass, actClass);
+        this.CLASS_INT2ACTION.put(action_code, actClass);
     }
 }
 //==============================================================================
@@ -136,6 +160,14 @@ class NoActionClassesPackagesDefined extends InternalAppException {
 class NoActionClassesDefined extends InternalAppException {
 
     public NoActionClassesDefined(final String message) {
+        super(message);
+    }
+}
+
+//==============================================================================
+class UnknownActionCode extends InternalAppException {
+
+    public UnknownActionCode(final String message) {
         super(message);
     }
 }

@@ -34,8 +34,8 @@ public class AbstractPersistenceAction<T extends ActionEntity>
     @SequenceGenerator(name = "seq_action_id", sequenceName = "seq_action_id", allocationSize = 1)
     @Column(name = "action_id", updatable = false)
     private Long actionId;
-    //@JoinColumn(name = "entity_id", referencedColumnName = "entity_id")
-    //private T entity;
+    @JoinColumn(name = "entity_id", referencedColumnName = "entity_id")
+    private T entity;
     @Column(name = "user_id", updatable = false)
     private Integer userId;
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)

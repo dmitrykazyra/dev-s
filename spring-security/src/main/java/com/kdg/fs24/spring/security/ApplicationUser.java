@@ -5,8 +5,11 @@
  */
 package com.kdg.fs24.spring.security;
 
+import com.kdg.fs24.config.SecurityConst;
 import com.kdg.fs24.entity.core.AbstractActionEntity;
+import com.kdg.fs24.entity.core.api.EntityKindId;
 import org.springframework.security.core.userdetails.User;
+import com.kdg.fs24.entity.core.api.EntityTypeId;
 import java.util.Collection;
 import javax.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -23,6 +26,11 @@ import com.kdg.fs24.entity.core.api.ActionClassesPackages;
 @Table(name = "core_Users")
 @PrimaryKeyJoinColumn(name = "user_id", referencedColumnName = "entity_id")
 @ActionClassesPackages(pkgList = {"com.kdg.fs24.actions"})
+@EntityTypeId(entity_type_id = SecurityConst.FS24_USER,
+        entity_type_name = "Пользователь комплекса")
+@EntityKindId(entity_kind_id = SecurityConst.FS24_USER_BASE,
+        entity_type_id = SecurityConst.FS24_USER,
+        entity_kind_name = "Основной пользователь системы")
 public class ApplicationUser extends AbstractActionEntity {
 
     @Column(name = "login")

@@ -9,6 +9,10 @@ import java.util.Collection;
 import lombok.Data;
 import javax.persistence.*;
 import com.kdg.fs24.entity.core.AbstractActionEntity;
+import com.kdg.fs24.entity.core.api.EntityKindId;
+import com.kdg.fs24.config.SecurityConst;
+import com.kdg.fs24.entity.core.api.EntityTypeId;
+import com.kdg.fs24.entity.core.api.ActionClassesPackages;
 
 /**
  *
@@ -18,6 +22,12 @@ import com.kdg.fs24.entity.core.AbstractActionEntity;
 @Entity
 @Table(name = "core_Roles")
 @PrimaryKeyJoinColumn(name = "role_id", referencedColumnName = "entity_id")
+@ActionClassesPackages(pkgList = {"com.kdg.fs24.actions"})
+@EntityTypeId(entity_type_id = SecurityConst.FS24_ROLE,
+        entity_type_name = "Роль в учетной системе")
+@EntityKindId(entity_kind_id = SecurityConst.FS24_ROLE_BASE,
+        entity_type_id = SecurityConst.ACT_CREATE_OR_MODIFY_ROLE,
+        entity_kind_name = "Базовая роль системы")
 public class ApplicationRole extends AbstractActionEntity {
 
     @Column(name = "role_code")
@@ -29,6 +39,6 @@ public class ApplicationRole extends AbstractActionEntity {
 
     public Long getRole_id() {
         return super.getEntity_id();
-    }    
-    
+    }
+
 }

@@ -17,7 +17,6 @@ import lombok.Data;
  * @author N76VB
  */
 @Data
-@Table(name = "core_Actions")
 @ActionCodeId(action_code = SecurityConst.ACT_CREATE_OR_MODIFY_ROLE,
         action_name = "Регистрация или изменение роли")
 public class ActCreateOrModifyRole extends AbstractAction<ApplicationRole> {

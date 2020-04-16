@@ -32,9 +32,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Value;
 import com.kdg.fs24.repository.ActionCodesRepository;
 import com.kdg.fs24.entity.action.ActionCode;
-import com.kdg.fs24.persistence.api.PersistenceEntity;
-import java.util.Collection;
-import org.springframework.lang.NonNull;
+import com.kdg.fs24.entity.type.EntityType;
 
 /**
  *
@@ -59,6 +57,9 @@ public abstract class ActionExecutionService<E extends AbstractActionEntity, A e
 
     @Autowired
     private ActionCodesRepository actionCodesRepository;
+
+    @Autowired
+    private EntityReferencesService entityReferencesService;
 
     //==========================================================================
     // выполнение действия над сущностью
@@ -143,6 +144,8 @@ public abstract class ActionExecutionService<E extends AbstractActionEntity, A e
         LogService.LogInfo(thisClass, () -> String.format("There %d pair(s) (entities/action): '%s' ",
                 this.CLASS_ENT2ACTION.size(),
                 this.getClass().getCanonicalName()));
+
+        // синхронизируем с БД
     }
     //==========================================================================
 
@@ -154,6 +157,53 @@ public abstract class ActionExecutionService<E extends AbstractActionEntity, A e
         }
         this.CLASS_ENT2ACTION.put(entClass, actClass);
         this.CLASS_INT2ACTION.put(action_code, actClass);
+
+        // обновляем БД
+        //======================================================================
+        final EntityTypeId entityTypeId = AnnotationFuncs.<EntityTypeId>getAnnotation(entClass, EntityTypeId.class);
+
+        if (NullSafe.notNull(entityTypeId)) {
+
+            final EntityType entityType
+                    = entityReferencesService.createNewEntityType(entityTypeId.entity_type_id(),
+                            entityTypeId.entity_type_name(),
+                            getModuleName(entClass.getProtectionDomain().getCodeSource().getLocation().getFile()));
+
+            persistanceEntityManager.getEntityManager().merge(entityType);
+        }
+        //======================================================================
+        final ActionCodeId actionCodeId = AnnotationFuncs.<ActionCodeId>getAnnotation(actClass, ActionCodeId.class);
+        if (NullSafe.notNull(actionCodeId)) {
+
+            final ActionCode actionCode
+                    = entityReferencesService.createNewActionCode(actionCodeId.action_code(),
+                            actionCodeId.action_name(),
+                            getModuleName(entClass.getProtectionDomain().getCodeSource().getLocation().getFile()),
+                            Boolean.FALSE);
+
+            persistanceEntityManager.getEntityManager().merge(actionCode);
+        }
+    }
+
+    //==========================================================================    
+    protected static String getModuleName(final String classUrl) {
+
+        String moduleName = SysConst.EMPTY_STRING;
+        String url = classUrl;
+
+        if ((url.lastIndexOf("/target/") < 0)) {
+            while (moduleName.lastIndexOf(".") < 0) {
+
+                if (!moduleName.isEmpty()) {
+                    url = url.substring(0, url.lastIndexOf("/WEB-INF"));
+                }
+
+                moduleName = url.substring(url.lastIndexOf("/") + 1);
+
+            }
+        }
+
+        return moduleName;
     }
 }
 //==============================================================================

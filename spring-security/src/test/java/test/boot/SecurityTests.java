@@ -7,6 +7,7 @@ package test.boot;
 
 import com.kdg.fs24.application.core.log.LogService;
 import com.kdg.fs24.application.core.nullsafe.NullSafe;
+import com.kdg.fs24.config.SecurityConst;
 import com.kdg.fs24.entity.status.EntityStatusPK;
 import com.kdg.fs24.entity.status.EntityStatus;
 import com.kdg.fs24.persistence.core.PersistanceEntityManager;
@@ -24,7 +25,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.kdg.fs24.repository.*;
 import com.kdg.fs24.repository.EntityStatusesRepository;
 import lombok.Data;
-import com.kdg.fs24.service.SecurityService;
+import com.kdg.fs24.service.*;
 
 /**
  *
@@ -40,10 +41,7 @@ import com.kdg.fs24.service.SecurityService;
 public class SecurityTests {
 
     @Autowired
-    private SecurityService securityService;
-
-    @Autowired
-    private PersistanceEntityManager persistanceEntityManager;
+    private SecurityActionsService securityActionsService;
 
     @Autowired
     private ApplicationRoleRepository applicationRoleRepository;
@@ -59,50 +57,31 @@ public class SecurityTests {
         //this.initializeTest();
         LogService.LogInfo(this.getClass(), () -> String.format("Unit test '%s' is running ",
                 this.getClass().getCanonicalName()));
-        persistanceEntityManager
-                .executeTransaction((entityManager) -> {
 
-                    final String testValue = UUID.randomUUID().toString().substring(1, 20);
+        final String testValue = UUID.randomUUID().toString().substring(1, 20);
 
-                    //==========================================================
-                    final EntityStatusPK entityStatusPK = NullSafe.createObject(EntityStatusPK.class);
+        //==========================================================
+        ApplicationUser user = securityActionsService.createUser(testValue,
+                testValue,
+                testValue,
+                testValue,
+                testValue);
 
-                    entityStatusPK.setEntityStatusId(1);
-                    entityStatusPK.setEntityTypeId(100);
+        //entityManager.persist(user);
+        // создание пользователя через действие
+        securityActionsService.executeAction(user, SecurityConst.ACT_CREATE_OR_MODIFY_USER);
 
-                    final EntityStatus userStatus = persistanceEntityManager
-                            .getEntityManager()
-                            .find(EntityStatus.class, entityStatusPK);
+        //==========================================================
+        //  добавляем роли
+        // создание тестовой роли
+        ApplicationRole role = securityActionsService.createRole(testValue,
+                testValue,
+                testValue);
 
-                    ApplicationUser user = securityService.createUser(testValue,
-                            testValue,
-                            testValue,
-                            testValue,
-                            testValue,
-                            userStatus);
+        //entityManager.persist(user);
+        // создание пользователя через действие
+        securityActionsService.executeAction(role, SecurityConst.ACT_CREATE_OR_MODIFY_ROLE);
 
-                    entityManager.persist(user);
-
-                    //==========================================================
-                    //  добавляем роли
-                    // создание тестовой роли
-                    final ApplicationRole role1 = NullSafe.createObject(ApplicationRole.class);
-                    role1.setRoleCode(testValue);
-                    role1.setRoleName(testValue);
-                    role1.setCreation_date(LocalDateTime.now());
-
-                    final EntityStatusPK roleStatusPK = NullSafe.createObject(EntityStatusPK.class);
-
-                    roleStatusPK.setEntityStatusId(1);
-                    roleStatusPK.setEntityTypeId(101);
-
-                    final EntityStatus roleStatus = entityManager.find(EntityStatus.class, roleStatusPK);
-
-                    role1.setEntityStatus(roleStatus);
-
-                    entityManager.persist(role1);
-
-                });
         //==========================================================
         LogService.LogInfo(this.getClass(), () -> String.format("\\ %s: %d ================================================",
                 "applicationUserRepository", applicationUserRepository.count()));

@@ -14,5 +14,6 @@ public final class SecurityConst {
     public static final int FS24_USER = 100;                    // пользователь системы
     public static final int FS24_USER_BASE = 100001;                    // базовый пользователь системы
     public static final int ACT_CREATE_OR_MODIFY_USER = 1001001; // регистрация пользователя
+    public static final int ACT_CREATE_OR_MODIFY_ROLE = 1001002; // регистрация роли
 
 }

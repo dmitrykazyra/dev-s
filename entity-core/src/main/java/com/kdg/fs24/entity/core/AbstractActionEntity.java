@@ -43,12 +43,12 @@ import lombok.Data;
 @Data
 public abstract class AbstractActionEntity
         extends AbstractPersistenceEntity {
-    
-    private final Collection<Class<? extends AbstractAction>> actClasses = 
-            ServiceFuncs.getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);    
-    
-    public void executeAction(final Integer actionId) {
-        
-    }
+//    
+//    private final Collection<Class<? extends AbstractAction>> actClasses = 
+//            ServiceFuncs.getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);    
+//    
+//    public void executeAction(final Integer actionId) {
+//        
+//    }
 
 }

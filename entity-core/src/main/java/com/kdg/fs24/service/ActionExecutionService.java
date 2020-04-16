@@ -30,6 +30,11 @@ import java.util.Arrays;
 import java.util.Map;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Value;
+import com.kdg.fs24.repository.ActionCodesRepository;
+import com.kdg.fs24.entity.action.ActionCode;
+import com.kdg.fs24.persistence.api.PersistenceEntity;
+import java.util.Collection;
+import org.springframework.lang.NonNull;
 
 /**
  *
@@ -52,6 +57,9 @@ public abstract class ActionExecutionService<E extends AbstractActionEntity, A e
     @Autowired
     private PersistanceEntityManager persistanceEntityManager;
 
+    @Autowired
+    private ActionCodesRepository actionCodesRepository;
+
     //==========================================================================
     // выполнение действия над сущностью
     public void executeAction(final AbstractActionEntity entity, final Integer action_code) {
@@ -65,10 +73,18 @@ public abstract class ActionExecutionService<E extends AbstractActionEntity, A e
 
         final A action = NullSafe.createObject(actClass);
 
-        action.setEntity(entity);
-        action.setPersistanceEntityManager(persistanceEntityManager);
-        action.execute();
+        final Optional<ActionCode> ac = actionCodesRepository.findById(action_code);
 
+        if (!ac.isPresent()) {
+            throw new NoActionCodeDefined(String.format("Unknown actionCode (%d)", action_code));
+        }
+
+        action.setPersistanceEntityManager(persistanceEntityManager);
+        action.setEntity(entity);
+        action.setActionCode(ac.get());
+
+        //action.execute(entity, ac.get());
+        action.execute();
     }
 
     //==========================================================================
@@ -141,6 +157,13 @@ public abstract class ActionExecutionService<E extends AbstractActionEntity, A e
     }
 }
 //==============================================================================
+
+class NoActionCodeDefined extends InternalAppException {
+
+    public NoActionCodeDefined(final String message) {
+        super(message);
+    }
+}
 
 class NoEntityClassesPackagesDefined extends InternalAppException {
 

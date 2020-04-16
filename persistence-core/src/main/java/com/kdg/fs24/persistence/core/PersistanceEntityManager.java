@@ -114,7 +114,6 @@ public class PersistanceEntityManager extends AbstractApplicationBean {
                             LogService.LogInfo(this.getClass(), () -> String.format("EMF Properties \n %s ",
                                     this.getEmfProperties()));
                         }
-                        
 
                     });
 
@@ -200,7 +199,9 @@ public class PersistanceEntityManager extends AbstractApplicationBean {
 //                        LogService.LogInfo(this.getClass(), () -> String.format("Start jpa transaction (%b,%d)",
 //                                this.getEntityManager().getTransaction().isActive(),
 //                                this.getEntityManager().getTransaction().hashCode()));
-                                entityTransaction.begin();
+                                if (!entityTransaction.isActive()) {
+                                    entityTransaction.begin();
+                                }
                                 //}
                                 this.executePersistAction(persistAction);
 
@@ -211,8 +212,8 @@ public class PersistanceEntityManager extends AbstractApplicationBean {
                             }).catchException((e) -> {
 
                         //if (this.getEntityManager().getTransaction().isActive()) {
-                        LogService.LogInfo(this.getClass(), () -> String.format("Rollback jpa transaction (%s, %d)",
-                                NullSafe.getErrorMessage(e), entityTransaction.hashCode()));
+                        LogService.LogErr(this.getClass(), () -> String.format("FAIL executeTransaction ('%s')",
+                                NullSafe.getErrorMessage(e)));
                         NullSafe.create(SysConst.STRING_NULL, NullSafe.DONT_THROW_EXCEPTION)
                                 .execute(() -> {
                                     entityTransaction.rollback();

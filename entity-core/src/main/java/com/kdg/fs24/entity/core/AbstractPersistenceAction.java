@@ -25,7 +25,7 @@ import lombok.Data;
 @Entity
 @Data
 @Table(name = "core_Actions")
-@Inheritance(strategy = InheritanceType.JOINED)
+//@Inheritance(strategy = InheritanceType.JOINED)
 public class AbstractPersistenceAction<T extends ActionEntity>
         implements Action<T> {
 
@@ -34,17 +34,20 @@ public class AbstractPersistenceAction<T extends ActionEntity>
     @SequenceGenerator(name = "seq_action_id", sequenceName = "seq_action_id", allocationSize = 1)
     @Column(name = "action_id", updatable = false)
     private Long actionId;
+    @ManyToOne(targetEntity = AbstractPersistenceEntity.class)
     @JoinColumn(name = "entity_id", referencedColumnName = "entity_id")
     private T entity;
+
     @Column(name = "user_id", updatable = false)
-    private Integer userId;
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Long userId = SysConst.SERVICE_USER_ID;
+    //@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "action_code", referencedColumnName = "action_code", updatable = false)
     private ActionCode actionCode;
     @Column(name = "execute_date", updatable = false)
-    private LocalDateTime executeDate;
+    private LocalDateTime executeDate = LocalDateTime.now();
     @Column(name = "action_address", updatable = false)
-    private String actionAddress;
+    private String actionAddress = SysConst.getCurrentIp();
     @Column(name = "err_msg")
     private String errMsg;
     @Column(name = "action_duration", updatable = false)

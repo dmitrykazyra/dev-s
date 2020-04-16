@@ -5,10 +5,14 @@ import com.kdg.fs24.entity.core.api.ActionEntity;
 import com.kdg.fs24.application.core.sysconst.SysConst;
 import com.kdg.fs24.application.core.nullsafe.NullSafe;
 import com.kdg.fs24.application.core.service.funcs.ServiceFuncs;
+import com.kdg.fs24.entity.action.ActionCode;
 import com.kdg.fs24.persistence.api.PersistenceEntity;
 import com.kdg.fs24.persistence.core.PersistanceEntityManager;
 import java.util.Collection;
 import javax.persistence.Transient;
+import com.kdg.fs24.tce.api.StopWatcher;
+import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 import lombok.Data;
 
 /**
@@ -20,11 +24,12 @@ public abstract class AbstractAction<T extends ActionEntity>
         extends AbstractPersistenceAction<T> {
 
     // объекты для персистенса
-    //@Transient
     private PersistanceEntityManager persistanceEntityManager;
 
     private Collection<PersistenceEntity> persistenceObjects
             = ServiceFuncs.<PersistenceEntity>getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);
+
+    private StopWatcher stopWatcher;
 
     public void execute() {
 
@@ -32,22 +37,35 @@ public abstract class AbstractAction<T extends ActionEntity>
         this.afterCalculation();
 
         if (this.isValid()) {
-
+            this.stopWatcher = StopWatcher.create();
             this.beforeUpdate();
             // наполнение в предках объектов для персистенса
-            this.doUpdate();
+            //this.doUpdate();
+
+            //final AbstractPersistenceAction<T> ent2persist = NullSafe.createObject(AbstractPersistenceAction.class);          
+            // сохранили объекты
+            persistanceEntityManager
+                    .executeTransaction(em -> {
+                        this.doUpdate();
+                        persistenceObjects
+                                .forEach((obj) -> {
+                                    em.persist(obj);
+                                    //em.refresh(entity);
+                                });
+                        //em.flush();
+                    });
+
+            //final AbstractPersistenceAction<T> ent2persist = this;
+            final AbstractPersistenceAction<T> ent2persist = NullSafe.createObject(AbstractPersistenceAction.class);
+            ent2persist.setEntity(this.getEntity());
+            ent2persist.setActionCode(this.getActionCode());
+            ent2persist.setActionDuration(LocalTime.MIN.plus(this.stopWatcher.getTimeExecMillis(), ChronoUnit.MILLIS));
+            //      this.setActionDuration(LocalTime.MIN.plus(this.stopWatcher.getTimeExecMillis(), ChronoUnit.MILLIS));
 
             // сохранили действие
             persistanceEntityManager
                     .executeTransaction(em -> {
-                        em.persist(this);
-                    });
-
-            // сохранили объекты
-            persistanceEntityManager
-                    .executeTransaction(em -> {
-                        persistenceObjects
-                                .forEach((entity) -> em.merge(entity));
+                        em.persist(ent2persist);
                     });
 
             this.afterCommit();

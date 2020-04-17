@@ -48,8 +48,8 @@ public final class SysConst {
     public static final int ENT_TERMINAL = 10000;
 
     // статусы entity
-    public static final int ENT_STATUS_ACTUAL = 1;
-    public static final int ENT_STATUS_CANCELLED = -1;
+//    public static final int ENT_STATUS_ACTUAL = 1;
+//    public static final int ENT_STATUS_CANCELLED = -1;
 
 //    public static final String defItemValue = "Select action";
 //

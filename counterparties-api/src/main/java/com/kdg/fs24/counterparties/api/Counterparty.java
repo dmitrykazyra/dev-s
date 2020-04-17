@@ -11,6 +11,9 @@ import com.kdg.fs24.entity.core.AbstractActionEntity;
 import com.kdg.fs24.entity.core.api.EntityKindId;
 import com.kdg.fs24.entity.core.api.EntityTypeId;
 import com.kdg.fs24.entity.core.api.ActionClassesPackages;
+import com.kdg.fs24.entity.core.api.EntityStatusesRef;
+import com.kdg.fs24.entity.status.EntityStatusId;
+import com.kdg.fs24.entity.core.api.EntityConst;
 
 /**
  *
@@ -26,6 +29,23 @@ import com.kdg.fs24.entity.core.api.ActionClassesPackages;
 @EntityKindId(entity_kind_id = CounterpartyConst.FS24_ODINARY_CLIENT,
         entity_type_id = CounterpartyConst.FS24_CLIENT,
         entity_kind_name = "Стандартный клиент")
+@EntityStatusesRef(
+        entiy_status = {
+            @EntityStatusId(
+                    entity_type_id = CounterpartyConst.FS24_CLIENT,
+                    entity_status_id = EntityConst.ES_ACTUAL,
+                    entity_status_name = "Действующая клиент")
+            ,
+            @EntityStatusId(
+                    entity_type_id = CounterpartyConst.FS24_CLIENT,
+                    entity_status_id = EntityConst.ES_CLOSED,
+                    entity_status_name = "Закрытый клиент")
+            ,
+            @EntityStatusId(
+                    entity_type_id = CounterpartyConst.FS24_CLIENT,
+                    entity_status_id = EntityConst.ES_CANCELLED,
+                    entity_status_name = "Арестованный клиент")
+        })
 public class Counterparty extends AbstractActionEntity {
 
 //    @Column(name = "counterparty_id")

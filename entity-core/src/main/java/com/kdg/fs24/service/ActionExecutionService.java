@@ -31,6 +31,8 @@ import org.springframework.beans.factory.annotation.Value;
 import com.kdg.fs24.repository.ActionCodesRepository;
 import com.kdg.fs24.entity.action.ActionCode;
 import com.kdg.fs24.entity.core.api.EntityKindId;
+import com.kdg.fs24.entity.core.api.EntityStatusesRef;
+import com.kdg.fs24.entity.status.EntityStatusId;
 
 /**
  *
@@ -42,10 +44,15 @@ import com.kdg.fs24.entity.core.api.EntityKindId;
 public abstract class ActionExecutionService
         implements ApplicationRepositoryService {
 
+    // сущность - действие
     private final Map<Class<ENT>, Class<ACT>> CLASS_ENT2ACTION
             = ServiceFuncs.getOrCreateMap(ServiceFuncs.MAP_NULL);
-
+    // действие - номер действия
     private final Map<Integer, Class<ACT>> CLASS_INT2ACTION
+            = ServiceFuncs.getOrCreateMap(ServiceFuncs.MAP_NULL);
+
+    // сущность - статус сущности
+    private final Map<Class<ENT>, Integer> CLASS_ENT2STATUS
             = ServiceFuncs.getOrCreateMap(ServiceFuncs.MAP_NULL);
 
     @Value("${debug}")
@@ -99,7 +106,7 @@ public abstract class ActionExecutionService
 
         final String[] entityClassesPackages = AnnotationFuncs.<EntityClassesPackages>getAnnotation(thisClass, EntityClassesPackages.class).pkgList();
 
-        // выясняем 
+        // классы сущностей
         Arrays.stream(entityClassesPackages)
                 .forEach(entPkg -> {
                     ReflectionFuncs.createPkgClassesCollection(entPkg, AbstractActionEntity.class)
@@ -130,6 +137,19 @@ public abstract class ActionExecutionService
                                                                 actClazz,
                                                                 AnnotationFuncs.getAnnotation(actClazz, ActionCodeId.class).action_code());
                                                     });
+                                        });
+
+                                // статусы сущностей
+                                if (!AnnotationFuncs.isAnnotated(entClazz, EntityStatusesRef.class)) {
+                                    throw new NoEntityStatusesDefined(String.format("No EntityStatuses defined annotations defined for '%s' ",
+                                            entClazz.getCanonicalName()));
+                                }
+
+                                final EntityStatusId[] entityStatuses = AnnotationFuncs.<EntityStatusesRef>getAnnotation(entClazz, EntityStatusesRef.class).entiy_status();
+
+                                Arrays.stream(entityStatuses)
+                                        .forEach(entityStatus -> {
+                                            this.registerEntStatus(entClazz, entityStatus);
                                         });
                             });
                 });
@@ -186,8 +206,16 @@ public abstract class ActionExecutionService
                     actionCodeId.action_name(),
                     getModuleName(entClass.getProtectionDomain().getCodeSource().getLocation().getFile()),
                     Boolean.FALSE);
-
         }
+    }
+
+    //==========================================================================
+    private void registerEntStatus(final Class entClass, final EntityStatusId entityStatusId) {
+        CLASS_ENT2STATUS.put(entClass, entityStatusId.entity_status_id());
+
+        entityReferencesService.createNewEntityStatus(entityStatusId.entity_status_id(),
+                entityStatusId.entity_type_id(),
+                entityStatusId.entity_status_name());
     }
 
     //==========================================================================    
@@ -258,6 +286,14 @@ class NoActionClassesDefined extends InternalAppException {
 class UnknownActionCode extends InternalAppException {
 
     public UnknownActionCode(final String message) {
+        super(message);
+    }
+}
+
+//==============================================================================
+class NoEntityStatusesDefined extends InternalAppException {
+
+    public NoEntityStatusesDefined(final String message) {
         super(message);
     }
 }

@@ -13,6 +13,10 @@ import com.kdg.fs24.application.core.sysconst.SysConst;
  */
 public class EntityConst {
 
+    public static final int ES_ACTUAL = 0;
+    public static final int ES_CLOSED = 0;
+    public static final int ES_CANCELLED = -1;
+
     public static final Boolean IS_AUTHORIZED = Boolean.TRUE;
     public static final Boolean NOT_AUTHORIZED = Boolean.FALSE;
 

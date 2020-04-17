@@ -16,6 +16,9 @@ import org.springframework.security.core.GrantedAuthority;
 import com.kdg.fs24.entity.core.AbstractPersistenceEntity;
 import lombok.Data;
 import com.kdg.fs24.entity.core.api.ActionClassesPackages;
+import com.kdg.fs24.entity.core.api.EntityConst;
+import com.kdg.fs24.entity.core.api.EntityStatusesRef;
+import com.kdg.fs24.entity.status.EntityStatusId;
 
 /**
  *
@@ -31,6 +34,23 @@ import com.kdg.fs24.entity.core.api.ActionClassesPackages;
 @EntityKindId(entity_kind_id = SecurityConst.FS24_USER_BASE,
         entity_type_id = SecurityConst.FS24_USER,
         entity_kind_name = "Стандартный пользователь комплекса")
+@EntityStatusesRef(
+        entiy_status = {
+            @EntityStatusId(
+                    entity_type_id = SecurityConst.FS24_USER,
+                    entity_status_id = EntityConst.ES_ACTUAL,
+                    entity_status_name = "Действующий пользователь")
+            ,
+            @EntityStatusId(
+                    entity_type_id = SecurityConst.FS24_USER,
+                    entity_status_id = EntityConst.ES_CLOSED,
+                    entity_status_name = "Закрытый пользователь")
+            ,
+            @EntityStatusId(
+                    entity_type_id = SecurityConst.FS24_USER,
+                    entity_status_id = EntityConst.ES_CANCELLED,
+                    entity_status_name = "Аннулированный пользователь")
+        })
 public class ApplicationUser extends AbstractActionEntity {
 
     @Column(name = "login")

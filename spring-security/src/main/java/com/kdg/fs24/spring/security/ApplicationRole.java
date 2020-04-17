@@ -13,6 +13,9 @@ import com.kdg.fs24.entity.core.api.EntityKindId;
 import com.kdg.fs24.config.SecurityConst;
 import com.kdg.fs24.entity.core.api.EntityTypeId;
 import com.kdg.fs24.entity.core.api.ActionClassesPackages;
+import com.kdg.fs24.entity.core.api.EntityConst;
+import com.kdg.fs24.entity.core.api.EntityStatusesRef;
+import com.kdg.fs24.entity.status.EntityStatusId;
 
 /**
  *
@@ -28,6 +31,23 @@ import com.kdg.fs24.entity.core.api.ActionClassesPackages;
 @EntityKindId(entity_kind_id = SecurityConst.FS24_ROLE_BASE,
         entity_type_id = SecurityConst.FS24_ROLE,
         entity_kind_name = "Стандартная роль комплекса")
+@EntityStatusesRef(
+        entiy_status = {
+            @EntityStatusId(
+                    entity_type_id = SecurityConst.FS24_ROLE,
+                    entity_status_id = EntityConst.ES_ACTUAL,
+                    entity_status_name = "Действующая роль")
+            ,
+            @EntityStatusId(
+                    entity_type_id = SecurityConst.FS24_ROLE,
+                    entity_status_id = EntityConst.ES_CLOSED,
+                    entity_status_name = "Закрытая роль")
+            ,
+            @EntityStatusId(
+                    entity_type_id = SecurityConst.FS24_ROLE,
+                    entity_status_id = EntityConst.ES_CANCELLED,
+                    entity_status_name = "Аннулированная роль")
+        })
 public class ApplicationRole extends AbstractActionEntity {
 
     @Column(name = "role_code")

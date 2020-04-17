@@ -27,7 +27,7 @@ import com.kdg.fs24.entity.core.api.ActionClassesPackages;
         entity_type_name = "Роль в учетной системе")
 @EntityKindId(entity_kind_id = SecurityConst.FS24_ROLE_BASE,
         entity_type_id = SecurityConst.FS24_ROLE,
-        entity_kind_name = "Базовая роль системы")
+        entity_kind_name = "Стандартная роль комплекса")
 public class ApplicationRole extends AbstractActionEntity {
 
     @Column(name = "role_code")

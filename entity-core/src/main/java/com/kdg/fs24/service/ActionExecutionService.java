@@ -9,9 +9,7 @@ import com.kdg.fs24.application.core.log.LogService;
 import com.kdg.fs24.application.core.service.funcs.AnnotationFuncs;
 import com.kdg.fs24.spring.core.api.ApplicationRepositoryService;
 import lombok.Data;
-import org.springframework.stereotype.Service;
 import com.kdg.fs24.entity.core.AbstractActionEntity;
-import com.kdg.fs24.entity.core.api.ViewAction;
 import com.kdg.fs24.persistence.core.PersistanceEntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import javax.annotation.PostConstruct;
@@ -40,14 +38,15 @@ import com.kdg.fs24.entity.core.api.EntityKindId;
  */
 @Data
 //@Service
-public abstract class ActionExecutionService<E extends AbstractActionEntity, A extends AbstractAction>
+
+public abstract class ActionExecutionService
         implements ApplicationRepositoryService {
 
-    private final Map<Class<E>, Class<A>> CLASS_ENT2ACTION
-            = ServiceFuncs.<Class<E>, Class<A>>getOrCreateMap(ServiceFuncs.MAP_NULL);
+    private final Map<Class<ENT>, Class<ACT>> CLASS_ENT2ACTION
+            = ServiceFuncs.getOrCreateMap(ServiceFuncs.MAP_NULL);
 
-    private final Map<Integer, Class<A>> CLASS_INT2ACTION
-            = ServiceFuncs.<Integer, Class<A>>getOrCreateMap(ServiceFuncs.MAP_NULL);
+    private final Map<Integer, Class<ACT>> CLASS_INT2ACTION
+            = ServiceFuncs.getOrCreateMap(ServiceFuncs.MAP_NULL);
 
     @Value("${debug}")
     private String debugMode; // = SysConst.STRING_FALSE;
@@ -64,15 +63,15 @@ public abstract class ActionExecutionService<E extends AbstractActionEntity, A e
     //==========================================================================
     // выполнение действия над сущностью
     public void executeAction(final AbstractActionEntity entity, final Integer action_code) {
-        final Optional<Class<A>> optActClass = ServiceFuncs.getMapValue(CLASS_INT2ACTION, mapEntry -> mapEntry.getKey().equals(action_code));
+        final Optional<Class<ACT>> optActClass = ServiceFuncs.getMapValue(CLASS_INT2ACTION, mapEntry -> mapEntry.getKey().equals(action_code));
 
         if (!optActClass.isPresent()) {
             throw new UnknownActionCode(String.format("Unknown action_code (%d)", action_code));
         }
 
-        final Class<A> actClass = optActClass.get();
+        final Class actClass = optActClass.get();
 
-        final A action = NullSafe.createObject(actClass);
+        final AbstractAction action = NullSafe.<AbstractAction>createObject(actClass);
 
         final Optional<ActionCode> ac = actionCodesRepository.findById(action_code);
 
@@ -127,8 +126,8 @@ public abstract class ActionExecutionService<E extends AbstractActionEntity, A e
                                                     .filter(p -> !Modifier.isAbstract(p.getModifiers()))
                                                     .filter(p -> AnnotationFuncs.isAnnotated(p, ActionCodeId.class))
                                                     .forEach((actClazz) -> {
-                                                        this.registerEntClass((Class<E>) entClazz,
-                                                                (Class<A>) actClazz,
+                                                        this.registerEntClass(entClazz,
+                                                                actClazz,
                                                                 AnnotationFuncs.getAnnotation(actClazz, ActionCodeId.class).action_code());
                                                     });
                                         });
@@ -149,7 +148,7 @@ public abstract class ActionExecutionService<E extends AbstractActionEntity, A e
     }
     //==========================================================================
 
-    private void registerEntClass(final Class<E> entClass, final Class<A> actClass, final Integer action_code) {
+    private void registerEntClass(final Class entClass, final Class actClass, final Integer action_code) {
         if (this.debugMode.equals(SysConst.STRING_TRUE)) {
             LogService.LogInfo(this.getClass(), () -> String.format("Add entity class/action: %s->%s",
                     entClass.getCanonicalName(),
@@ -211,6 +210,18 @@ public abstract class ActionExecutionService<E extends AbstractActionEntity, A e
 
         return moduleName;
     }
+
+    //==========================================================================
+    public <T extends AbstractActionEntity> T createActionEntity(final Class<T> entClass,
+            final ActionEntityCreator<T> aec) {
+
+        final T actionEntity = NullSafe.<T>createObject(entClass);
+
+        aec.createEntity(actionEntity);
+
+        return actionEntity;
+
+    }
 }
 //==============================================================================
 
@@ -249,4 +260,12 @@ class UnknownActionCode extends InternalAppException {
     public UnknownActionCode(final String message) {
         super(message);
     }
+}
+
+class ENT extends AbstractActionEntity {
+
+}
+
+class ACT extends AbstractAction {
+
 }

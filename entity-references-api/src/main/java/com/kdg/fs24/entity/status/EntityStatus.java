@@ -28,7 +28,7 @@ public class EntityStatus extends AbstractRefRecord implements ReferenceRec {
     @Id
     @Column(name = "entity_type_id")
     private Integer entityTypeId;
-    @Column(name = "entity_status_name", length = 30)
+    @Column(name = "entity_status_name")
     private String entityStatusName;
 
     @Override

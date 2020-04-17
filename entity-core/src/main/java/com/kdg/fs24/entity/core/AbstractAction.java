@@ -55,18 +55,6 @@ public abstract class AbstractAction<T extends ActionEntity>
                         //em.flush();
                     });
 
-            //final AbstractPersistenceAction<T> ent2persist = this;
-//            final AbstractPersistenceAction<T> ent2persist = NullSafe.createObject(AbstractPersistenceAction.class);
-//            ent2persist.setEntity(this.getEntity());
-//            ent2persist.setActionCode(this.getActionCode());
-//            ent2persist.setActionDuration(LocalTime.MIN.plus(this.stopWatcher.getTimeExecMillis(), ChronoUnit.MILLIS));
-//            //      this.setActionDuration(LocalTime.MIN.plus(this.stopWatcher.getTimeExecMillis(), ChronoUnit.MILLIS));
-//
-//            // сохранили действие
-//            persistanceEntityManager
-//                    .executeTransaction(em -> {
-//                        em.persist(ent2persist);
-//                    });
             persistanceEntityManager.<AbstractPersistenceAction>createPersistenceEntity(
                     AbstractPersistenceAction.class,
                     (action) -> {

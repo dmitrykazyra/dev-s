@@ -29,27 +29,28 @@ public class SecurityActionsService extends ActionExecutionService {
             final String phone,
             final String mail) {
 
-        final ApplicationUser user = NullSafe.createObject(ApplicationUser.class);
+        return this.<ApplicationUser>createActionEntity(ApplicationUser.class,
+                (user) -> {
 
-        user.setName(name);
-        user.setMail(mail);
-        user.setPhone(phone);
-        user.setPassword(password);
-        user.setCreation_date(LocalDateTime.now());
-        user.setLogin(login);
+                    user.setName(name);
+                    user.setMail(mail);
+                    user.setPhone(phone);
+                    user.setPassword(password);
+                    user.setCreation_date(LocalDateTime.now());
+                    user.setLogin(login);
 
-        final EntityStatusPK entityStatusPK = NullSafe.createObject(EntityStatusPK.class);
+                    final EntityStatusPK entityStatusPK = NullSafe.createObject(EntityStatusPK.class);
 
-        entityStatusPK.setEntityStatusId(1);
-        entityStatusPK.setEntityTypeId(100);
+                    entityStatusPK.setEntityStatusId(1);
+                    entityStatusPK.setEntityTypeId(100);
 
-        final EntityStatus userStatus = this.getPersistanceEntityManager()
-                .getEntityManager()
-                .find(EntityStatus.class, entityStatusPK);
+                    final EntityStatus userStatus = this.getPersistanceEntityManager()
+                            .getEntityManager()
+                            .find(EntityStatus.class, entityStatusPK);
 
-        user.setEntityStatus(userStatus);
+                    user.setEntityStatus(userStatus);
 
-        return user;
+                });
     }
 
     //==========================================================================
@@ -57,24 +58,25 @@ public class SecurityActionsService extends ActionExecutionService {
             final String roleName,
             final String name) {
 
-        final ApplicationRole role = NullSafe.createObject(ApplicationRole.class);
+        return this.<ApplicationRole>createActionEntity(ApplicationRole.class,
+                (role) -> {
 
-        role.setRoleCode(roleCode);
-        role.setRoleName(roleName);
-        role.setCreation_date(LocalDateTime.now());
+                    role.setRoleCode(roleCode);
+                    role.setRoleName(roleName);
+                    role.setCreation_date(LocalDateTime.now());
 
-        final EntityStatusPK roleStatusPK = NullSafe.createObject(EntityStatusPK.class);
+                    final EntityStatusPK roleStatusPK = NullSafe.createObject(EntityStatusPK.class);
 
-        roleStatusPK.setEntityStatusId(1);
-        roleStatusPK.setEntityTypeId(101);
+                    roleStatusPK.setEntityStatusId(1);
+                    roleStatusPK.setEntityTypeId(101);
 
-        //this.getPersistanceEntityManager().getEntityManager()
-        final EntityStatus roleStatus = this.getPersistanceEntityManager()
-                .getEntityManager()
-                .find(EntityStatus.class, roleStatusPK);
+                    //this.getPersistanceEntityManager().getEntityManager()
+                    final EntityStatus roleStatus = this.getPersistanceEntityManager()
+                            .getEntityManager()
+                            .find(EntityStatus.class, roleStatusPK);
 
-        role.setEntityStatus(roleStatus);
+                    role.setEntityStatus(roleStatus);
 
-        return role;
+                });
     }
 }

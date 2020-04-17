@@ -67,6 +67,7 @@
         <module>entity-contracts</module>
         <module>entity-contract-references-api</module>
         <module>retail-loan-contracts</module>
+        <module>counterparties-api</module>
     </modules>
 
     <dependencies>

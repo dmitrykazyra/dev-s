@@ -30,7 +30,7 @@ import com.kdg.fs24.entity.core.api.ActionClassesPackages;
         entity_type_name = "Пользователь комплекса")
 @EntityKindId(entity_kind_id = SecurityConst.FS24_USER_BASE,
         entity_type_id = SecurityConst.FS24_USER,
-        entity_kind_name = "Основной пользователь системы")
+        entity_kind_name = "Стандартный пользователь комплекса")
 public class ApplicationUser extends AbstractActionEntity {
 
     @Column(name = "login")

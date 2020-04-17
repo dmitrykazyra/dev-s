@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.kdg.fs24.entity.type.EntityType;
 import com.kdg.fs24.entity.status.EntityStatus;
 import com.kdg.fs24.entity.action.ActionCode;
-import javax.persistence.Column;
+import com.kdg.fs24.entity.kind.EntityKind;
 
 /**
  *
@@ -28,48 +28,63 @@ public class EntityReferencesService implements ApplicationRepositoryService {
     private PersistanceEntityManager persistanceEntityManager;
 
     //==========================================================================
-    public EntityType createNewEntityType(final Integer entityTypeId,
+    public final void createNewEntityType(final Integer entityTypeId,
             final String entityTypeName,
             final String entityAppName) {
 
-        final EntityType entityType = NullSafe.createObject(EntityType.class);
+        persistanceEntityManager.<EntityType>mergePersistenceEntity(EntityType.class,
+                entityType -> {
 
-        entityType.setEntityAppName(entityAppName);
-        entityType.setEntityTypeId(entityTypeId);
-        entityType.setEntityTypeName(entityTypeName);
+                    entityType.setEntityAppName(entityAppName);
+                    entityType.setEntityTypeId(entityTypeId);
+                    entityType.setEntityTypeName(entityTypeName);
 
-        return entityType;
+                });
 
     }
 
     //==========================================================================
-    public EntityStatus createNewEntityStatus(final Integer entityStatusId,
+    public final void createNewEntityKind(final Integer entityKindId,
+            final Integer entityTypeId,
+            final String entityKindName) {
+
+        persistanceEntityManager.<EntityKind>mergePersistenceEntity(EntityKind.class,
+                entity -> {
+
+                    entity.setEntityKindId(entityKindId);
+                    entity.setEntityTypeId(entityTypeId);
+                    entity.setEntityKindName(entityKindName);
+
+                });
+    }
+
+    //==========================================================================
+    public final void createNewEntityStatus(final Integer entityStatusId,
             final Integer entityTypeId,
             final String entityStatusName) {
 
-        final EntityStatus entityStatus = NullSafe.createObject(EntityStatus.class);
+        persistanceEntityManager.<EntityStatus>mergePersistenceEntity(EntityStatus.class,
+                entity -> {
 
-        entityStatus.setEntityStatusId(entityStatusId);
-        entityStatus.setEntityStatusName(entityStatusName);
-        entityStatus.setEntityTypeId(entityTypeId);
+                    entity.setEntityStatusId(entityStatusId);
+                    entity.setEntityStatusName(entityStatusName);
+                    entity.setEntityTypeId(entityTypeId);
 
-        return entityStatus;
+                });
     }
     //==========================================================================
 
-    public ActionCode createNewActionCode(final Integer actionCode,
+    public final void createNewActionCode(final Integer actionCode,
             final String actionName,
             final String appName,
             final Boolean isClosed) {
-       
-        
-        final ActionCode newActionCode = NullSafe.createObject(ActionCode.class);
 
-        newActionCode.setActionCode(actionCode);
-        newActionCode.setActionName(actionName);
-        newActionCode.setAppName(appName);
-        newActionCode.setIsClosed(isClosed);
-
-        return newActionCode;
+        persistanceEntityManager.<ActionCode>mergePersistenceEntity(ActionCode.class,
+                entity -> {
+                    entity.setActionCode(actionCode);
+                    entity.setActionName(actionName);
+                    entity.setAppName(appName);
+                    entity.setIsClosed(isClosed);
+                });
     }
 }

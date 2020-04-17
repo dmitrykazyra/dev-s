@@ -56,16 +56,23 @@ public abstract class AbstractAction<T extends ActionEntity>
                     });
 
             //final AbstractPersistenceAction<T> ent2persist = this;
-            final AbstractPersistenceAction<T> ent2persist = NullSafe.createObject(AbstractPersistenceAction.class);
-            ent2persist.setEntity(this.getEntity());
-            ent2persist.setActionCode(this.getActionCode());
-            ent2persist.setActionDuration(LocalTime.MIN.plus(this.stopWatcher.getTimeExecMillis(), ChronoUnit.MILLIS));
-            //      this.setActionDuration(LocalTime.MIN.plus(this.stopWatcher.getTimeExecMillis(), ChronoUnit.MILLIS));
-
-            // сохранили действие
-            persistanceEntityManager
-                    .executeTransaction(em -> {
-                        em.persist(ent2persist);
+//            final AbstractPersistenceAction<T> ent2persist = NullSafe.createObject(AbstractPersistenceAction.class);
+//            ent2persist.setEntity(this.getEntity());
+//            ent2persist.setActionCode(this.getActionCode());
+//            ent2persist.setActionDuration(LocalTime.MIN.plus(this.stopWatcher.getTimeExecMillis(), ChronoUnit.MILLIS));
+//            //      this.setActionDuration(LocalTime.MIN.plus(this.stopWatcher.getTimeExecMillis(), ChronoUnit.MILLIS));
+//
+//            // сохранили действие
+//            persistanceEntityManager
+//                    .executeTransaction(em -> {
+//                        em.persist(ent2persist);
+//                    });
+            persistanceEntityManager.<AbstractPersistenceAction>createPersistenceEntity(
+                    AbstractPersistenceAction.class,
+                    (action) -> {
+                        action.setEntity(this.getEntity());
+                        action.setActionCode(this.getActionCode());
+                        action.setActionDuration(LocalTime.MIN.plus(this.stopWatcher.getTimeExecMillis(), ChronoUnit.MILLIS));
                     });
 
             this.afterCommit();

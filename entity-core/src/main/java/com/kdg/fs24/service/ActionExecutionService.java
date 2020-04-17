@@ -32,7 +32,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Value;
 import com.kdg.fs24.repository.ActionCodesRepository;
 import com.kdg.fs24.entity.action.ActionCode;
-import com.kdg.fs24.entity.type.EntityType;
+import com.kdg.fs24.entity.core.api.EntityKindId;
 
 /**
  *
@@ -158,30 +158,36 @@ public abstract class ActionExecutionService<E extends AbstractActionEntity, A e
         this.CLASS_ENT2ACTION.put(entClass, actClass);
         this.CLASS_INT2ACTION.put(action_code, actClass);
 
-        // обновляем БД
+        // обновляем справочники БД
         //======================================================================
         final EntityTypeId entityTypeId = AnnotationFuncs.<EntityTypeId>getAnnotation(entClass, EntityTypeId.class);
 
         if (NullSafe.notNull(entityTypeId)) {
 
-            final EntityType entityType
-                    = entityReferencesService.createNewEntityType(entityTypeId.entity_type_id(),
-                            entityTypeId.entity_type_name(),
-                            getModuleName(entClass.getProtectionDomain().getCodeSource().getLocation().getFile()));
+            entityReferencesService.createNewEntityType(entityTypeId.entity_type_id(),
+                    entityTypeId.entity_type_name(),
+                    getModuleName(entClass.getProtectionDomain().getCodeSource().getLocation().getFile()));
 
-            persistanceEntityManager.getEntityManager().merge(entityType);
+        }
+        //======================================================================
+        final EntityKindId entityKindId = AnnotationFuncs.<EntityKindId>getAnnotation(entClass, EntityKindId.class);
+
+        if (NullSafe.notNull(entityKindId)) {
+
+            entityReferencesService.createNewEntityKind(entityKindId.entity_kind_id(),
+                    entityKindId.entity_type_id(),
+                    entityKindId.entity_kind_name());
+
         }
         //======================================================================
         final ActionCodeId actionCodeId = AnnotationFuncs.<ActionCodeId>getAnnotation(actClass, ActionCodeId.class);
         if (NullSafe.notNull(actionCodeId)) {
 
-            final ActionCode actionCode
-                    = entityReferencesService.createNewActionCode(actionCodeId.action_code(),
-                            actionCodeId.action_name(),
-                            getModuleName(entClass.getProtectionDomain().getCodeSource().getLocation().getFile()),
-                            Boolean.FALSE);
+            entityReferencesService.createNewActionCode(actionCodeId.action_code(),
+                    actionCodeId.action_name(),
+                    getModuleName(entClass.getProtectionDomain().getCodeSource().getLocation().getFile()),
+                    Boolean.FALSE);
 
-            persistanceEntityManager.getEntityManager().merge(actionCode);
         }
     }
 

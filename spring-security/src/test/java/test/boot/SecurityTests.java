@@ -6,15 +6,10 @@
 package test.boot;
 
 import com.kdg.fs24.application.core.log.LogService;
-import com.kdg.fs24.application.core.nullsafe.NullSafe;
 import com.kdg.fs24.config.SecurityConst;
-import com.kdg.fs24.entity.status.EntityStatusPK;
-import com.kdg.fs24.entity.status.EntityStatus;
-import com.kdg.fs24.persistence.core.PersistanceEntityManager;
 import com.kdg.fs24.spring.security.ApplicationUser;
 import com.kdg.fs24.spring.security.ApplicationRole;
 import test.config.SecurityTestConfig;
-import java.time.LocalDateTime;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.UUID;
@@ -23,7 +18,6 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.boot.test.context.SpringBootTest;
 import com.kdg.fs24.repository.*;
-import com.kdg.fs24.repository.EntityStatusesRepository;
 import lombok.Data;
 import com.kdg.fs24.service.*;
 
@@ -61,7 +55,7 @@ public class SecurityTests {
         final String testValue = UUID.randomUUID().toString().substring(1, 20);
 
         //==========================================================
-        ApplicationUser user = securityActionsService.createUser(testValue,
+        final ApplicationUser user = securityActionsService.createUser(testValue,
                 testValue,
                 testValue,
                 testValue,
@@ -74,7 +68,7 @@ public class SecurityTests {
         //==========================================================
         //  добавляем роли
         // создание тестовой роли
-        ApplicationRole role = securityActionsService.createRole(testValue,
+        final ApplicationRole role = securityActionsService.createRole(testValue,
                 testValue,
                 testValue);
 

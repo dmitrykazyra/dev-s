@@ -3,6 +3,7 @@ package repo;
 import com.kdg.fs24.application.core.log.LogService;
 import com.kdg.fs24.application.core.nullsafe.NullSafe;
 import com.kdg.fs24.entity.type.EntityType;
+import com.kdg.fs24.entity.kind.EntityKind;
 import com.kdg.fs24.entity.status.EntityStatus;
 import com.kdg.fs24.entity.action.ActionCode;
 import com.kdg.fs24.persistence.core.PersistanceEntityManager;
@@ -54,6 +55,7 @@ public class TestEntityReferences {
 
     final private Integer entityStatusId4Test = 999;
     final private Integer entityType4Test = 999;
+    final private Integer entityKind4Test = 999;
     final private Integer entityActionCode4Test = 999;
 
 //
@@ -62,77 +64,51 @@ public class TestEntityReferences {
     @Test
     public void testTypeAndStatuses() {
         //this.initializeTest();
-        persistanceEntityManager
-                .executeTransaction((entityManager) -> {
-                    //this.printAllRepositories();
 
-                    final String testString = TestFuncs.generateTestString20();
+        String testString = TestFuncs.generateTestString20();
 
-                    final EntityType entityType = entityReferencesService.createNewEntityType(entityType4Test, testString, testString);
+        entityReferencesService.createNewEntityType(entityType4Test, testString, testString);
 
-                    entityManager.persist(entityType);
+        testString = TestFuncs.generateTestString20();
 
-                });
-//        this.printAllRepositories();
+        entityReferencesService.createNewEntityKind(entityKind4Test, entityType4Test, testString);
 
-        persistanceEntityManager
-                .executeTransaction((entityManager) -> {
-//                    this.printAllRepositories();
-                    final String testString = TestFuncs.generateTestString20();
-                    final EntityStatus entityStatus = entityReferencesService.createNewEntityStatus(entityStatusId4Test, entityType4Test, testString);
+        testString = TestFuncs.generateTestString20();
+        entityReferencesService.createNewEntityStatus(entityStatusId4Test, entityType4Test, testString);
 
-                    entityManager.merge(entityStatus);
+        final EntityStatusPK entityStatusPK = NullSafe.createObject(EntityStatusPK.class);
 
-                });
+        entityStatusPK.setEntityStatusId(entityStatusId4Test);
+        entityStatusPK.setEntityTypeId(entityType4Test);
+
+        final EntityStatus entityStatus = persistanceEntityManager
+                .getEntityManager()
+                .find(EntityStatus.class, entityStatusPK);
 
         persistanceEntityManager
-                .executeTransaction((entityManager) -> {
-                    //this.printAllRepositories();
-
-                    final EntityStatusPK entityStatusPK = NullSafe.createObject(EntityStatusPK.class);
-
-                    entityStatusPK.setEntityStatusId(entityStatusId4Test);
-                    entityStatusPK.setEntityTypeId(entityType4Test);
-
-                    final EntityStatus entityStatus = entityManager.find(EntityStatus.class, entityStatusPK);
-
-                    entityManager.remove(entityStatus);
-
-                });
+                .getEntityManager()
+                .remove(entityStatus);
 
         persistanceEntityManager
-                .executeTransaction((entityManager) -> {
-//                    this.printAllRepositories();
-                    //final EntityType entityType = entityManager.find(EntityType.class, entityType4Test);
+                .getEntityManager().remove(persistanceEntityManager
+                        .getEntityManager().find(EntityKind.class, entityKind4Test));
+        persistanceEntityManager
+                .getEntityManager().remove(persistanceEntityManager
+                        .getEntityManager().find(EntityType.class, entityType4Test));
 
-                    entityManager.remove(entityManager.find(EntityType.class, entityType4Test));
-
-                });
         //this.printAllRepositories();
     }
 
     @Test
     public void testActionCodes() {
         //this.initializeTest();
-        persistanceEntityManager
-                .executeTransaction((entityManager) -> {
-                    //this.printAllRepositories();
 
-                    final String testString = TestFuncs.generateTestString20();
+        final String testString = TestFuncs.generateTestString20();
 
-                    final ActionCode actionCode = entityReferencesService.createNewActionCode(entityActionCode4Test, testString, testString, Boolean.FALSE);
+        entityReferencesService.createNewActionCode(entityActionCode4Test, testString, testString, Boolean.FALSE);
 
-                    entityManager.persist(actionCode);
+        persistanceEntityManager.getEntityManager().remove(persistanceEntityManager.getEntityManager().find(ActionCode.class,
+                entityActionCode4Test));
 
-                });
-        
-        persistanceEntityManager
-                .executeTransaction((entityManager) -> {
-//                    this.printAllRepositories();
-                    //final EntityType entityType = entityManager.find(EntityType.class, entityType4Test);
-
-                    entityManager.remove(entityManager.find(ActionCode.class, entityActionCode4Test));
-
-                });        
     }
 }

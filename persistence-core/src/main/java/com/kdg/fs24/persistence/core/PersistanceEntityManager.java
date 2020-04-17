@@ -16,6 +16,7 @@ import javax.persistence.Persistence;
 //import com.kdg.fs24.application.core.log.LogService;
 import com.kdg.fs24.application.core.sysconst.SysConst;
 import com.kdg.fs24.persistence.api.PersistenceAction;
+import com.kdg.fs24.persistence.api.PersistenceEntity;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 import javax.persistence.EntityTransaction;
@@ -275,5 +276,21 @@ public class PersistanceEntityManager extends AbstractApplicationBean {
                     return query.getResultList();
 
                 }).<Collection<T>>getObject();
+    }
+
+    //==========================================================================
+    public <T extends PersistenceEntity> void createPersistenceEntity(final Class<T> persistanceClass, final PersisntanceEntityCreator<T> pee) {
+        final T persistenceEntity = NullSafe.<T>createObject(persistanceClass);
+        pee.create(persistenceEntity);
+
+        this.executeTransaction(em -> em.persist(persistenceEntity));
+    }
+
+    //==========================================================================
+    public <T extends PersistenceEntity> void mergePersistenceEntity(final Class<T> persistanceClass, final PersisntanceEntityCreator<T> pee) {
+        final T persistenceEntity = NullSafe.<T>createObject(persistanceClass);
+        pee.create(persistenceEntity);
+
+        this.executeTransaction(em -> em.merge(persistenceEntity));
     }
 }

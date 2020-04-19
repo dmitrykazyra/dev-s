@@ -67,7 +67,17 @@
         <module>entity-contracts</module>
         <module>entity-contract-references-api</module>
         <module>retail-loan-contracts</module>
-        <module>counterparties-api</module>
+        <module>counterparties</module>
+        <module>tariff-references-api</module>
+        <module>liases-api</module>
+        <module>bond-schedule-api</module>
+        <module>bond-schedule-references-api</module>
+        <module>lias-opers-api</module>
+        <module>documents-references-api</module>
+        <module>liases-references-api</module>
+        <module>tariff-core-api</module>
+        <module>tariff-core</module>
+        <module>tariff-references</module>
     </modules>
 
     <dependencies>

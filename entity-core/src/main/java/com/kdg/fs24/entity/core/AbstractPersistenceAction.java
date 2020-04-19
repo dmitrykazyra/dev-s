@@ -26,8 +26,7 @@ import lombok.Data;
 @Data
 @Table(name = "core_Actions")
 //@Inheritance(strategy = InheritanceType.JOINED)
-public class AbstractPersistenceAction<T extends ActionEntity>
-        implements Action<T> {
+public class AbstractPersistenceAction implements Action {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_action_id")
@@ -36,7 +35,7 @@ public class AbstractPersistenceAction<T extends ActionEntity>
     private Long actionId;
     @ManyToOne(targetEntity = AbstractPersistenceEntity.class)
     @JoinColumn(name = "entity_id", referencedColumnName = "entity_id")
-    private T entity;
+    private ActionEntity entity;
 
     @Column(name = "user_id", updatable = false)
     private Long userId = SysConst.SERVICE_USER_ID;

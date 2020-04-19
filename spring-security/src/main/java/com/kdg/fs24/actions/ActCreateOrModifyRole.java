@@ -22,7 +22,7 @@ public class ActCreateOrModifyRole extends AbstractAction<ApplicationRole> {
 
     @Override
     protected void doUpdate() {
-        this.getPersistenceObjects().add(this.getEntity());
+        //this.getPersistenceObjects().add(this.getEntity());
     }
 
 }

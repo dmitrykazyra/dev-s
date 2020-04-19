@@ -25,7 +25,7 @@ public class ActCreateOrModifyUser extends AbstractAction<ApplicationUser> {
 
     @Override
     protected void doUpdate() {
-        this.getPersistenceObjects().add(this.getEntity());
+        //this.getPersistenceObjects().add(this.getEntity());
     }
 
 }

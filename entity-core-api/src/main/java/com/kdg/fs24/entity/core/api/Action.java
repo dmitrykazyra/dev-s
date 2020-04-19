@@ -11,7 +11,7 @@ import com.kdg.fs24.persistence.api.PersistenceEntity;
  *
  * @author kazyra_d
  */
-public interface Action<T extends ActionEntity> extends PersistenceEntity {
+public interface Action extends PersistenceEntity {
 
 //    Integer actionId();
 //    String ActionName();    

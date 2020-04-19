@@ -9,8 +9,9 @@ import com.kdg.fs24.entity.action.ActionCode;
 import com.kdg.fs24.persistence.api.PersistenceEntity;
 import com.kdg.fs24.persistence.core.PersistanceEntityManager;
 import java.util.Collection;
-import javax.persistence.Transient;
+import org.springframework.transaction.annotation.Transactional;
 import com.kdg.fs24.tce.api.StopWatcher;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import lombok.Data;
@@ -21,16 +22,17 @@ import lombok.Data;
  */
 @Data
 public abstract class AbstractAction<T extends ActionEntity>
-        extends AbstractPersistenceAction<T> {
+        extends AbstractPersistenceAction {
 
     // объекты для персистенса
     private PersistanceEntityManager persistanceEntityManager;
 
-    private Collection<PersistenceEntity> persistenceObjects
+    private final Collection<PersistenceEntity> persistenceObjects
             = ServiceFuncs.<PersistenceEntity>getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);
 
     private StopWatcher stopWatcher;
 
+    @Transactional
     public void execute() {
 
         this.doCalculation();
@@ -42,14 +44,27 @@ public abstract class AbstractAction<T extends ActionEntity>
             // наполнение в предках объектов для персистенса
             //this.doUpdate();
 
-            //final AbstractPersistenceAction<T> ent2persist = NullSafe.createObject(AbstractPersistenceAction.class);          
+            //final AbstractPersistenceAction<T> ent2persist = NullSafe.createObject(AbstractPersistenceAction.class); 
             // сохранили объекты
             persistanceEntityManager
                     .executeTransaction(em -> {
                         this.doUpdate();
+
+                        persistenceObjects.add(this.getEntity());
+//                        if (persistenceObjects.isEmpty()) {
+//                            throw new RuntimeException("There are no objects for persistence");
+//                        }
+
                         persistenceObjects
                                 .forEach((obj) -> {
+
+                                    if (obj instanceof AbstractPersistenceEntity) {
+                                        ((AbstractPersistenceEntity) (AbstractPersistenceEntity) (obj))
+                                                .setLast_modify(LocalDateTime.now());
+                                    }
+
                                     em.persist(obj);
+
                                     //em.refresh(entity);
                                 });
                         //em.flush();

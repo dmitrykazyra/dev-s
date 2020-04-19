@@ -14,6 +14,7 @@ import com.kdg.fs24.application.core.nullsafe.NullSafe;
  *
  * @author kazyra_d
  */
+@Deprecated
 @RefClass(reference_class = Currency.class)
 public class CurrenciesRef<T extends Currency> extends AbstractReference<Currency> {
 
@@ -28,7 +29,7 @@ public class CurrenciesRef<T extends Currency> extends AbstractReference<Currenc
     //==========================================================================
     public String getCurrencyNameById(final Integer currency_id) throws ReferenceNotFound {
 
-        return this.findCurrencyById(currency_id).getCurrency_name();
+        return this.findCurrencyById(currency_id).getCurrencyName();
     }
 
     //==========================================================================
@@ -46,7 +47,7 @@ public class CurrenciesRef<T extends Currency> extends AbstractReference<Currenc
         currency = this.getCachedCurrency(currency_id);;
 
         if (NullSafe.notNull(currency)) {
-            result = currency.getCurrency_name();
+            result = currency.getCurrencyName();
         }
 
         return result;
@@ -55,7 +56,7 @@ public class CurrenciesRef<T extends Currency> extends AbstractReference<Currenc
     //==========================================================================
     private T findCurrencyById(final Integer currency_id) {
 
-        return (T) this.findCachedRecords((object) -> ((Currency) object).getCurrency_id().equals(currency_id));
+        return (T) this.findCachedRecords((object) -> ((Currency) object).getCurrencyId().equals(currency_id));
     }
 
     //==========================================================================

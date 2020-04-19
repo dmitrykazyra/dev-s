@@ -11,6 +11,11 @@
     <dependencies>
         <dependency>
             <groupId>com.kdg.fs24</groupId>
+            <artifactId>counterparties</artifactId>
+            <version>${app.version}</version>            
+        </dependency>
+        <dependency>
+            <groupId>com.kdg.fs24</groupId>
             <artifactId>spring-security</artifactId>
             <version>${app.version}</version>            
         </dependency>
@@ -34,6 +39,11 @@
             <artifactId>entity-core</artifactId>
             <version>${app.version}</version>            
         </dependency>   
+        <dependency>
+            <groupId>com.kdg.fs24</groupId>
+            <artifactId>tariff-core</artifactId>
+            <version>${app.version}</version>            
+        </dependency>         
         <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>entity-contract-references-api</artifactId>

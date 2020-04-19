@@ -30,10 +30,10 @@ public abstract class AbstractRestService<T extends RestServer> { // implements 
 //        final Integer serverPort = NullSafe.create(ServiceLocator.find(ApplicationSetup.class))
 //                .safeExecute((ns_as) -> {
 //
-////                    LogGate.LogInfo(this.getClass(), String.format("getting server port for '%s'  ",
+////                    LogService.LogInfo(this.getClass(), String.format("getting server port for '%s'  ",
 ////                            this.getClass().getSimpleName().concat("ServerPort")));
 ////
-////                    LogGate.LogInfo(this.getClass(), String.format("getting server port for '%s' (%s) ",
+////                    LogService.LogInfo(this.getClass(), String.format("getting server port for '%s' (%s) ",
 ////                            this.getClass().getSimpleName().concat("ServerPort"),
 ////                            ((ApplicationSetup) ns_as).getRegParam(this.getClass().getSimpleName().concat("ServerPort"), defaultPort)));
 //                    return ((ApplicationSetup) ns_as).getRegParam(this.getClass().getSimpleName().concat("ServerPort"), defaultPort);

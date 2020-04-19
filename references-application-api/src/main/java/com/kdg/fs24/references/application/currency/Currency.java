@@ -8,47 +8,28 @@ package com.kdg.fs24.references.application.currency;
 import com.kdg.fs24.references.api.ReferenceRec;
 import java.util.Map;
 import com.kdg.fs24.references.api.AbstractRefRecord;
+import javax.persistence.*;
+import lombok.Data;
 
 /**
  *
  * @author kazyra_d
  */
+@Data
+@Entity
+@Table(name = "core_CurrenciesRef")
 public class Currency extends AbstractRefRecord implements ReferenceRec {
 
-    private Integer currency_id;
-    private String currency_iso;
-    private String currency_name;
-
-    public Currency() {
-        super();
-    }
-
-    public Integer getCurrency_id() {
-        return currency_id;
-    }
-
-    public void setCurrency_id(final Integer currency_id) {
-        this.currency_id = currency_id;
-    }
-
-    public String getCurrency_iso() {
-        return currency_iso;
-    }
-
-    public void setCurrency_iso(final String currency_iso) {
-        this.currency_iso = currency_iso;
-    }
-
-    public String getCurrency_name() {
-        return currency_name;
-    }
-
-    public void setCurrency_name(final String currency_name) {
-        this.currency_name = currency_name;
-    }
+    @Id
+    @Column(name = "currency_id")
+    private Integer currencyId;
+    @Column(name = "currency_iso")
+    private String currencyIso;
+    @Column(name = "currency_name")
+    private String currencyName;
 
     @Override
     public void record2Map(final Map<String, Integer> map) {
-        map.put(String.format("%d - %s", this.getCurrency_id(), this.getCurrency_name()), this.getCurrency_id());
+        map.put(String.format("%d - %s", this.getCurrencyId(), this.getCurrencyName()), this.getCurrencyId());
     }
 }

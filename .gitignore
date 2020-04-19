@@ -11,3 +11,14 @@
 /entity-contracts/target/
 /retail-loan-contracts/target/
 /counterparties-api/target/
+/counterparties/target/
+/tariff-references-api/target/
+/bond-schedule-references-api/target/
+/bond-schedule-api/target/
+/liases-references-api/target/
+/documents-references-api/target/
+/lias-opers-api/target/
+/liases-api/target/
+/tariff-core-api/target/
+/tariff-references/target/
+/tariff-core/target/

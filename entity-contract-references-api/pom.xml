@@ -78,7 +78,7 @@
             <artifactId>spring-test</artifactId>
             <version>${spring.core.version}</version>
             <scope>test</scope>
-        </dependency> 
+        </dependency>
     </dependencies>
     <build>
         <finalName>entity-contract-references-api</finalName> 

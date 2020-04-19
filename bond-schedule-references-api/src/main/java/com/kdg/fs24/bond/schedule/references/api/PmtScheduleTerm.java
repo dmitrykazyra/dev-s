@@ -5,9 +5,11 @@
  */
 package com.kdg.fs24.bond.schedule.references.api;
 
+
 import java.util.Map;
 import com.kdg.fs24.references.api.ReferenceRec;
 import com.kdg.fs24.references.api.AbstractRefRecord;
+import javax.persistence.*;
 import lombok.Data;
 
 /**
@@ -15,14 +17,20 @@ import lombok.Data;
  * @author kazyra_d
  */
 @Data
+@Entity
+@Table(name = "core_pmtScheduleAlgsRef")
 public class PmtScheduleTerm extends AbstractRefRecord implements ReferenceRec {
+    @Id
+    @Column(name="pmt_term_id")
+    private Integer pmtTermId;
+    @Column(name="pmt_term_name")
+    private String pmtTermName;
+    @Column(name="is_actual")
+    private Boolean isActual;
 
-    private Integer pmt_term_id;
-    private String pmt_term_name;
-    private Boolean is_actual;
 
     @Override
     public void record2Map(final Map<String, Integer> map) {
-        map.put(String.format("%d - {%s}", this.getPmt_term_id(), this.getPmt_term_name()), this.getPmt_term_id());
+        map.put(this.toString(), this.getPmtTermId());
     }
 }

@@ -31,16 +31,16 @@ import java.util.Collection;
 import java.util.stream.Collectors;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Value;
-import com.kdg.fs24.repository.ActionCodesRepository;
 import com.kdg.fs24.entity.action.ActionCode;
 import com.kdg.fs24.entity.core.api.EntityKindId;
 import com.kdg.fs24.entity.core.api.EntityStatusesRef;
 import com.kdg.fs24.entity.status.EntityStatus;
 import com.kdg.fs24.entity.kind.EntityKind;
 import com.kdg.fs24.entity.status.EntityStatusId;
-import com.kdg.fs24.entity.status.EntityStatusPK;
 import com.kdg.fs24.references.api.AbstractRefRecord;
 import javax.persistence.Table;
+import com.kdg.fs24.entity.core.api.CachedReferencClasses;
+import java.lang.annotation.Annotation;
 
 /**
  *
@@ -48,11 +48,14 @@ import javax.persistence.Table;
  */
 @Data
 //@Service
+@CachedReferencClasses(classes = {EntityStatus.class, EntityKind.class, ActionCode.class})
+public abstract class ActionExecutionService implements ApplicationRepositoryService {
 
-public abstract class ActionExecutionService
-        implements ApplicationRepositoryService {
+    // кэшированные справочники
+    final Collection<Class<? extends AbstractRefRecord>> SYS_REF_CLASSES
+            = ServiceFuncs.getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);
 
-    final Class[] refsClasses = {EntityStatus.class, EntityKind.class, ActionCode.class};
+//    final Class[] refsClasses = {EntityStatus.class, EntityKind.class, ActionCode.class};
     private final Map<Class<? extends AbstractRefRecord>, Collection<? extends AbstractRefRecord>> REF_CACHE
             = ServiceFuncs.getOrCreateMap_Safe(ServiceFuncs.MAP_NULL);
 
@@ -336,18 +339,35 @@ public abstract class ActionExecutionService
     @PostConstruct
     public void loadSysReferences() {
 
-        Arrays.stream(refsClasses)
-                .forEach(clazz -> {
-                    final String tableName = AnnotationFuncs.<Table>getAnnotation(clazz, Table.class).name();
+        Class clAss = this.getClass();
 
-                    final Collection collection = this.getPersistanceEntityManager()
-                            .getEntityManager()
-                            .createQuery("Select t from " + clazz.getSimpleName() + " t")
-                            .getResultList();
+        while (NullSafe.notNull(clAss)) {
 
-                    REF_CACHE.put(clazz, collection);
+            final Annotation annotation = AnnotationFuncs.<CachedReferencClasses>getAnnotation(clAss, CachedReferencClasses.class);
 
-                });
+            if (NullSafe.notNull(annotation)) {
+
+                final Class[] classes = AnnotationFuncs.<CachedReferencClasses>getAnnotation(clAss, CachedReferencClasses.class).classes();
+
+                Arrays.stream(classes)
+                        .forEach(clazz -> {
+                            //final String tableName = AnnotationFuncs.<Table>getAnnotation(clazz, Table.class).name();
+
+                            final Collection<? extends AbstractRefRecord> collection = this.getPersistanceEntityManager()
+                                    .getEntityManager()
+                                    .createQuery("Select t from " + clazz.getSimpleName() + " t")
+                                    .getResultList();
+
+                            REF_CACHE.put(clazz, collection);
+
+                        });
+            }
+            clAss = clAss.getSuperclass();
+        }
+
+        LogService.LogInfo(this.getClass(), () -> String.format("There are [%d] system reference(s) loaded '%s' ",
+                REF_CACHE.size(),
+                this.getClass().getCanonicalName()));
     }
 }
 //==============================================================================

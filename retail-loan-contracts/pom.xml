@@ -16,6 +16,16 @@
         </dependency>
         <dependency>
             <groupId>com.kdg.fs24</groupId>
+            <artifactId>retail-loan-contracts-references-api</artifactId>
+            <version>${app.version}</version>            
+        </dependency>        
+        <dependency>
+            <groupId>com.kdg.fs24</groupId>
+            <artifactId>entity-contracts</artifactId>
+            <version>${app.version}</version>            
+        </dependency>        
+        <dependency>
+            <groupId>com.kdg.fs24</groupId>
             <artifactId>spring-boot-api</artifactId>
             <version>${app.version}</version>            
         </dependency>        
@@ -82,7 +92,7 @@
                     <artifactId>spring-boot-starter-logging</artifactId>
                 </exclusion>
             </exclusions>
-        </dependency>                           
+        </dependency>
     </dependencies>  
     <build>
         <finalName>retail-loan-contracts</finalName> 
@@ -102,6 +112,12 @@
                 <version>${spring.boot.version}</version>
             </plugin>
         </plugins>
-    </build> 
-    
+    </build>
+    <repositories>
+        <repository>
+            <id>unknown-jars-temp-repo</id>
+            <name>A temporary repository created by NetBeans for libraries and jars it could not identify. Please replace the dependencies in this repository with correct ones and delete this repository.</name>
+            <url>file:${project.basedir}/lib</url>
+        </repository>
+    </repositories>
 </project>

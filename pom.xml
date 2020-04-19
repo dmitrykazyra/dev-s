@@ -78,6 +78,7 @@
         <module>tariff-core-api</module>
         <module>tariff-core</module>
         <module>tariff-references</module>
+        <module>retail-loan-contracts-references-api</module>
     </modules>
 
     <dependencies>

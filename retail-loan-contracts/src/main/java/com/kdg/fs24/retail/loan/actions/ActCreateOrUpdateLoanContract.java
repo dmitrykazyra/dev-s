@@ -1,0 +1,23 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.kdg.fs24.retail.loan.actions;
+
+import com.kdg.fs24.entity.contracts.actions.ActCreateOrUpdateContract;
+import com.kdg.fs24.entity.core.api.ActionCodeId;
+import com.kdg.fs24.retail.loan.contracts.AbstractRetailLoanContract;
+import com.kdg.fs24.retail.loan.contracts.RetailLoanConstants;
+import lombok.Data;
+
+/**
+ *
+ * @author N76VB
+ */
+@Data
+@ActionCodeId(action_code = RetailLoanConstants.MODIFY_INDIVIDUAL_LOAN_CONTRACT,
+        action_name = "Редактировать кредитную сделку с физическим лицом")
+public class ActCreateOrUpdateLoanContract extends ActCreateOrUpdateContract<AbstractRetailLoanContract> {
+
+}

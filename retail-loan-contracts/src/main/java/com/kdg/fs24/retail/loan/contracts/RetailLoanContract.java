@@ -53,9 +53,12 @@ import lombok.Data;
 public class RetailLoanContract extends AbstractRetailLoanContract {
 
     @ManyToOne
+    @JoinColumn(name = "loan_source_id", referencedColumnName = "loan_source_id")
     private LoanSource loanSource;
     @ManyToOne
+    @JoinColumn(name = "schedule_alg_id", referencedColumnName = "schedule_alg_id")
     private PmtScheduleAlg pmtScheduleAlg;
     @ManyToOne
+    @JoinColumn(name = "pmt_term_id", referencedColumnName = "pmt_term_id")
     private PmtScheduleTerm pmtScheduleTerm;
 }

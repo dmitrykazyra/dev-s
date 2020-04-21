@@ -5,10 +5,12 @@
  */
 package com.kdg.fs24.entity.kind;
 
+import com.kdg.fs24.application.core.exception.api.InternalAppException;
 import com.kdg.fs24.application.core.service.funcs.ServiceFuncs;
 import java.util.Map;
 import com.kdg.fs24.references.api.ReferenceRec;
 import com.kdg.fs24.references.api.AbstractRefRecord;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.persistence.*;
 import lombok.Data;
@@ -36,18 +38,4 @@ public class EntityKind extends AbstractRefRecord implements ReferenceRec {
         map.put(this.toString(), this.getEntityKindId());
     }
 //    //==========================================================================
-
-    public static EntityKind getExistEntityKind(final Integer kindId) {
-
-        return ServiceFuncs.getMapValue(REF_CACHE, mapEntry -> mapEntry.getKey().equals(EntityKind.class))
-                .get()
-                .stream()
-                .map(x -> (EntityKind) x)
-                .collect(Collectors.toList())
-                .stream()
-                .filter(entityKind -> entityKind.getEntityKindId().equals(kindId))
-                .findFirst()
-                .get();
-    }
-
 }

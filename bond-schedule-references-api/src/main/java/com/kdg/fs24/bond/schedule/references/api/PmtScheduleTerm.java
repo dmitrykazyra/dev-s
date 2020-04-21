@@ -35,17 +35,5 @@ public class PmtScheduleTerm extends AbstractRefRecord implements ReferenceRec {
     public void record2Map(final Map<String, Integer> map) {
         map.put(this.toString(), this.getPmtTermId());
     }
-    
-    public static PmtScheduleTerm getExistPmtScheduleTerm(final Integer pmtScheduleTermId) {
-
-        return ServiceFuncs.getMapValue(AbstractRefRecord.REF_CACHE, mapEntry -> mapEntry.getKey().equals(PmtScheduleTerm.class))
-                .get()
-                .stream()
-                .map(x -> (PmtScheduleTerm) x)
-                .collect(Collectors.toList())
-                .stream()
-                .filter(pmtScheduleTerm -> pmtScheduleTerm.getPmtTermId().equals(pmtScheduleTermId))
-                .findFirst()
-                .get();
-    }    
+      
 }

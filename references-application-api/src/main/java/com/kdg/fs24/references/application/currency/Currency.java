@@ -34,18 +34,4 @@ public class Currency extends AbstractRefRecord implements ReferenceRec {
     public void record2Map(final Map<String, Integer> map) {
         map.put(String.format("%d - %s", this.getCurrencyId(), this.getCurrencyName()), this.getCurrencyId());
     }
-
-    //==========================================================================
-    public static Currency getCurrency(final Integer currencyId) {
-
-        return ServiceFuncs.getMapValue(REF_CACHE, mapEntry -> mapEntry.getKey().equals(Currency.class))
-                .get()
-                .stream()
-                .map(x -> (Currency) x)
-                .collect(Collectors.toList())
-                .stream()
-                .filter(currency -> currency.getCurrencyId().equals(currencyId))
-                .findFirst()
-                .get();
-    }
 }

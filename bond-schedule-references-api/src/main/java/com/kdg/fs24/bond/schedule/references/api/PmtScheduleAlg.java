@@ -36,16 +36,4 @@ public class PmtScheduleAlg extends AbstractRefRecord implements ReferenceRec {
         map.put(this.toString(), this.getScheduleAlgId());
     }
 
-    public static PmtScheduleAlg getExistPmtScheduleAlg(final Integer loanSourceId) {
-
-        return ServiceFuncs.getMapValue(REF_CACHE, mapEntry -> mapEntry.getKey().equals(PmtScheduleAlg.class))
-                .get()
-                .stream()
-                .map(x -> (PmtScheduleAlg) x)
-                .collect(Collectors.toList())
-                .stream()
-                .filter(loanSource -> loanSource.getScheduleAlgId().equals(loanSourceId))
-                .findFirst()
-                .get();
-    }
 }

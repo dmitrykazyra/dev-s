@@ -23,8 +23,9 @@ import com.kdg.fs24.loan.references.api.LoanSource;
 import com.kdg.fs24.references.application.currency.Currency;
 import com.kdg.fs24.tariff.core.api.TariffPlan;
 import java.math.BigDecimal;
-import java.util.stream.Collectors;
 import com.kdg.fs24.entity.core.api.CachedReferencesClasses;
+import com.kdg.fs24.references.api.AbstractRefRecord;
+import com.kdg.fs24.retail.loan.contracts.RetailLoanConstants;
 
 /**
  *
@@ -65,7 +66,11 @@ public class RetailLoanContractActionsService extends ActionExecutionService {
                     retailLoanContract.setEntityKind(entityKind);
                     retailLoanContract.setLoanSource(loanSource);
                     retailLoanContract.setCreation_date(LocalDateTime.now());
-                    retailLoanContract.setEntityStatus(EntityStatus.getExistEntityStatus(TariffConst.ENTITY_TARIFF_PLAN, 0));
+                    retailLoanContract.setEntityStatus(AbstractRefRecord.<EntityStatus>getRefeenceRecord(
+                            EntityStatus.class,
+                            record -> record.getEntityStatusId().equals(0)
+                            && record.getEntityTypeId().equals(RetailLoanConstants.LOAN2INDIVIDUAL)));
+                    //EntityStatus.getExistEntityStatus(TariffConst.ENTITY_TARIFF_PLAN, 0));
                 });
     }
 }

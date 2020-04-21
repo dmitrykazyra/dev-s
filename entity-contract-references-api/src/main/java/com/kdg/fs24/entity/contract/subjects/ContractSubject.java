@@ -10,7 +10,9 @@ package com.kdg.fs24.entity.contract.subjects;
  * @author kazyra_d
  */
 import com.kdg.fs24.application.core.service.funcs.ServiceFuncs;
+import com.kdg.fs24.application.core.exception.api.InternalAppException;
 import java.util.Map;
+import java.util.Optional;
 import com.kdg.fs24.references.api.ReferenceRec;
 import com.kdg.fs24.references.api.AbstractRefRecord;
 import java.util.stream.Collectors;
@@ -36,17 +38,4 @@ public class ContractSubject extends AbstractRefRecord implements ReferenceRec {
         map.put(this.toString(), this.getContractSubjectId());
     }
     //==========================================================================
-
-    public static ContractSubject getContractSubject(final Integer contractSubjectId) {
-
-        return ServiceFuncs.getMapValue(REF_CACHE, mapEntry -> mapEntry.getKey().equals(ContractSubject.class))
-                .get()
-                .stream()
-                .map(x -> (ContractSubject) x)
-                .collect(Collectors.toList())
-                .stream()
-                .filter(contractSubject -> contractSubject.getContractSubjectId().equals(contractSubjectId))
-                .findFirst()
-                .get();
-    }
 }

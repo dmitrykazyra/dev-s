@@ -86,6 +86,13 @@ public abstract class ActionExecutionService extends AbstractApplicationService 
         final Optional<Class<ACT>> optActClass = ServiceFuncs.getMapValue(CLASS_INT2ACTION, mapEntry -> mapEntry.getKey().equals(action_code));
 
         if (!optActClass.isPresent()) {
+
+            class UnknownActionCode extends InternalAppException {
+
+                public UnknownActionCode(final String message) {
+                    super(message);
+                }
+            }
             throw new UnknownActionCode(String.format("Unknown action_code (%d)", action_code));
         }
 
@@ -99,13 +106,24 @@ public abstract class ActionExecutionService extends AbstractApplicationService 
                 .findFirst();
 
         if (!isLegalAction.isPresent()) {
+
+            class IllegalActionForEntity extends InternalAppException {
+
+                public IllegalActionForEntity(final String message) {
+                    super(message);
+                }
+            }
             throw new IllegalActionForEntity(String.format("Action '%s' is not legal for entity (%s)",
                     entity, actClass));
+
         }
 
         final AbstractAction action = NullSafe.<AbstractAction>createObject(actClass);
 
-        final ActionCode ac = ActionCode.getActionCode(action_code);
+        final ActionCode ac
+                = AbstractRefRecord.<ActionCode>getRefeenceRecord(
+                        ActionCode.class,
+                        record -> record.getActionCode().equals(action_code));
 
 //        if (!ac.isPresent()) {
 //            throw new NoActionCodeDefined(String.format("Unknown actionCode (%d)", action_code));
@@ -124,6 +142,12 @@ public abstract class ActionExecutionService extends AbstractApplicationService 
         final Class thisClass = this.getClass();
 
         if (!AnnotationFuncs.isAnnotated(thisClass, EntityClassesPackages.class)) {
+            class NoEntityClassesPackagesDefined extends InternalAppException {
+
+                public NoEntityClassesPackagesDefined(final String message) {
+                    super(message);
+                }
+            }
             throw new NoEntityClassesPackagesDefined(String.format("No EntityClassesPackages annotations defined for '%s' ",
                     thisClass.getCanonicalName()));
         }
@@ -142,6 +166,12 @@ public abstract class ActionExecutionService extends AbstractApplicationService 
 
                                 // действия на сущности
                                 if (!AnnotationFuncs.isAnnotated(entClazz, ActionClassesPackages.class)) {
+                                    class NoActionClassesPackagesDefined extends InternalAppException {
+
+                                        public NoActionClassesPackagesDefined(final String message) {
+                                            super(message);
+                                        }
+                                    }
                                     throw new NoActionClassesPackagesDefined(String.format("No ActionClassesPackagesDefined annotations defined for '%s' ",
                                             entClazz.getCanonicalName()));
                                 }
@@ -165,6 +195,12 @@ public abstract class ActionExecutionService extends AbstractApplicationService 
 
                                 // статусы сущностей
                                 if (!AnnotationFuncs.isAnnotated(entClazz, EntityStatusesRef.class)) {
+                                    class NoEntityStatusesDefined extends InternalAppException {
+
+                                        public NoEntityStatusesDefined(final String message) {
+                                            super(message);
+                                        }
+                                    }
                                     throw new NoEntityStatusesDefined(String.format("No EntityStatuses defined annotations defined for '%s' ",
                                             entClazz.getCanonicalName()));
                                 }
@@ -176,17 +212,25 @@ public abstract class ActionExecutionService extends AbstractApplicationService 
                                             this.registerEntStatus(entClazz, entityStatus);
                                         });
                             });
-                });
+                }
+                );
 
         if (this.CLASS_ENT2ACTION.isEmpty()) {
+            class NoActionClassesDefined extends InternalAppException {
+
+                public NoActionClassesDefined(final String message) {
+                    super(message);
+                }
+            }
             throw new NoActionClassesDefined(String.format("Action classes is empty for '%s' ",
                     thisClass.getCanonicalName()));
         }
 
         // post
-        LogService.LogInfo(thisClass, () -> String.format("There [%d] pair(s) (entities/action): '%s' ",
-                this.CLASS_ENT2ACTION.size(),
-                thisClass.getCanonicalName()));
+        LogService.LogInfo(thisClass,
+                () -> String.format("There [%d] pair(s) (entities/action): '%s' ",
+                        this.CLASS_ENT2ACTION.size(),
+                        thisClass.getCanonicalName()));
 
         // синхронизируем с БД
     }
@@ -205,7 +249,8 @@ public abstract class ActionExecutionService extends AbstractApplicationService 
 
         // обновляем справочники БД
         //======================================================================
-        final EntityTypeId entityTypeId = AnnotationFuncs.<EntityTypeId>getAnnotation(entClass, EntityTypeId.class);
+        final EntityTypeId entityTypeId = AnnotationFuncs.<EntityTypeId>getAnnotation(entClass, EntityTypeId.class
+        );
 
         if (NullSafe.notNull(entityTypeId)) {
 
@@ -215,7 +260,8 @@ public abstract class ActionExecutionService extends AbstractApplicationService 
 
         }
         //======================================================================
-        final EntityKindId entityKindId = AnnotationFuncs.<EntityKindId>getAnnotation(entClass, EntityKindId.class);
+        final EntityKindId entityKindId = AnnotationFuncs.<EntityKindId>getAnnotation(entClass, EntityKindId.class
+        );
 
         if (NullSafe.notNull(entityKindId)) {
 
@@ -225,7 +271,8 @@ public abstract class ActionExecutionService extends AbstractApplicationService 
 
         }
         //======================================================================
-        final ActionCodeId actionCodeId = AnnotationFuncs.<ActionCodeId>getAnnotation(actClass, ActionCodeId.class);
+        final ActionCodeId actionCodeId = AnnotationFuncs.<ActionCodeId>getAnnotation(actClass, ActionCodeId.class
+        );
         if (NullSafe.notNull(actionCodeId)) {
 
             entityReferencesService.createNewActionCode(actionCodeId.action_code(),
@@ -285,17 +332,19 @@ public abstract class ActionExecutionService extends AbstractApplicationService 
 
         while (NullSafe.notNull(clAss)) {
 
-            final Annotation annotation = AnnotationFuncs.<CachedReferencesClasses>getAnnotation(clAss, CachedReferencesClasses.class);
+            final Annotation annotation = AnnotationFuncs.<CachedReferencesClasses>getAnnotation(clAss, CachedReferencesClasses.class
+            );
 
             if (NullSafe.notNull(annotation)) {
 
-                final Class[] classes = AnnotationFuncs.<CachedReferencesClasses>getAnnotation(clAss, CachedReferencesClasses.class).classes();
+                final Class[] classes = AnnotationFuncs.<CachedReferencesClasses>getAnnotation(clAss, CachedReferencesClasses.class
+                ).classes();
 
                 Arrays.stream(classes)
                         .forEach(clazz -> {
 
 //                            final Optional<AbstractRefRecord> ref ServiceFuncs.getMapValue(AbstractRefRecord.REF_CACHE, mapEntry -> mapEntry.getKey().equals(clazz));
-                            if (!ServiceFuncs.getMapValue(AbstractRefRecord.REF_CACHE, mapEntry -> mapEntry.getKey().equals(clazz)).isPresent())  {
+                            if (!ServiceFuncs.getMapValue(AbstractRefRecord.REF_CACHE, mapEntry -> mapEntry.getKey().equals(clazz)).isPresent()) {
 
                                 //final String tableName = AnnotationFuncs.<Table>getAnnotation(clazz, Table.class).name();
                                 NullSafe.create()
@@ -329,7 +378,7 @@ public abstract class ActionExecutionService extends AbstractApplicationService 
     //==========================================================================
     public <T extends AbstractActionEntity> Optional<T> findActionEntity(
             final Class<T> entClass,
-            final Integer entityId) {
+            final Long entityId) {
 
         final Optional<T> optEntity = ServiceFuncs.<T>getCollectionElement(enityCollection
                 .stream()
@@ -352,6 +401,7 @@ public abstract class ActionExecutionService extends AbstractApplicationService 
         }
 
         return Optional.ofNullable(entity);
+
     }
 
 }
@@ -365,54 +415,9 @@ final class Pair {
     private Class<ACT> actClass;
 }
 
-class IllegalActionForEntity extends InternalAppException {
-
-    public IllegalActionForEntity(final String message) {
-        super(message);
-    }
-}
-
 class NoActionCodeDefined extends InternalAppException {
 
     public NoActionCodeDefined(final String message) {
-        super(message);
-    }
-}
-
-class NoEntityClassesPackagesDefined extends InternalAppException {
-
-    public NoEntityClassesPackagesDefined(final String message) {
-        super(message);
-    }
-}
-
-class NoActionClassesPackagesDefined extends InternalAppException {
-
-    public NoActionClassesPackagesDefined(final String message) {
-        super(message);
-    }
-}
-
-//==============================================================================
-class NoActionClassesDefined extends InternalAppException {
-
-    public NoActionClassesDefined(final String message) {
-        super(message);
-    }
-}
-
-//==============================================================================
-class UnknownActionCode extends InternalAppException {
-
-    public UnknownActionCode(final String message) {
-        super(message);
-    }
-}
-
-//==============================================================================
-class NoEntityStatusesDefined extends InternalAppException {
-
-    public NoEntityStatusesDefined(final String message) {
         super(message);
     }
 }

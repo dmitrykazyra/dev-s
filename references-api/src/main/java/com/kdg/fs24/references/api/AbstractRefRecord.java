@@ -5,12 +5,16 @@
  */
 package com.kdg.fs24.references.api;
 
+import com.kdg.fs24.application.core.exception.api.InternalAppException;
 import java.lang.reflect.Field;
 import com.kdg.fs24.application.core.nullsafe.NullSafe;
+import com.kdg.fs24.application.core.service.funcs.FilterComparator;
 import com.kdg.fs24.application.core.service.funcs.ServiceFuncs;
 import com.kdg.fs24.persistence.api.PersistenceEntity;
 import java.util.Collection;
 import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 import lombok.Data;
 
 /**
@@ -22,8 +26,7 @@ public abstract class AbstractRefRecord implements PersistenceEntity {
 
     public static final Map<Class<? extends AbstractRefRecord>, Collection<? extends AbstractRefRecord>> REF_CACHE
             = ServiceFuncs.getOrCreateMap_Safe(ServiceFuncs.MAP_NULL);
-    
-    
+
     public final long calcRecordHash() {
 
         return NullSafe.create()
@@ -41,5 +44,34 @@ public abstract class AbstractRefRecord implements PersistenceEntity {
                     }
                     return recHash;
                 }).<Long>getObject();
+    }
+
+    //==========================================================================
+    public static <T extends AbstractRefRecord> T getRefeenceRecord(
+            final Class<T> clazz,
+            final FilterComparator<T> filterComparator) {
+        final Optional<T> optional
+                = ServiceFuncs.getMapValue(AbstractRefRecord.REF_CACHE, mapEntry -> mapEntry.getKey().equals(clazz))
+                        .get()
+                        .stream()
+                        .map(x -> (T) x)
+                        .collect(Collectors.toList())
+                        .stream()
+                        .filter((fltr) -> filterComparator.getFilter(fltr))
+                        .findFirst();
+
+        if (!optional.isPresent()) {
+
+            class ActRefeenceRecordIsNotFound extends InternalAppException {
+
+                public ActRefeenceRecordIsNotFound(final String message) {
+                    super(message);
+                }
+            }
+            throw new ActRefeenceRecordIsNotFound(String.format("%s is not found ",
+                    clazz.getSimpleName()));
+        }
+
+        return optional.get();
     }
 }

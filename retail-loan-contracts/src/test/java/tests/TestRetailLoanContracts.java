@@ -12,6 +12,7 @@ import com.kdg.fs24.bond.schedule.references.api.PmtScheduleAlg;
 import com.kdg.fs24.bond.schedule.references.api.PmtScheduleTerm;
 import com.kdg.fs24.counterparties.api.Counterparty;
 import com.kdg.fs24.entity.contract.subjects.ContractSubject;
+import com.kdg.fs24.entity.core.api.EntityContractConst;
 import com.kdg.fs24.persistence.core.PersistanceEntityManager;
 import lombok.Data;
 import org.junit.runner.RunWith;
@@ -24,6 +25,7 @@ import com.kdg.fs24.service.RetailLoanContractActionsService;
 import com.kdg.fs24.service.CounterpartyActionsService;
 import com.kdg.fs24.entity.kind.EntityKind;
 import com.kdg.fs24.loan.references.api.LoanSource;
+import com.kdg.fs24.references.api.AbstractRefRecord;
 import com.kdg.fs24.references.application.currency.Currency;
 import org.junit.Test;
 import com.kdg.fs24.retail.loan.contracts.RetailLoanContract;
@@ -61,23 +63,40 @@ public class TestRetailLoanContracts {
         final String testString = TestFuncs.generateTestString20();
         final Integer kindId = RetailLoanConstants.LOAN2INDIVIDUAL_CARD;
 
-        final ContractSubject contractSubject = ContractSubject.getContractSubject(0);
+        final ContractSubject contractSubject
+                = AbstractRefRecord.<ContractSubject>getRefeenceRecord(
+                        ContractSubject.class,
+                        record -> record.getContractSubjectId().equals(210001));
+
+        final EntityKind entityKind = AbstractRefRecord.<EntityKind>getRefeenceRecord(
+                EntityKind.class,
+                record -> record.getEntityKindId().equals(RetailLoanConstants.LOAN2INDIVIDUAL_CARD));
+
         final Counterparty counterparty = this.counterpartyActionsService.createCounterparty(testString, testString, testString);
-        final EntityKind entityKind = EntityKind.getExistEntityKind(kindId);
-        final Currency currency = Currency.getCurrency(840);
-        final TariffPlan tariffPlan = retailLoanContractActionsService.<AbstractTariffPlan>findActionEntity(AbstractTariffPlan.class, 68338).get();
+
+        final Currency currency 
+                                = AbstractRefRecord.<Currency>getRefeenceRecord(
+                        Currency.class,
+                        record -> record.getCurrencyId().equals(840));
+        
+        final TariffPlan tariffPlan = retailLoanContractActionsService.<AbstractTariffPlan>findActionEntity(AbstractTariffPlan.class, Long.valueOf(68338)).get();
         final String contractNum = testString;
         final LocalDate contractDate = LocalDate.now();
         final LocalDate beginDate = LocalDate.now();
         final LocalDate endDate = LocalDate.now();
         final BigDecimal contractSumm = SysConst.MAX_BIGDECIMAL;
-        final LoanSource loanSource = LoanSource.getExistLoanSource(1);
-        final PmtScheduleAlg pmtScheduleAlg = PmtScheduleAlg.getExistPmtScheduleAlg(0);
-        final PmtScheduleTerm pmtScheduleTerm = PmtScheduleTerm.getExistPmtScheduleTerm(0);
-
-        if (NullSafe.isNull(entityKind)) {
-            throw new RuntimeException(String.format("EntityKind is not found(%d)", kindId));
-        }
+        final LoanSource loanSource
+                = AbstractRefRecord.<LoanSource>getRefeenceRecord(
+                        LoanSource.class,
+                        record -> record.getLoanSourceId().equals(102));
+        final PmtScheduleAlg pmtScheduleAlg 
+                = AbstractRefRecord.<PmtScheduleAlg>getRefeenceRecord(
+                        PmtScheduleAlg.class,
+                        record -> record.getScheduleAlgId().equals(1));
+        final PmtScheduleTerm pmtScheduleTerm 
+                = AbstractRefRecord.<PmtScheduleTerm>getRefeenceRecord(
+                        PmtScheduleTerm.class,
+                        record -> record.getPmtTermId().equals(30));
 
         final RetailLoanContract retailLoanContract = retailLoanContractActionsService
                 .createRetailLoanContract(contractSubject,
@@ -107,7 +126,7 @@ public class TestRetailLoanContracts {
 //            final LoanSource loanSource,
 //            final PmtScheduleAlg pmtScheduleAlg,
 //            final PmtScheduleTerm pmtScheduleTerm
-//        retailLoanContractActionsService.executeAction(retailLoanContract, RetailLoanConstants.MODIFY_INDIVIDUAL_LOAN_CONTRACT);
-        //retailLoanContractActionsService.executeAction(retailLoanContract, TariffConst.ACT_AUTHORIZE_TARIFF_PLAN);
+        retailLoanContractActionsService.executeAction(retailLoanContract, RetailLoanConstants.MODIFY_INDIVIDUAL_LOAN_CONTRACT);
+    //    retailLoanContractActionsService.executeAction(retailLoanContract, EntityContractConst.ACT_AUTHORIZE_CONTRACT);
     }
 }

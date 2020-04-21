@@ -14,6 +14,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import com.kdg.fs24.references.tariffs.api.TariffConst;
 import com.kdg.fs24.entity.status.EntityStatus;
+import com.kdg.fs24.references.api.AbstractRefRecord;
+
 /**
  *
  * @author N76VB
@@ -37,7 +39,10 @@ public class TariffCoreActionsService extends ActionExecutionService {
                     tariffPlan.setActualDate(actualDate);
                     tariffPlan.setFinishDate(finishDate);
                     tariffPlan.setCreation_date(LocalDateTime.now());
-                    tariffPlan.setEntityStatus(EntityStatus.getExistEntityStatus(TariffConst.ENTITY_TARIFF_PLAN, 0));
+                    tariffPlan.setEntityStatus(AbstractRefRecord.<EntityStatus>getRefeenceRecord(
+                            EntityStatus.class,
+                            record -> record.getEntityStatusId().equals(0)
+                            && record.getEntityTypeId().equals(TariffConst.ENTITY_TARIFF_PLAN)));
                 });
     }
 }

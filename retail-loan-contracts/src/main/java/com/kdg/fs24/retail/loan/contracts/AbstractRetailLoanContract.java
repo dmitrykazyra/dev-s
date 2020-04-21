@@ -6,11 +6,13 @@
 package com.kdg.fs24.retail.loan.contracts;
 
 import com.kdg.fs24.entity.contracts.AbstractEntityContract;
+import lombok.Data;
 
 /**
  *
  * @author N76VB
  */
+@Data
 public abstract class AbstractRetailLoanContract extends AbstractEntityContract {
 
 }

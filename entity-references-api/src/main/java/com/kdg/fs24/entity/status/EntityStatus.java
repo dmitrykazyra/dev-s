@@ -38,20 +38,4 @@ public class EntityStatus extends AbstractRefRecord implements ReferenceRec {
         map.put(this.toString(), this.getEntityStatusId());
     }
     //==========================================================================
-
-    public static EntityStatus getExistEntityStatus(final Integer entityType, final Integer entityStatusId) {
-
-        return ServiceFuncs.getMapValue(REF_CACHE, mapEntry -> mapEntry.getKey().equals(EntityStatus.class))
-                .get()
-                .stream()
-                .map(x -> (EntityStatus) x)
-                .collect(Collectors.toList())
-                .stream()
-                .filter(status -> status.getEntityTypeId().equals(entityType))
-                .filter(status -> status.getEntityStatusId().equals(entityStatusId))
-                .findFirst()
-                .get();
-
-    }
-
 }

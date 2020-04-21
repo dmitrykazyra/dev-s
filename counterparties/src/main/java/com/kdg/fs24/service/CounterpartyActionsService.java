@@ -5,13 +5,12 @@
  */
 package com.kdg.fs24.service;
 
-import com.kdg.fs24.application.core.nullsafe.NullSafe;
 import com.kdg.fs24.entity.core.api.EntityClassesPackages;
 import lombok.Data;
 import org.springframework.stereotype.Service;
 import com.kdg.fs24.counterparties.api.Counterparty;
 import com.kdg.fs24.entity.status.EntityStatus;
-import com.kdg.fs24.entity.status.EntityStatusPK;
+import com.kdg.fs24.references.api.AbstractRefRecord;
 import java.time.LocalDateTime;
 
 /**
@@ -33,7 +32,10 @@ public class CounterpartyActionsService extends ActionExecutionService {
                     counterparty.setCreation_date(LocalDateTime.now());
                     counterparty.setShortName(shortName);
                     counterparty.setFullName(fullName);
-                    counterparty.setEntityStatus(EntityStatus.getExistEntityStatus(1, 200));                    
+                    counterparty.setEntityStatus(AbstractRefRecord.<EntityStatus>getRefeenceRecord(
+                            EntityStatus.class,
+                            record -> record.getEntityStatusId().equals(1)
+                            && record.getEntityTypeId().equals(200)));                    
                 });
     }
 }

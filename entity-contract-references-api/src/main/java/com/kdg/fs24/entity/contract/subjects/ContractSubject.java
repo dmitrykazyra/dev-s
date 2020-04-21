@@ -9,9 +9,11 @@ package com.kdg.fs24.entity.contract.subjects;
  *
  * @author kazyra_d
  */
+import com.kdg.fs24.application.core.service.funcs.ServiceFuncs;
 import java.util.Map;
 import com.kdg.fs24.references.api.ReferenceRec;
 import com.kdg.fs24.references.api.AbstractRefRecord;
+import java.util.stream.Collectors;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -32,5 +34,19 @@ public class ContractSubject extends AbstractRefRecord implements ReferenceRec {
     @Override
     public void record2Map(final Map<String, Integer> map) {
         map.put(this.toString(), this.getContractSubjectId());
+    }
+    //==========================================================================
+
+    public static ContractSubject getContractSubject(final Integer contractSubjectId) {
+
+        return ServiceFuncs.getMapValue(REF_CACHE, mapEntry -> mapEntry.getKey().equals(ContractSubject.class))
+                .get()
+                .stream()
+                .map(x -> (ContractSubject) x)
+                .collect(Collectors.toList())
+                .stream()
+                .filter(contractSubject -> contractSubject.getContractSubjectId().equals(contractSubjectId))
+                .findFirst()
+                .get();
     }
 }

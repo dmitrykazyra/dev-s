@@ -7,7 +7,7 @@ package com.kdg.fs24.service;
 
 import com.kdg.fs24.application.core.log.LogService;
 import com.kdg.fs24.application.core.service.funcs.AnnotationFuncs;
-import com.kdg.fs24.spring.core.api.ApplicationRepositoryService;
+//import com.kdg.fs24.spring.core.api.ApplicationRepositoryService;
 import lombok.Data;
 import lombok.AllArgsConstructor;
 import com.kdg.fs24.entity.core.AbstractActionEntity;
@@ -18,6 +18,7 @@ import com.kdg.fs24.entity.core.api.EntityClassesPackages;
 import com.kdg.fs24.entity.core.api.ActionClassesPackages;
 import com.kdg.fs24.application.core.exception.api.InternalAppException;
 import com.kdg.fs24.application.core.nullsafe.NullSafe;
+import com.kdg.fs24.application.core.service.funcs.FilterComparator;
 import com.kdg.fs24.application.core.service.funcs.ReflectionFuncs;
 import com.kdg.fs24.application.core.service.funcs.ServiceFuncs;
 import com.kdg.fs24.application.core.sysconst.SysConst;
@@ -28,7 +29,6 @@ import java.lang.reflect.Modifier;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Collection;
-import java.util.stream.Collectors;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Value;
 import com.kdg.fs24.entity.action.ActionCode;
@@ -38,9 +38,9 @@ import com.kdg.fs24.entity.status.EntityStatus;
 import com.kdg.fs24.entity.kind.EntityKind;
 import com.kdg.fs24.entity.status.EntityStatusId;
 import com.kdg.fs24.references.api.AbstractRefRecord;
-import javax.persistence.Table;
-import com.kdg.fs24.entity.core.api.CachedReferencClasses;
 import java.lang.annotation.Annotation;
+import java.util.stream.Collectors;
+import com.kdg.fs24.entity.core.api.CachedReferencesClasses;
 
 /**
  *
@@ -48,27 +48,14 @@ import java.lang.annotation.Annotation;
  */
 @Data
 //@Service
-@CachedReferencClasses(classes = {EntityStatus.class, EntityKind.class, ActionCode.class})
-public abstract class ActionExecutionService implements ApplicationRepositoryService {
-
-    // кэшированные справочники
-    final Collection<Class<? extends AbstractRefRecord>> SYS_REF_CLASSES
-            = ServiceFuncs.getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);
-
-//    final Class[] refsClasses = {EntityStatus.class, EntityKind.class, ActionCode.class};
-    private final Map<Class<? extends AbstractRefRecord>, Collection<? extends AbstractRefRecord>> REF_CACHE
-            = ServiceFuncs.getOrCreateMap_Safe(ServiceFuncs.MAP_NULL);
+@CachedReferencesClasses(classes = {EntityStatus.class, EntityKind.class, ActionCode.class})
+public abstract class ActionExecutionService extends AbstractApplicationService {
 
     //==========================================================================
-    @AllArgsConstructor
-    @Data
-    private final class Pair {
-
-        private Class<ENT> entClass;
-        private Class<ACT> actClass;
-    }
-
     private final Collection<Pair> CLASS_ENT2ACTION
+            = ServiceFuncs.getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);
+
+    private final Collection<? extends AbstractActionEntity> enityCollection
             = ServiceFuncs.getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);
 
     // сущность - действие
@@ -118,7 +105,7 @@ public abstract class ActionExecutionService implements ApplicationRepositorySer
 
         final AbstractAction action = NullSafe.<AbstractAction>createObject(actClass);
 
-        final ActionCode ac = this.getActionCode(action_code);
+        final ActionCode ac = ActionCode.getActionCode(action_code);
 
 //        if (!ac.isPresent()) {
 //            throw new NoActionCodeDefined(String.format("Unknown actionCode (%d)", action_code));
@@ -257,51 +244,6 @@ public abstract class ActionExecutionService implements ApplicationRepositorySer
                 entityStatusId.entity_status_name());
     }
 
-    //==========================================================================
-    public ActionCode getActionCode(final Integer actionCode) {
-
-        return ServiceFuncs.getMapValue(REF_CACHE, mapEntry -> mapEntry.getKey().equals(ActionCode.class))
-                .get()
-                .stream()
-                .map(x -> (ActionCode) x)
-                .collect(Collectors.toList())
-                .stream()
-                .filter(code -> code.getActionCode().equals(actionCode))
-                .findFirst()
-                .get();
-
-    }
-
-    //==========================================================================
-    public EntityStatus getExistEntityStatus(final Integer entityType, final Integer entityStatusId) {
-
-        return ServiceFuncs.getMapValue(REF_CACHE, mapEntry -> mapEntry.getKey().equals(EntityStatus.class))
-                .get()
-                .stream()
-                .map(x -> (EntityStatus) x)
-                .collect(Collectors.toList())
-                .stream()
-                .filter(status -> status.getEntityTypeId().equals(entityType))
-                .filter(status -> status.getEntityStatusId().equals(entityStatusId))
-                .findFirst()
-                .get();
-
-    }
-
-//    //==========================================================================
-    public EntityKind getExistEntityKind(final Integer kindId) {
-
-        return ServiceFuncs.getMapValue(REF_CACHE, mapEntry -> mapEntry.getKey().equals(EntityKind.class))
-                .get()
-                .stream()
-                .map(x -> (EntityKind) x)
-                .collect(Collectors.toList())
-                .stream()
-                .filter(entityKind -> entityKind.getEntityKindId().equals(kindId))
-                .findFirst()
-                .get();
-    }
-
     //==========================================================================    
     protected static String getModuleName(final String classUrl) {
 
@@ -343,34 +285,85 @@ public abstract class ActionExecutionService implements ApplicationRepositorySer
 
         while (NullSafe.notNull(clAss)) {
 
-            final Annotation annotation = AnnotationFuncs.<CachedReferencClasses>getAnnotation(clAss, CachedReferencClasses.class);
+            final Annotation annotation = AnnotationFuncs.<CachedReferencesClasses>getAnnotation(clAss, CachedReferencesClasses.class);
 
             if (NullSafe.notNull(annotation)) {
 
-                final Class[] classes = AnnotationFuncs.<CachedReferencClasses>getAnnotation(clAss, CachedReferencClasses.class).classes();
+                final Class[] classes = AnnotationFuncs.<CachedReferencesClasses>getAnnotation(clAss, CachedReferencesClasses.class).classes();
 
                 Arrays.stream(classes)
                         .forEach(clazz -> {
-                            //final String tableName = AnnotationFuncs.<Table>getAnnotation(clazz, Table.class).name();
 
-                            final Collection<? extends AbstractRefRecord> collection = this.getPersistanceEntityManager()
-                                    .getEntityManager()
-                                    .createQuery("Select t from " + clazz.getSimpleName() + " t")
-                                    .getResultList();
+//                            final Optional<AbstractRefRecord> ref ServiceFuncs.getMapValue(AbstractRefRecord.REF_CACHE, mapEntry -> mapEntry.getKey().equals(clazz));
+                            if (!ServiceFuncs.getMapValue(AbstractRefRecord.REF_CACHE, mapEntry -> mapEntry.getKey().equals(clazz)).isPresent())  {
 
-                            REF_CACHE.put(clazz, collection);
+                                //final String tableName = AnnotationFuncs.<Table>getAnnotation(clazz, Table.class).name();
+                                NullSafe.create()
+                                        .execute((stmt) -> {
+                                            final Collection<? extends AbstractRefRecord> collection = this.getPersistanceEntityManager()
+                                                    .getEntityManager()
+                                                    .createQuery("Select t from " + clazz.getSimpleName() + " t")
+                                                    .getResultList();
 
+                                            AbstractRefRecord.REF_CACHE.put(clazz, collection);
+
+                                            LogService.LogInfo(clazz, () -> String.format("Reference '%s' is loaded ",
+                                                    clazz.getCanonicalName()));
+
+                                        })
+                                        .catchException(e
+                                                -> LogService.LogErr(clazz, () -> String.format("Can't load refernce '%s' (%s) ",
+                                        clazz.getCanonicalName(), e.getMessage())))
+                                        .throwException();
+                            }
                         });
             }
             clAss = clAss.getSuperclass();
         }
 
         LogService.LogInfo(this.getClass(), () -> String.format("There are [%d] system reference(s) loaded '%s' ",
-                REF_CACHE.size(),
+                AbstractRefRecord.REF_CACHE.size(),
                 this.getClass().getCanonicalName()));
     }
+
+    //==========================================================================
+    public <T extends AbstractActionEntity> Optional<T> findActionEntity(
+            final Class<T> entClass,
+            final Integer entityId) {
+
+        final Optional<T> optEntity = ServiceFuncs.<T>getCollectionElement(enityCollection
+                .stream()
+                .filter(entity -> entity.getClass().equals(entClass))
+                .map(entity -> (T) entity)
+                .collect(Collectors.toList()),
+                entity -> entity.getEntity_id().equals(entityId)
+        );
+
+        final T entity;
+
+        if (optEntity.isPresent()) {
+            // найдено в кэше
+            entity = (T) optEntity.get();
+        } else {
+            // ищем в БД
+            entity = persistanceEntityManager
+                    .getEntityManager()
+                    .find(entClass, entityId);
+        }
+
+        return Optional.ofNullable(entity);
+    }
+
 }
 //==============================================================================
+
+@AllArgsConstructor
+@Data
+final class Pair {
+
+    private Class<ENT> entClass;
+    private Class<ACT> actClass;
+}
 
 class IllegalActionForEntity extends InternalAppException {
 

@@ -7,7 +7,6 @@ package com.kdg.fs24.service;
 
 import com.kdg.fs24.application.core.nullsafe.NullSafe;
 import com.kdg.fs24.persistence.core.PersistanceEntityManager;
-import com.kdg.fs24.spring.core.api.ApplicationRepositoryService;
 import org.springframework.stereotype.Service;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +14,7 @@ import com.kdg.fs24.entity.type.EntityType;
 import com.kdg.fs24.entity.status.EntityStatus;
 import com.kdg.fs24.entity.action.ActionCode;
 import com.kdg.fs24.entity.kind.EntityKind;
+import com.kdg.fs24.spring.core.api.ApplicationService;
 
 /**
  *
@@ -22,7 +22,7 @@ import com.kdg.fs24.entity.kind.EntityKind;
  */
 @Data
 @Service
-public class EntityReferencesService implements ApplicationRepositoryService {
+public class EntityReferencesService implements ApplicationService {
 
     @Autowired
     private PersistanceEntityManager persistanceEntityManager;

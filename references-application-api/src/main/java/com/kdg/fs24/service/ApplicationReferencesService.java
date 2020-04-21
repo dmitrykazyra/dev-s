@@ -5,12 +5,14 @@
  */
 package com.kdg.fs24.service;
 
+import com.kdg.fs24.application.core.service.funcs.ServiceFuncs;
 import lombok.Data;
 import org.springframework.stereotype.Service;
-import com.kdg.fs24.spring.core.api.ApplicationRepositoryService;
 import com.kdg.fs24.persistence.core.PersistanceEntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.kdg.fs24.references.application.currency.Currency;
+import java.util.stream.Collectors;
+
 
 /**
  *
@@ -18,7 +20,7 @@ import com.kdg.fs24.references.application.currency.Currency;
  */
 @Data
 @Service
-public class ApplicationReferencesService implements ApplicationRepositoryService {
+public class ApplicationReferencesService extends AbstractApplicationService {
 
     @Autowired
     private PersistanceEntityManager persistanceEntityManager;
@@ -36,4 +38,17 @@ public class ApplicationReferencesService implements ApplicationRepositoryServic
 
                 });
     }
+    //==========================================================================
+//    public Currency getCurrency(final Integer currencyId) {
+//
+//        return ServiceFuncs.getMapValue(this.getREF_CACHE(), mapEntry -> mapEntry.getKey().equals(Currency.class))
+//                .get()
+//                .stream()
+//                .map(x -> (Currency) x)
+//                .collect(Collectors.toList())
+//                .stream()
+//                .filter(currency -> currency.getCurrencyId().equals(currencyId))
+//                .findFirst()
+//                .get();
+//    }    
 }

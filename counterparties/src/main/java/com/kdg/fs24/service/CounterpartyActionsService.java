@@ -33,17 +33,7 @@ public class CounterpartyActionsService extends ActionExecutionService {
                     counterparty.setCreation_date(LocalDateTime.now());
                     counterparty.setShortName(shortName);
                     counterparty.setFullName(fullName);
-                    
-                    final EntityStatusPK entityStatusPK = NullSafe.createObject(EntityStatusPK.class);
-
-                    entityStatusPK.setEntityStatusId(1);
-                    entityStatusPK.setEntityTypeId(200);
-
-                    final EntityStatus userStatus = this.getPersistanceEntityManager()
-                            .getEntityManager()
-                            .find(EntityStatus.class, entityStatusPK);
-
-                    counterparty.setEntityStatus(userStatus);                    
+                    counterparty.setEntityStatus(EntityStatus.getExistEntityStatus(1, 200));                    
                 });
     }
 }

@@ -10,6 +10,7 @@ import com.kdg.fs24.persistence.api.PersistenceEntity;
 import com.kdg.fs24.persistence.core.PersistanceEntityManager;
 import java.util.Collection;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.annotation.Propagation;
 import com.kdg.fs24.tce.api.StopWatcher;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -32,7 +33,7 @@ public abstract class AbstractAction<T extends ActionEntity>
 
     private StopWatcher stopWatcher;
 
-    @Transactional
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
     public void execute() {
 
         this.doCalculation();

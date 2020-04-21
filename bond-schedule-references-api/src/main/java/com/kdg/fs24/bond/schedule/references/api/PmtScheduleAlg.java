@@ -5,9 +5,12 @@
  */
 package com.kdg.fs24.bond.schedule.references.api;
 
+import com.kdg.fs24.application.core.service.funcs.ServiceFuncs;
 import java.util.Map;
 import com.kdg.fs24.references.api.ReferenceRec;
 import com.kdg.fs24.references.api.AbstractRefRecord;
+import static com.kdg.fs24.references.api.AbstractRefRecord.REF_CACHE;
+import java.util.stream.Collectors;
 import javax.persistence.*;
 import lombok.Data;
 
@@ -21,7 +24,7 @@ import lombok.Data;
 public class PmtScheduleAlg extends AbstractRefRecord implements ReferenceRec {
 
     @Id
-    @Column(name = "schedule_alg_id")
+    @Column(name = "schedule_alg_id", updatable = false)
     private Integer scheduleAlgId;
     @Column(name = "schedule_alg_name")
     private String scheduleAlgName;
@@ -31,5 +34,18 @@ public class PmtScheduleAlg extends AbstractRefRecord implements ReferenceRec {
     @Override
     public void record2Map(final Map<String, Integer> map) {
         map.put(this.toString(), this.getScheduleAlgId());
+    }
+
+    public static PmtScheduleAlg getExistPmtScheduleAlg(final Integer loanSourceId) {
+
+        return ServiceFuncs.getMapValue(REF_CACHE, mapEntry -> mapEntry.getKey().equals(PmtScheduleAlg.class))
+                .get()
+                .stream()
+                .map(x -> (PmtScheduleAlg) x)
+                .collect(Collectors.toList())
+                .stream()
+                .filter(loanSource -> loanSource.getScheduleAlgId().equals(loanSourceId))
+                .findFirst()
+                .get();
     }
 }

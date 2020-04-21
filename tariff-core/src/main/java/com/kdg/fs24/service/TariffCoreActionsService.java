@@ -13,7 +13,7 @@ import com.kdg.fs24.tariff.core.AbstractTariffPlan;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import com.kdg.fs24.references.tariffs.api.TariffConst;
-
+import com.kdg.fs24.entity.status.EntityStatus;
 /**
  *
  * @author N76VB
@@ -37,7 +37,7 @@ public class TariffCoreActionsService extends ActionExecutionService {
                     tariffPlan.setActualDate(actualDate);
                     tariffPlan.setFinishDate(finishDate);
                     tariffPlan.setCreation_date(LocalDateTime.now());
-                    tariffPlan.setEntityStatus(this.getExistEntityStatus(TariffConst.ENTITY_TARIFF_PLAN, 0));
+                    tariffPlan.setEntityStatus(EntityStatus.getExistEntityStatus(TariffConst.ENTITY_TARIFF_PLAN, 0));
                 });
     }
 }

@@ -8,9 +8,9 @@ package com.kdg.fs24.service;
 import com.kdg.fs24.application.core.service.funcs.ServiceFuncs;
 import com.kdg.fs24.bond.schedule.references.api.PmtScheduleAlg;
 import com.kdg.fs24.bond.schedule.references.api.PmtScheduleTerm;
-import com.kdg.fs24.entity.core.api.CachedReferencClasses;
 import com.kdg.fs24.entity.core.api.EntityClassesPackages;
 import com.kdg.fs24.entity.kind.EntityKind;
+import com.kdg.fs24.entity.status.EntityStatus;
 import lombok.Data;
 import org.springframework.stereotype.Service;
 import com.kdg.fs24.retail.loan.contracts.RetailLoanContract;
@@ -24,6 +24,7 @@ import com.kdg.fs24.references.application.currency.Currency;
 import com.kdg.fs24.tariff.core.api.TariffPlan;
 import java.math.BigDecimal;
 import java.util.stream.Collectors;
+import com.kdg.fs24.entity.core.api.CachedReferencesClasses;
 
 /**
  *
@@ -32,7 +33,7 @@ import java.util.stream.Collectors;
 @Data
 @Service
 @EntityClassesPackages(pkgList = {"com.kdg.fs24.retail.loan.contracts"})
-@CachedReferencClasses(classes = {ContractSubject.class, LoanSource.class, PmtScheduleAlg.class, PmtScheduleTerm.class})
+@CachedReferencesClasses(classes = {ContractSubject.class, LoanSource.class, PmtScheduleAlg.class, PmtScheduleTerm.class, Currency.class})
 public class RetailLoanContractActionsService extends ActionExecutionService {
 
     public RetailLoanContract createRetailLoanContract(final ContractSubject contractSubject,
@@ -64,20 +65,7 @@ public class RetailLoanContractActionsService extends ActionExecutionService {
                     retailLoanContract.setEntityKind(entityKind);
                     retailLoanContract.setLoanSource(loanSource);
                     retailLoanContract.setCreation_date(LocalDateTime.now());
-                    retailLoanContract.setEntityStatus(this.getExistEntityStatus(TariffConst.ENTITY_TARIFF_PLAN, 0));
+                    retailLoanContract.setEntityStatus(EntityStatus.getExistEntityStatus(TariffConst.ENTITY_TARIFF_PLAN, 0));
                 });
-    }
-    //==========================================================================
-    public ContractSubject getContractSubject(final Integer contractSubjectId) {
-
-        return ServiceFuncs.getMapValue(this.getREF_CACHE(), mapEntry -> mapEntry.getKey().equals(ContractSubject.class))
-                .get()
-                .stream()
-                .map(x -> (ContractSubject) x)
-                .collect(Collectors.toList())
-                .stream()
-                .filter(contractSubject -> contractSubject.getContractSubjectId().equals(contractSubjectId))
-                .findFirst()
-                .get();
     }
 }

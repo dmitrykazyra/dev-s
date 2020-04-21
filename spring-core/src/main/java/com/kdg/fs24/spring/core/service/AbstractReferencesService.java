@@ -5,17 +5,17 @@
  */
 package com.kdg.fs24.spring.core.service;
 
-import com.kdg.fs24.spring.core.api.ApplicationRepositoryService;
 import java.util.Collection;
 import com.kdg.fs24.spring.core.api.ApplicationJpaRepository;
 import lombok.Data;
+import com.kdg.fs24.spring.core.api.ApplicationService;
 /**
  *
  * @author N76VB
  */
 
 @Data
-public abstract class AbstractReferencesService implements ApplicationRepositoryService {
+public abstract class AbstractReferencesService implements ApplicationService {
     
     private Collection<ApplicationJpaRepository> refRepositories;
 }

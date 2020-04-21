@@ -7,14 +7,23 @@ package com.kdg.fs24.references.api;
 
 import java.lang.reflect.Field;
 import com.kdg.fs24.application.core.nullsafe.NullSafe;
+import com.kdg.fs24.application.core.service.funcs.ServiceFuncs;
 import com.kdg.fs24.persistence.api.PersistenceEntity;
+import java.util.Collection;
+import java.util.Map;
+import lombok.Data;
 
 /**
  *
  * @author kazyra_d
  */
+@Data
 public abstract class AbstractRefRecord implements PersistenceEntity {
 
+    public static final Map<Class<? extends AbstractRefRecord>, Collection<? extends AbstractRefRecord>> REF_CACHE
+            = ServiceFuncs.getOrCreateMap_Safe(ServiceFuncs.MAP_NULL);
+    
+    
     public final long calcRecordHash() {
 
         return NullSafe.create()

@@ -3,16 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.kdg.fs24.spring.core.service;
+package com.kdg.fs24.spring.core.api;
 
-import lombok.Data;
-import com.kdg.fs24.spring.core.api.ApplicationService;
+
 
 /**
  *
  * @author N76VB
  */
-@Data
-public class AbstractEntityClassesService implements ApplicationService {
-    
+
+public interface ApplicationService {
+
 }

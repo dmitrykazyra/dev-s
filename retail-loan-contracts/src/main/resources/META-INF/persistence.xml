@@ -9,6 +9,8 @@
         <jar-file>file:///D:\fs24\DEV-S\libs\counterparties.jar</jar-file>
         <jar-file>file:///D:\fs24\DEV-S\libs\references-application-api.jar</jar-file>
         <jar-file>file:///D:\fs24\DEV-S\libs\tariff-core.jar</jar-file>
+        <jar-file>file:///D:\fs24\DEV-S\libs\retail-loan-contracts-references-api.jar</jar-file>  
+        <jar-file>file:///D:\fs24\DEV-S\libs\bond-schedule-references-api.jar</jar-file>  
         <properties>
             <property name="hibernate.hbm2ddl.auto" value="none"/>
             <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/fs24"/>

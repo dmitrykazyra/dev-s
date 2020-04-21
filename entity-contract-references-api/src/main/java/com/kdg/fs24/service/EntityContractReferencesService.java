@@ -5,12 +5,12 @@
  */
 package com.kdg.fs24.service;
 
-import com.kdg.fs24.spring.core.api.ApplicationRepositoryService;
 import lombok.Data;
 import org.springframework.stereotype.Service;
 import com.kdg.fs24.entity.contract.subjects.ContractSubject;
 import com.kdg.fs24.persistence.core.PersistanceEntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
+import com.kdg.fs24.spring.core.api.ApplicationService;
 
 /**
  *
@@ -18,7 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 @Data
 @Service
-public class EntityContractReferencesService implements ApplicationRepositoryService {
+public class EntityContractReferencesService implements ApplicationService {
 
     @Autowired
     private PersistanceEntityManager persistanceEntityManager;

@@ -20,12 +20,14 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @ComponentScan(basePackages = "com.kdg.fs24.service")
 @PropertySource("classpath:application.properties")
 @EntityScan(basePackages = {"com.kdg.fs24.entity",
-    "com.kdg.fs24.counterparties.api", 
+    "com.kdg.fs24.counterparties.api",
     "com.kdg.fs24.references.application",
     "com.kdg.fs24.tariff.core",
     "com.kdg.fs24.entity.contract",
-    "com.kdg.fs24.spring.security"})
+    "com.kdg.fs24.spring.security",
+    "com.kdg.fs24.loan.references.api",
+    "com.kdg.fs24.bond.schedule.references.api"})
 @EnableJpaRepositories(basePackages = "com.kdg.fs24.repository")
 public class TestSpringBoot extends SpringBoot4Test {
-    
+
 }

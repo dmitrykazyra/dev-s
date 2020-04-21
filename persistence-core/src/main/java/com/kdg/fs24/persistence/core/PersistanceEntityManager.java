@@ -51,7 +51,7 @@ public class PersistanceEntityManager extends AbstractApplicationBean {
 
     //public PersistanceEntityManager(final String persistenceUnitName) {
     @PostConstruct
-    public void postEntityManager() {
+    public void postConstructEntityManager() {
 
         NullSafe.create(persistenceUnitName)
                 .execute(() -> {

@@ -49,34 +49,36 @@ public abstract class AbstractAction<T extends ActionEntity>
             // сохранили объекты
             persistanceEntityManager
                     .executeTransaction(em -> {
+                        persistenceObjects.add(this.getEntity());
                         this.doUpdate();
 
-                        persistenceObjects.add(this.getEntity());
 //                        if (persistenceObjects.isEmpty()) {
 //                            throw new RuntimeException("There are no objects for persistence");
 //                        }
-
                         persistenceObjects
                                 .forEach((obj) -> {
 
-                                    if (obj instanceof AbstractPersistenceEntity) {
-                                        ((AbstractPersistenceEntity) (AbstractPersistenceEntity) (obj))
-                                                .setLast_modify(LocalDateTime.now());
+//                                    if (obj instanceof AbstractPersistenceEntity) {
+                                    final AbstractPersistenceEntity apeObj = (AbstractPersistenceEntity) (obj);
+
+                                    apeObj.setLast_modify(this.getExecuteDate());
+                                    final Boolean needMerge = !apeObj.getJustCreated();
+                                    //}
+
+                                    if (needMerge) {
+                                        em.merge(obj);
+                                    } else {
+                                        em.persist(obj);
                                     }
-
-                                    em.persist(obj);
-
-                                    //em.refresh(entity);
                                 });
-                        //em.flush();
-                    });
 
-            persistanceEntityManager.<AbstractPersistenceAction>createPersistenceEntity(
-                    AbstractPersistenceAction.class,
-                    (action) -> {
-                        action.setEntity(this.getEntity());
-                        action.setActionCode(this.getActionCode());
-                        action.setActionDuration(LocalTime.MIN.plus(this.stopWatcher.getTimeExecMillis(), ChronoUnit.MILLIS));
+                        persistanceEntityManager.<AbstractPersistenceAction>createPersistenceEntity(
+                                AbstractPersistenceAction.class,
+                                (action) -> {
+                                    action.setEntity(this.getEntity());
+                                    action.setActionCode(this.getActionCode());
+                                    action.setActionDuration(LocalTime.MIN.plus(this.stopWatcher.getTimeExecMillis(), ChronoUnit.MILLIS));
+                                });
                     });
 
             this.afterCommit();

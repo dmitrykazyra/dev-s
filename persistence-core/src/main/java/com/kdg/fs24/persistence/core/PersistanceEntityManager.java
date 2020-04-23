@@ -185,6 +185,7 @@ public class PersistanceEntityManager extends AbstractApplicationBean {
                 })
                 .throwException();
     }
+    //==========================================================================
 
     //==========================================================================
     public final void executeTransaction(final PersistenceAction persistAction) {
@@ -197,16 +198,25 @@ public class PersistanceEntityManager extends AbstractApplicationBean {
                     NullSafe.create()
                             .execute(() -> {
 
-//                        LogService.LogInfo(this.getClass(), () -> String.format("Start jpa transaction (%b,%d)",
-//                                this.getEntityManager().getTransaction().isActive(),
-//                                this.getEntityManager().getTransaction().hashCode()));
-                                if (!entityTransaction.isActive()) {
+                                final Boolean isActiveTransaction = entityTransaction.isActive();
+
+                                if (!isActiveTransaction) {
                                     entityTransaction.begin();
+                                    if (this.debugMode.equals(SysConst.STRING_TRUE)) {
+                                        LogService.LogInfo(this.getClass(), () -> String.format("Start jpa transaction (%d)",
+                                                this.getEntityManager().getTransaction().hashCode()).toUpperCase());
+                                    }
                                 }
                                 //}
                                 this.executePersistAction(persistAction);
 
-                                entityTransaction.commit();
+                                if (!isActiveTransaction) {
+                                    entityTransaction.commit();
+                                    if (this.debugMode.equals(SysConst.STRING_TRUE)) {
+                                        LogService.LogInfo(this.getClass(), () -> String.format("commit jpa transaction (%d)",
+                                                this.getEntityManager().getTransaction().hashCode()).toUpperCase());
+                                    }
+                                }
 
 //                        LogService.LogInfo(this.getClass(), () -> String.format("Finish jpa transaction (%d)",
 //                                this.getEntityManager().getTransaction().hashCode()));
@@ -214,11 +224,9 @@ public class PersistanceEntityManager extends AbstractApplicationBean {
 
                         //if (this.getEntityManager().getTransaction().isActive()) {
                         LogService.LogErr(this.getClass(), () -> String.format("FAIL executeTransaction ('%s')",
-                                NullSafe.getErrorMessage(e)));
+                                NullSafe.getErrorMessage(e)).toUpperCase());
                         NullSafe.create(SysConst.STRING_NULL, NullSafe.DONT_THROW_EXCEPTION)
-                                .execute(() -> {
-                                    entityTransaction.rollback();
-                                });
+                                .execute(() -> entityTransaction.rollback());
 
                         //reCreateEntityManager();
                         //}

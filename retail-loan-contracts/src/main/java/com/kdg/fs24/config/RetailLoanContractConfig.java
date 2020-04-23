@@ -7,6 +7,7 @@ package com.kdg.fs24.config;
 
 import com.kdg.fs24.spring.config.AbstractApplicationConfiguration;
 import lombok.Data;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -17,7 +18,14 @@ import org.springframework.context.annotation.PropertySource;
  */
 @Configuration
 @ComponentScan(basePackages = "com.kdg.fs24.service")
-//@EntityScan(basePackages = {"com.kdg.fs24.spring.security", "com.kdg.fs24.entity"})
+@EntityScan(basePackages = {"com.kdg.fs24.entity",
+    "com.kdg.fs24.counterparties.api",
+    "com.kdg.fs24.references.application",
+    "com.kdg.fs24.tariff.core",
+    "com.kdg.fs24.entity.contract",
+    "com.kdg.fs24.spring.security",
+    "com.kdg.fs24.loan.references.api",
+    "com.kdg.fs24.bond.schedule.references.api"})
 @PropertySource("classpath:application.properties")
 //@EnableJpaRepositories(basePackages = "com.kdg.fs24.repository")
 @Data

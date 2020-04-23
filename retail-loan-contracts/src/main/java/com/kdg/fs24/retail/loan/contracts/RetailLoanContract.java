@@ -49,7 +49,8 @@ import lombok.Data;
                     entity_status_name = "Аннулированная сделка")
         })
 @DefaultEntityStatus(entity_status = SysConst.ES_VALID)
-@ActionClassesPackages(pkgList = {"com.kdg.fs24.retail.loan.actions"})
+@ActionClassesPackages(pkgList = {"com.kdg.fs24.retail.loan.actions",
+    "com.kdg.fs24.entity.contracts.actions"})
 public class RetailLoanContract extends AbstractRetailLoanContract {
 
     @ManyToOne

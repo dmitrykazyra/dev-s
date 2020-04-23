@@ -127,6 +127,6 @@ public class TestRetailLoanContracts {
 //            final PmtScheduleAlg pmtScheduleAlg,
 //            final PmtScheduleTerm pmtScheduleTerm
         retailLoanContractActionsService.executeAction(retailLoanContract, RetailLoanConstants.MODIFY_INDIVIDUAL_LOAN_CONTRACT);
-    //    retailLoanContractActionsService.executeAction(retailLoanContract, EntityContractConst.ACT_AUTHORIZE_CONTRACT);
+        retailLoanContractActionsService.executeAction(retailLoanContract, EntityContractConst.ACT_AUTHORIZE_CONTRACT);
     }
 }

@@ -53,5 +53,5 @@ public class AbstractPersistenceAction implements Action {
     private LocalTime actionDuration;
     @Column(name = "notes", updatable = false)
     private String notes;
-
+  
 }

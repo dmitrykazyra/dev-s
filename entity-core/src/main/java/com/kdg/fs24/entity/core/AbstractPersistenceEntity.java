@@ -5,6 +5,7 @@
  */
 package com.kdg.fs24.entity.core;
 
+import com.kdg.fs24.application.core.nullsafe.NullSafe;
 import com.kdg.fs24.persistence.api.PersistenceSetup;
 import com.kdg.fs24.entity.core.api.ActionEntity;
 import com.kdg.fs24.entity.type.EntityType;
@@ -49,5 +50,9 @@ public class AbstractPersistenceEntity implements ActionEntity {
     private LocalDate close_date;
     @Column(name = "last_modify")
     private LocalDateTime last_modify;
+
+    public Boolean getJustCreated() {
+        return NullSafe.isNull(this.entity_id);
+    }
 
 }

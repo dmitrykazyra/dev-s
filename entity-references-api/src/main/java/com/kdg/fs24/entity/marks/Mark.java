@@ -5,48 +5,32 @@
  */
 package com.kdg.fs24.entity.marks;
 
-
 import java.util.Map;
 import com.kdg.fs24.references.api.ReferenceRec;
 import com.kdg.fs24.references.api.AbstractRefRecord;
+import javax.persistence.*;
+import lombok.Data;
 
 /**
  *
  * @author kazyra_d
  */
-public class Mark  extends AbstractRefRecord implements ReferenceRec {
+@Entity
+@Data
+@Table(name = "core_marksRef")
+public class Mark extends AbstractRefRecord implements ReferenceRec {
 
-    private Integer mark_id;
-    private String mark_name;
-    private String mark_group;
-
-    public Integer getMark_id() {
-        return mark_id;
-    }
-
-    public void setMark_id(final Integer mark_id) {
-        this.mark_id = mark_id;
-    }
-
-    public String getMark_name() {
-        return mark_name;
-    }
-
-    public void setMark_name(final String mark_name) {
-        this.mark_name = mark_name;
-    }
-
-    public String getMark_group() {
-        return mark_group;
-    }
-
-    public void setMark_group(final String mark_group) {
-        this.mark_group = mark_group;
-    }
+    @Id
+    @Column(name = "mark_id")
+    private Integer markId;
+    @Column(name = "mark_name")
+    private String markName;
+    @Column(name = "mark_group")
+    private String markGroup;
 
     @Override
     public void record2Map(final Map<String, Integer> map) {
-        map.put(String.format("%d - %s", this.getMark_id(), this.getMark_name()), this.getMark_id());
+        map.put(String.format("%d - %s", this.getMarkId(), this.getMarkName()), this.getMarkId());
     }
 
 }

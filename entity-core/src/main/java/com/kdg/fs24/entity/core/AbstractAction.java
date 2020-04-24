@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import lombok.Data;
+import java.util.Optional;
 
 /**
  *
@@ -32,6 +33,7 @@ public abstract class AbstractAction<T extends ActionEntity>
             = ServiceFuncs.<PersistenceEntity>getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);
 
     private StopWatcher stopWatcher;
+    private String errMsg;
 
     @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
     public void execute() {
@@ -55,29 +57,35 @@ public abstract class AbstractAction<T extends ActionEntity>
 //                        if (persistenceObjects.isEmpty()) {
 //                            throw new RuntimeException("There are no objects for persistence");
 //                        }
-                        persistenceObjects
-                                .forEach((obj) -> {
+                        NullSafe.create()
+                                .execute(() -> {
+
+                                    persistenceObjects
+                                            .forEach((obj) -> {
 
 //                                    if (obj instanceof AbstractPersistenceEntity) {
-                                    final AbstractPersistenceEntity apeObj = (AbstractPersistenceEntity) (obj);
+                                                final AbstractPersistenceEntity apeObj = (AbstractPersistenceEntity) (obj);
 
-                                    apeObj.setLast_modify(this.getExecuteDate());
-                                    final Boolean needMerge = !apeObj.getJustCreated();
-                                    //}
+                                                apeObj.setLast_modify(this.getExecuteDate());
+                                                final Boolean needMerge = !apeObj.getJustCreated();
+                                                //}
 
-                                    if (needMerge) {
-                                        em.merge(obj);
-                                    } else {
-                                        em.persist(obj);
-                                    }
-                                });
-
-                        persistanceEntityManager.<AbstractPersistenceAction>createPersistenceEntity(
-                                AbstractPersistenceAction.class,
-                                (action) -> {
-                                    action.setEntity(this.getEntity());
-                                    action.setActionCode(this.getActionCode());
-                                    action.setActionDuration(LocalTime.MIN.plus(this.stopWatcher.getTimeExecMillis(), ChronoUnit.MILLIS));
+                                                if (needMerge) {
+                                                    em.merge(obj);
+                                                } else {
+                                                    em.persist(obj);
+                                                }
+                                            });
+                                }).catchException(e -> this.setErrMsg(NullSafe.getErrorMessage(e)))
+                                .finallyBlock(() -> {
+                                    persistanceEntityManager.<AbstractPersistenceAction>createPersistenceEntity(
+                                            AbstractPersistenceAction.class,
+                                            (action) -> {
+                                                action.setEntity(this.getEntity());
+                                                action.setActionCode(this.getActionCode());
+                                                action.setActionDuration(LocalTime.MIN.plus(this.stopWatcher.getTimeExecMillis(), ChronoUnit.MILLIS));
+                                                action.setErrMsg(this.getErrMsg());
+                                            });
                                 });
                     });
 

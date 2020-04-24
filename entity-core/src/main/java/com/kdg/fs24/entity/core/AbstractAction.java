@@ -34,6 +34,7 @@ public abstract class AbstractAction<T extends ActionEntity>
 
     private StopWatcher stopWatcher;
     private String errMsg;
+    private AbstractPersistenceAction persistAction;
 
     @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
     public void execute() {
@@ -51,12 +52,16 @@ public abstract class AbstractAction<T extends ActionEntity>
             // сохранили объекты
             persistanceEntityManager
                     .executeTransaction(em -> {
-                        persistenceObjects.add(this.getEntity());
-                        this.doUpdate();
 
-//                        if (persistenceObjects.isEmpty()) {
-//                            throw new RuntimeException("There are no objects for persistence");
-//                        }
+                        // создание базовой сущности
+                        this.createMainEntity();
+
+                        // создание действия
+                        this.createAction();
+
+                        // сущности для создания\редакирования
+                        this.createPersistenceObjects();
+
                         NullSafe.create()
                                 .execute(() -> {
 
@@ -78,14 +83,9 @@ public abstract class AbstractAction<T extends ActionEntity>
                                             });
                                 }).catchException(e -> this.setErrMsg(NullSafe.getErrorMessage(e)))
                                 .finallyBlock(() -> {
-                                    persistanceEntityManager.<AbstractPersistenceAction>createPersistenceEntity(
-                                            AbstractPersistenceAction.class,
-                                            (action) -> {
-                                                action.setEntity(this.getEntity());
-                                                action.setActionCode(this.getActionCode());
-                                                action.setActionDuration(LocalTime.MIN.plus(this.stopWatcher.getTimeExecMillis(), ChronoUnit.MILLIS));
-                                                action.setErrMsg(this.getErrMsg());
-                                            });
+                                    // обновление действия
+                                    this.updateAction();
+                                    this.updateMainEntity();
                                 });
                     });
 
@@ -93,7 +93,49 @@ public abstract class AbstractAction<T extends ActionEntity>
         }
     }
 
-    protected void doUpdate() {
+    //==========================================================================
+    private void createMainEntity() {
+        final AbstractPersistenceEntity obj = (AbstractPersistenceEntity) this.getEntity();
+
+        if (obj.getJustCreated()) {
+            persistanceEntityManager.getEntityManager().persist(obj);
+        }
+    }
+
+    //==========================================================================
+    private void updateMainEntity() {
+        final AbstractPersistenceEntity obj = (AbstractPersistenceEntity) this.getEntity();
+
+        obj.setLast_modify(this.getPersistAction().getExecuteDate());
+
+        persistanceEntityManager.getEntityManager().persist(obj);
+
+    }
+
+    //==========================================================================
+    private void createAction() {
+        persistanceEntityManager.<AbstractPersistenceAction>createPersistenceEntity(
+                AbstractPersistenceAction.class,
+                (action) -> {
+                    action.setEntity(this.getEntity());
+                    action.setActionCode(this.getActionCode());
+                    this.setPersistAction(action);
+                    action.setActionDuration(LocalTime.MIN);
+//                    action.setErrMsg(this.getErrMsg());
+                });
+    }
+
+    //==========================================================================
+    private void updateAction() {
+        this.getPersistAction().setActionDuration(LocalTime.MIN.plus(this.stopWatcher.getTimeExecMillis(), ChronoUnit.MILLIS));
+        this.getPersistAction().setErrMsg(this.getErrMsg());
+        persistanceEntityManager
+                .getEntityManager()
+                .merge(this.getPersistAction());
+    }
+
+    //==========================================================================
+    protected void createPersistenceObjects() {
 
     }
 

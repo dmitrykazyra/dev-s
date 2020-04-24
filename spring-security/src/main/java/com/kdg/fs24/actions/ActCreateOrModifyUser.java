@@ -24,7 +24,7 @@ import lombok.Data;
 public class ActCreateOrModifyUser extends AbstractAction<ApplicationUser> {
 
     @Override
-    protected void doUpdate() {
+    protected void createPersistenceObjects() {
         //this.getPersistenceObjects().add(this.getEntity());
     }
 

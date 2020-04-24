@@ -16,6 +16,8 @@ import java.time.LocalDate;
 import java.math.BigDecimal;
 import com.kdg.fs24.tariff.core.api.TariffPlan;
 import com.kdg.fs24.tariff.core.AbstractTariffPlan;
+import java.util.Collection;
+import com.kdg.fs24.entity.marks.EntityMark;
 
 /**
  *
@@ -54,4 +56,7 @@ public class AbstractEntityContract extends AbstractActionEntity {
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = AbstractTariffPlan.class)
     @JoinColumn(name = "tariff_plan_id", referencedColumnName = "tariff_plan_id")
     private TariffPlan tariffPlan;
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Collection<EntityMark> entityMarks;
+    
 }

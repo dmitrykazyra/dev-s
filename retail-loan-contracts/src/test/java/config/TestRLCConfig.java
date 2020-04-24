@@ -27,6 +27,7 @@ import org.springframework.context.annotation.ComponentScan;
     "com.kdg.fs24.entity.core.api",
     "com.kdg.fs24.tariff.core",
     "com.kdg.fs24.entity.contract",
+    "com.kdg.fs24.entity.marks",    
     "com.kdg.fs24.spring.security",
     "com.kdg.fs24.loan.references.api",
     "com.kdg.fs24.bond.schedule.references.api"})

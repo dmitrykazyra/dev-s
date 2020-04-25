@@ -287,18 +287,22 @@ public class PersistanceEntityManager extends AbstractApplicationBean {
     }
 
     //==========================================================================
-    public <T extends PersistenceEntity> void createPersistenceEntity(final Class<T> persistanceClass, final PersisntanceEntityCreator<T> pee) {
+    public <T extends PersistenceEntity> T createPersistenceEntity(final Class<T> persistanceClass, final PersisntanceEntityCreator<T> pee) {
         final T persistenceEntity = NullSafe.<T>createObject(persistanceClass);
         pee.create(persistenceEntity);
 
         this.executeTransaction(em -> em.persist(persistenceEntity));
+
+        return persistenceEntity;
     }
 
     //==========================================================================
-    public <T extends PersistenceEntity> void mergePersistenceEntity(final Class<T> persistanceClass, final PersisntanceEntityCreator<T> pee) {
+    public <T extends PersistenceEntity> T mergePersistenceEntity(final Class<T> persistanceClass, final PersisntanceEntityCreator<T> pee) {
         final T persistenceEntity = NullSafe.<T>createObject(persistanceClass);
         pee.create(persistenceEntity);
 
         this.executeTransaction(em -> em.merge(persistenceEntity));
+
+        return persistenceEntity;
     }
 }

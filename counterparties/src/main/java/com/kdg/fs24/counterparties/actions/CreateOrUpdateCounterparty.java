@@ -21,7 +21,7 @@ import lombok.Data;
 public class CreateOrUpdateCounterparty extends AbstractAction<Counterparty> {
 
     @Override
-    protected void createPersistenceObjects() {
+    protected void createPersistenceEntities() {
         //this.getPersistenceObjects().add(this.getEntity());
     }
 

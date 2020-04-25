@@ -36,7 +36,7 @@ public class ActModifyTariffPlan extends AbstractAction<AbstractTariffPlan> {
 
     //==========================================================================
     @Override
-    protected void createPersistenceObjects() {
+    protected void createPersistenceEntities() {
        // this.getPersistenceObjects().add(this.getEntity());
 //        NullSafe.create()
 //                .execute(() -> {

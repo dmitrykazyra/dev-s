@@ -1,12 +1,10 @@
 package com.kdg.fs24.entity.core;
 
-import com.kdg.fs24.entity.core.api.Action;
 import com.kdg.fs24.application.core.exception.api.InternalAppException;
 import com.kdg.fs24.entity.core.api.ActionEntity;
 import com.kdg.fs24.application.core.sysconst.SysConst;
 import com.kdg.fs24.application.core.nullsafe.NullSafe;
 import com.kdg.fs24.application.core.service.funcs.ServiceFuncs;
-import com.kdg.fs24.entity.action.ActionCode;
 import com.kdg.fs24.persistence.api.PersistenceEntity;
 import com.kdg.fs24.persistence.core.PersistanceEntityManager;
 import java.util.Collection;
@@ -17,7 +15,6 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import lombok.Data;
-import java.util.Optional;
 
 /**
  *
@@ -30,7 +27,7 @@ public abstract class AbstractAction<T extends ActionEntity>
     // объекты для персистенса
     private PersistanceEntityManager persistanceEntityManager;
 
-    private final Collection<PersistenceEntity> persistenceObjects
+    private final Collection<PersistenceEntity> persistenceEntities
             = ServiceFuncs.<PersistenceEntity>getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);
 
     private StopWatcher stopWatcher;
@@ -60,12 +57,12 @@ public abstract class AbstractAction<T extends ActionEntity>
                                     this.createMainEntity();
 
                                     // создание действия
-                                    this.createAction();
+                                    this.createPersistenceAction();
 
                                     // сущности для создания\редакирования
-                                    this.createPersistenceObjects();
+                                    this.createPersistenceEntities();
 
-                                    persistenceObjects
+                                    persistenceEntities
                                             .forEach((obj) -> {
 
                                                 if (NullSafe.isNull(this.getErrMsg())) {
@@ -84,15 +81,12 @@ public abstract class AbstractAction<T extends ActionEntity>
                                                 }
                                             });
 
-                                }).catchException(e -> this.setErrMsg(String.format("%s: %s",
-                                this.getClass().getSimpleName(),
-                                NullSafe.getErrorMessage(e))))
+                                }).catchException(e -> this.setErrMsg(String.format("%s: %s", this.getClass().getSimpleName(), NullSafe.getErrorMessage(e))))
                                 .finallyBlock(() -> {
                                     // обновление действия
-                                    this.updateAction();
+                                    this.updatePersistenceAction();
                                     this.updateMainEntity();
                                 });
-
                     });
 
             if (NullSafe.notNull(this.getErrMsg())) {
@@ -107,7 +101,9 @@ public abstract class AbstractAction<T extends ActionEntity>
     private void createMainEntity() {
 
         if (this.getEntity().justCreated()) {
-            persistanceEntityManager.getEntityManager().persist(this.getEntity());
+            persistanceEntityManager
+                    .getEntityManager()
+                    .persist(this.getEntity());
         }
     }
 
@@ -122,32 +118,39 @@ public abstract class AbstractAction<T extends ActionEntity>
     }
 
     //==========================================================================
-    private void createAction() {
-        persistanceEntityManager.<AbstractPersistenceAction>createPersistenceEntity(
+    private void createPersistenceAction() {
+        this.setPersistAction(persistanceEntityManager.<AbstractPersistenceAction>createPersistenceEntity(
                 AbstractPersistenceAction.class,
                 (action) -> {
                     action.setEntity(this.getEntity());
                     action.setActionCode(this.getActionCode());
-                    this.setPersistAction(action);
                     action.setActionDuration(LocalTime.MIN);
 //                    action.setErrMsg(this.getErrMsg());
-                });
+                }));
     }
 
     //==========================================================================
-    private void updateAction() {
-        this.getPersistAction().setActionDuration(LocalTime.MIN.plus(this.stopWatcher.getTimeExecMillis(), ChronoUnit.MILLIS));
-        this.getPersistAction().setErrMsg(this.getErrMsg());
+    private void updatePersistenceAction() {
+        this.getPersistAction()
+                .setActionDuration(LocalTime.MIN.plus(this.stopWatcher.getTimeExecMillis(), ChronoUnit.MILLIS));
+        this.getPersistAction()
+                .setErrMsg(this.getErrMsg());
         persistanceEntityManager
                 .getEntityManager()
                 .merge(this.getPersistAction());
     }
 
     //==========================================================================
-    protected void createPersistenceObjects() {
+    protected void addPersistenceEntity(final PersistenceEntity persistenceEntity) {
+        this.persistenceEntities.add(persistenceEntity);
+    }
+
+    //==========================================================================
+    protected void createPersistenceEntities() {
 
     }
 
+    //==========================================================================
     protected void afterCommit() {
 
     }

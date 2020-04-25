@@ -44,16 +44,16 @@ public class ActAuthorizeAbstractContract extends AbstractContractAction<Abstrac
 //                })
 //                .<Boolean>getObject();
         return true;
-        
+
     }
 
     //==========================================================================
     @Override
-    protected void createPersistenceObjects() {
+    protected void createPersistenceEntities() {
 
         // отметка об авторизации
         final EntityMark entityMark = NullSafe.createObject(EntityMark.class);
-        
+
         entityMark.setAction(this.getPersistAction());
         entityMark.setEntity(this.getEntity());
         entityMark.setMarkValue(AbstractRefRecord.<MarkValue>getRefeenceRecord(
@@ -61,18 +61,9 @@ public class ActAuthorizeAbstractContract extends AbstractContractAction<Abstrac
                 record -> record.getMarkId().equals(EntityConst.MR_AUTHORIZE_ENTITY)
                 && record.getMarkValueId().equals(EntityConst.MR_AUTHORIZE_ENTITY_AUTH)));
         entityMark.setDirection(EntityConst.IS_AUTHORIZED);
-        
-        this.getPersistenceObjects().add(entityMark);
-//        NullSafe.create()
-//                .execute(() -> {
-//                    this.getContractEntity()
-//                            .getEntityMarks()
-//                            .saveEntityMark(
-//                                    this.getEntity().getEntity_id(),
-//                                    this.actionId,
-//                                    EntityConst.MR_AUTHORIZE_ENTITY,
-//                                    EntityConst.MR_AUTHORIZE_ENTITY_AUTH);
-//                }).throwException();
+
+        this.addPersistenceEntity(entityMark);
+
     }
 
     //==========================================================================    

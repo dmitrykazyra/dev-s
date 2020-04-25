@@ -21,7 +21,7 @@ import lombok.Data;
 public class ActCreateOrModifyRole extends AbstractAction<ApplicationRole> {
 
     @Override
-    protected void createPersistenceObjects() {
+    protected void createPersistenceEntities() {
         //this.getPersistenceObjects().add(this.getEntity());
     }
 

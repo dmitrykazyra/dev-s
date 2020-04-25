@@ -19,9 +19,7 @@ import lombok.Data;
  *
  * @author N76VB
  */
-@PersistenceSetup(
-        persistence_unit = "core_persistence",
-        table = "core_Entities")
+
 @Entity
 @Table(name = "core_Entities")
 @Data
@@ -50,8 +48,9 @@ public class AbstractPersistenceEntity implements ActionEntity {
     private LocalDate close_date;
     @Column(name = "last_modify")
     private LocalDateTime last_modify;
-
-    public Boolean getJustCreated() {
+    
+    @Override
+    public Boolean justCreated() {
         return NullSafe.isNull(this.entity_id);
     }
 

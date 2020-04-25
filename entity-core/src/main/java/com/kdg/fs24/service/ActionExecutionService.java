@@ -18,7 +18,6 @@ import com.kdg.fs24.entity.core.api.EntityClassesPackages;
 import com.kdg.fs24.entity.core.api.ActionClassesPackages;
 import com.kdg.fs24.application.core.exception.api.InternalAppException;
 import com.kdg.fs24.application.core.nullsafe.NullSafe;
-import com.kdg.fs24.application.core.service.funcs.FilterComparator;
 import com.kdg.fs24.application.core.service.funcs.ReflectionFuncs;
 import com.kdg.fs24.application.core.service.funcs.ServiceFuncs;
 import com.kdg.fs24.application.core.sysconst.SysConst;
@@ -36,6 +35,8 @@ import com.kdg.fs24.entity.core.api.EntityKindId;
 import com.kdg.fs24.entity.core.api.EntityStatusesRef;
 import com.kdg.fs24.entity.status.EntityStatus;
 import com.kdg.fs24.entity.kind.EntityKind;
+import com.kdg.fs24.entity.marks.Mark;
+import com.kdg.fs24.entity.marks.MarkValue;
 import com.kdg.fs24.entity.status.EntityStatusId;
 import com.kdg.fs24.references.api.AbstractRefRecord;
 import java.lang.annotation.Annotation;
@@ -48,7 +49,7 @@ import com.kdg.fs24.entity.core.api.CachedReferencesClasses;
  */
 @Data
 //@Service
-@CachedReferencesClasses(classes = {EntityStatus.class, EntityKind.class, ActionCode.class})
+@CachedReferencesClasses(classes = {EntityStatus.class, EntityKind.class, ActionCode.class, Mark.class, MarkValue.class})
 public abstract class ActionExecutionService extends AbstractApplicationService {
 
     //==========================================================================

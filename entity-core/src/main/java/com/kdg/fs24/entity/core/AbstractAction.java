@@ -1,6 +1,7 @@
 package com.kdg.fs24.entity.core;
 
 import com.kdg.fs24.entity.core.api.Action;
+import com.kdg.fs24.application.core.exception.api.InternalAppException;
 import com.kdg.fs24.entity.core.api.ActionEntity;
 import com.kdg.fs24.application.core.sysconst.SysConst;
 import com.kdg.fs24.application.core.nullsafe.NullSafe;
@@ -53,52 +54,60 @@ public abstract class AbstractAction<T extends ActionEntity>
             persistanceEntityManager
                     .executeTransaction(em -> {
 
-                        // создание базовой сущности
-                        this.createMainEntity();
-
-                        // создание действия
-                        this.createAction();
-
-                        // сущности для создания\редакирования
-                        this.createPersistenceObjects();
-
                         NullSafe.create()
                                 .execute(() -> {
+                                    // создание базовой сущности
+                                    this.createMainEntity();
+
+                                    // создание действия
+                                    this.createAction();
+
+                                    // сущности для создания\редакирования
+                                    this.createPersistenceObjects();
 
                                     persistenceObjects
                                             .forEach((obj) -> {
 
-//                                    if (obj instanceof AbstractPersistenceEntity) {
-                                                final AbstractPersistenceEntity apeObj = (AbstractPersistenceEntity) (obj);
+                                                if (NullSafe.isNull(this.getErrMsg())) {
 
-                                                apeObj.setLast_modify(this.getExecuteDate());
-                                                final Boolean needMerge = !apeObj.getJustCreated();
-                                                //}
+                                                    if (obj instanceof AbstractPersistenceEntity) {
+                                                        final AbstractPersistenceEntity apeObj = (AbstractPersistenceEntity) (obj);
 
-                                                if (needMerge) {
-                                                    em.merge(obj);
-                                                } else {
-                                                    em.persist(obj);
+                                                        apeObj.setLast_modify(this.getExecuteDate());
+                                                    }
+
+                                                    if (!obj.justCreated()) {
+                                                        em.merge(obj);
+                                                    } else {
+                                                        em.persist(obj);
+                                                    }
                                                 }
                                             });
-                                }).catchException(e -> this.setErrMsg(NullSafe.getErrorMessage(e)))
+
+                                }).catchException(e -> this.setErrMsg(String.format("%s: %s",
+                                this.getClass().getSimpleName(),
+                                NullSafe.getErrorMessage(e))))
                                 .finallyBlock(() -> {
                                     // обновление действия
                                     this.updateAction();
                                     this.updateMainEntity();
                                 });
+
                     });
 
+            if (NullSafe.notNull(this.getErrMsg())) {
+
+                throw new ActionExecutionException(this.getErrMsg());
+            }
             this.afterCommit();
         }
     }
 
-    //==========================================================================
+//==========================================================================
     private void createMainEntity() {
-        final AbstractPersistenceEntity obj = (AbstractPersistenceEntity) this.getEntity();
 
-        if (obj.getJustCreated()) {
-            persistanceEntityManager.getEntityManager().persist(obj);
+        if (this.getEntity().justCreated()) {
+            persistanceEntityManager.getEntityManager().persist(this.getEntity());
         }
     }
 
@@ -190,4 +199,11 @@ public abstract class AbstractAction<T extends ActionEntity>
 //        return (entity.getEntityStatus().getEntity_status_id().equals(allowedStatus));
     }
 
+}
+
+class ActionExecutionException extends InternalAppException {
+
+    public ActionExecutionException(final String message) {
+        super(message);
+    }
 }

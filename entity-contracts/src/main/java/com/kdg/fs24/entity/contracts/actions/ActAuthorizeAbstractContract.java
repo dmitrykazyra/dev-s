@@ -5,6 +5,8 @@
  */
 package com.kdg.fs24.entity.contracts.actions;
 
+import com.kdg.fs24.application.core.nullsafe.NullSafe;
+import com.kdg.fs24.entity.contract.subjects.ContractSubject;
 import com.kdg.fs24.entity.contracts.AbstractEntityContract;
 import com.kdg.fs24.entity.core.AbstractAction;
 import com.kdg.fs24.entity.core.api.ActionCodeId;
@@ -13,6 +15,9 @@ import com.kdg.fs24.entity.core.api.EntityConst;
 import com.kdg.fs24.entity.core.api.EntityContractConst;
 import com.kdg.fs24.entity.core.api.ViewAction;
 import com.kdg.fs24.entity.core.api.PreViewDialog;
+import com.kdg.fs24.entity.marks.EntityMark;
+import com.kdg.fs24.entity.marks.MarkValue;
+import com.kdg.fs24.references.api.AbstractRefRecord;
 import lombok.Data;
 
 /**
@@ -39,12 +44,25 @@ public class ActAuthorizeAbstractContract extends AbstractContractAction<Abstrac
 //                })
 //                .<Boolean>getObject();
         return true;
-
+        
     }
 
     //==========================================================================
-//    @Override
-//    protected void doUpdate() {
+    @Override
+    protected void createPersistenceObjects() {
+
+        // отметка об авторизации
+        final EntityMark entityMark = NullSafe.createObject(EntityMark.class);
+        
+        entityMark.setAction(this.getPersistAction());
+        entityMark.setEntity(this.getEntity());
+        entityMark.setMarkValue(AbstractRefRecord.<MarkValue>getRefeenceRecord(
+                MarkValue.class,
+                record -> record.getMarkId().equals(EntityConst.MR_AUTHORIZE_ENTITY)
+                && record.getMarkValueId().equals(EntityConst.MR_AUTHORIZE_ENTITY_AUTH)));
+        entityMark.setDirection(EntityConst.IS_AUTHORIZED);
+        
+        this.getPersistenceObjects().add(entityMark);
 //        NullSafe.create()
 //                .execute(() -> {
 //                    this.getContractEntity()
@@ -55,7 +73,7 @@ public class ActAuthorizeAbstractContract extends AbstractContractAction<Abstrac
 //                                    EntityConst.MR_AUTHORIZE_ENTITY,
 //                                    EntityConst.MR_AUTHORIZE_ENTITY_AUTH);
 //                }).throwException();
-//    }
+    }
 
     //==========================================================================    
     @Override

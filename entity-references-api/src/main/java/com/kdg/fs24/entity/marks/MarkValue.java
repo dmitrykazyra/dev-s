@@ -5,6 +5,7 @@
  */
 package com.kdg.fs24.entity.marks;
 
+import com.kdg.fs24.references.api.AbstractRefRecord;
 import java.util.Map;
 import com.kdg.fs24.references.api.ReferenceRec;
 import javax.persistence.*;
@@ -19,7 +20,7 @@ import lombok.Data;
 @Table(name = "core_marksValuesRef")
 @PrimaryKeyJoinColumn(name = "mark_id", referencedColumnName = "mark_id")
 @IdClass(MarkValuePK.class)
-public class MarkValue implements ReferenceRec {
+public class MarkValue extends AbstractRefRecord implements ReferenceRec {
 
     @Id
     @Column(name = "mark_id")

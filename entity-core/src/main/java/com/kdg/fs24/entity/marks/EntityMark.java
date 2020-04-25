@@ -9,6 +9,9 @@ import javax.persistence.*;
 import lombok.Data;
 import com.kdg.fs24.entity.core.api.ActionEntity;
 import com.kdg.fs24.entity.core.api.Action;
+import com.kdg.fs24.persistence.api.PersistenceEntity;
+import com.kdg.fs24.entity.core.AbstractPersistenceEntity;
+import com.kdg.fs24.entity.core.AbstractPersistenceAction;
 
 /**
  *
@@ -17,24 +20,31 @@ import com.kdg.fs24.entity.core.api.Action;
 @Entity
 @Data
 @Table(name = "core_entityMarks")
-//@PrimaryKeyJoinColumns(value = {
-//    @PrimaryKeyJoinColumn(name = "entity_id", referencedColumnName = "entity_id")
-//    , @PrimaryKeyJoinColumn(name = "action_id", referencedColumnName = "action_id")})
+@PrimaryKeyJoinColumns(value = {
+    @PrimaryKeyJoinColumn(name = "entity_id", referencedColumnName = "entity_id")
+    , @PrimaryKeyJoinColumn(name = "action_id", referencedColumnName = "action_id")})
 @IdClass(EntityMarkPK.class)
-public class EntityMark {
+public class EntityMark implements PersistenceEntity {
 
     @Id
-    @PrimaryKeyJoinColumn(name = "entity_id", referencedColumnName = "entity_id")
+//    @PrimaryKeyJoinColumn(name = "entity_id", referencedColumnName = "entity_id")
+    @ManyToOne(targetEntity = AbstractPersistenceEntity.class)
+    @JoinColumn(name = "entity_id", referencedColumnName = "entity_id")
     private ActionEntity entity;
     @Id
-    @PrimaryKeyJoinColumn(name = "action_id", referencedColumnName = "action_id")
+//    @PrimaryKeyJoinColumn(name = "action_id", referencedColumnName = "action_id")
+    @ManyToOne(targetEntity = AbstractPersistenceAction.class)
+    @JoinColumn(name = "action_id", referencedColumnName = "action_id")
     private Action action;
 //    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 //    @JoinColumn(name = "mark_id", referencedColumnName = "mark_id")
 //    private Mark mark;
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumns(value = {
-        @JoinColumn(name = "mark_id", referencedColumnName = "mark_id"),
+        @JoinColumn(name = "mark_id", referencedColumnName = "mark_id")
+        ,
         @JoinColumn(name = "mark_value_id", referencedColumnName = "mark_value_id")})
     private MarkValue markValue;
+    @Column(name = "mark_direction")
+    private Boolean direction;
 }

@@ -27,19 +27,14 @@ import com.kdg.fs24.entity.core.AbstractPersistenceAction;
 public class EntityMark implements PersistenceEntity {
 
     @Id
-//    @PrimaryKeyJoinColumn(name = "entity_id", referencedColumnName = "entity_id")
     @ManyToOne(targetEntity = AbstractPersistenceEntity.class)
     @JoinColumn(name = "entity_id", referencedColumnName = "entity_id")
     private ActionEntity entity;
     @Id
-//    @PrimaryKeyJoinColumn(name = "action_id", referencedColumnName = "action_id")
     @ManyToOne(targetEntity = AbstractPersistenceAction.class)
     @JoinColumn(name = "action_id", referencedColumnName = "action_id")
     private Action action;
-//    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//    @JoinColumn(name = "mark_id", referencedColumnName = "mark_id")
-//    private Mark mark;
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumns(value = {
         @JoinColumn(name = "mark_id", referencedColumnName = "mark_id")
         ,

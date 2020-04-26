@@ -1,6 +1,7 @@
 package com.kdg.fs24.entity.core;
 
 import com.kdg.fs24.application.core.exception.api.InternalAppException;
+import com.kdg.fs24.application.core.log.LogService;
 import com.kdg.fs24.entity.core.api.ActionEntity;
 import com.kdg.fs24.application.core.sysconst.SysConst;
 import com.kdg.fs24.application.core.nullsafe.NullSafe;
@@ -87,13 +88,18 @@ public abstract class AbstractAction<T extends ActionEntity>
                                     this.updatePersistenceAction();
                                     this.updateMainEntity();
                                 });
+                        persistanceEntityManager
+                                .getEntityManager()
+                                .flush();
                     });
 
             if (NullSafe.notNull(this.getErrMsg())) {
 
                 throw new ActionExecutionException(this.getErrMsg());
             }
+
             this.afterCommit();
+            //           this.refreshModifiedEntities();
         }
     }
 
@@ -153,6 +159,52 @@ public abstract class AbstractAction<T extends ActionEntity>
     //==========================================================================
     protected void afterCommit() {
 
+    }
+
+    //==========================================================================
+    public void refreshModifiedEntities() {
+//        if (persistanceEntityManager
+//                .getDebugMode()
+//                .equals(SysConst.STRING_TRUE)) {
+
+            LogService.LogInfo(this.getClass(), () -> String.format("refresh entity (%d, %s)",
+                    this.getEntity().entityId(),
+                    this.getEntity().getClass().getSimpleName())
+                    .toUpperCase());
+
+            // обновление кэша
+            persistanceEntityManager
+                    .getFactory()
+                    .getCache()
+                    .evictAll();
+
+            // поиск сущности
+            final ActionEntity entity = persistanceEntityManager
+                    .getEntityManager()
+                    .find(this.getEntity().getClass(), this.getEntity().entityId());
+
+            // обновление главной сущности
+            persistanceEntityManager
+                    .getEntityManager()
+                    .refresh(entity);
+
+            LogService.LogInfo(this.getClass(), () -> String.format("refresh entity is finished (%d, %s)",
+                    entity.entityId(),
+                    entity.getClass().getSimpleName())
+                    .toUpperCase());
+
+            // обновление подчиненных сущности
+//            persistenceEntities
+//                    .forEach((obj) -> {
+//
+//                        LogService.LogInfo(this.getClass(), () -> String.format("refresh persistene entity (%s)",
+//                                obj.getClass().getSimpleName()).toUpperCase());
+//
+//                        persistanceEntityManager
+//                                .getEntityManager()
+//                                .refresh(obj);
+//                    });
+//        }
     }
 
     protected void doCalculation() {

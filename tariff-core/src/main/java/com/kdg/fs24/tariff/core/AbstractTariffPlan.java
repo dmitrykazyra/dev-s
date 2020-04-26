@@ -79,13 +79,13 @@ public class AbstractTariffPlan extends AbstractActionEntity
     private LocalDate finishDate;
 
     // вид тарифного плана
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "tariff_plan_kind_id", referencedColumnName = "entity_kind_id")
     private EntityKind entityKind;
 //
 //    // коллекция тарифов в плане
     @Transient
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany
     private Collection<TariffKind> tariffKinds;
 
     public Long getTariffPlanId() {

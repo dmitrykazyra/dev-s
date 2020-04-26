@@ -13,5 +13,5 @@ import com.kdg.fs24.persistence.api.PersistenceEntity;
  * @author kazyra_d
  */
 public interface ActionEntity extends PersistenceEntity {
-
+    Long entityId();
 }

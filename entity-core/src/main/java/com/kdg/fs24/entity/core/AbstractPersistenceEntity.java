@@ -19,7 +19,6 @@ import lombok.Data;
  *
  * @author N76VB
  */
-
 @Entity
 @Table(name = "core_Entities")
 @Data
@@ -35,7 +34,7 @@ public class AbstractPersistenceEntity implements ActionEntity {
 //    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 //    @JoinColumn(name = "entity_type_id")
 //    private EntityType entityType;
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne
     //@JoinColumn(name = "entity_type_id", updatable = false, insertable = true)
     @JoinColumns({
         @JoinColumn(name = "entity_status_id", referencedColumnName = "entity_status_id")
@@ -48,10 +47,14 @@ public class AbstractPersistenceEntity implements ActionEntity {
     private LocalDate close_date;
     @Column(name = "last_modify")
     private LocalDateTime last_modify;
-    
+
     @Override
     public Boolean justCreated() {
         return NullSafe.isNull(this.entity_id);
     }
 
+    @Override
+    public Long entityId() {
+        return (this.entity_id);
+    }
 }

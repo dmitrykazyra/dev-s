@@ -26,12 +26,14 @@ import com.kdg.fs24.persistence.api.QueryExecutor;
 import com.kdg.fs24.persistence.api.PersistenceQuery;
 import javax.annotation.PostConstruct;
 import javax.persistence.Query;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
 
 /**
  *
  * @author N76VB
  */
+@Data
 public class PersistanceEntityManager extends AbstractApplicationBean {
 
     private final AtomicBoolean safeMode = NullSafe.createObject(AtomicBoolean.class);
@@ -44,10 +46,6 @@ public class PersistanceEntityManager extends AbstractApplicationBean {
     //private static final QueryExecutor QUERY_EXECUTOR_NULL = null;
     @Value("${debug}")
     private String debugMode; // = SysConst.STRING_FALSE;
-
-    public PersistanceEntityManager() {
-
-    }
 
     //public PersistanceEntityManager(final String persistenceUnitName) {
     @PostConstruct

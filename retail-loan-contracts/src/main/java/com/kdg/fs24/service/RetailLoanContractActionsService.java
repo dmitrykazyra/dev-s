@@ -64,6 +64,7 @@ public class RetailLoanContractActionsService extends ActionExecutionService {
                     retailLoanContract.setPmtScheduleAlg(pmtScheduleAlg);
                     retailLoanContract.setPmtScheduleTerm(pmtScheduleTerm);
                     retailLoanContract.setEntityKind(entityKind);
+                    retailLoanContract.setContractSumm(contractSumm);
                     retailLoanContract.setLoanSource(loanSource);
                     retailLoanContract.setCreation_date(LocalDateTime.now());
                     retailLoanContract.setEntityStatus(AbstractRefRecord.<EntityStatus>getRefeenceRecord(

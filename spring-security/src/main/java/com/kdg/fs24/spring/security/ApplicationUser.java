@@ -64,7 +64,7 @@ public class ApplicationUser extends AbstractActionEntity {
     @Column(name = "mail")
     private String mail;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany
     @JoinTable(name = "core_User2Role", joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Collection<ApplicationRole> userRoles;

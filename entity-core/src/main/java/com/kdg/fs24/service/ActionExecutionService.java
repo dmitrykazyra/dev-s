@@ -135,6 +135,7 @@ public abstract class ActionExecutionService extends AbstractApplicationService 
 
         //action.execute(entity, ac.get());
         action.execute();
+        action.refreshModifiedEntities();
     }
 
     //==========================================================================

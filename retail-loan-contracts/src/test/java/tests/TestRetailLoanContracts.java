@@ -74,11 +74,11 @@ public class TestRetailLoanContracts {
 
         final Counterparty counterparty = this.counterpartyActionsService.createCounterparty(testString, testString, testString);
 
-        final Currency currency 
-                                = AbstractRefRecord.<Currency>getRefeenceRecord(
+        final Currency currency
+                = AbstractRefRecord.<Currency>getRefeenceRecord(
                         Currency.class,
                         record -> record.getCurrencyId().equals(840));
-        
+
         final TariffPlan tariffPlan = retailLoanContractActionsService.<AbstractTariffPlan>findActionEntity(AbstractTariffPlan.class, Long.valueOf(68338)).get();
         final String contractNum = testString;
         final LocalDate contractDate = LocalDate.now();
@@ -89,11 +89,11 @@ public class TestRetailLoanContracts {
                 = AbstractRefRecord.<LoanSource>getRefeenceRecord(
                         LoanSource.class,
                         record -> record.getLoanSourceId().equals(102));
-        final PmtScheduleAlg pmtScheduleAlg 
+        final PmtScheduleAlg pmtScheduleAlg
                 = AbstractRefRecord.<PmtScheduleAlg>getRefeenceRecord(
                         PmtScheduleAlg.class,
                         record -> record.getScheduleAlgId().equals(1));
-        final PmtScheduleTerm pmtScheduleTerm 
+        final PmtScheduleTerm pmtScheduleTerm
                 = AbstractRefRecord.<PmtScheduleTerm>getRefeenceRecord(
                         PmtScheduleTerm.class,
                         record -> record.getPmtTermId().equals(30));
@@ -128,5 +128,13 @@ public class TestRetailLoanContracts {
 //            final PmtScheduleTerm pmtScheduleTerm
         retailLoanContractActionsService.executeAction(retailLoanContract, RetailLoanConstants.MODIFY_INDIVIDUAL_LOAN_CONTRACT);
         retailLoanContractActionsService.executeAction(retailLoanContract, EntityContractConst.ACT_AUTHORIZE_CONTRACT);
+
+        final Long entityId = retailLoanContract.getEntity_id();
+
+        final Integer i = retailLoanContract.getEntityMarks().size();
+
+//        persistanceEntityManager
+//                .getEntityManager()
+//                .refresh(retailLoanContract);
     }
 }

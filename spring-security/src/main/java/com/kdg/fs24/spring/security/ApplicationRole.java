@@ -54,7 +54,7 @@ public class ApplicationRole extends AbstractActionEntity {
     private String roleCode;
     @Column(name = "role_name")
     private String roleName;
-    @ManyToMany(mappedBy = "userRoles", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "userRoles")
     private Collection<ApplicationUser> roleUsers;
 
     public Long getRole_id() {

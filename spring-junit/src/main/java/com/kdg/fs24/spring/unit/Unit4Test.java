@@ -26,14 +26,12 @@ public abstract class Unit4Test<BOOT extends AbstractSpringBootApplication, CONF
 
     public Unit4Test() {
 
-        final Class thisClass = this.getClass();
-
         LogService.LogInfo(this.getClass(), () -> String.format("Unit4Test '%s' is running (%d) ",
-                thisClass.getCanonicalName(),
+                this.getClass().getCanonicalName(),
                 BOOT_CLASSES.size()));
 
-        final Class<BOOT> sbClass = (Class<BOOT>) GenericFuncs.<BOOT>getTypeParameterClass(thisClass, 0);
-        final Class<CONF> appConfigClass = (Class<CONF>) GenericFuncs.<CONF>getTypeParameterClass(thisClass, 1);
+        final Class<BOOT> sbClass = (Class<BOOT>) GenericFuncs.<BOOT>getTypeParameterClass(this.getClass(), 0);
+        final Class<CONF> appConfigClass = (Class<CONF>) GenericFuncs.<CONF>getTypeParameterClass(this.getClass(), 1);
 
         if (!ServiceFuncs.<Class<? extends AbstractSpringBootApplication>>getCollectionElement(BOOT_CLASSES, bootClass -> bootClass.equals(sbClass))
                 .isPresent()) {

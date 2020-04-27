@@ -141,9 +141,8 @@ public abstract class ActionExecutionService extends AbstractApplicationService 
     //==========================================================================
     @PostConstruct
     public void postActionExecutionService() {
-        final Class thisClass = this.getClass();
 
-        if (!AnnotationFuncs.isAnnotated(thisClass, EntityClassesPackages.class)) {
+        if (!AnnotationFuncs.isAnnotated(this.getClass(), EntityClassesPackages.class)) {
             class NoEntityClassesPackagesDefined extends InternalAppException {
 
                 public NoEntityClassesPackagesDefined(final String message) {
@@ -151,10 +150,10 @@ public abstract class ActionExecutionService extends AbstractApplicationService 
                 }
             }
             throw new NoEntityClassesPackagesDefined(String.format("No EntityClassesPackages annotations defined for '%s' ",
-                    thisClass.getCanonicalName()));
+                    this.getClass().getCanonicalName()));
         }
 
-        final String[] entityClassesPackages = AnnotationFuncs.<EntityClassesPackages>getAnnotation(thisClass, EntityClassesPackages.class).pkgList();
+        final String[] entityClassesPackages = AnnotationFuncs.<EntityClassesPackages>getAnnotation(this.getClass(), EntityClassesPackages.class).pkgList();
 
         // классы сущностей
         Arrays.stream(entityClassesPackages)
@@ -225,14 +224,14 @@ public abstract class ActionExecutionService extends AbstractApplicationService 
                 }
             }
             throw new NoActionClassesDefined(String.format("Action classes is empty for '%s' ",
-                    thisClass.getCanonicalName()));
+                    this.getClass().getCanonicalName()));
         }
 
         // post
-        LogService.LogInfo(thisClass,
+        LogService.LogInfo(this.getClass(),
                 () -> String.format("There [%d] pair(s) (entities/action): '%s' ",
                         this.CLASS_ENT2ACTION.size(),
-                        thisClass.getCanonicalName()));
+                        this.getClass().getCanonicalName()));
 
         // синхронизируем с БД
     }

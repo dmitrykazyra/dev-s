@@ -10,7 +10,7 @@ import com.kdg.fs24.entity.contract.subjects.ContractSubject;
 import com.kdg.fs24.entity.contracts.AbstractEntityContract;
 import com.kdg.fs24.entity.core.AbstractAction;
 import com.kdg.fs24.entity.core.api.ActionCodeId;
-import com.kdg.fs24.entity.core.api.AllowedMethod;
+import com.kdg.fs24.entity.core.api.RefreshAfterCommit;
 import com.kdg.fs24.entity.core.api.EntityConst;
 import com.kdg.fs24.entity.core.api.EntityContractConst;
 import com.kdg.fs24.entity.core.api.ViewAction;
@@ -29,6 +29,7 @@ import lombok.Data;
         action_name = "Авторизация договора")
 @ViewAction
 @PreViewDialog
+@RefreshAfterCommit
 //@AllowedMethod(action = ActAuthorizeAbstractContract.class, entity = EntityContract.class)
 public class ActAuthorizeAbstractContract extends AbstractContractAction<AbstractEntityContract> {
 
@@ -63,6 +64,7 @@ public class ActAuthorizeAbstractContract extends AbstractContractAction<Abstrac
         entityMark.setDirection(EntityConst.IS_AUTHORIZED);
 
         this.addPersistenceEntity(entityMark);
+        //this.getContractEntity().getEntityMarks().add(entityMark);
 
     }
 

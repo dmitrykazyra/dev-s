@@ -11,6 +11,8 @@ import com.kdg.fs24.entity.core.AbstractActionEntity;
 import javax.persistence.*;
 import com.kdg.fs24.entity.contract.subjects.ContractSubject;
 import com.kdg.fs24.counterparties.api.Counterparty;
+import com.kdg.fs24.entity.core.AbstractPersistenceAction;
+import com.kdg.fs24.entity.core.api.Action;
 import lombok.Data;
 import com.kdg.fs24.entity.kind.EntityKind;
 import com.kdg.fs24.references.application.currency.Currency;
@@ -61,5 +63,8 @@ public class AbstractEntityContract extends AbstractActionEntity {
     @OneToMany
     @JoinColumn(name = "entity_id", referencedColumnName = "contract_id")
     private Collection<EntityMark> entityMarks; // = ServiceFuncs.<EntityMark>getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);
+    @OneToMany(targetEntity = AbstractPersistenceAction.class)
+    @JoinColumn(name = "entity_id", referencedColumnName = "entity_id")
+    private Collection<Action> entityActions;
 
 }

@@ -12,6 +12,7 @@ import com.kdg.fs24.bond.schedule.references.api.PmtScheduleAlg;
 import com.kdg.fs24.bond.schedule.references.api.PmtScheduleTerm;
 import com.kdg.fs24.counterparties.api.Counterparty;
 import com.kdg.fs24.entity.contract.subjects.ContractSubject;
+import com.kdg.fs24.entity.core.api.ActionEntity;
 import com.kdg.fs24.entity.core.api.EntityContractConst;
 import com.kdg.fs24.persistence.core.PersistanceEntityManager;
 import lombok.Data;
@@ -131,7 +132,13 @@ public class TestRetailLoanContracts {
 
         final Long entityId = retailLoanContract.getEntity_id();
 
-        final Integer i = retailLoanContract.getEntityMarks().size();
+            // поиск сущности
+            final RetailLoanContract entity = persistanceEntityManager
+                    .getEntityManager()
+                    .find(RetailLoanContract.class, Long.valueOf(68833));        
+        
+        final Integer i = entity.getEntityMarks().size();
+        final Integer i1 = entity.getEntityActions().size();
 
 //        persistanceEntityManager
 //                .getEntityManager()

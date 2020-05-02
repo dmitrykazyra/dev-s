@@ -12,9 +12,9 @@ import com.kdg.fs24.entity.core.api.EntityKindId;
 import com.kdg.fs24.entity.core.api.EntityStatusesRef;
 import com.kdg.fs24.entity.core.api.EntityTypeId;
 import com.kdg.fs24.entity.status.EntityStatusId;
-import com.kdg.fs24.loan.references.api.LoanSource;
-import com.kdg.fs24.bond.schedule.references.api.PmtScheduleAlg;
-import com.kdg.fs24.bond.schedule.references.api.PmtScheduleTerm;
+import com.kdg.fs24.references.loan.api.LoanSource;
+import com.kdg.fs24.references.bond.schedule.api.PmtScheduleAlg;
+import com.kdg.fs24.references.bond.schedule.api.PmtScheduleTerm;
 import javax.persistence.*;
 import lombok.Data;
 

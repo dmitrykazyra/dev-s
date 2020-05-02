@@ -19,7 +19,7 @@ import config.TestReferencesConfig;
 import com.kdg.fs24.service.TariffCoreActionsService;
 import com.kdg.fs24.entity.kind.EntityKind;
 import org.junit.Test;
-import com.kdg.fs24.tariff.core.AbstractTariffPlan;
+import com.kdg.fs24.entity.tariff.AbstractTariffPlan;
 import com.kdg.fs24.references.tariffs.api.TariffConst;
 import java.time.LocalDate;
 

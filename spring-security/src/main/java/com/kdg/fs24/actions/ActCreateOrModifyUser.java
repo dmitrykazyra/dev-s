@@ -6,7 +6,7 @@
 package com.kdg.fs24.actions;
 
 import com.kdg.fs24.entity.core.AbstractAction;
-import com.kdg.fs24.spring.security.ApplicationUser;
+import com.kdg.fs24.entity.security.ApplicationUser;
 import com.kdg.fs24.entity.core.api.ActionCodeId;
 import com.kdg.fs24.config.SecurityConst;
 import javax.persistence.Entity;

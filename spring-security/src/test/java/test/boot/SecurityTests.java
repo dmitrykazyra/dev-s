@@ -7,8 +7,8 @@ package test.boot;
 
 import com.kdg.fs24.application.core.log.LogService;
 import com.kdg.fs24.config.SecurityConst;
-import com.kdg.fs24.spring.security.ApplicationUser;
-import com.kdg.fs24.spring.security.ApplicationRole;
+import com.kdg.fs24.entity.security.ApplicationUser;
+import com.kdg.fs24.entity.security.ApplicationRole;
 import test.config.SecurityTestConfig;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -21,4 +21,7 @@
             <version>${spring.security.version}</version>
         </dependency>         
     </dependencies>
+    <build>
+        <finalName>spring-security-api</finalName> 
+    </build>
 </project>

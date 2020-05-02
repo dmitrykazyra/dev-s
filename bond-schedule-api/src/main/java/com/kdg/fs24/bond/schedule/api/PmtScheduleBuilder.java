@@ -5,8 +5,8 @@
  */
 package com.kdg.fs24.bond.schedule.api;
 
-import com.kdg.fs24.bond.schedule.references.api.PmtScheduleTerm;
-import com.kdg.fs24.bond.schedule.references.api.PmtScheduleAlg;
+import com.kdg.fs24.references.bond.schedule.api.PmtScheduleTerm;
+import com.kdg.fs24.references.bond.schedule.api.PmtScheduleAlg;
 import com.kdg.fs24.entity.core.api.ActionEntity;
 import java.time.LocalDate;
 

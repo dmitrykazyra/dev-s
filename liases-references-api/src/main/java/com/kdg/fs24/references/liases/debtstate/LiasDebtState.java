@@ -20,6 +20,7 @@ import lombok.Data;
 @Table(name = "liasDebtStatesRef")
 public class LiasDebtState extends AbstractRefRecord implements ReferenceRec {
 
+    @Id
     @Column(name = "debt_state_id", updatable = false)
     private Integer debtStateId;
     @Column(name = "debt_state_name")

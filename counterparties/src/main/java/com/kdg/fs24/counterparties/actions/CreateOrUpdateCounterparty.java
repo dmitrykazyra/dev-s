@@ -6,9 +6,9 @@
 package com.kdg.fs24.counterparties.actions;
 
 import com.kdg.fs24.entity.core.AbstractAction;
-import com.kdg.fs24.counterparties.api.Counterparty;
+import com.kdg.fs24.entity.counterparties.api.Counterparty;
 import com.kdg.fs24.entity.core.api.ActionCodeId;
-import com.kdg.fs24.counterparties.api.CounterpartyConst;
+import com.kdg.fs24.entity.counterparties.api.CounterpartyConst;
 import lombok.Data;
 
 /**

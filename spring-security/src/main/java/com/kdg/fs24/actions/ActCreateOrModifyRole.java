@@ -8,7 +8,7 @@ package com.kdg.fs24.actions;
 import com.kdg.fs24.config.SecurityConst;
 import com.kdg.fs24.entity.core.AbstractAction;
 import com.kdg.fs24.entity.core.api.ActionCodeId;
-import com.kdg.fs24.spring.security.ApplicationRole;
+import com.kdg.fs24.entity.security.ApplicationRole;
 import lombok.Data;
 
 /**

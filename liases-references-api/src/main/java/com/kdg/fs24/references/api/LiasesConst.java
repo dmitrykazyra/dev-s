@@ -12,7 +12,7 @@ import com.kdg.fs24.application.core.sysconst.SysConst;
  */
 public class LiasesConst {
 
-    public static final String LIASES_TEMLATE_PKG = "com.kdg.fs24.liases.templates";
+    public static final String LIASES_TEMLATE_PKG = "com.kdg.fs24.entity.liases.templates";
     
     public static final int LTI_INITIAL_LIASES = 1;
     public static final int LTI_CURRENT_LIASES = 2; // Текущие обязательства (Обязательства по возврату базисного актива)

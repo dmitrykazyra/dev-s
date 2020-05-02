@@ -9,7 +9,7 @@ import com.kdg.fs24.entity.core.api.EntityClassesPackages;
 import com.kdg.fs24.entity.kind.EntityKind;
 import lombok.Data;
 import org.springframework.stereotype.Service;
-import com.kdg.fs24.tariff.core.AbstractTariffPlan;
+import com.kdg.fs24.entity.tariff.AbstractTariffPlan;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import com.kdg.fs24.references.tariffs.api.TariffConst;
@@ -22,7 +22,7 @@ import com.kdg.fs24.references.api.AbstractRefRecord;
  */
 @Data
 @Service
-@EntityClassesPackages(pkgList = {"com.kdg.fs24.tariff.core"})
+@EntityClassesPackages(pkgList = {"com.kdg.fs24.entity.tariff"})
 public class TariffCoreActionsService extends ActionExecutionService {
 
     public AbstractTariffPlan createTariffPlan(final String tariffPlanName,

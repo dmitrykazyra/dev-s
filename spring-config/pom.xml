@@ -21,4 +21,7 @@
             <version>${app.version}</version>
         </dependency>        
     </dependencies>
+    <build>
+        <finalName>spring-config</finalName>
+    </build> 
 </project>

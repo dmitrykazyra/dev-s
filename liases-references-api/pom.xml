@@ -17,5 +17,7 @@
             <version>${app.version}</version>            
         </dependency>              
     </dependencies> 
-    
+    <build>
+        <finalName>liases-references-api</finalName>
+    </build>
 </project>

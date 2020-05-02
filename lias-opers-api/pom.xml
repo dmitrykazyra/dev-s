@@ -25,4 +25,7 @@
             <version>${app.version}</version>         
         </dependency>               
     </dependencies>
+    <build>
+        <finalName>lias-opers-api</finalName> 
+    </build>
 </project>

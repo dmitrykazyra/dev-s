@@ -6,8 +6,8 @@
 package com.kdg.fs24.service;
 
 import com.kdg.fs24.application.core.service.funcs.ServiceFuncs;
-import com.kdg.fs24.bond.schedule.references.api.PmtScheduleAlg;
-import com.kdg.fs24.bond.schedule.references.api.PmtScheduleTerm;
+import com.kdg.fs24.references.bond.schedule.api.PmtScheduleAlg;
+import com.kdg.fs24.references.bond.schedule.api.PmtScheduleTerm;
 import com.kdg.fs24.entity.core.api.EntityClassesPackages;
 import com.kdg.fs24.entity.kind.EntityKind;
 import com.kdg.fs24.entity.status.EntityStatus;
@@ -22,10 +22,10 @@ import com.kdg.fs24.references.liases.type.LiasType;
 import com.kdg.fs24.references.liases.baseassettype.LiasBaseAssetType;
 import com.kdg.fs24.references.tariffs.api.TariffConst;
 import com.kdg.fs24.entity.contract.subjects.ContractSubject;
-import com.kdg.fs24.counterparties.api.Counterparty;
-import com.kdg.fs24.loan.references.api.LoanSource;
+import com.kdg.fs24.entity.counterparties.api.Counterparty;
+import com.kdg.fs24.references.loan.api.LoanSource;
 import com.kdg.fs24.references.application.currency.Currency;
-import com.kdg.fs24.tariff.core.api.TariffPlan;
+import com.kdg.fs24.entity.tariff.api.TariffPlan;
 import java.math.BigDecimal;
 import com.kdg.fs24.entity.core.api.CachedReferencesClasses;
 import com.kdg.fs24.references.api.AbstractRefRecord;

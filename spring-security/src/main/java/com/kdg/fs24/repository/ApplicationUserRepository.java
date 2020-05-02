@@ -5,7 +5,7 @@
  */
 package com.kdg.fs24.repository;
 
-import com.kdg.fs24.spring.security.ApplicationUser;
+import com.kdg.fs24.entity.security.ApplicationUser;
 import com.kdg.fs24.spring.core.api.ApplicationJpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;

@@ -8,7 +8,7 @@ package com.kdg.fs24.service;
 import com.kdg.fs24.entity.core.api.EntityClassesPackages;
 import lombok.Data;
 import org.springframework.stereotype.Service;
-import com.kdg.fs24.counterparties.api.Counterparty;
+import com.kdg.fs24.entity.counterparties.api.Counterparty;
 import com.kdg.fs24.entity.status.EntityStatus;
 import com.kdg.fs24.references.api.AbstractRefRecord;
 import java.time.LocalDateTime;
@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
  */
 @Data
 @Service
-@EntityClassesPackages(pkgList = {"com.kdg.fs24.counterparties.api"})
+@EntityClassesPackages(pkgList = {"com.kdg.fs24.entity.counterparties.api"})
 public class CounterpartyActionsService extends ActionExecutionService {
 
     public Counterparty createCounterparty(final String counterpartyCode,

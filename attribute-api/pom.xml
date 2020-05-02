@@ -8,4 +8,7 @@
     </parent>
     <artifactId>attribute-api</artifactId>
     <packaging>jar</packaging>
+    <build>
+        <finalName>attribute-api</finalName> 
+    </build>
 </project>

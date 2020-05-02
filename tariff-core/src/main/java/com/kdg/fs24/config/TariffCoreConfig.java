@@ -17,7 +17,7 @@ import org.springframework.context.annotation.PropertySource;
  */
 @Configuration
 @ComponentScan(basePackages = "com.kdg.fs24.service")
-//@EntityScan(basePackages = {"com.kdg.fs24.spring.security", "com.kdg.fs24.entity"})
+//@EntityScan(basePackages = {"com.kdg.fs24.entity.security", "com.kdg.fs24.entity"})
 @PropertySource("classpath:application.properties")
 //@EnableJpaRepositories(basePackages = "com.kdg.fs24.repository")
 @Data

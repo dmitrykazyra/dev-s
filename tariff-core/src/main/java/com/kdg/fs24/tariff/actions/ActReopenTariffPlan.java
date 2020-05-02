@@ -12,7 +12,7 @@ import com.kdg.fs24.entity.core.api.AllowedMethod;
 import com.kdg.fs24.entity.core.api.PreViewDialog;
 import com.kdg.fs24.entity.core.api.ViewAction;
 import com.kdg.fs24.references.tariffs.api.TariffConst;
-import com.kdg.fs24.tariff.core.AbstractTariffPlan;
+import com.kdg.fs24.entity.tariff.AbstractTariffPlan;
 import javax.persistence.Entity;
 
 /**

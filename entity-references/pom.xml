@@ -10,7 +10,7 @@
     <packaging>jar</packaging>
     
     <dependencies>
-<!--        <dependency>
+        <!--        <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>log-mgmt</artifactId>
             <version>${app.version}</version>            
@@ -25,11 +25,13 @@
             <artifactId>entity-references-api</artifactId>
             <version>${app.version}</version>            
         </dependency>
-<!--        <dependency>
+        <!--        <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>services-api</artifactId>
             <version>${app.version}</version>            
         </dependency>        -->
     </dependencies>
-    
+    <build>
+        <finalName>entity-references</finalName>
+    </build>
 </project>

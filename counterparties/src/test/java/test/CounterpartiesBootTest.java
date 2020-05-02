@@ -19,7 +19,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @SpringBootApplication
 @ComponentScan(basePackages = "com.kdg.fs24.service")
 @PropertySource("classpath:application.properties")
-@EntityScan(basePackages = {"com.kdg.fs24.counterparties.api", "com.kdg.fs24.entity"})
+@EntityScan(basePackages = {"com.kdg.fs24.entity.counterparties.api", "com.kdg.fs24.entity"})
 @EnableJpaRepositories(basePackages = "com.kdg.fs24.repository")
 public class CounterpartiesBootTest extends SpringBoot4Test {
 

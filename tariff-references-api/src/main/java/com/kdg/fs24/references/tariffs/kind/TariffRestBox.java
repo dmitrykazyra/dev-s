@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Collections;
-import com.kdg.fs24.liases.api.LiasDebtRest;
+import com.kdg.fs24.entity.liases.api.LiasDebtRest;
 import com.kdg.fs24.application.core.sysconst.SysConst;
 import java.util.Iterator;
 import java.util.List;
@@ -48,7 +48,7 @@ public final class TariffRestBox extends TariffBoxAbstract {
         dbIteratorBasis = v_liasDebtRest.getRest();
 
         if (restsIterator.hasNext()) {
-            while (v_liasDebtRest.getRest_date().isBefore(ld1)) {
+            while (v_liasDebtRest.getRestDate().isBefore(ld1)) {
                 dbIteratorBasis = v_liasDebtRest.getRest();
                 if (restsIterator.hasNext()) {
                     v_liasDebtRest = restsIterator.next();
@@ -70,7 +70,7 @@ public final class TariffRestBox extends TariffBoxAbstract {
         }
         while (ld1.isBefore(ld2)) {
 
-            if (ld1.equals(v_liasDebtRest.getRest_date())) {
+            if (ld1.equals(v_liasDebtRest.getRestDate())) {
                 dbIteratorBasis = v_liasDebtRest.getRest();
                 if (restsIterator.hasNext()) {
                     v_liasDebtRest = restsIterator.next();

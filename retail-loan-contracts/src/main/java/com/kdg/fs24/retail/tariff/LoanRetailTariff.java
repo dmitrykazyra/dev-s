@@ -5,7 +5,7 @@
  */
 package com.kdg.fs24.retail.tariff;
 
-import com.kdg.fs24.tariff.core.AbstractTariffPlan;
+import com.kdg.fs24.entity.tariff.AbstractTariffPlan;
 import com.kdg.fs24.entity.core.api.EntityKindId;
 import com.kdg.fs24.references.tariffs.api.TariffConst;
 /**

@@ -5,7 +5,7 @@
  */
 package com.kdg.fs24.references.tariffs.kind;
 
-import com.kdg.fs24.liases.api.LiasAction;
+import com.kdg.fs24.entity.liases.api.LiasAction;
 import com.kdg.fs24.application.core.sysconst.SysConst;
 import java.math.BigDecimal;
 import java.time.LocalDate;

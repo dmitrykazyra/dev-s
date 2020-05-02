@@ -7,8 +7,8 @@ package com.kdg.fs24.references.tariffs.kind;
 
 import com.kdg.fs24.application.core.service.funcs.CustomCollectionImpl;
 import com.kdg.fs24.application.core.service.funcs.ServiceFuncs;
-import com.kdg.fs24.liases.api.LiasDebtRest;
-import com.kdg.fs24.liases.api.LiasAction;
+import com.kdg.fs24.entity.liases.api.LiasDebtRest;
+import com.kdg.fs24.entity.liases.api.LiasAction;
 import com.kdg.fs24.application.core.locale.NLS;
 import com.kdg.fs24.application.core.log.LogService;
 import java.math.BigDecimal;
@@ -24,7 +24,7 @@ import com.kdg.fs24.application.core.nullsafe.NullSafe;
 public abstract class TariffBoxAbstract implements TariffBox {
 
     private final Collection<TariffCalcSum> tariffSums;
-    protected final Comparator<LiasDebtRest> RDC = (LiasDebtRest rd1, LiasDebtRest rd2) -> rd1.getRest_date().compareTo(rd2.getRest_date());
+    protected final Comparator<LiasDebtRest> RDC = (LiasDebtRest rd1, LiasDebtRest rd2) -> rd1.getRestDate().compareTo(rd2.getRestDate());
     protected final Comparator<LiasAction> LAC = (LiasAction la1, LiasAction la2) -> la1.getLiasDate().compareTo(la2.getLiasDate());
     protected final Comparator<TariffRateRecord> TRRC = (TariffRateRecord rd1, TariffRateRecord rd2) -> rd1.getRate_date().compareTo(rd2.getRate_date());
 

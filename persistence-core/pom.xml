@@ -26,4 +26,7 @@
             <version>${app.version}</version>            
         </dependency>         
     </dependencies>
+    <build>
+        <finalName>persistence-core</finalName>
+    </build> 
 </project>

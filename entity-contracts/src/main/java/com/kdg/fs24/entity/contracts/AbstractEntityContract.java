@@ -10,7 +10,7 @@ import com.kdg.fs24.application.core.service.funcs.ServiceFuncs;
 import com.kdg.fs24.entity.core.AbstractActionEntity;
 import javax.persistence.*;
 import com.kdg.fs24.entity.contract.subjects.ContractSubject;
-import com.kdg.fs24.counterparties.api.Counterparty;
+import com.kdg.fs24.entity.counterparties.api.Counterparty;
 import com.kdg.fs24.entity.core.AbstractPersistenceAction;
 import com.kdg.fs24.entity.core.api.Action;
 import lombok.Data;
@@ -18,11 +18,11 @@ import com.kdg.fs24.entity.kind.EntityKind;
 import com.kdg.fs24.references.application.currency.Currency;
 import java.time.LocalDate;
 import java.math.BigDecimal;
-import com.kdg.fs24.tariff.core.api.TariffPlan;
-import com.kdg.fs24.tariff.core.AbstractTariffPlan;
+import com.kdg.fs24.entity.tariff.api.TariffPlan;
+import com.kdg.fs24.entity.tariff.AbstractTariffPlan;
 import java.util.Collection;
 import com.kdg.fs24.entity.marks.EntityMark;
-import com.kdg.fs24.liases.api.LiasDebt;
+import com.kdg.fs24.entity.liases.api.LiasDebt;
 
 /**
  *

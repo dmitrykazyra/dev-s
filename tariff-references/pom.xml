@@ -21,5 +21,8 @@
             <version>${app.version}</version>              
         </dependency>                
     </dependencies> 
+    <build>
+        <finalName>tariff-references</finalName> 
+    </build>
     
 </project>

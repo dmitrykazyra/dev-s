@@ -23,7 +23,7 @@
         <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>counterparties</artifactId>
-           <version>${app.version}</version>             
+            <version>${app.version}</version>             
         </dependency>
         <dependency>
             <groupId>com.kdg.fs24</groupId>
@@ -34,6 +34,20 @@
             <groupId>com.kdg.fs24</groupId>
             <artifactId>lias-opers-api</artifactId>
             <version>${app.version}</version>            
-        </dependency>               
-    </dependencies>    
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>4.3.1.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>unknown.binary</groupId>
+            <artifactId>hibernate-jpamodelgen-4.3.1.Final</artifactId>
+            <version>SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>  
+    <build>
+        <finalName>liases-api</finalName>
+    </build>
 </project>

@@ -5,13 +5,14 @@
  */
 package com.kdg.fs24.service;
 
+import com.kdg.fs24.entity.security.ApplicationRole;
+import com.kdg.fs24.entity.security.ApplicationUser;
 import com.kdg.fs24.application.core.nullsafe.NullSafe;
 import lombok.Data;
 import org.springframework.stereotype.Service;
 import com.kdg.fs24.entity.core.api.EntityClassesPackages;
 import com.kdg.fs24.entity.status.EntityStatus;
 import com.kdg.fs24.entity.status.EntityStatusPK;
-import com.kdg.fs24.spring.security.*;
 import java.time.LocalDateTime;
 
 /**
@@ -20,7 +21,7 @@ import java.time.LocalDateTime;
  */
 @Data
 @Service
-@EntityClassesPackages(pkgList = {"com.kdg.fs24.spring.security"})
+@EntityClassesPackages(pkgList = {"com.kdg.fs24.entity.security"})
 public class SecurityActionsService extends ActionExecutionService {
 
     public ApplicationUser createUser(final String login,

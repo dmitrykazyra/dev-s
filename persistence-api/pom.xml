@@ -21,4 +21,7 @@
             <version>${app.version}</version>            
         </dependency> 
     </dependencies>
+    <build>
+        <finalName>persistence-api</finalName> 
+    </build>  
 </project>

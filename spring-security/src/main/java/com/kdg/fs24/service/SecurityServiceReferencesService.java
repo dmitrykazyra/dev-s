@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 
 @Data
 @Service
-@ReferencesClassesPackages(pkgList = {"com.kdg.fs24.spring.security"})
+@ReferencesClassesPackages(pkgList = {"com.kdg.fs24.entity.security"})
 public class SecurityServiceReferencesService extends AbstractReferencesService {
 
 }

@@ -13,7 +13,7 @@ import com.kdg.fs24.entity.core.api.EntityWarningsList;
 //import com.kdg.fs24.application.core.exception.api.InternalAppException;
 import com.kdg.fs24.references.tariffs.api.TariffConst;
 import com.kdg.fs24.application.core.sysconst.SysConst;
-import com.kdg.fs24.tariff.core.AbstractTariffPlan;
+import com.kdg.fs24.entity.tariff.AbstractTariffPlan;
 import lombok.Data;
 
 /**

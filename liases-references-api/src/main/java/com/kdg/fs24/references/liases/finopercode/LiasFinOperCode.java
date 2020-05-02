@@ -16,6 +16,8 @@ import lombok.Data;
  * @author kazyra_d
  */
 @Data
+@Entity
+@Table(name = "liasFinOperCodesRef")
 public class LiasFinOperCode extends AbstractRefRecord implements ReferenceRec {
 
     @Id

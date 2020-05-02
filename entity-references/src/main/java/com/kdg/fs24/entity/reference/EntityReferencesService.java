@@ -23,6 +23,7 @@ import com.kdg.fs24.entity.attr.EntAttrsRef;
  *
  * @author N76VB
  */
+@Deprecated
 public final class EntityReferencesService extends AbstractReferencesList {
  //       implements Service {
 

@@ -5,50 +5,65 @@
  */
 package com.kdg.fs24.liases.api;
 
+import com.kdg.fs24.application.core.service.funcs.CustomCollectionImpl;
+import com.kdg.fs24.liases.exception.LiasRestIsNegative;
+import com.kdg.fs24.lias.opers.napi.NewLiasOper;
+import com.kdg.fs24.lias.opers.attrs.*;
+import java.time.LocalDate;
+import java.util.Collection;
+//import com.kdg.fs24.liases.references.LiasesReferencesService;
+import com.kdg.fs24.application.core.locale.NLS;
+import com.kdg.fs24.application.core.log.LogService;
+import com.kdg.fs24.application.core.api.ObjectRoot;
+//import com.kdg.fs24.services.api.ServiceLocator;
+import com.kdg.fs24.application.core.sysconst.SysConst;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
+import com.kdg.fs24.application.core.nullsafe.NullSafe;
+import com.kdg.fs24.application.core.service.funcs.ServiceFuncs;
+import com.kdg.fs24.lias.opers.api.LiasOpersConst;
+import com.kdg.fs24.lias.opers.napi.SaveAccretionHist;
+import com.kdg.fs24.application.core.nullsafe.NullSafe;
+import com.kdg.fs24.persistence.api.PersistenceEntity;
+import javax.persistence.*;
+import lombok.Data;
+
 /**
  *
  * @author kazyra_d
  */
-import com.kdg.fs24.lias.opers.napi.NewLiasOper;
-import com.kdg.fs24.lias.opers.napi.SaveAccretionHist;
-import com.kdg.fs24.liases.exception.LiasRestIsNegative;
-import java.math.BigDecimal;
-import java.util.Collection;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+@Data
+@Entity
+@Table(name = "liases")
+public class Lias extends ObjectRoot implements PersistenceEntity {
 
-public interface Lias {
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_lias_id")
+    @SequenceGenerator(name = "seq_lias_id", sequenceName = "seq_lias_id", allocationSize = 1)
+    @Column(name = "lias_id")
+    private Integer liasId;
+    @Column(name = "start_date")
+    private LocalDate startDate;
+    @Column(name = "allow_date")
+    private LocalDate allowDate;
+    @Column(name = "final_date")
+    private LocalDate finalDate;
+    @Column(name = "legal_date")
+    private LocalDate legalDate;
+    @Column(name = "server_date")
+    private LocalDateTime serverDate;
+    @Column(name = "inactive_date")
+    private LocalDate inactiveDate;
+    @Column(name = "is_Cancelled")
+    private Boolean isCancelled;
 
-    Integer getLiasId();
-
-    LocalDate getStart_date();
-
-    LocalDate getAllow_date();
-
-    LocalDate getFinal_date();
-
-    LocalDate getLegal_date();
-
-    LocalDateTime getServer_date();
-
-    LocalDate getInactive_date();
-
-    Boolean getIs_Cancelled();
-
-    void store(Integer debt_id);
-
-    Collection<LiasAction> getLiasActions();
-
-    Collection<LiasRest> getContactLiasRests();
-
-    void createLiasOper(NewLiasOper liasOperInfo) throws LiasRestIsNegative;
-
-    void createOrUpdateLiasRests(NewLiasOper liasOperInfo) throws LiasRestIsNegative;
-
-    void createLiasOper(BigDecimal liasSum,
-            LocalDate operDate,
-            Integer liasFinOperCode,
-            Integer liasTypeID,
-            int liasOperHC,
-            SaveAccretionHist sah);
+    @OneToMany
+    @JoinColumn(name = "lias_id", referencedColumnName = "lias_id")
+    private Collection<LiasAction> liasActions;
+    
+    @OneToMany
+    @JoinColumn(name = "lias_id", referencedColumnName = "lias_id")
+    private Collection<LiasRest> liasRests;
 }

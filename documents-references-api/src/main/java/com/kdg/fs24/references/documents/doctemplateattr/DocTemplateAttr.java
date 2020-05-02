@@ -8,38 +8,23 @@ package com.kdg.fs24.references.documents.doctemplateattr;
 import java.util.Map;
 import com.kdg.fs24.references.api.ReferenceRec;
 import com.kdg.fs24.references.api.AbstractRefRecord;
+import javax.persistence.*;
+import lombok.Data;
 
 /**
  *
  * @author kazyra_d
  */
+@Data
+@Entity
+@Table(name = "docTemplateAttrsRef")
 public class DocTemplateAttr extends AbstractRefRecord implements ReferenceRec {
 
-    private Integer doc_template_id;
-    private Integer doc_attr_id;
-
-    public DocTemplateAttr() {
-        super();
-    }
-
-    //==========================================================================
-    public Integer getDoc_template_id() {
-        return doc_template_id;
-    }
-
-    public DocTemplateAttr setDoc_template_id(final Integer doc_template_id) {
-        this.doc_template_id = doc_template_id;
-        return this;
-    }
-
-    public Integer getDoc_attr_id() {
-        return doc_attr_id;
-    }
-
-    public DocTemplateAttr setDoc_attr_id(final Integer doc_attr_id) {
-        this.doc_attr_id = doc_attr_id;
-        return this;
-    }
+    @Id
+    @Column(name = "doc_template_id")
+    private Integer docTemplateId;
+    @Column(name = "doc_attr_id")
+    private Integer docAttrId;
 
     @Override
     public void record2Map(final Map<String, Integer> map) {

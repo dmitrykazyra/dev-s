@@ -8,41 +8,28 @@ package com.kdg.fs24.references.documents.doctype;
 import java.util.Map;
 import com.kdg.fs24.references.api.ReferenceRec;
 import com.kdg.fs24.references.api.AbstractRefRecord;
+import javax.persistence.*;
+import lombok.Data;
 
 /**
  *
  * @author kazyra_d
  */
+@Data
+@Entity
+@Table(name = "docTypesRef")
 public class DocType extends AbstractRefRecord implements ReferenceRec {
 
-    private Integer doc_type_id;
-    private String doc_type_name;
+    @Id
+    @Column(name = "doc_type_id")
 
-    public DocType() {
-        super();
-    }
-
-    public Integer getDoc_type_id() {
-        return doc_type_id;
-    }
-
-    public DocType setDoc_type_id(final Integer doc_type_id) {
-        this.doc_type_id = doc_type_id;
-        return this;
-    }
-
-    public String getDoc_type_name() {
-        return doc_type_name;
-    }
-
-    public DocType setDoc_type_name(final String doc_type_name) {
-        this.doc_type_name = doc_type_name;
-        return this;
-    }
+    private Integer docTypeId;
+    @Column(name = "doc_type_name")
+    private String docTypeName;
 
     @Override
     public void record2Map(final Map<String, Integer> map) {
-        map.put(String.format("%d - %s", this.getDoc_type_id(), this.getDoc_type_name()), this.getDoc_type_id());
+        //map.put(String.format("%d - %s", this.getDoc_type_id(), this.getDoc_type_name()), this.getDoc_type_id());
     }
 
 }

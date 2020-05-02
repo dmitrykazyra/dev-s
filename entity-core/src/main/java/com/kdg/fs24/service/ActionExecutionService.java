@@ -42,6 +42,8 @@ import com.kdg.fs24.references.api.AbstractRefRecord;
 import java.lang.annotation.Annotation;
 import java.util.stream.Collectors;
 import com.kdg.fs24.entity.core.api.CachedReferencesClasses;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -83,6 +85,7 @@ public abstract class ActionExecutionService extends AbstractApplicationService 
 
     //==========================================================================
     // выполнение действия над сущностью
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
     public void executeAction(final AbstractActionEntity entity, final Integer action_code) {
         final Optional<Class<ACT>> optActClass = ServiceFuncs.getMapValue(CLASS_INT2ACTION, mapEntry -> mapEntry.getKey().equals(action_code));
 
@@ -135,7 +138,7 @@ public abstract class ActionExecutionService extends AbstractApplicationService 
 
         //action.execute(entity, ac.get());
         action.execute();
-        action.refreshModifiedEntities();
+        //action.refreshModifiedEntities();
     }
 
     //==========================================================================

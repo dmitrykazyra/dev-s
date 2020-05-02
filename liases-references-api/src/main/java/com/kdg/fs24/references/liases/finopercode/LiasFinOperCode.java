@@ -8,45 +8,24 @@ package com.kdg.fs24.references.liases.finopercode;
 import java.util.Map;
 import com.kdg.fs24.references.api.ReferenceRec;
 import com.kdg.fs24.references.api.AbstractRefRecord;
+import javax.persistence.*;
+import lombok.Data;
 
 /**
  *
  * @author kazyra_d
  */
+@Data
 public class LiasFinOperCode extends AbstractRefRecord implements ReferenceRec {
 
-    private Integer fin_oper_code;
-    private String fin_oper_name;
-
-    public LiasFinOperCode() {
-        super();
-    }
-
-//    public LiasFinOperCode(final Integer fin_oper_code, String fin_oper_name) {
-//        super();
-//        this.fin_oper_code = fin_oper_code;
-//        this.fin_oper_name = fin_oper_name;
-//    }
-    public Integer getFin_oper_code() {
-        return fin_oper_code;
-    }
-
-    public LiasFinOperCode setFin_oper_code(final Integer fin_oper_code) {
-        this.fin_oper_code = fin_oper_code;
-        return this;
-    }
-
-    public String getFin_oper_name() {
-        return fin_oper_name;
-    }
-
-    public LiasFinOperCode setFin_oper_name(final String fin_oper_name) {
-        this.fin_oper_name = fin_oper_name;
-        return this;
-    }
+    @Id
+    @Column(name = "fin_oper_code")
+    private Integer finOperCode;
+    @Column(name = "fin_oper_name")
+    private String finOperName;
 
     @Override
     public void record2Map(final Map<String, Integer> map) {
-        map.put(String.format("%d - %s", this.getFin_oper_code(), this.getFin_oper_name()), this.getFin_oper_code());
+        map.put(String.format("%d - %s", this.getFinOperCode(), this.getFinOperName()), this.getFinOperCode());
     }
 }

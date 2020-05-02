@@ -9,46 +9,27 @@ import java.util.Map;
 import com.kdg.fs24.references.api.ReferenceRec;
 import com.kdg.fs24.references.api.AbstractRefRecord;
 
+import javax.persistence.*;
+import lombok.Data;
+
 /**
  *
  * @author kazyra_d
  */
+@Data
+@Entity
+@Table(name = "liasDebtStatesRef")
 public class LiasGroup extends AbstractRefRecord implements ReferenceRec {
 
-    private Integer lias_group_id;
-    private String lias_group_name;
+    @Id
+    @Column(name = "lias_group_id")
+    private Integer liasGroupId;
 
-    public LiasGroup() {
-        super();
-    }
-
-    public LiasGroup(final Integer lias_group_id, final String lias_group_name) {
-        super();
-        this.lias_group_id = lias_group_id;
-        this.lias_group_name = lias_group_name;
-    }
-
-    //==========================================================================
-    public Integer getLias_group_id() {
-        return lias_group_id;
-    }
-
-    public LiasGroup setLias_group_id(final Integer lias_group_id) {
-        this.lias_group_id = lias_group_id;
-        return this;
-    }
-
-    public String getLias_group_name() {
-        return lias_group_name;
-    }
-
-    public LiasGroup setLias_group_name(final String lias_group_name) {
-        this.lias_group_name = lias_group_name;
-        return this;
-    }
+    @Column(name = "lias_group_name")
+    private String liasGroupName;
 
     @Override
     public void record2Map(final Map<String, Integer> map) {
-        map.put(String.format("%d - %s", this.getLias_group_id(), this.getLias_group_name()), this.getLias_group_id());
+        map.put(String.format("%d - %s", this.getLiasGroupId(), this.getLiasGroupName()), this.getLiasGroupId());
     }
 }

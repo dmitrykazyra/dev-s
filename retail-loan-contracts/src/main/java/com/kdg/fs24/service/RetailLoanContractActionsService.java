@@ -16,6 +16,10 @@ import org.springframework.stereotype.Service;
 import com.kdg.fs24.retail.loan.contracts.RetailLoanContract;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import com.kdg.fs24.references.liases.debtstate.LiasDebtState;
+import com.kdg.fs24.references.liases.kind.LiasKind;
+import com.kdg.fs24.references.liases.type.LiasType;
+import com.kdg.fs24.references.liases.baseassettype.LiasBaseAssetType;
 import com.kdg.fs24.references.tariffs.api.TariffConst;
 import com.kdg.fs24.entity.contract.subjects.ContractSubject;
 import com.kdg.fs24.counterparties.api.Counterparty;
@@ -34,7 +38,8 @@ import com.kdg.fs24.retail.loan.contracts.RetailLoanConstants;
 @Data
 @Service
 @EntityClassesPackages(pkgList = {"com.kdg.fs24.retail.loan.contracts"})
-@CachedReferencesClasses(classes = {ContractSubject.class, LoanSource.class, PmtScheduleAlg.class, PmtScheduleTerm.class, Currency.class})
+@CachedReferencesClasses(classes = {ContractSubject.class, LoanSource.class, PmtScheduleAlg.class,
+    PmtScheduleTerm.class, Currency.class, LiasDebtState.class, LiasKind.class, LiasType.class, LiasBaseAssetType.class})
 public class RetailLoanContractActionsService extends ActionExecutionService {
 
     public RetailLoanContract createRetailLoanContract(final ContractSubject contractSubject,

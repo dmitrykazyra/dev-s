@@ -7,19 +7,27 @@ package com.kdg.fs24.liases.api;
 
 /**
  *
- * @author kazyra_d
+ * @author N76VB
  */
-import java.time.LocalDate;
+import com.kdg.fs24.application.core.api.ObjectRoot;
+import com.kdg.fs24.persistence.api.PersistenceEntity;
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import javax.persistence.*;
+import lombok.Data;
 
-public interface LiasDebtRest {
+@Data
+@Entity
+@Table(name = "liasDebtRests")
+@IdClass(LiasDebtRestPK.class)
+public class LiasDebtRest extends ObjectRoot implements PersistenceEntity {
 
-    LocalDate getRest_date();
-
-    BigDecimal getRest();
-    
-    void setRest(BigDecimal rest);
-    
-    void incRest(BigDecimal rest);
+    @Id
+    private Integer debt_id;
+    @Id
+    private Integer rest_type;
+    @Id
+    private LocalDate rest_date;
+    private BigDecimal rest;
 
 }

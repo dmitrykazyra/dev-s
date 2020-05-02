@@ -13,7 +13,7 @@ package com.kdg.fs24.liases.api;
 
 import java.time.LocalDateTime;
 
-public interface StoredLiasAction extends LiasAction {
+public interface StoredLiasAction { //extends LiasAction {
 
     int getLias_action_id();
 

@@ -25,7 +25,7 @@ public abstract class TariffBoxAbstract implements TariffBox {
 
     private final Collection<TariffCalcSum> tariffSums;
     protected final Comparator<LiasDebtRest> RDC = (LiasDebtRest rd1, LiasDebtRest rd2) -> rd1.getRest_date().compareTo(rd2.getRest_date());
-    protected final Comparator<LiasAction> LAC = (LiasAction la1, LiasAction la2) -> la1.getLias_date().compareTo(la2.getLias_date());
+    protected final Comparator<LiasAction> LAC = (LiasAction la1, LiasAction la2) -> la1.getLiasDate().compareTo(la2.getLiasDate());
     protected final Comparator<TariffRateRecord> TRRC = (TariffRateRecord rd1, TariffRateRecord rd2) -> rd1.getRate_date().compareTo(rd2.getRate_date());
 
     TariffBoxAbstract() {

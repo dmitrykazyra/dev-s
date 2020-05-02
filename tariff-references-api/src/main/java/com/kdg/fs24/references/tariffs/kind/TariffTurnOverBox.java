@@ -40,7 +40,7 @@ public class TariffTurnOverBox extends TariffBoxAbstract {
             return;
         }
 
-        final LocalDate d1 = firstOper.getLias_date();
+        final LocalDate d1 = firstOper.getLiasDate();
         //final Iterator<LiasAction> laIterator = liasActions.iterator();
         final Iterator<TariffRateRecord> rateIterator = tariffRate.getRateRecords().iterator();
 
@@ -62,7 +62,7 @@ public class TariffTurnOverBox extends TariffBoxAbstract {
         //LogService.LogInfo(this.getClass(), String.format(" liasActions size = %d ", liasActions.size()));
         for (final LiasAction liasAction : liasActions) {
 
-            if (liasAction.getLias_date().equals(v_tariffRateRecord.getRate_date())) {
+            if (liasAction.getLiasDate().equals(v_tariffRateRecord.getRate_date())) {
                 percRate = v_tariffRateRecord.getRate_value();
                 if (rateIterator.hasNext()) {
                     v_tariffRateRecord = rateIterator.next();
@@ -73,14 +73,14 @@ public class TariffTurnOverBox extends TariffBoxAbstract {
             final BigDecimal accrualSum;
 
             if (null != tariffRowCalculator) {
-                accrualSum = tariffRowCalculator.calculate(liasAction.getLias_date(), liasAction.getLias_sum().abs(), percRate);
+                accrualSum = tariffRowCalculator.calculate(liasAction.getLiasDate(), liasAction.getLiasSum().abs(), percRate);
             } else {
                 accrualSum = null;
             }
 
-            this.addOrReplaceTariffSum(liasAction.getLias_date(), liasAction.getLias_sum().abs(), accrualRate, accrualSum, SysConst.BIGDECIMAL_NULL);
+            this.addOrReplaceTariffSum(liasAction.getLiasDate(), liasAction.getLiasSum().abs(), accrualRate, accrualSum, SysConst.BIGDECIMAL_NULL);
 
-            if (liasAction.getLias_date().equals(v_tariffRateRecord.getRate_date())) {
+            if (liasAction.getLiasDate().equals(v_tariffRateRecord.getRate_date())) {
                 percRate = v_tariffRateRecord.getRate_value();
                 if (rateIterator.hasNext()) {
                     v_tariffRateRecord = rateIterator.next();

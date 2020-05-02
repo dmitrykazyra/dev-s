@@ -8,40 +8,25 @@ package com.kdg.fs24.references.liases.debtstate;
 import java.util.Map;
 import com.kdg.fs24.references.api.ReferenceRec;
 import com.kdg.fs24.references.api.AbstractRefRecord;
+import javax.persistence.*;
+import lombok.Data;
 
 /**
  *
  * @author kazyra_d
  */
+@Data
+@Entity
+@Table(name = "liasDebtStatesRef")
 public class LiasDebtState extends AbstractRefRecord implements ReferenceRec {
 
-    private Integer debt_state_id;
-    private String debt_state_name;
-
-    public LiasDebtState() {
-        super();
-    }
-
-    public Integer getDebt_state_id() {
-        return debt_state_id;
-    }
-
-    public LiasDebtState setDebt_state_id(final Integer debt_state_id) {
-        this.debt_state_id = debt_state_id;
-        return this;
-    }
-
-    public String getDebt_state_name() {
-        return debt_state_name;
-    }
-
-    public LiasDebtState setDebt_state_name(final String debt_state_name) {
-        this.debt_state_name = debt_state_name;
-        return this;
-    }
+    @Column(name = "debt_state_id", updatable = false)
+    private Integer debtStateId;
+    @Column(name = "debt_state_name")
+    private String debtStateName;
 
     @Override
     public void record2Map(final Map<String, Integer> map) {
-        map.put(String.format("%d - %s", this.getDebt_state_id(), this.getDebt_state_name()), this.getDebt_state_id());
+        map.put(String.format("%d - %s", this.getDebtStateId(), this.getDebtStateName()), this.getDebtStateId());
     }
 }

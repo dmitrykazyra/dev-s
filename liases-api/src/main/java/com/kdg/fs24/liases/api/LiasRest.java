@@ -5,14 +5,27 @@
  */
 package com.kdg.fs24.liases.api;
 
+/**
+ *
+ * @author N76VB
+ */
+import com.kdg.fs24.application.core.api.ObjectRoot;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import javax.persistence.*;
+import lombok.Data;
 
-public interface LiasRest {
+@Data
+@Entity
+@Table(name = "liasRests")
+@IdClass(LiasRestPK.class)
+public class LiasRest extends ObjectRoot {
 
-    LocalDate getRest_date();
-
-    BigDecimal getRest();
-    
-    void setRest(BigDecimal rest);
+    @Id
+    private Integer lias_id;
+    @Id
+    private Integer rest_type;
+    @Id
+    private LocalDate rest_date;
+    private BigDecimal rest;
 }

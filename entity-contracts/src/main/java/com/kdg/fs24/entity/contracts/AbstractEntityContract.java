@@ -22,6 +22,7 @@ import com.kdg.fs24.tariff.core.api.TariffPlan;
 import com.kdg.fs24.tariff.core.AbstractTariffPlan;
 import java.util.Collection;
 import com.kdg.fs24.entity.marks.EntityMark;
+import com.kdg.fs24.liases.api.LiasDebt;
 
 /**
  *
@@ -38,33 +39,64 @@ public class AbstractEntityContract extends AbstractActionEntity {
 
     @JoinColumn(name = "contract_subject_id", referencedColumnName = "contract_subject_id", updatable = false)
     private ContractSubject contractSubject;
+    // 
+    //--------------------------------------------------------------------------    
+
     @Column(name = "contract_num")
     private String contractNum;
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "counterparty_id", referencedColumnName = "counterparty_id")
     private Counterparty counterparty;
+    // 
+    //--------------------------------------------------------------------------    
+
     @ManyToOne
     @JoinColumn(name = "entity_kind_id", referencedColumnName = "entity_kind_id", updatable = false)
     private EntityKind entityKind;
+    // 
+    //--------------------------------------------------------------------------    
+
     @ManyToOne
     @JoinColumn(name = "currency_id", referencedColumnName = "currency_id")
-    Currency currency;
+    private Currency currency;
+    // 
+    //--------------------------------------------------------------------------    
+
     @Column(name = "contract_date")
     private LocalDate contractDate;
+    // 
+    //--------------------------------------------------------------------------    
+
     @Column(name = "begin_date")
     private LocalDate beginDate;
+    // 
+    //--------------------------------------------------------------------------    
+
     @Column(name = "end_date")
     private LocalDate endDate;
+    // 
+    //--------------------------------------------------------------------------    
+
     @Column(name = "contract_summ")
     private BigDecimal contractSumm;
+    // 
+    //--------------------------------------------------------------------------    
     @ManyToOne(targetEntity = AbstractTariffPlan.class)
     @JoinColumn(name = "tariff_plan_id", referencedColumnName = "tariff_plan_id")
     private TariffPlan tariffPlan;
+    // отметки на сущности
+    //--------------------------------------------------------------------------
     @OneToMany
     @JoinColumn(name = "entity_id", referencedColumnName = "contract_id")
-    private Collection<EntityMark> entityMarks; // = ServiceFuncs.<EntityMark>getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);
+    private Collection<EntityMark> entityMarks;
+    // исполенные действия
+    //--------------------------------------------------------------------------
     @OneToMany(targetEntity = AbstractPersistenceAction.class)
     @JoinColumn(name = "entity_id", referencedColumnName = "entity_id")
     private Collection<Action> entityActions;
+    //==========================================================================
+    @OneToMany
+    @JoinColumn(name = "contract_id", referencedColumnName = "contract_id")
+    private Collection<LiasDebt> contractDebts;
 
 }

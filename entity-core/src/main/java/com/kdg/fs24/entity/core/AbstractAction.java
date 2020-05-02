@@ -13,12 +13,12 @@ import com.kdg.fs24.persistence.core.PersistanceEntityManager;
 import java.util.Collection;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.annotation.Propagation;
-import com.kdg.fs24.entity.core.api.RefreshAfterCommit;
 import com.kdg.fs24.tce.api.StopWatcher;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import lombok.Data;
+import com.kdg.fs24.entity.core.api.SkipRefresh;
 
 /**
  *
@@ -181,46 +181,48 @@ public abstract class AbstractAction<T extends ActionEntity>
     //==========================================================================
     public void refreshModifiedEntities() {
 
-        if (AnnotationFuncs.isAnnotated(this.getClass(), RefreshAfterCommit.class)) {
+        Boolean needRefresh = SysConst.BOOLEAN_TRUE;
 
-            final Boolean needRefresh = AnnotationFuncs.<RefreshAfterCommit>getAnnotation(this.getClass(), RefreshAfterCommit.class).needRefresh();
+        if (AnnotationFuncs.isAnnotated(this.getClass(), SkipRefresh.class)) {
+            needRefresh = !AnnotationFuncs.<SkipRefresh>getAnnotation(this.getClass(), SkipRefresh.class).skipRefresh();
+        }
 
-            if (needRefresh) {
+        if (needRefresh) {
 //            final Boolean debugMode = persistanceEntityManager
 //                    .getDebugMode()
 //                    .equals(SysConst.STRING_TRUE);
-                if (getDebugMode()) {
+            if (getDebugMode()) {
 
-                    LogService.LogInfo(this.getClass(), () -> String.format("refresh entity (%d, %s)",
-                            this.getEntity().entityId(),
-                            this.getEntity().getClass().getSimpleName())
-                            .toUpperCase());
-                }
-                // обновление кэша
-                persistanceEntityManager
-                        .getFactory()
-                        .getCache()
-                        .evict(this.getEntity().getClass(),
-                                this.getEntity().entityId());
+                LogService.LogInfo(this.getClass(), () -> String.format("refresh entity (%d, %s)",
+                        this.getEntity().entityId(),
+                        this.getEntity().getClass().getSimpleName())
+                        .toUpperCase());
+            }
+            // обновление кэша
+            persistanceEntityManager
+                    .getFactory()
+                    .getCache()
+                    .evict(this.getEntity().getClass(),
+                            this.getEntity().entityId());
 
-                // поиск сущности
-                final ActionEntity entity = persistanceEntityManager
-                        .getEntityManager()
-                        .find(this.getEntity().getClass(), this.getEntity().entityId());
+            // поиск сущности
+//            final ActionEntity entity = persistanceEntityManager
+//                    .getEntityManager()
+//                    .find(this.getEntity().getClass(), this.getEntity().entityId());
 
-                // обновление главной сущности
-                persistanceEntityManager
-                        .getEntityManager()
-                        .refresh(entity);
+            // обновление главной сущности
+            persistanceEntityManager
+                    .getEntityManager()
+                    .refresh(this.getEntity());
 
-                if (getDebugMode()) {
-                    LogService.LogInfo(this.getClass(), () -> String.format("refresh entity is finished (%d, %s)",
-                            entity.entityId(),
-                            entity.getClass().getSimpleName())
-                            .toUpperCase());
-                }
+            if (getDebugMode()) {
+                LogService.LogInfo(this.getClass(), () -> String.format("refresh entity is finished (%d, %s)",
+                        this.getEntity().entityId(),
+                        this.getEntity().getClass().getSimpleName())
+                        .toUpperCase());
+            }
 
-                // обновление подчиненных сущности
+            // обновление подчиненных сущности
 //            persistenceEntities
 //                    .forEach((obj) -> {
 //
@@ -231,7 +233,6 @@ public abstract class AbstractAction<T extends ActionEntity>
 //                                .getEntityManager()
 //                                .refresh(obj);
 //                    });
-            }
         }
     }
 

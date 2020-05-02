@@ -10,7 +10,6 @@ import com.kdg.fs24.entity.contract.subjects.ContractSubject;
 import com.kdg.fs24.entity.contracts.AbstractEntityContract;
 import com.kdg.fs24.entity.core.AbstractAction;
 import com.kdg.fs24.entity.core.api.ActionCodeId;
-import com.kdg.fs24.entity.core.api.RefreshAfterCommit;
 import com.kdg.fs24.entity.core.api.EntityConst;
 import com.kdg.fs24.entity.core.api.EntityContractConst;
 import com.kdg.fs24.entity.core.api.ViewAction;
@@ -19,6 +18,7 @@ import com.kdg.fs24.entity.marks.EntityMark;
 import com.kdg.fs24.entity.marks.MarkValue;
 import com.kdg.fs24.references.api.AbstractRefRecord;
 import lombok.Data;
+import com.kdg.fs24.entity.core.api.SkipRefresh;
 
 /**
  *
@@ -29,7 +29,7 @@ import lombok.Data;
         action_name = "Авторизация договора")
 @ViewAction
 @PreViewDialog
-@RefreshAfterCommit
+//@SkipRefresh
 //@AllowedMethod(action = ActAuthorizeAbstractContract.class, entity = EntityContract.class)
 public class ActAuthorizeAbstractContract extends AbstractContractAction<AbstractEntityContract> {
 

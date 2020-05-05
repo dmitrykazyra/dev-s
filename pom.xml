@@ -13,7 +13,7 @@
         <primefaces.version>6.2</primefaces.version>
         <jackson.version>2.9.7</jackson.version>
         <resteasy.version>3.6.2.Final</resteasy.version> 
-        <hibernate.version>5.4.12.Final</hibernate.version> 
+        <hibernate.version>5.4.10.Final</hibernate.version> 
         <jpa.version>2.2</jpa.version>     
         <spring.boot.version>2.2.6.RELEASE</spring.boot.version>  
         <spring.data.jpa>2.2.5.RELEASE</spring.data.jpa>  

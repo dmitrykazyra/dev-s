@@ -20,9 +20,9 @@ import com.kdg.fs24.entity.core.AbstractPersistenceAction;
 @Entity
 @Data
 @Table(name = "core_entityMarks")
-@PrimaryKeyJoinColumns(value = {
-    @PrimaryKeyJoinColumn(name = "entity_id", referencedColumnName = "entity_id")
-    , @PrimaryKeyJoinColumn(name = "action_id", referencedColumnName = "action_id")})
+//@PrimaryKeyJoinColumns(value = {
+//    @PrimaryKeyJoinColumn(name = "entity_id", referencedColumnName = "entity_id")
+//    , @PrimaryKeyJoinColumn(name = "action_id", referencedColumnName = "action_id")})
 @IdClass(EntityMarkPK.class)
 public class EntityMark implements PersistenceEntity {
 

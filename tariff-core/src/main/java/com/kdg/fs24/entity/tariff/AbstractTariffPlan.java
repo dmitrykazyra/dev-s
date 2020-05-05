@@ -61,7 +61,7 @@ import lombok.Data;
                     entity_status_name = "Аннулированный тарифный план")
         })
 @DefaultEntityStatus(entity_status = SysConst.ES_VALID)
-@ActionClassesPackages(pkgList = {"com.kdg.fs24.tariff.actions"})
+@ActionClassesPackages(pkgList = {"com.kdg.fs24.entity.tariff.actions"})
 public class AbstractTariffPlan extends AbstractActionEntity
         implements TariffPlan {
 

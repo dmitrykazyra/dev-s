@@ -216,8 +216,7 @@ public abstract class ActionExecutionService extends AbstractApplicationService 
                                             this.registerEntStatus(entClazz, entityStatus);
                                         });
                             });
-                }
-                );
+                });
 
         if (this.CLASS_ENT2ACTION.isEmpty()) {
             class NoActionClassesDefined extends InternalAppException {

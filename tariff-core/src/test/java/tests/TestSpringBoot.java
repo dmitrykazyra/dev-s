@@ -19,8 +19,9 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @SpringBootApplication
 @ComponentScan(basePackages = "com.kdg.fs24.service")
 @PropertySource("classpath:application.properties")
-@EntityScan(basePackages = {"com.kdg.fs24.entity", "com.kdg.fs24.entity.tariff"})
+@EntityScan(basePackages = {"com.kdg.fs24.entity",
+     "com.kdg.fs24.references"})
 @EnableJpaRepositories(basePackages = "com.kdg.fs24.repository")
 public class TestSpringBoot extends SpringBoot4Test {
-    
+
 }

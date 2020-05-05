@@ -22,16 +22,6 @@ import org.springframework.context.annotation.ComponentScan;
 @Configuration
 @ComponentScan(basePackages = "com.kdg.fs24.service")
 @EntityScan(basePackages = {"com.kdg.fs24.entity",
-//    "com.kdg.fs24.entity.counterparties.api",
-//    "com.kdg.fs24.references.application",
-//    "com.kdg.fs24.entity.core.api",
-//    "com.kdg.fs24.entity.tariff",
-//    "com.kdg.fs24.entity.contract",
-//    "com.kdg.fs24.entity.marks",
-//    "com.kdg.fs24.entity.security",
-//    "com.kdg.fs24.references.loan.api",
-//    "com.kdg.fs24.references.bond.schedule.api",
-//    "com.kdg.fs24.entity.liases",
     "com.kdg.fs24.references"})
 @PropertySource("classpath:application.properties")
 //@EnableJpaRepositories(basePackages = "com.kdg.fs24.repository")

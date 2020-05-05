@@ -13,7 +13,7 @@ import com.kdg.fs24.entity.kind.EntityKind;
 import com.kdg.fs24.entity.status.EntityStatus;
 import lombok.Data;
 import org.springframework.stereotype.Service;
-import com.kdg.fs24.retail.loan.contracts.RetailLoanContract;
+import com.kdg.fs24.entity.retail.loan.contracts.RetailLoanContract;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import com.kdg.fs24.references.liases.debtstate.LiasDebtState;
@@ -29,7 +29,7 @@ import com.kdg.fs24.entity.tariff.api.TariffPlan;
 import java.math.BigDecimal;
 import com.kdg.fs24.entity.core.api.CachedReferencesClasses;
 import com.kdg.fs24.references.api.AbstractRefRecord;
-import com.kdg.fs24.retail.loan.contracts.RetailLoanConstants;
+import com.kdg.fs24.entity.retail.loan.contracts.RetailLoanConstants;
 
 /**
  *
@@ -37,7 +37,7 @@ import com.kdg.fs24.retail.loan.contracts.RetailLoanConstants;
  */
 @Data
 @Service
-@EntityClassesPackages(pkgList = {"com.kdg.fs24.retail.loan.contracts"})
+@EntityClassesPackages(pkgList = {"com.kdg.fs24.entity.retail.loan.contracts"})
 @CachedReferencesClasses(classes = {ContractSubject.class, LoanSource.class, PmtScheduleAlg.class,
     PmtScheduleTerm.class, Currency.class, LiasDebtState.class, LiasKind.class, LiasType.class, LiasBaseAssetType.class})
 public class RetailLoanContractActionsService extends ActionExecutionService {

@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.kdg.fs24.retail.loan.actions;
+package com.kdg.fs24.entity.retail.loan.actions;
 
 import com.kdg.fs24.entity.contracts.actions.ActCreateOrUpdateContract;
 import com.kdg.fs24.entity.core.api.ActionCodeId;
-import com.kdg.fs24.retail.loan.contracts.AbstractRetailLoanContract;
-import com.kdg.fs24.retail.loan.contracts.RetailLoanConstants;
+import com.kdg.fs24.entity.retail.loan.contracts.AbstractRetailLoanContract;
+import com.kdg.fs24.entity.retail.loan.contracts.RetailLoanConstants;
 import lombok.Data;
 
 /**

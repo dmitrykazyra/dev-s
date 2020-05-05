@@ -16,8 +16,10 @@ import com.kdg.fs24.application.core.api.ObjectRoot;
 import com.kdg.fs24.application.core.sysconst.SysConst;
 import com.kdg.fs24.lias.opers.napi.SaveAccretionHist;
 import com.kdg.fs24.persistence.api.PersistenceEntity;
+import com.kdg.fs24.entity.document.Document;
 import javax.persistence.*;
 import lombok.Data;
+import com.kdg.fs24.entity.liases.api.Lias;
 
 /**
  *
@@ -36,26 +38,32 @@ public class LiasAction extends ObjectRoot implements PersistenceEntity {
     private Long liasActionId;
 
     @ManyToOne
-    @JoinColumn(name = "fin_oper_code", referencedColumnName = "fin_oper_code")
+    @JoinColumn(name = "fin_oper_code", referencedColumnName = "fin_oper_code", updatable = false)
     private LiasFinOperCode liasFinOperCode;
     // тип финансовой операции
-    @JoinColumn(name = "action_type_id", referencedColumnName = "action_type_id")
+    @ManyToOne
+    @JoinColumn(name = "action_type_id", referencedColumnName = "action_type_id", updatable = false)
     private LiasActionType liasActionType;
     // сумма финансовой операции
-    @Column(name = "lias_sum")
+    @Column(name = "lias_sum", updatable = false)
     private BigDecimal liasSum;
     // дата финансовой операции
-    @Column(name = "lias_date")
+    @Column(name = "lias_date", updatable = false)
     private LocalDate liasDate;
 
-    @Column(name = "doc_id")
-    private Long docId;
-    @Column(name = "lias_id")
-    private Integer liasId;
-    @Column(name = "server_date")
+    @ManyToOne
+    @JoinColumn(name = "doc_id", referencedColumnName = "doc_id", updatable = false)
+    private Document document;
+
+    @ManyToOne
+    @JoinColumn(name = "lias_id", referencedColumnName = "lias_id", updatable = false)
+    private Lias lias;
+
+    @Column(name = "server_date", updatable = false)
     private LocalDateTime serverDate;
-    @Column(name = "status")
+    @Column(name = "status", updatable = false)
     private Integer status;
+    @Transient
     private int liasOperHC;
 
     //private SaveAccretionHist sah;

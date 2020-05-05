@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.kdg.fs24.tariff.actions;
+package com.kdg.fs24.entity.tariff.actions;
 
-import com.kdg.fs24.entity.actions.ActAbstractCloseEntity;
+import com.kdg.fs24.entity.actions.ActAbstractCancelEntity;
 //import com.kdg.fs24.entity.core.AbstractEntityImpl;
 import com.kdg.fs24.entity.core.api.ActionCodeId;
 import com.kdg.fs24.entity.core.api.AllowedMethod;
@@ -19,12 +19,12 @@ import javax.persistence.Entity;
  *
  * @author N76VB
  */
-//@Entity
-@ActionCodeId(action_code = TariffConst.ACT_CLOSE_TARIFF_PLAN,
-        action_name = "Закрыть тарифный план")
-//@ViewAction
-//@PreViewDialog
-//@AllowedMethod(action = ActAbstractCloseEntity.class, entity = AbstractEntityImpl.class)
-public class ActCloseTariffPlan extends ActAbstractCloseEntity<AbstractTariffPlan> {
+
+@ActionCodeId(action_code = TariffConst.ACT_CANCEL_TARIFF_PLAN,
+        action_name = "Аннулировать тарифный план")
+@ViewAction
+@PreViewDialog
+//@AllowedMethod(action = ActAbstractCancelEntity.class, entity = AbstractEntityImpl.class)
+public class ActCancelTariffPlan extends ActAbstractCancelEntity<AbstractTariffPlan> {
 
 }

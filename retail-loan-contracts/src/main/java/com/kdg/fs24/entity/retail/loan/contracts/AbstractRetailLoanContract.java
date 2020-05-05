@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.kdg.fs24.retail.loan.contracts;
+package com.kdg.fs24.entity.retail.loan.contracts;
 
 import com.kdg.fs24.entity.contracts.AbstractEntityContract;
 import lombok.Data;

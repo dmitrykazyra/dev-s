@@ -18,7 +18,7 @@ import lombok.Data;
 @Entity
 @Data
 @Table(name = "core_marksValuesRef")
-@PrimaryKeyJoinColumn(name = "mark_id", referencedColumnName = "mark_id")
+//@PrimaryKeyJoinColumn(name = "mark_id", referencedColumnName = "mark_id")
 @IdClass(MarkValuePK.class)
 public class MarkValue extends AbstractRefRecord implements ReferenceRec {
 

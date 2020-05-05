@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.kdg.fs24.tariff.actions;
+package com.kdg.fs24.entity.tariff.actions;
 
 import com.kdg.fs24.entity.core.AbstractAction;
 import com.kdg.fs24.entity.core.api.ActionCodeId;

@@ -56,6 +56,11 @@
         </dependency>
         <dependency>
             <groupId>com.kdg.fs24</groupId>
+            <artifactId>documents-api</artifactId>
+            <version>${app.version}</version> 
+        </dependency>
+        <dependency>
+            <groupId>com.kdg.fs24</groupId>
             <artifactId>spring-junit</artifactId>
             <version>${app.version}</version> 
             <scope>test</scope>            

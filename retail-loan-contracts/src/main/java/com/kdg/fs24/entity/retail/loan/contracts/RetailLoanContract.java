@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.kdg.fs24.retail.loan.contracts;
+package com.kdg.fs24.entity.retail.loan.contracts;
 
 import com.kdg.fs24.application.core.sysconst.SysConst;
 import com.kdg.fs24.entity.core.api.ActionClassesPackages;
@@ -49,7 +49,7 @@ import lombok.Data;
                     entity_status_name = "Аннулированная сделка")
         })
 @DefaultEntityStatus(entity_status = SysConst.ES_VALID)
-@ActionClassesPackages(pkgList = {"com.kdg.fs24.retail.loan.actions",
+@ActionClassesPackages(pkgList = {"com.kdg.fs24.entity.retail.loan.actions",
     "com.kdg.fs24.entity.contracts.actions"})
 public class RetailLoanContract extends AbstractRetailLoanContract {
 

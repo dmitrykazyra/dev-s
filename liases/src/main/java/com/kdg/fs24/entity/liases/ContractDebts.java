@@ -6,7 +6,6 @@
 package com.kdg.fs24.entity.liases;
 
 import com.kdg.fs24.application.core.service.funcs.FilterComparator;
-import com.kdg.fs24.lias.opers.napi.NewLiasOper;
 import com.kdg.fs24.lias.opers.attrs.*;
 import com.kdg.fs24.entity.liases.api.LiasDebt;
 //import com.kdg.fs24.entity.liases.references.LiasesReferencesService;
@@ -21,6 +20,7 @@ import com.kdg.fs24.references.tariffs.kind.TariffAccretionHisory;
 import com.kdg.fs24.lias.opers.api.LiasOpersConst;
 import com.kdg.fs24.application.core.nullsafe.NullSafe;
 import lombok.Data;
+import com.kdg.fs24.lias.opers.napi.OldLiasOper;
 
 /**
  *

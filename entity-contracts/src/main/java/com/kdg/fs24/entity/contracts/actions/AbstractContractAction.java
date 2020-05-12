@@ -5,14 +5,14 @@
  */
 package com.kdg.fs24.entity.contracts.actions;
 
-import com.kdg.fs24.entity.contracts.AbstractEntityContract;
+import com.kdg.fs24.entity.contracts.AbstractEntityServiceContract;
 import com.kdg.fs24.entity.core.AbstractAction;
 
 /**
  *
  * @author N76VB
  */
-public abstract class AbstractContractAction<T extends AbstractEntityContract> extends AbstractAction<T> {
+public abstract class AbstractContractAction<T extends AbstractEntityServiceContract> extends AbstractAction<T> {
 
     @Override
     protected void doCalculation() {

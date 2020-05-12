@@ -18,7 +18,8 @@ import java.util.Map;
  *
  * @author N76VB
  */
-public class NewLiasOperImpl implements NewLiasOper {
+@Deprecated
+public class NewLiasOperImpl implements OldLiasOper {
 
     final private Collection<OperAttr> operAttrsCollection
             = ServiceFuncs.<OperAttr>getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);

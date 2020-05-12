@@ -5,7 +5,6 @@ package com.kdg.fs24.lias.opers.api;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author N76VB
@@ -13,10 +12,14 @@ package com.kdg.fs24.lias.opers.api;
 import com.kdg.fs24.lias.opers.attrs.*;
 
 public final class LiasOpersConst {
+
     public static final Class<LIAS_DATE> LIAS_DATE_CLASS = LIAS_DATE.class;
     public static final Class<LIAS_FINOPER_CODE> LIAS_FINOPER_CODE_CLASS = LIAS_FINOPER_CODE.class;
     public static final Class<LIAS_SUMM> LIAS_SUMM_CLASS = LIAS_SUMM.class;
     public static final Class<LIAS_START_DATE> LIAS_START_DATE_CLASS = LIAS_START_DATE.class;
     public static final Class<LIAS_FINAL_DATE> LIAS_FINAL_DATE_CLASS = LIAS_FINAL_DATE.class;
+    public static final Class<LIAS_TYPE_ID> LIAS_TYPE_ID_CLASS = LIAS_TYPE_ID.class;
     
+    
+
 }

@@ -12,11 +12,12 @@ import java.util.Map;
  *
  * @author N76VB
  */
-public interface NewLiasOper {
+@Deprecated
+public interface OldLiasOper {
 
     //<T extends OperAttr, V> NewLiasOper addAttr(final V attrValue);
     //<LD extends LocalDateOperAttr> NewLiasOper addAttr(LD attrValue);
-    <LD extends OperAttr> NewLiasOper addAttr(LD attrValue);
+    <LD extends OperAttr> OldLiasOper addAttr(LD attrValue);
 
     <V> V attrValue(final Class<? extends OperAttr> clazz);
 

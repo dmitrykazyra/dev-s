@@ -23,6 +23,8 @@ import com.kdg.fs24.entity.tariff.AbstractTariffPlan;
 import java.util.Collection;
 import com.kdg.fs24.entity.marks.EntityMark;
 import com.kdg.fs24.entity.liases.api.LiasDebt;
+import com.kdg.fs24.lias.opers.napi.LiasFinanceOper;
+import com.kdg.fs24.lias.opers.api.LiasOpersConst;
 
 /**
  *
@@ -98,5 +100,6 @@ public class AbstractEntityContract extends AbstractActionEntity {
     @OneToMany
     @JoinColumn(name = "contract_id", referencedColumnName = "contract_id")
     private Collection<LiasDebt> contractDebts;
+    //==========================================================================
 
 }

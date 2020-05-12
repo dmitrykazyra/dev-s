@@ -7,7 +7,7 @@ package com.kdg.fs24.entity.contracts.actions;
 
 import com.kdg.fs24.application.core.nullsafe.NullSafe;
 import com.kdg.fs24.entity.contract.subjects.ContractSubject;
-import com.kdg.fs24.entity.contracts.AbstractEntityContract;
+import com.kdg.fs24.entity.contracts.AbstractEntityServiceContract;
 import com.kdg.fs24.entity.core.AbstractAction;
 import com.kdg.fs24.entity.core.api.ActionCodeId;
 import com.kdg.fs24.entity.core.api.EntityConst;
@@ -31,10 +31,11 @@ import com.kdg.fs24.entity.core.api.SkipRefresh;
 @PreViewDialog
 //@SkipRefresh
 //@AllowedMethod(action = ActAuthorizeAbstractContract.class, entity = EntityContract.class)
-public class ActAuthorizeAbstractContract extends AbstractContractAction<AbstractEntityContract> {
+public class ActAuthorizeAbstractContract extends AbstractContractAction<AbstractEntityServiceContract> {
 
     //==========================================================================
-    public static Boolean isAllowed(final AbstractEntityContract entity) {
+    public static Boolean isAllowed(final AbstractEntityServiceContract
+            entity) {
 
 //        return (NullSafe.create()
 //                .execute2result(() -> {

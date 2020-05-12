@@ -56,7 +56,8 @@ public final class ServiceFuncs {
         return collection;
     }
 
-    //==========================================================================    
+    //==========================================================================   
+    @Deprecated
     public static <T> T getCollectionElement(final Collection<T> collection,
             final FilterComparator<T> filterComparator,
             final String exceptionMessage) {
@@ -106,6 +107,7 @@ public final class ServiceFuncs {
     }
 
     //==========================================================================
+    @Deprecated
     public static <T> T getCollectionElement(final Collection<T> collection,
             final FilterComparator<T> filterComparator,
             final SortedBy<T> sortedBy,

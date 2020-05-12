@@ -6,7 +6,7 @@
 package com.kdg.fs24.entity.contracts.actions;
 
 import com.kdg.fs24.application.core.service.funcs.ServiceFuncs;
-import com.kdg.fs24.entity.contracts.AbstractEntityContract;
+import com.kdg.fs24.entity.contracts.AbstractEntityServiceContract;
 import com.kdg.fs24.entity.document.Document;
 import java.util.Collection;
 
@@ -20,7 +20,7 @@ import lombok.Data;
  */
 // абстрактное действие создающие платежные инструкции по договору
 @Data
-public abstract class AbstractContractDocumentAction<T extends AbstractEntityContract>
+public abstract class AbstractContractDocumentAction<T extends AbstractEntityServiceContract>
         extends AbstractContractAction<T> {
 
     // коллекция для создания документов

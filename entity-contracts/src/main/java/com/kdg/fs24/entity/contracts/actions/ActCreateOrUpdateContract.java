@@ -5,7 +5,7 @@
  */
 package com.kdg.fs24.entity.contracts.actions;
 
-import com.kdg.fs24.entity.contracts.AbstractEntityContract;
+import com.kdg.fs24.entity.contracts.AbstractEntityServiceContract;
 import com.kdg.fs24.entity.core.AbstractAction;
 import lombok.Data;
 
@@ -14,7 +14,7 @@ import lombok.Data;
  * @author N76VB
  */
 @Data
-public abstract class ActCreateOrUpdateContract<T extends AbstractEntityContract>
+public abstract class ActCreateOrUpdateContract<T extends AbstractEntityServiceContract>
         extends AbstractAction<T> {
 
 }

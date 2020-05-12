@@ -12,6 +12,7 @@ package com.kdg.fs24.bond.schedule.api;
 import java.time.LocalDate;
 import java.math.BigDecimal;
 
+@Deprecated
 public interface PmtScheduleLine {
 
     Integer getSchedule_id();

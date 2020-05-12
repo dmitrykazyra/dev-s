@@ -25,6 +25,7 @@ import com.kdg.fs24.entity.marks.EntityMark;
 import com.kdg.fs24.entity.liases.api.LiasDebt;
 import com.kdg.fs24.lias.opers.napi.LiasFinanceOper;
 import com.kdg.fs24.lias.opers.api.LiasOpersConst;
+import com.kdg.fs24.entity.bondschedule.PmtSchedule;
 
 /**
  *
@@ -97,9 +98,14 @@ public class AbstractEntityContract extends AbstractActionEntity {
     @JoinColumn(name = "entity_id", referencedColumnName = "entity_id")
     private Collection<Action> entityActions;
     //==========================================================================
+    // задолженности по договору
     @OneToMany
     @JoinColumn(name = "contract_id", referencedColumnName = "contract_id")
     private Collection<LiasDebt> contractDebts;
     //==========================================================================
+    //графики по договору
+    @OneToMany
+    @JoinColumn(name = "contract_id", referencedColumnName = "contract_id")
+    private Collection<PmtSchedule> pmtSchedules;
 
 }

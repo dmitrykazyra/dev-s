@@ -6,7 +6,7 @@
 package com.kdg.fs24.application.core.nullsafe;
 
 import com.kdg.fs24.application.core.exception.api.InternalAppException;
-//import com.kdg.fs24.application.core.log.LogService;
+import com.kdg.fs24.application.core.log.LogService;
 import com.kdg.fs24.application.core.sysconst.SysConst;
 import com.kdg.fs24.tce.api.CodeBlock;
 import com.kdg.fs24.tce.api.CodeBlockEx;
@@ -48,7 +48,6 @@ public class NullSafe { // implements NullSafe {
     private volatile CodeBlockResult cb4watcher;
 
     //public final static Collection<ExceptionEvent> EXCEPTION_EVENTS = new ArrayList();
-
     //--------------------------------------------------------------------------
     public static final NullSafe create() {
         return new NullSafe();
@@ -424,7 +423,6 @@ public class NullSafe { // implements NullSafe {
 //                    () -> String.format("%s: '%s' ",
 //                            this.getBlockName(),
 //                            this.getExceptionMsg()));
-
             this.addException(th, thMsg);
         }
     }
@@ -477,7 +475,7 @@ public class NullSafe { // implements NullSafe {
 //
 //                // печатаем стектрейс, если такого исключения не было последние ХХ минут
 //                //  if (ev_List.isEmpty()) {
-//                NullSafe.internalPrintStackTrace(th);
+            NullSafe.internalPrintStackTrace(th);
 //                // }
 //            }
         }).start();
@@ -505,9 +503,9 @@ public class NullSafe { // implements NullSafe {
 
     private static void internalPrintStackTrace(final Throwable th) {
 
-//        final String callStack = NullSafe.getStackTraceRaw(th);
-//
-//        LogService.LogErr(th.getClass(), () -> callStack);
+        final String callStack = NullSafe.getStackTraceRaw(th);
+
+        LogService.LogErr(th.getClass(), () -> callStack);
 //
 //        NullSafe.EXCEPTION_EVENTS.add(new ExceptionEvent()
 //                .setThrowable(th)
@@ -647,7 +645,6 @@ public class NullSafe { // implements NullSafe {
 //                        NullSafe.getErrorMessage(this.getThrowable()),
 //                        NullSafe.getStackTraceRaw(this.getThrowable())));
 //            }
-
             throw new RuntimeException(this.getThrowable());
         }
         return this;
@@ -671,7 +668,6 @@ public class NullSafe { // implements NullSafe {
 //        } catch (Throwable th) {
 //            this.processThrowableException(th);
 //        }
-
         return this;
     }
 
@@ -701,7 +697,6 @@ public class NullSafe { // implements NullSafe {
                             details);
 
 //                    LogService.LogInfo(this.getClass(), () -> watchString);
-
                     stopWatcher = null;
                 }
             }

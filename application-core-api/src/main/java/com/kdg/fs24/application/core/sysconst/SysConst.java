@@ -9,18 +9,20 @@ package com.kdg.fs24.application.core.sysconst;
  *
  * @author N76VB
  */
+import com.kdg.fs24.application.core.nullsafe.NullSafe;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.time.format.DateTimeFormatter;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public final class SysConst {
 
 //    public static Boolean TEST_MODE_RUNNING = Boolean.FALSE;  
 //    public static String TEST_MODE_LAST_ERR_MSG = SysConst.STRING_NULL;
-
+    public static final AtomicBoolean DEBUG_MODE = NullSafe.createObject(AtomicBoolean.class);
     public static final String APPNAME = "fs24";
     public static final String CRLF = "\n";
     public static final String NOT_DEFINED = "?";

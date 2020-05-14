@@ -19,8 +19,8 @@ public abstract class AbstractContractAction<T extends AbstractEntityServiceCont
         super.doCalculation();
     }
     //==========================================================================
-    public T getContractEntity() {
-        return (T) (this.getEntity());
+    public AbstractEntityServiceContract getContractEntity() {
+        return (AbstractEntityServiceContract) this.getEntity();
     }
     //==========================================================================
     

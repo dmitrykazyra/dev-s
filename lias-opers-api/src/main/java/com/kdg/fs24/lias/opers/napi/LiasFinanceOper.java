@@ -7,6 +7,8 @@ package com.kdg.fs24.lias.opers.napi;
 
 import com.kdg.fs24.application.core.service.funcs.ServiceFuncs;
 import com.kdg.fs24.application.core.log.LogService;
+import com.kdg.fs24.application.core.nullsafe.NullSafe;
+import com.kdg.fs24.application.core.sysconst.SysConst;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.function.Function;
@@ -22,12 +24,15 @@ public class LiasFinanceOper {
     final private Collection<OperAttr> operAttrsCollection
             = ServiceFuncs.<OperAttr>getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);
 
-    public <LD extends OperAttr> LiasFinanceOper add(final LD attrValue) {
+    public <LD extends OperAttr> LiasFinanceOper addAttr(final LD attrValue) {
 
-//        LogService.LogInfo(attrValue.getClass(), () -> String.format("attrValue: %s = (%s) %s",
+//        final Object value = attrValue.value();
+//        final String logRecord = String.format("attrValue: %s = (%s) %s",
 //                attrValue.getClass().getInterfaces()[0].getSimpleName(),
-//                attrValue.value().getClass().getSimpleName(),
-//                attrValue.value()));
+//                NullSafe.notNull(value) ? value.getClass().getSimpleName() : SysConst.UNKNOWN,
+//                value);
+//
+//        LogService.LogInfo(attrValue.getClass(), () -> logRecord);
         this.getOperAttrsCollection().add(attrValue);
         return this;
     }
@@ -39,16 +44,17 @@ public class LiasFinanceOper {
                 this.getOperAttrsCollection(),
                 attr -> attr.getClass().getInterfaces()[0].getName().equals(clazz.getName()));
 
-        return (V) (operAttr.isPresent() ? operAttr.get() : null);
+        return (V) (operAttr.isPresent() ? operAttr.get().value() : null);
     }
 
     //==========================================================================
     public void printOperAttrsCollection() {
 
-        String operAttrs = String.format("LiasOpers attributes (%d): \n",
-                LiasFinanceOper.this.operAttrsCollection.size());
-
-        final String printAttrs = this.operAttrsCollection
+//        newBody = RED_WORDS.stream()
+//                .map(toReplace -> (Function<String, String>) s -> s.replaceAll(toReplace, fillInRed(toReplace)))
+//                .reduce(Function.identity(), Function::andThen)
+//                .apply(newBody);        
+        LogService.LogInfo(this.getClass(), () -> this.operAttrsCollection
                 .stream()
                 .sorted((r1, r2) -> r1.getClass()
                 .getInterfaces()[0]
@@ -56,14 +62,9 @@ public class LiasFinanceOper {
                 .compareTo(r2.getClass()
                         .getInterfaces()[0]
                         .getSimpleName()))
-                .map(operAttr -> (Function<String, String>) s -> String.format("%30s: %s\n", operAttr.getClass().getInterfaces()[0].getSimpleName(), ServiceFuncs.getStringObjValue(operAttr.value())))
-                .reduce(Function.identity(), Function::andThen)
-                .apply(operAttrs);
-
-//        newBody = RED_WORDS.stream()
-//                .map(toReplace -> (Function<String, String>) s -> s.replaceAll(toReplace, fillInRed(toReplace)))
-//                .reduce(Function.identity(), Function::andThen)
-//                .apply(newBody);        
-        LogService.LogInfo(this.getClass(), () -> printAttrs);
+                .map(operAttr -> String.format("%30s: %s\n", operAttr.getClass().getInterfaces()[0].getSimpleName(), ServiceFuncs.getStringObjValue(operAttr.value())))
+                .reduce(String.format("LiasOpers attributes (%d): \n",
+                        LiasFinanceOper.this.operAttrsCollection.size()),
+                        (x, y) -> x.concat(y)));
     }
 }

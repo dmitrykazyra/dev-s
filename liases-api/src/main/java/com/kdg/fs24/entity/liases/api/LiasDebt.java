@@ -49,16 +49,16 @@ public class LiasDebt extends ObjectRoot implements PersistenceEntity {
     @ManyToOne
     @JoinColumn(name = "currency_id", referencedColumnName = "currency_id")
     private Currency currency;
-
-    @JoinColumn(name = "lias_debt_state_id", referencedColumnName = "lias_debt_state_id")
+    @ManyToOne
+    @JoinColumn(name = "debt_state_id", referencedColumnName = "debt_state_id")
     private LiasDebtState liasDebtState;
-
+    @ManyToOne
     @JoinColumn(name = "lias_kind_id", referencedColumnName = "lias_kind_id")
     private LiasKind liasKind;
-
+    @ManyToOne
     @JoinColumn(name = "lias_type_id", referencedColumnName = "lias_type_id")
     private LiasType liasType;
-
+    @ManyToOne
     @JoinColumn(name = "base_asset_type_id", referencedColumnName = "base_asset_type_id")
     private LiasBaseAssetType liasBaseAssetType;
 

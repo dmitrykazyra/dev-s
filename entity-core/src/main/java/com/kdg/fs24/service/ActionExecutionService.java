@@ -72,9 +72,6 @@ public abstract class ActionExecutionService extends AbstractApplicationService 
     private final Map<Class<ENT>, Integer> CLASS_ENT2STATUS
             = ServiceFuncs.getOrCreateMap_Safe(ServiceFuncs.MAP_NULL);
 
-    @Value("${debug}")
-    private String debugMode; // = SysConst.STRING_FALSE;
-
     @Autowired
     private PersistanceEntityManager persistanceEntityManager;
 
@@ -240,7 +237,7 @@ public abstract class ActionExecutionService extends AbstractApplicationService 
     //==========================================================================
 
     private void registerEntClass(final Class entClass, final Class actClass, final Integer action_code) {
-        if (this.debugMode.equals(SysConst.STRING_TRUE)) {
+        if (SysConst.DEBUG_MODE.get()) {
             LogService.LogInfo(this.getClass(), () -> String.format("Add entity class/action: %s->%s",
                     entClass.getCanonicalName(),
                     actClass.getCanonicalName()));

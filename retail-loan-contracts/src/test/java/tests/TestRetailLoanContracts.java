@@ -129,6 +129,7 @@ public class TestRetailLoanContracts {
 //            final PmtScheduleTerm pmtScheduleTerm
         retailLoanContractActionsService.executeAction(retailLoanContract, RetailLoanConstants.MODIFY_INDIVIDUAL_LOAN_CONTRACT);
         retailLoanContractActionsService.executeAction(retailLoanContract, EntityContractConst.ACT_AUTHORIZE_CONTRACT);
+        retailLoanContractActionsService.executeAction(retailLoanContract, RetailLoanConstants.ACT_ISSUE_LOAN);
 
         final Long entityId = retailLoanContract.getEntity_id();
 

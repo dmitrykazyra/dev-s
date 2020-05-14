@@ -54,14 +54,17 @@ public class PersistanceEntityManager extends AbstractApplicationBean {
         NullSafe.create(persistenceUnitName)
                 .execute(() -> {
 //sessionFactory = new Configuration().configure().buildSessionFactory();
-                    if (this.debugMode.equals(SysConst.STRING_TRUE)) {
+                    
+                    SysConst.DEBUG_MODE.set(this.debugMode.toLowerCase().equals(SysConst.STRING_TRUE));
+
+                    if (SysConst.DEBUG_MODE.get()) {
                         LogService.LogInfo(this.getClass(), () -> String.format("Try 2 create persistence '%s'",
                                 persistenceUnitName));
                     }
 
                     this.factory = Persistence.createEntityManagerFactory(persistenceUnitName);
 
-                    if (this.debugMode.equals(SysConst.STRING_TRUE)) {
+                    if (SysConst.DEBUG_MODE.get()) {
                         LogService.LogInfo(this.getClass(), () -> String.format("Persistence '%s' is created",
                                 persistenceUnitName));
                     }
@@ -84,7 +87,7 @@ public class PersistanceEntityManager extends AbstractApplicationBean {
             NullSafe.create()
                     .execute(() -> {
 
-                        if (this.debugMode.equals(SysConst.STRING_TRUE)) {
+                        if (SysConst.DEBUG_MODE.get()) {
                             LogService.LogInfo(this.getClass(), ()
                                     -> String.format("%s: try to create/recreate entity manager ",
                                             this.persistenceUnitName));
@@ -105,7 +108,7 @@ public class PersistanceEntityManager extends AbstractApplicationBean {
                             this.entityManager = factory.createEntityManager();
                         }
 
-                        if (this.debugMode.equals(SysConst.STRING_TRUE)) {
+                        if (SysConst.DEBUG_MODE.get()) {
                             LogService.LogInfo(this.getClass(), () -> String.format("%s: Successfully create entity manager (%s) ",
                                     this.persistenceUnitName,
                                     this.getEntityManager().getClass().getCanonicalName()));
@@ -200,7 +203,7 @@ public class PersistanceEntityManager extends AbstractApplicationBean {
 
                                 if (!isActiveTransaction) {
                                     entityTransaction.begin();
-                                    if (this.debugMode.equals(SysConst.STRING_TRUE)) {
+                                    if (SysConst.DEBUG_MODE.get()) {
                                         LogService.LogInfo(this.getClass(), () -> String.format("Start jpa transaction (%d)",
                                                 this.getEntityManager().getTransaction().hashCode()).toUpperCase());
                                     }
@@ -210,7 +213,7 @@ public class PersistanceEntityManager extends AbstractApplicationBean {
 
                                 if (!isActiveTransaction) {
                                     entityTransaction.commit();
-                                    if (this.debugMode.equals(SysConst.STRING_TRUE)) {
+                                    if (SysConst.DEBUG_MODE.get()) {
                                         LogService.LogInfo(this.getClass(), () -> String.format("commit jpa transaction (%d)",
                                                 this.getEntityManager().getTransaction().hashCode()).toUpperCase());
                                     }
@@ -271,7 +274,7 @@ public class PersistanceEntityManager extends AbstractApplicationBean {
                     final Query query = this.getEntityManager()
                             .createNativeQuery(sql, clazz.getSimpleName());
 
-                    if (this.debugMode.equals(SysConst.STRING_TRUE)) {
+                    if (SysConst.DEBUG_MODE.get()) {
                         LogService.LogInfo(this.getClass(), () -> String.format("executeNativeQuery: (%s)", sql));
                     }
 

@@ -40,7 +40,7 @@ public abstract class AbstractEntityServiceContract extends AbstractEntityContra
                 .safeExecute(() -> {
                     opers
                             .stream()
-                            .filter(s -> (s.<BigDecimal>attr(LiasOpersConst.LIAS_SUMM_CLASS)).compareTo(BigDecimal.ZERO) != 0)
+                            //.filter(s -> (s.<BigDecimal>attr(LiasOpersConst.LIAS_SUMM_CLASS)).compareTo(BigDecimal.ZERO) != 0)
                             .sorted((ld1, ld2) -> {
                                 // сортировка по номеру операции в списке
                                 //return ld1.getRowNum().compareTo(ld2.getRowNum());
@@ -48,29 +48,27 @@ public abstract class AbstractEntityServiceContract extends AbstractEntityContra
                             })
                             .forEach(operation -> {
 
-                                NullSafe.create()
-                                        .execute(() -> {
+                                // ищем нужную задолженность по типу задолженности
+                                // задолженность не найдена, создаем новую задолженность
+                                final int operDirection = operation.<BigDecimal>attr(LiasOpersConst.LIAS_SUMM_CLASS).signum();
 
-                                            // ищем нужную задолженность по типу задолженности
-                                            // задолженность не найдена, создаем новую задолженность
-                                            final LiasDebt liasDebt = (LiasDebt) NullSafe.create(this.findLiasDebt(operation, (operation.<BigDecimal>attr(LiasOpersConst.LIAS_SUMM_CLASS)).signum() < 0))
-                                                    .whenIsNull(() -> {
-                                                        final LiasDebt newLiasDebt = this.createLiasDebt(operation);
-                                                        this.getContractDebts()
-                                                                .add(newLiasDebt);
-                                                        return newLiasDebt;
-                                                        // добавление
-                                                        //this.getContactDebts().add(liasDebt);
-                                                    })
-                                                    .<LiasDebt>getObject();
-                                            // создали или увеличили/уменьшили обязательство
-                                            liasDebt.createOrUpdateLiases(operation);
+                                final LiasDebt liasDebt = (LiasDebt) NullSafe.create(this.findLiasDebt(operation, operDirection < 0))
+                                        .whenIsNull(() -> {
+                                            final LiasDebt newLiasDebt = this.createLiasDebt(operation);
+                                            this.getContractDebts()
+                                                    .add(newLiasDebt);
+                                            return newLiasDebt;
+                                            // добавление
+                                            //this.getContactDebts().add(liasDebt);
+                                        })
+                                        .<LiasDebt>getObject();
+                                // создали или увеличили/уменьшили обязательство
+                                liasDebt.createOrUpdateLiases(operation);
 
-                                            // обновляем остатки по обязательству
-                                            liasDebt.createOrUpdateDebtRests(operation);
-                                        });
+                                // обновляем остатки по обязательству
+                                liasDebt.createOrUpdateDebtRests(operation);
                             });
-                });
+                }).throwException();
 
         // изменить остатки по задолженностям и обязательствам
         //this.updateRests();
@@ -132,9 +130,8 @@ public abstract class AbstractEntityServiceContract extends AbstractEntityContra
         //LogService.LogInfo(this.getClass(), () -> LogService.getCurrentObjProcName(this));
 
         final LiasDebt newLiasDebt = new LiasDebt();
-        
+
         //newLiasDebt.setCurrency(liasFinanceOper.<Integer>attr(LIAS_CURRENCY_ID.class));
-        
 //                0,
 //                ServiceLocator.find(AppReferencesListService.class).getCurrency(liasFinanceOper.<Integer>attr(LIAS_CURRENCY_ID.class)),
 //                ServiceLocator.find(LiasesReferencesService.class).getLiasDebtStateById(liasFinanceOper.<Integer>attr(DEBT_STATE_ID.class)),
@@ -144,7 +141,6 @@ public abstract class AbstractEntityServiceContract extends AbstractEntityContra
 //                liasFinanceOper.<LocalDate>attr(LiasOpersConst.LIAS_START_DATE_CLASS),
 //                liasFinanceOper.<LocalDate>attr(LiasOpersConst.LIAS_FINAL_DATE_CLASS)
 //        );
-
         //newLiasDebt.createOrUpdateLiases(liasFinanceOper);
         return newLiasDebt;
     }
@@ -209,7 +205,6 @@ public abstract class AbstractEntityServiceContract extends AbstractEntityContra
                     this.accretionHistory = ServiceFuncs.<TariffAccretionHisory>getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);
 
                     //this.refreshAccretionHistory();
-
                     return this.accretionHistory;
                 })
                 .<LiasDebt>getObject();

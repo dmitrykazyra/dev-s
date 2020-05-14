@@ -44,32 +44,27 @@ public class ActIssueLoan extends AbstractLiasContractOper<AbstractRetailLoanCon
     @Override
     protected void preCalculation() {
 
-        final LiasFinanceOper liasFinanceOper = NullSafe.createObject(LiasFinanceOper.class);
+        this.addNewLiasOper(NullSafe.createObject(LiasFinanceOper.class)
+                .<LIAS_SUMM>addAttr(() -> this.getLiasSum())
+                .<LIAS_CURRENCY_ID>addAttr(() -> this.getContractEntity().getCurrency().getCurrencyId())
+                .<COUNTERPARTY_ID>addAttr(() -> this.getContractEntity().entityId())
+                .<LIAS_DATE>addAttr(() -> this.getLiasDate())
+                .<DEBT_STATE_ID>addAttr(() -> LiasesConst.LDS_NORMAL_DEBTS)
+                .<LIAS_FINOPER_CODE>addAttr(() -> LiasesConst.FOC_MAIN_PLACEMENT)
+                .<LIAS_ACTION_TYPE_ID>addAttr(() -> LiasesConst.LAT_GET_PRIMARY_LIASES)
+                .<LIAS_KIND_ID>addAttr(() -> LiasesConst.LKI_RETURN_MAIN_DEBT)
+                .<LIAS_TYPE_ID>addAttr(() -> LiasesConst.LTI_CURRENT_LIASES)
+                .<LIAS_BASE_ASSET_TYPE_ID>addAttr(() -> LiasesConst.LBAT_MONEYS)
+                .<LIAS_START_DATE>addAttr(() -> this.getContractEntity().getContractDate())
+                .<LIAS_FINAL_DATE>addAttr(() -> this.getContractEntity().getEndDate())
+                //                .<PMT_SCHEDULE>add(()
+                //                        -> ServiceFuncs.<PmtSchedule>getCollectionElement(
+                //                        this.getContractEntity().getPmtSchedules(),
+                //                        bs -> (bs.getEntityKindId().equals(BondScheduleConst.EK_BONDSCHEDULE_MAIN_DEBT)),
+                //                        String.format("BondSchedule is not found(%d)", BondScheduleConst.EK_BONDSCHEDULE_MAIN_DEBT)));
+                .<OPER_NOTES>addAttr(() -> "Issue loann")
+        );
 
-        liasFinanceOper.<LIAS_SUMM>add(() -> this.getContractEntity().getContractSumm());
-
-        //this.addNewLiasOper(new NewLiasOperImpl()
-        liasFinanceOper.<LIAS_SUMM>add(() -> this.getContractEntity().getContractSumm());
-        liasFinanceOper.<LIAS_CURRENCY_ID>add(() -> this.getContractEntity().getCurrency().getCurrencyId());
-        liasFinanceOper.<COUNTERPARTY_ID>add(() -> this.getContractEntity().entityId());
-        liasFinanceOper.<LIAS_DATE>add(() -> this.getLiasDate());
-        liasFinanceOper.<DEBT_STATE_ID>add(() -> LiasesConst.LDS_NORMAL_DEBTS);
-        liasFinanceOper.<LIAS_FINOPER_CODE>add(() -> LiasesConst.FOC_MAIN_PLACEMENT);
-        liasFinanceOper.<LIAS_ACTION_TYPE_ID>add(() -> LiasesConst.LAT_GET_PRIMARY_LIASES);
-        liasFinanceOper.<LIAS_KIND_ID>add(() -> LiasesConst.LKI_RETURN_MAIN_DEBT);
-        liasFinanceOper.<LIAS_TYPE_ID>add(() -> LiasesConst.LTI_CURRENT_LIASES);
-        liasFinanceOper.<LIAS_BASE_ASSET_TYPE_ID>add(() -> LiasesConst.LBAT_MONEYS);
-        liasFinanceOper.<LIAS_START_DATE>add(() -> this.getContractEntity().getContractDate());
-        liasFinanceOper.<LIAS_FINAL_DATE>add(() -> this.getContractEntity().getEndDate());
-//                liasFinanceOper.<PMT_SCHEDULE>add(()
-//                        -> ServiceFuncs.<PmtSchedule>getCollectionElement(
-//                        this.getContractEntity().getPmtSchedules(),
-//                        bs -> (bs.getEntityKindId().equals(BondScheduleConst.EK_BONDSCHEDULE_MAIN_DEBT)),
-//                        String.format("BondSchedule is not found(%d)", BondScheduleConst.EK_BONDSCHEDULE_MAIN_DEBT)));
-        liasFinanceOper.<OPER_NOTES>add(() -> "Issue loann");
-        
-        this.addNewLiasOper(liasFinanceOper);
-        
         // ещё какая-то задолженность
 //        this.addNewLiasOper(new NewLiasOperImpl()
 //                .<LIAS_SUMM>add(() -> BigDecimal.valueOf(100))

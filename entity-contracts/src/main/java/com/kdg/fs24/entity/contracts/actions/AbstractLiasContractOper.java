@@ -21,6 +21,7 @@ import java.time.temporal.ChronoUnit;
 import com.kdg.fs24.lias.opers.attrs.ROW_NUM;
 import com.kdg.fs24.lias.opers.attrs.DOC_TEMPLATE_ID;
 import com.kdg.fs24.application.core.nullsafe.NullSafe;
+import com.kdg.fs24.application.core.sysconst.SysConst;
 import lombok.Data;
 import com.kdg.fs24.lias.opers.napi.LiasFinanceOper;
 
@@ -90,12 +91,14 @@ public abstract class AbstractLiasContractOper<T extends AbstractEntityServiceCo
             throw new LiasActionsNotSpecified("Нет операций для выполнения!");
         }
         // обработка новых операций
-        this
-                .getNewOpers()
-                .stream()
-                .unordered()
-                .sorted((op1, op2) -> (op1.<Integer>attr(ROW_NUM.class)).compareTo(op2.<Integer>attr(ROW_NUM.class)))
-                .forEach(oper -> this.applyNewOper(oper));
+        this.getContractEntity()
+                .applyNewLiasOpers(this.getNewOpers());
+//        this
+//                .getNewOpers()
+//                .stream()
+//                .unordered()
+//                .sorted((op1, op2) -> (op1.<Integer>attr(ROW_NUM.class)).compareTo(op2.<Integer>attr(ROW_NUM.class)))
+//                .forEach(oper -> this.applyNewOper(oper));
 
     }
     //==========================================================================
@@ -107,7 +110,7 @@ public abstract class AbstractLiasContractOper<T extends AbstractEntityServiceCo
 
     //==========================================================================
     protected void addNewLiasOper(final LiasFinanceOper lio) {
-        lio.<ROW_NUM>add(() -> Integer.valueOf(this.getNewOpers().size() /*+ 1*/));
+        lio.<ROW_NUM>addAttr(() -> Integer.valueOf(this.getNewOpers().size() /*+ 1*/));
 
         // код шаблона документа не задан
         if ((NullSafe.isNull(lio.<Integer>attr(DOC_TEMPLATE_ID.class)))
@@ -120,8 +123,9 @@ public abstract class AbstractLiasContractOper<T extends AbstractEntityServiceCo
         }
         this.getNewOpers().add(lio);
 
-        //      if (TestConst.TEST_MODE_RUNNING) {
-        lio.printOperAttrsCollection();
+        if (SysConst.DEBUG_MODE.get()) {
+            lio.printOperAttrsCollection();
+        }
         //      }
 
 //        LogGate.LogInfo(this.getClass(), String.format("create new liasoper (%d)",

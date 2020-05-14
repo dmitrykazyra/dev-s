@@ -31,20 +31,6 @@ public abstract class AbstractAction<T extends ActionEntity>
     // объекты для персистенса
     private PersistanceEntityManager persistanceEntityManager;
     //==========================================================================
-    private Boolean debugMode;
-
-    //@Override
-    public Boolean getDebugMode() {
-
-        if (NullSafe.isNull(this.debugMode)) {
-            this.debugMode = persistanceEntityManager
-                    .getDebugMode()
-                    .equals(SysConst.STRING_TRUE);
-        }
-
-        return this.debugMode;
-    }
-    //==========================================================================
     private final Collection<PersistenceEntity> persistenceEntities
             = ServiceFuncs.<PersistenceEntity>getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);
 
@@ -55,6 +41,7 @@ public abstract class AbstractAction<T extends ActionEntity>
     @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
     public void execute() {
 
+        this.initialize();
         this.doCalculation();
         this.afterCalculation();
 
@@ -188,10 +175,8 @@ public abstract class AbstractAction<T extends ActionEntity>
         }
 
         if (needRefresh) {
-//            final Boolean debugMode = persistanceEntityManager
-//                    .getDebugMode()
-//                    .equals(SysConst.STRING_TRUE);
-            if (getDebugMode()) {
+
+            if (SysConst.DEBUG_MODE.get()) {
 
                 LogService.LogInfo(this.getClass(), () -> String.format("refresh entity (%d, %s)",
                         this.getEntity().entityId(),
@@ -209,13 +194,12 @@ public abstract class AbstractAction<T extends ActionEntity>
 //            final ActionEntity entity = persistanceEntityManager
 //                    .getEntityManager()
 //                    .find(this.getEntity().getClass(), this.getEntity().entityId());
-
             // обновление главной сущности
             persistanceEntityManager
                     .getEntityManager()
                     .refresh(this.getEntity());
 
-            if (getDebugMode()) {
+            if (SysConst.DEBUG_MODE.get()) {
                 LogService.LogInfo(this.getClass(), () -> String.format("refresh entity is finished (%d, %s)",
                         this.getEntity().entityId(),
                         this.getEntity().getClass().getSimpleName())

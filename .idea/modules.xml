@@ -4,6 +4,13 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/application-core-api/application-core-api.iml" filepath="$PROJECT_DIR$/application-core-api/application-core-api.iml" />
       <module fileurl="file://$PROJECT_DIR$/attribute-api/attribute-api.iml" filepath="$PROJECT_DIR$/attribute-api/attribute-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bond-schedule-api/bond-schedule-api.iml" filepath="$PROJECT_DIR$/bond-schedule-api/bond-schedule-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bond-schedule-references-api/bond-schedule-references-api.iml" filepath="$PROJECT_DIR$/bond-schedule-references-api/bond-schedule-references-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/counterparties/counterparties.iml" filepath="$PROJECT_DIR$/counterparties/counterparties.iml" />
+      <module fileurl="file://$PROJECT_DIR$/documents-api/documents-api.iml" filepath="$PROJECT_DIR$/documents-api/documents-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/documents-references-api/documents-references-api.iml" filepath="$PROJECT_DIR$/documents-references-api/documents-references-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/entity-contract-references-api/entity-contract-references-api.iml" filepath="$PROJECT_DIR$/entity-contract-references-api/entity-contract-references-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/entity-contracts/entity-contracts.iml" filepath="$PROJECT_DIR$/entity-contracts/entity-contracts.iml" />
       <module fileurl="file://$PROJECT_DIR$/entity-core/entity-core.iml" filepath="$PROJECT_DIR$/entity-core/entity-core.iml" />
       <module fileurl="file://$PROJECT_DIR$/entity-core-api/entity-core-api.iml" filepath="$PROJECT_DIR$/entity-core-api/entity-core-api.iml" />
       <module fileurl="file://$PROJECT_DIR$/entity-marks/entity-marks.iml" filepath="$PROJECT_DIR$/entity-marks/entity-marks.iml" />
@@ -11,20 +18,35 @@
       <module fileurl="file://$PROJECT_DIR$/entity-references/entity-references.iml" filepath="$PROJECT_DIR$/entity-references/entity-references.iml" />
       <module fileurl="file://$PROJECT_DIR$/entity-references-api/entity-references-api.iml" filepath="$PROJECT_DIR$/entity-references-api/entity-references-api.iml" />
       <module fileurl="file://$PROJECT_DIR$/fs24s.iml" filepath="$PROJECT_DIR$/fs24s.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lias-opers-api/lias-opers-api.iml" filepath="$PROJECT_DIR$/lias-opers-api/lias-opers-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/liases/liases.iml" filepath="$PROJECT_DIR$/liases/liases.iml" />
+      <module fileurl="file://$PROJECT_DIR$/liases-api/liases-api.iml" filepath="$PROJECT_DIR$/liases-api/liases-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/liases-references-api/liases-references-api.iml" filepath="$PROJECT_DIR$/liases-references-api/liases-references-api.iml" />
       <module fileurl="file://$PROJECT_DIR$/listeners-api/listeners-api.iml" filepath="$PROJECT_DIR$/listeners-api/listeners-api.iml" />
       <module fileurl="file://$PROJECT_DIR$/persistence-api/persistence-api.iml" filepath="$PROJECT_DIR$/persistence-api/persistence-api.iml" />
       <module fileurl="file://$PROJECT_DIR$/persistence-core/persistence-core.iml" filepath="$PROJECT_DIR$/persistence-core/persistence-core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/querydsl-api/querydsl-api.iml" filepath="$PROJECT_DIR$/querydsl-api/querydsl-api.iml" />
       <module fileurl="file://$PROJECT_DIR$/references-api/references-api.iml" filepath="$PROJECT_DIR$/references-api/references-api.iml" />
       <module fileurl="file://$PROJECT_DIR$/references-application/references-application.iml" filepath="$PROJECT_DIR$/references-application/references-application.iml" />
       <module fileurl="file://$PROJECT_DIR$/references-application-api/references-application-api.iml" filepath="$PROJECT_DIR$/references-application-api/references-application-api.iml" />
       <module fileurl="file://$PROJECT_DIR$/references-core/references-core.iml" filepath="$PROJECT_DIR$/references-core/references-core.iml" />
       <module fileurl="file://$PROJECT_DIR$/rest-api/rest-api.iml" filepath="$PROJECT_DIR$/rest-api/rest-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/retail-loan-contracts/retail-loan-contracts.iml" filepath="$PROJECT_DIR$/retail-loan-contracts/retail-loan-contracts.iml" />
+      <module fileurl="file://$PROJECT_DIR$/retail-loan-contracts-references-api/retail-loan-contracts-references-api.iml" filepath="$PROJECT_DIR$/retail-loan-contracts-references-api/retail-loan-contracts-references-api.iml" />
       <module fileurl="file://$PROJECT_DIR$/spring-boot-api/spring-boot-api.iml" filepath="$PROJECT_DIR$/spring-boot-api/spring-boot-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spring-config/spring-config.iml" filepath="$PROJECT_DIR$/spring-config/spring-config.iml" />
       <module fileurl="file://$PROJECT_DIR$/spring-core/spring-core.iml" filepath="$PROJECT_DIR$/spring-core/spring-core.iml" />
       <module fileurl="file://$PROJECT_DIR$/spring-core-api/spring-core-api.iml" filepath="$PROJECT_DIR$/spring-core-api/spring-core-api.iml" />
       <module fileurl="file://$PROJECT_DIR$/spring-fw-test/spring-fw-test.iml" filepath="$PROJECT_DIR$/spring-fw-test/spring-fw-test.iml" />
       <module fileurl="file://$PROJECT_DIR$/spring-jdbc-api/spring-jdbc-api.iml" filepath="$PROJECT_DIR$/spring-jdbc-api/spring-jdbc-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spring-junit/spring-junit.iml" filepath="$PROJECT_DIR$/spring-junit/spring-junit.iml" />
       <module fileurl="file://$PROJECT_DIR$/spring-orm-api/spring-orm-api.iml" filepath="$PROJECT_DIR$/spring-orm-api/spring-orm-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spring-security/spring-security.iml" filepath="$PROJECT_DIR$/spring-security/spring-security.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spring-security-api/spring-security-api.iml" filepath="$PROJECT_DIR$/spring-security-api/spring-security-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tariff-core/tariff-core.iml" filepath="$PROJECT_DIR$/tariff-core/tariff-core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tariff-core-api/tariff-core-api.iml" filepath="$PROJECT_DIR$/tariff-core-api/tariff-core-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tariff-references/tariff-references.iml" filepath="$PROJECT_DIR$/tariff-references/tariff-references.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tariff-references-api/tariff-references-api.iml" filepath="$PROJECT_DIR$/tariff-references-api/tariff-references-api.iml" />
       <module fileurl="file://$PROJECT_DIR$/test-api/test-api.iml" filepath="$PROJECT_DIR$/test-api/test-api.iml" />
       <module fileurl="file://$PROJECT_DIR$/test-core/test-core.iml" filepath="$PROJECT_DIR$/test-core/test-core.iml" />
       <module fileurl="file://$PROJECT_DIR$/test-junit-api/test-junit-api.iml" filepath="$PROJECT_DIR$/test-junit-api/test-junit-api.iml" />

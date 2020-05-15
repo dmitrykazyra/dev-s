@@ -5,8 +5,9 @@
  */
 package com.kdg.fs24.application.core.exception.api;
 
-import java.sql.SQLException;
 import com.kdg.fs24.application.core.sysconst.SysConst;
+
+import java.sql.SQLException;
 
 /**
  *

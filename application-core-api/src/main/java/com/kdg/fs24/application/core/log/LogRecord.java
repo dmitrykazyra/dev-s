@@ -9,10 +9,12 @@ package com.kdg.fs24.application.core.log;
  *
  * @author N76VB
  */
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.kdg.fs24.application.core.sysconst.SysConst;
+
 import java.time.LocalDateTime;
 
 public class LogRecord implements LogRec {

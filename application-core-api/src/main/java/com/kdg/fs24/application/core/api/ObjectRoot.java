@@ -10,8 +10,6 @@ package com.kdg.fs24.application.core.api;
  * @author N76VB
  */
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.kdg.fs24.application.core.nullsafe.NullSafe;
 import java.io.Serializable;
 //import com.kdg.fs24.registry.api.RegistryCoreService;
 //import com.kdg.fs24.jpa.entity.service.PersistanceEntityManagerService;

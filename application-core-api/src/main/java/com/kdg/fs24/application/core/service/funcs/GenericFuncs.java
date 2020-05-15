@@ -6,10 +6,11 @@
 package com.kdg.fs24.application.core.service.funcs;
 
 import com.kdg.fs24.application.core.log.LogService;
+import com.kdg.fs24.application.core.nullsafe.NullSafe;
+
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Collection;
-import com.kdg.fs24.application.core.nullsafe.NullSafe;
 
 /**
  *

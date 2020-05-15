@@ -19,6 +19,7 @@ import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import lombok.Data;
 import com.kdg.fs24.entity.core.api.SkipRefresh;
+import com.kdg.fs24.spring.core.api.ServiceLocator;
 
 /**
  *
@@ -30,6 +31,16 @@ public abstract class AbstractAction<T extends ActionEntity>
 
     // объекты для персистенса
     private PersistanceEntityManager persistanceEntityManager;
+
+    private PersistanceEntityManager getPersistanceEntityManager() {
+
+        if (NullSafe.isNull(this.persistanceEntityManager)) {
+            persistanceEntityManager = ServiceLocator.<PersistanceEntityManager>findService(PersistanceEntityManager.class);
+        }
+
+        return this.persistanceEntityManager;
+    }
+
     //==========================================================================
     private final Collection<PersistenceEntity> persistenceEntities
             = ServiceFuncs.<PersistenceEntity>getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);
@@ -53,7 +64,7 @@ public abstract class AbstractAction<T extends ActionEntity>
 
             //final AbstractPersistenceAction<T> ent2persist = NullSafe.createObject(AbstractPersistenceAction.class); 
             // сохранили объекты
-            persistanceEntityManager
+            getPersistanceEntityManager()
                     .executeTransaction(em -> {
 
                         NullSafe.create()
@@ -92,7 +103,7 @@ public abstract class AbstractAction<T extends ActionEntity>
                                     this.updatePersistenceAction();
                                     this.updateMainEntity();
                                 });
-                        persistanceEntityManager
+                        getPersistanceEntityManager()
                                 .getEntityManager()
                                 .flush();
                     });
@@ -107,11 +118,22 @@ public abstract class AbstractAction<T extends ActionEntity>
         }
     }
 
-//==========================================================================
+    //==========================================================================
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+    public void registerActionFail(final String errMsg) {
+        getPersistanceEntityManager()
+                .executeTransaction(em -> {
+
+                    this.setErrMsg(errMsg);
+                    this.updatePersistenceAction();
+                });
+    }
+
+    //==========================================================================
     private void createMainEntity() {
 
         if (this.getEntity().justCreated()) {
-            persistanceEntityManager
+            getPersistanceEntityManager()
                     .getEntityManager()
                     .persist(this.getEntity());
         }
@@ -123,13 +145,13 @@ public abstract class AbstractAction<T extends ActionEntity>
 
         obj.setLast_modify(this.getPersistAction().getExecuteDate());
 
-        persistanceEntityManager.getEntityManager().persist(obj);
+        getPersistanceEntityManager().getEntityManager().persist(obj);
 
     }
 
     //==========================================================================
     private void createPersistenceAction() {
-        this.setPersistAction(persistanceEntityManager.<AbstractPersistenceAction>createPersistenceEntity(
+        this.setPersistAction(getPersistanceEntityManager().<AbstractPersistenceAction>createPersistenceEntity(
                 AbstractPersistenceAction.class,
                 (action) -> {
                     action.setEntity(this.getEntity());
@@ -145,7 +167,7 @@ public abstract class AbstractAction<T extends ActionEntity>
                 .setActionDuration(LocalTime.MIN.plus(this.stopWatcher.getTimeExecMillis(), ChronoUnit.MILLIS));
         this.getPersistAction()
                 .setErrMsg(this.getErrMsg());
-        persistanceEntityManager
+        this.getPersistanceEntityManager()
                 .getEntityManager()
                 .merge(this.getPersistAction());
     }
@@ -184,7 +206,7 @@ public abstract class AbstractAction<T extends ActionEntity>
                         .toUpperCase());
             }
             // обновление кэша
-            persistanceEntityManager
+            getPersistanceEntityManager()
                     .getFactory()
                     .getCache()
                     .evict(this.getEntity().getClass(),
@@ -195,7 +217,7 @@ public abstract class AbstractAction<T extends ActionEntity>
 //                    .getEntityManager()
 //                    .find(this.getEntity().getClass(), this.getEntity().entityId());
             // обновление главной сущности
-            persistanceEntityManager
+            getPersistanceEntityManager()
                     .getEntityManager()
                     .refresh(this.getEntity());
 

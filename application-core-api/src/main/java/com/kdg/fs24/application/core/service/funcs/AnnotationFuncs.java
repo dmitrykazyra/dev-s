@@ -5,10 +5,11 @@
  */
 package com.kdg.fs24.application.core.service.funcs;
 
-import java.lang.annotation.Annotation;
-import java.util.Collection;
-import java.util.Arrays;
 import com.kdg.fs24.application.core.nullsafe.NullSafe;
+
+import java.lang.annotation.Annotation;
+import java.util.Arrays;
+import java.util.Collection;
 
 public final class AnnotationFuncs {
 

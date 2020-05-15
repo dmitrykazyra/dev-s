@@ -5,9 +5,10 @@
  */
 package com.kdg.fs24.application.core.service.funcs;
 
+import org.reflections.Reflections;
+
 import java.util.ArrayList;
 import java.util.Collection;
-import org.reflections.Reflections;
 /**
  *
  * @author N76VB

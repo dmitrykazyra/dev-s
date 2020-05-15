@@ -5,8 +5,8 @@
  */
 package com.kdg.fs24.application.core.thread;
 
-import com.kdg.fs24.application.core.sysconst.SysConst;
 import com.kdg.fs24.application.core.nullsafe.NullSafe;
+import com.kdg.fs24.application.core.sysconst.SysConst;
 
 /**
  *

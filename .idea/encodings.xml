@@ -4,26 +4,48 @@
     <file url="file://$PROJECT_DIR$" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/application-core-api" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/attribute-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/bond-schedule-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/bond-schedule-references-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/counterparties" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/documents-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/documents-references-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/entity-contract-references-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/entity-contracts" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/entity-core" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/entity-core-api" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/entity-marks" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/entity-marks-api" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/entity-references" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/entity-references-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/lias-opers-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/liases" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/liases-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/liases-references-api" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/listeners-api" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/persistence-api" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/persistence-core" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/querydsl-api" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/references-api" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/references-application" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/references-application-api" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/references-core" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/rest-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/retail-loan-contracts" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/retail-loan-contracts-references-api" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/spring-boot-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/spring-config" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/spring-core" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/spring-core-api" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/spring-fw-test" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/spring-jdbc-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/spring-junit" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/spring-orm-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/spring-security" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/spring-security-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tariff-core" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tariff-core-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tariff-references" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tariff-references-api" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/test-api" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/test-core" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/test-junit-api" charset="UTF-8" />

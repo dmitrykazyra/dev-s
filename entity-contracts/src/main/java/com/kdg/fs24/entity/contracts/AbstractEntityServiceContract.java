@@ -18,6 +18,9 @@ import java.time.LocalDate;
 import lombok.Data;
 import java.util.Optional;
 import com.kdg.fs24.application.core.service.funcs.FilterComparator;
+import com.kdg.fs24.references.application.currency.Currency;
+import com.kdg.fs24.references.api.AbstractRefRecord;
+import com.kdg.fs24.references.liases.baseassettype.LiasBaseAssetType;
 
 /**
  *
@@ -131,7 +134,10 @@ public abstract class AbstractEntityServiceContract extends AbstractEntityContra
 
         final LiasDebt newLiasDebt = new LiasDebt();
 
-        //newLiasDebt.setCurrency(liasFinanceOper.<Integer>attr(LIAS_CURRENCY_ID.class));
+        newLiasDebt.setCurrency(Currency.findCurrency(liasFinanceOper.<Integer>attr(LIAS_CURRENCY_ID.class)));
+
+        newLiasDebt.setLiasBaseAssetType(LiasBaseAssetType.findLiasBaseAssetType(liasFinanceOper.<Integer>attr(LIAS_BASE_ASSET_TYPE_ID.class)));
+//        newLiasDebt.(LiasBaseAssetType.findLiasBaseAssetType(liasFinanceOper.<Integer>attr(LIAS_BASE_ASSET_TYPE_ID.class)));
 //                0,
 //                ServiceLocator.find(AppReferencesListService.class).getCurrency(liasFinanceOper.<Integer>attr(LIAS_CURRENCY_ID.class)),
 //                ServiceLocator.find(LiasesReferencesService.class).getLiasDebtStateById(liasFinanceOper.<Integer>attr(DEBT_STATE_ID.class)),
@@ -165,7 +171,7 @@ public abstract class AbstractEntityServiceContract extends AbstractEntityContra
                     liasFinanceOper.<LocalDate>attr(LiasOpersConst.LIAS_FINAL_DATE_CLASS)));
         }
 
-        return ld.get();
+        return ld.orElse(null);
 
     }
     //==========================================================================

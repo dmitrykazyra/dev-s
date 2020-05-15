@@ -9,12 +9,14 @@ package com.kdg.fs24.application.core.sysconst;
  *
  * @author N76VB
  */
+
 import com.kdg.fs24.application.core.nullsafe.NullSafe;
+
 import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.concurrent.atomic.AtomicBoolean;
 

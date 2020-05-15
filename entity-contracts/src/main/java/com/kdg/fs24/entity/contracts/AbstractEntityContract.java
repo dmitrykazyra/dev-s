@@ -99,12 +99,12 @@ public class AbstractEntityContract extends AbstractActionEntity {
     private Collection<Action> entityActions;
     //==========================================================================
     // задолженности по договору
-    @OneToMany
+    @OneToMany(cascade=CascadeType.ALL)
     @JoinColumn(name = "contract_id", referencedColumnName = "contract_id")
     private Collection<LiasDebt> contractDebts;
     //==========================================================================
     //графики по договору
-    @OneToMany
+    @OneToMany(cascade=CascadeType.ALL)
     @JoinColumn(name = "contract_id", referencedColumnName = "contract_id")
     private Collection<PmtSchedule> pmtSchedules;
 

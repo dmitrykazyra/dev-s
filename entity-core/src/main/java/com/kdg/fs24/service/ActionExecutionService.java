@@ -118,7 +118,7 @@ public abstract class ActionExecutionService extends AbstractApplicationService 
                     entity, actClass));
 
         }
-
+        // экземплр действия
         final AbstractAction action = NullSafe.<AbstractAction>createObject(actClass);
 
         final ActionCode ac
@@ -129,12 +129,15 @@ public abstract class ActionExecutionService extends AbstractApplicationService 
 //        if (!ac.isPresent()) {
 //            throw new NoActionCodeDefined(String.format("Unknown actionCode (%d)", action_code));
 //        }
-        action.setPersistanceEntityManager(persistanceEntityManager);
+        //action.setPersistanceEntityManager(persistanceEntityManager);
         action.setEntity(entity);
         action.setActionCode(ac);
 
         //action.execute(entity, ac.get());
-        action.execute();
+        NullSafe.create()
+                .execute(() -> action.execute())
+                .catchException(e -> action.registerActionFail(e.getMessage()))
+                .throwException();
         //action.refreshModifiedEntities();
     }
 

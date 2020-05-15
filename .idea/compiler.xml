@@ -6,37 +6,66 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="references-application" />
-        <module name="entity-marks-api" />
-        <module name="rest-api" />
-        <module name="references-api" />
-        <module name="spring-orm-api" />
-        <module name="references-application-api" />
-        <module name="persistence-core" />
         <module name="webmonitor-core" />
-        <module name="entity-marks" />
-        <module name="test-api" />
-        <module name="entity-references-api" />
-        <module name="spring-core-api" />
-        <module name="test-core" />
-        <module name="spring-fw-test" />
-        <module name="entity-references" />
-        <module name="references-core" />
-        <module name="persistence-api" />
-        <module name="attribute-api" />
-        <module name="test-junit-api" />
-        <module name="entity-core-api" />
-        <module name="entity-core" />
-        <module name="listeners-api" />
-        <module name="spring-core" />
+        <module name="entity-contracts" />
+        <module name="documents-references-api" />
         <module name="spring-boot-api" />
         <module name="spring-jdbc-api" />
+        <module name="spring-fw-test" />
+        <module name="references-core" />
+        <module name="entity-references" />
+        <module name="querydsl-api" />
+        <module name="retail-loan-contracts" />
+        <module name="spring-core-api" />
+        <module name="retail-loan-contracts-references-api" />
         <module name="application-core-api" />
+        <module name="test-api" />
+        <module name="counterparties" />
+        <module name="liases-api" />
+        <module name="references-application-api" />
+        <module name="tariff-references" />
+        <module name="bond-schedule-references-api" />
+        <module name="listeners-api" />
+        <module name="entity-references-api" />
+        <module name="bond-schedule-api" />
+        <module name="rest-api" />
+        <module name="test-core" />
+        <module name="tariff-references-api" />
+        <module name="spring-junit" />
+        <module name="attribute-api" />
+        <module name="spring-security" />
+        <module name="references-api" />
+        <module name="lias-opers-api" />
+        <module name="tariff-core" />
+        <module name="persistence-api" />
+        <module name="liases" />
+        <module name="entity-marks-api" />
+        <module name="persistence-core" />
+        <module name="entity-core" />
+        <module name="entity-contract-references-api" />
+        <module name="spring-security-api" />
+        <module name="test-junit-api" />
+        <module name="tariff-core-api" />
+        <module name="spring-orm-api" />
+        <module name="entity-marks" />
+        <module name="spring-config" />
+        <module name="spring-core" />
+        <module name="documents-api" />
+        <module name="references-application" />
+        <module name="entity-core-api" />
+        <module name="liases-references-api" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="application-core-api" target="1.8" />
       <module name="attribute-api" target="1.8" />
+      <module name="bond-schedule-api" target="1.8" />
+      <module name="bond-schedule-references-api" target="1.8" />
+      <module name="counterparties" target="1.8" />
+      <module name="documents-api" target="1.8" />
+      <module name="documents-references-api" target="1.8" />
+      <module name="entity-contract-references-api" target="1.8" />
+      <module name="entity-contracts" target="1.8" />
       <module name="entity-core" target="1.8" />
       <module name="entity-core-api" target="1.8" />
       <module name="entity-marks" target="1.8" />
@@ -44,20 +73,35 @@
       <module name="entity-references" target="1.8" />
       <module name="entity-references-api" target="1.8" />
       <module name="fs24s" target="1.8" />
+      <module name="lias-opers-api" target="1.8" />
+      <module name="liases" target="1.8" />
+      <module name="liases-api" target="1.8" />
+      <module name="liases-references-api" target="1.8" />
       <module name="listeners-api" target="1.8" />
       <module name="persistence-api" target="1.8" />
       <module name="persistence-core" target="1.8" />
+      <module name="querydsl-api" target="1.8" />
       <module name="references-api" target="1.8" />
       <module name="references-application" target="1.8" />
       <module name="references-application-api" target="1.8" />
       <module name="references-core" target="1.8" />
       <module name="rest-api" target="1.8" />
+      <module name="retail-loan-contracts" target="1.8" />
+      <module name="retail-loan-contracts-references-api" target="1.8" />
       <module name="spring-boot-api" target="1.8" />
+      <module name="spring-config" target="1.8" />
       <module name="spring-core" target="1.8" />
       <module name="spring-core-api" target="1.8" />
       <module name="spring-fw-test" target="1.8" />
       <module name="spring-jdbc-api" target="1.8" />
+      <module name="spring-junit" target="1.8" />
       <module name="spring-orm-api" target="1.8" />
+      <module name="spring-security" target="1.8" />
+      <module name="spring-security-api" target="1.8" />
+      <module name="tariff-core" target="1.8" />
+      <module name="tariff-core-api" target="1.8" />
+      <module name="tariff-references" target="1.8" />
+      <module name="tariff-references-api" target="1.8" />
       <module name="test-api" target="1.8" />
       <module name="test-core" target="1.8" />
       <module name="test-junit-api" target="1.8" />

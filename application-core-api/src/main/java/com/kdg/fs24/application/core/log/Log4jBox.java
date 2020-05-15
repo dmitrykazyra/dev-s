@@ -9,10 +9,12 @@ package com.kdg.fs24.application.core.log;
  *
  * @author N76VB
  */
-import java.io.FileInputStream;
-import java.util.Properties;
+
 import com.kdg.fs24.application.core.nullsafe.NullSafe;
 import org.apache.log4j.PropertyConfigurator;
+
+import java.io.FileInputStream;
+import java.util.Properties;
 
 public final class Log4jBox {
 

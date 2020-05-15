@@ -6,13 +6,13 @@
 package com.kdg.fs24.lias.opers.attrs;
 
 import com.kdg.fs24.lias.opers.napi.GenericOperAttr;
-import com.kdg.fs24.bond.schedule.api.PmtSchedule;
+//import com.kdg.fs24.entity.bondschedule.PmtSchedule;
 
 
 /**
  *
  * @author N76VB
  */
-public interface PMT_SCHEDULE extends GenericOperAttr<PmtSchedule> {
+public interface PMT_SCHEDULE extends GenericOperAttr<Integer> {
     
 }

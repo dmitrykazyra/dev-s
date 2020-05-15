@@ -20,11 +20,6 @@
             <artifactId>entity-core</artifactId>
             <version>${app.version}</version>          
         </dependency>        
-<!--        <dependency>
-            <groupId>com.kdg.fs24</groupId>
-            <artifactId>liases-api</artifactId>
-            <version>1.0</version>            
-        </dependency>          -->
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>

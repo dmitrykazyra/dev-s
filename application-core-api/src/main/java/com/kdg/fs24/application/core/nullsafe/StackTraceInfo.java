@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.kdg.fs24.tce.api;
+package com.kdg.fs24.application.core.nullsafe;
 
 import java.util.Arrays;
 

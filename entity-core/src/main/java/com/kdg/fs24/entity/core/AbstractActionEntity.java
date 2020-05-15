@@ -34,7 +34,7 @@ import com.kdg.fs24.persistence.api.PersistenceEntity;
 //import com.kdg.fs24.entity.core.api.EntityEventListener;
 //import com.kdg.fs24.listeners.api.Event;
 //import com.kdg.fs24.persistence.api.PersistenceEntity;
-//import com.kdg.fs24.tce.api.StopWatcher;
+//import com.kdg.fs24.application.core.nullsafe.StopWatcher;
 
 import lombok.Data;
 

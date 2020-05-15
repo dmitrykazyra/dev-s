@@ -8,7 +8,6 @@
     </parent>
     <artifactId>entity-core-api</artifactId>
     <packaging>jar</packaging>
-    <version>1.0</version>
     <build>
         <finalName>entity-core-api</finalName> 
     </build>

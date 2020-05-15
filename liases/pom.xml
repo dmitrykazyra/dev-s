@@ -14,27 +14,27 @@
         <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>liases-api</artifactId>
-            <version>1.0</version>            
+            <version>${app.version}</version>            
         </dependency>
         <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>documents-api</artifactId>
-            <version>1.0</version>            
+            <version>${app.version}</version>          
         </dependency>        
         <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>lias-opers-api</artifactId>
-            <version>1.0</version>            
+            <version>${app.version}</version>          
         </dependency>  
         <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>tariff-references-api</artifactId>
-            <version>1.0</version>            
+            <version>${app.version}</version>           
         </dependency>              
         <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>liases-references-api</artifactId>
-            <version>1.0</version>            
+            <version>${app.version}</version>           
         </dependency>
         <dependency>
             <groupId>com.kdg.fs24</groupId>
@@ -108,7 +108,7 @@
         <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>bond-schedule-api</artifactId>
-            <version>1.0</version>            
+            <version>${app.version}</version>             
         </dependency>       
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>

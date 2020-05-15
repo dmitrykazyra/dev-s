@@ -5,6 +5,7 @@
  */
 package com.kdg.fs24.bond.schedule.api;
 
+//import com.kdg.fs24.entity.bondschedule.PmtSchedule;
 import com.kdg.fs24.references.bond.schedule.api.PmtScheduleTerm;
 import com.kdg.fs24.references.bond.schedule.api.PmtScheduleAlg;
 import com.kdg.fs24.entity.core.api.ActionEntity;
@@ -28,6 +29,6 @@ public interface PmtScheduleBuilder {
 
     PmtScheduleBuilder setLasDate(LocalDate last_date);
 
-    PmtSchedule createSchedule();
+    //PmtSchedule createSchedule();
 
 }

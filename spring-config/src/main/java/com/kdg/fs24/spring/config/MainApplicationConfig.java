@@ -36,7 +36,7 @@ public abstract class MainApplicationConfig extends AbstractApplicationConfigura
 
     @Bean
     public MailManager mailManager() {
-        return NullSafe.createObject(MailManager.class);
+        return NullSafe.<MailManager>createObject(MailManager.class);
     }
 
     @Bean

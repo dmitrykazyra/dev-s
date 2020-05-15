@@ -30,11 +30,11 @@
             <artifactId>counterparties</artifactId>
             <version>${app.version}</version>             
         </dependency>
-        <dependency>
+<!--        <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>bond-schedule-api</artifactId>
             <version>${app.version}</version>             
-        </dependency>  
+        </dependency>  -->
         <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>lias-opers-api</artifactId>

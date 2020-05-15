@@ -5,6 +5,7 @@
  */
 package com.kdg.fs24.bond.schedule.api;
 
+//import com.kdg.fs24.entity.bondschedule.PmtSchedule;
 import java.util.List;
 import java.util.Collection;
 
@@ -12,8 +13,7 @@ import java.util.Collection;
  *
  * @author kazyra_d
  */
-
 public interface SchedulesLoader {
 
-    Collection<PmtSchedule> loadSchedules(Long entity_id);
+    //  Collection<PmtSchedule> loadSchedules(Long entity_id);
 }

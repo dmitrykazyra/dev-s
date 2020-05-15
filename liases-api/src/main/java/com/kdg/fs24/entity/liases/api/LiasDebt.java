@@ -10,7 +10,7 @@ import com.kdg.fs24.references.liases.baseassettype.LiasBaseAssetType;
 import com.kdg.fs24.references.liases.debtstate.LiasDebtState;
 import com.kdg.fs24.references.liases.kind.LiasKind;
 import com.kdg.fs24.references.liases.type.LiasType;
-import com.kdg.fs24.bond.schedule.api.PmtSchedule;
+//import com.kdg.fs24.entity.bondschedule.PmtSchedule;
 import com.kdg.fs24.entity.liases.api.Lias;
 import com.kdg.fs24.lias.opers.api.LiasOpersConst;
 import com.kdg.fs24.application.core.nullsafe.NullSafe;
@@ -79,16 +79,16 @@ public class LiasDebt extends ObjectRoot implements PersistenceEntity {
     // сервисная часть
     //==========================================================================
     public final void createOrUpdateLiases(final LiasFinanceOper liasFinanceOper) {
-        NullSafe.create(liasFinanceOper.<PmtSchedule>attr(PMT_SCHEDULE.class))
-                .inititialize(() -> this.liases = ServiceFuncs.<Lias>getOrCreateCollection(this.liases))
-                .safeExecute(() -> {
-                    // обязательства формируются согласно графика
-                    this.processBondSchedLiases(liasFinanceOper);
-                })
-                .whenIsNull(() -> {
-                    // обязательство без графика
-                    this.processLias(liasFinanceOper);
-                });
+//        NullSafe.create(liasFinanceOper.<PmtSchedule>attr(PMT_SCHEDULE.class))
+//                .inititialize(() -> this.liases = ServiceFuncs.<Lias>getOrCreateCollection(this.liases))
+//                .safeExecute(() -> {
+//                    // обязательства формируются согласно графика
+//                    this.processBondSchedLiases(liasFinanceOper);
+//                })
+//                .whenIsNull(() -> {
+//                    // обязательство без графика
+//                    this.processLias(liasFinanceOper);
+//                });
 
     }
 
@@ -167,51 +167,51 @@ public class LiasDebt extends ObjectRoot implements PersistenceEntity {
         NullSafe.create()
                 .execute(() -> {
 
-                    NullSafe.create(liasFinanceOper.<PmtSchedule>attr(PMT_SCHEDULE.class))
-                            // увеличиваем обязательства согласно графиков погашения
-                            .safeExecute(pmtSchedule -> {
-
-                                //анонимный класс для вычисления остатка
-                                final LiasOperRest liasOperRest = new LiasOperRest() {
-
-                                    private BigDecimal liasOperRest = (BigDecimal) liasFinanceOper.<BigDecimal>attr(LiasOpersConst.LIAS_SUMM_CLASS);
-                                    final private BigDecimal substrSum = liasOperRest.divide(BigDecimal.valueOf(((PmtSchedule) liasFinanceOper.<PmtSchedule>attr(PMT_SCHEDULE.class)).getPmtScheduleLines().size()), 2, 2);
-
-                                    @Override
-                                    public BigDecimal getLiasOperSum() {
-                                        final BigDecimal liasOperSum = liasOperRest.min(substrSum);
-                                        liasOperRest = liasOperRest.subtract(substrSum);
-                                        return liasOperSum;
-                                    }
-                                };
-
-                                ((PmtSchedule) pmtSchedule)
-                                        .getPmtScheduleLines()
-                                        .stream()
-                                        .forEach((pmtScheduleLine) -> {
-
-                                            final Lias schedLias = NullSafe.create(this.findLias(pmtScheduleLine.getFrom_date(),
-                                                    pmtScheduleLine.getTo_date(),
-                                                    (liasFinanceOper.<BigDecimal>attr(LiasOpersConst.LIAS_SUMM_CLASS)).signum() < 0))
-                                                    .whenIsNull(() -> {
-                                                        return this.createLias(pmtScheduleLine.getFrom_date(),
-                                                                pmtScheduleLine.getTo_date());
-                                                    }).<Lias>getObject();
-                                            liases.add(schedLias);
-
-                                            // создание финопераций
-                                            schedLias.createLiasOper(liasOperRest.getLiasOperSum(),
-                                                    liasFinanceOper.<LocalDate>attr(LiasOpersConst.LIAS_DATE_CLASS),
-                                                    liasFinanceOper.<Integer>attr(LiasOpersConst.LIAS_FINOPER_CODE_CLASS),
-                                                    liasFinanceOper.<Integer>attr(LIAS_TYPE_ID.class)
-                                            );
-
-                                        });
-                            })
-                            // графика нет
-                            .whenIsNull(() -> {
-
-                            });
+//                    NullSafe.create(liasFinanceOper.<PmtSchedule>attr(PMT_SCHEDULE.class))
+//                            // увеличиваем обязательства согласно графиков погашения
+//                            .safeExecute(pmtSchedule -> {
+//
+//                                //анонимный класс для вычисления остатка
+//                                final LiasOperRest liasOperRest = new LiasOperRest() {
+//
+//                                    private BigDecimal liasOperRest = (BigDecimal) liasFinanceOper.<BigDecimal>attr(LiasOpersConst.LIAS_SUMM_CLASS);
+//                                    final private BigDecimal substrSum = liasOperRest.divide(BigDecimal.valueOf(((PmtSchedule) liasFinanceOper.<PmtSchedule>attr(PMT_SCHEDULE.class)).getPmtScheduleLines().size()), 2, 2);
+//
+//                                    @Override
+//                                    public BigDecimal getLiasOperSum() {
+//                                        final BigDecimal liasOperSum = liasOperRest.min(substrSum);
+//                                        liasOperRest = liasOperRest.subtract(substrSum);
+//                                        return liasOperSum;
+//                                    }
+//                                };
+//
+//                                ((PmtSchedule) pmtSchedule)
+//                                        .getPmtScheduleLines()
+//                                        .stream()
+//                                        .forEach((pmtScheduleLine) -> {
+//
+//                                            final Lias schedLias = NullSafe.create(this.findLias(pmtScheduleLine.getFrom_date(),
+//                                                    pmtScheduleLine.getTo_date(),
+//                                                    (liasFinanceOper.<BigDecimal>attr(LiasOpersConst.LIAS_SUMM_CLASS)).signum() < 0))
+//                                                    .whenIsNull(() -> {
+//                                                        return this.createLias(pmtScheduleLine.getFrom_date(),
+//                                                                pmtScheduleLine.getTo_date());
+//                                                    }).<Lias>getObject();
+//                                            liases.add(schedLias);
+//
+//                                            // создание финопераций
+//                                            schedLias.createLiasOper(liasOperRest.getLiasOperSum(),
+//                                                    liasFinanceOper.<LocalDate>attr(LiasOpersConst.LIAS_DATE_CLASS),
+//                                                    liasFinanceOper.<Integer>attr(LiasOpersConst.LIAS_FINOPER_CODE_CLASS),
+//                                                    liasFinanceOper.<Integer>attr(LIAS_TYPE_ID.class)
+//                                            );
+//
+//                                        });
+//                            })
+//                            // графика нет
+//                            .whenIsNull(() -> {
+//
+//                            });
                 });
     }
 

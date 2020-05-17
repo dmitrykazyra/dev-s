@@ -5,15 +5,14 @@
  */
 package com.kdg.fs24.service;
 
-import com.kdg.fs24.entity.core.AbstractActionEntity;
+
+import lombok.Data;
 
 /**
  *
  * @author N76VB
  */
-@Deprecated
-public interface ActionEntityCreator<T extends AbstractActionEntity> {
-
-    void createEntity(T entity);
-
+@Data
+public abstract class AbstractTariffCalculationService extends AbstractApplicationService {
+    
 }

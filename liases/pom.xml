@@ -11,16 +11,16 @@
     
     <dependencies>
                 
-        <dependency>
+<!--        <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>liases-api</artifactId>
             <version>${app.version}</version>            
-        </dependency>
-        <dependency>
+        </dependency>-->
+<!--        <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>documents-api</artifactId>
             <version>${app.version}</version>          
-        </dependency>        
+        </dependency>        -->
         <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>lias-opers-api</artifactId>

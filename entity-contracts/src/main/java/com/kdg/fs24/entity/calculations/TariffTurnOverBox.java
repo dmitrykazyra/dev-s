@@ -3,10 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.kdg.fs24.references.tariffs.kind;
+package com.kdg.fs24.entity.calculations;
 
-import com.kdg.fs24.entity.liases.api.LiasAction;
+import com.kdg.fs24.entity.debts.LiasAction;
 import com.kdg.fs24.application.core.sysconst.SysConst;
+import com.kdg.fs24.references.tariffs.kind.TariffRate;
+import com.kdg.fs24.references.tariffs.kind.TariffRateRecord;
+import com.kdg.fs24.references.tariffs.kind.TariffRowCalculator;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Collection;

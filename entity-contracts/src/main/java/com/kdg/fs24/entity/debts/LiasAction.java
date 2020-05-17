@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.kdg.fs24.entity.liases.api;
+package com.kdg.fs24.entity.debts;
 
 import com.kdg.fs24.references.liases.actiontype.LiasActionType;
 import com.kdg.fs24.references.liases.finopercode.LiasFinOperCode;
@@ -19,7 +19,8 @@ import com.kdg.fs24.persistence.api.PersistenceEntity;
 import com.kdg.fs24.entity.document.Document;
 import javax.persistence.*;
 import lombok.Data;
-import com.kdg.fs24.entity.liases.api.Lias;
+import com.kdg.fs24.entity.debts.Lias;
+import com.kdg.fs24.entity.debts.Lias;
 
 /**
  *

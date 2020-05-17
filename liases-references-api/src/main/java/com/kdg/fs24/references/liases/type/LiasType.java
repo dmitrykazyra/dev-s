@@ -8,6 +8,7 @@ package com.kdg.fs24.references.liases.type;
 import java.util.Map;
 import com.kdg.fs24.references.api.ReferenceRec;
 import com.kdg.fs24.references.api.AbstractRefRecord;
+import com.kdg.fs24.references.liases.kind.LiasKind;
 import javax.persistence.*;
 import lombok.Data;
 
@@ -29,5 +30,10 @@ public class LiasType extends AbstractRefRecord implements ReferenceRec {
     @Override
     public void record2Map(final Map<String, Integer> map) {
         map.put(String.format("%d - %s", this.getLiasTypeId(), this.getLiasTypeName()), this.getLiasTypeId());
+    }
+
+    public final static LiasType findLiasType(final Integer liasLiasTypeId) {
+        return AbstractRefRecord.<LiasType>getRefeenceRecord(LiasType.class,
+                record -> record.getLiasTypeId().equals(liasLiasTypeId));
     }
 }

@@ -22,10 +22,11 @@ import com.kdg.fs24.entity.tariff.api.TariffPlan;
 import com.kdg.fs24.entity.tariff.AbstractTariffPlan;
 import java.util.Collection;
 import com.kdg.fs24.entity.marks.EntityMark;
-import com.kdg.fs24.entity.liases.api.LiasDebt;
+import com.kdg.fs24.entity.debts.LiasDebt;
 import com.kdg.fs24.lias.opers.napi.LiasFinanceOper;
 import com.kdg.fs24.lias.opers.api.LiasOpersConst;
 import com.kdg.fs24.entity.bondschedule.PmtSchedule;
+import com.kdg.fs24.bond.schedule.api.PmtScheduleBuilder;
 
 /**
  *
@@ -99,12 +100,13 @@ public class AbstractEntityContract extends AbstractActionEntity {
     private Collection<Action> entityActions;
     //==========================================================================
     // задолженности по договору
-    @OneToMany(cascade=CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "contract_id", referencedColumnName = "contract_id")
+//    @OneToMany(mappedBy = "debtContract", cascade = CascadeType.ALL)
     private Collection<LiasDebt> contractDebts;
     //==========================================================================
     //графики по договору
-    @OneToMany(cascade=CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "contract_id", referencedColumnName = "contract_id")
     private Collection<PmtSchedule> pmtSchedules;
 

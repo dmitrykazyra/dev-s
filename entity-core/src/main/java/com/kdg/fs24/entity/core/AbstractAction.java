@@ -120,11 +120,13 @@ public abstract class AbstractAction<T extends ActionEntity>
 
     //==========================================================================
     @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
-    public void registerActionFail(final String errMsg) {
+    public void registerActionFail(final Throwable th) {
         getPersistanceEntityManager()
                 .executeTransaction(em -> {
 
-                    this.setErrMsg(errMsg);
+                    this.setErrMsg(String.format("%s: \n %s",
+                            NullSafe.getErrorMessage(th),
+                            NullSafe.getStackTraceRaw(th)));
                     this.updatePersistenceAction();
                 });
     }

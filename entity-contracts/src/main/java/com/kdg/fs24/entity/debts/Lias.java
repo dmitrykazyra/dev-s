@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.kdg.fs24.entity.liases.api;
+package com.kdg.fs24.entity.debts;
 
 import com.kdg.fs24.application.core.service.funcs.CustomCollectionImpl;
 import com.kdg.fs24.entity.liases.exception.LiasRestIsNegative;
@@ -25,6 +25,7 @@ import com.kdg.fs24.application.core.service.funcs.ServiceFuncs;
 import com.kdg.fs24.lias.opers.api.LiasOpersConst;
 import com.kdg.fs24.lias.opers.napi.SaveAccretionHist;
 import com.kdg.fs24.application.core.nullsafe.NullSafe;
+import com.kdg.fs24.entity.liases.api.LiasRest;
 import com.kdg.fs24.lias.opers.napi.LiasFinanceOper;
 import com.kdg.fs24.persistence.api.PersistenceEntity;
 import javax.persistence.*;

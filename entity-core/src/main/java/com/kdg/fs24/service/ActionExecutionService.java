@@ -29,7 +29,6 @@ import java.util.Arrays;
 import java.util.Map;
 import java.util.Collection;
 import java.util.Optional;
-import org.springframework.beans.factory.annotation.Value;
 import com.kdg.fs24.entity.action.ActionCode;
 import com.kdg.fs24.entity.core.api.EntityKindId;
 import com.kdg.fs24.entity.core.api.EntityStatusesRef;
@@ -114,7 +113,7 @@ public abstract class ActionExecutionService extends AbstractApplicationService 
                     super(message);
                 }
             }
-            throw new IllegalActionForEntity(String.format("Action '%s' is not legal for entity (%s)",
+            throw new IllegalActionForEntity(String.format("Action '%s' is not allowed for entity (%s)",
                     entity, actClass));
 
         }
@@ -136,7 +135,7 @@ public abstract class ActionExecutionService extends AbstractApplicationService 
         //action.execute(entity, ac.get());
         NullSafe.create()
                 .execute(() -> action.execute())
-                .catchException(e -> action.registerActionFail(e.getMessage()))
+                .catchException(e -> action.registerActionFail(e))
                 .throwException();
         //action.refreshModifiedEntities();
     }

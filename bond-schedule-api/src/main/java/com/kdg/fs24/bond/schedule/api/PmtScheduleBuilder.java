@@ -15,6 +15,7 @@ import java.time.LocalDate;
  *
  * @author N76VB
  */
+@Deprecated
 public interface PmtScheduleBuilder {
 
     PmtScheduleBuilder setEntity(ActionEntity entity);

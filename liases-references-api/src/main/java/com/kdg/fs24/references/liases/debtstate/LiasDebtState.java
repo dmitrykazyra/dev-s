@@ -30,4 +30,9 @@ public class LiasDebtState extends AbstractRefRecord implements ReferenceRec {
     public void record2Map(final Map<String, Integer> map) {
         map.put(String.format("%d - %s", this.getDebtStateId(), this.getDebtStateName()), this.getDebtStateId());
     }
+
+    public final static LiasDebtState findLiasDebtState(final Integer liasLiasDebtStateId) {
+        return AbstractRefRecord.<LiasDebtState>getRefeenceRecord(LiasDebtState.class,
+                record -> record.getDebtStateId().equals(liasLiasDebtStateId));
+    }
 }

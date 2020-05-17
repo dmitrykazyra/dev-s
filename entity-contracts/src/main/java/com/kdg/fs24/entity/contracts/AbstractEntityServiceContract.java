@@ -7,7 +7,7 @@ package com.kdg.fs24.entity.contracts;
 
 import com.kdg.fs24.application.core.nullsafe.NullSafe;
 import com.kdg.fs24.application.core.service.funcs.ServiceFuncs;
-import com.kdg.fs24.entity.liases.api.LiasDebt;
+import com.kdg.fs24.entity.debts.LiasDebt;
 import com.kdg.fs24.lias.opers.api.LiasOpersConst;
 import com.kdg.fs24.lias.opers.napi.LiasFinanceOper;
 import java.math.BigDecimal;
@@ -19,8 +19,10 @@ import lombok.Data;
 import java.util.Optional;
 import com.kdg.fs24.application.core.service.funcs.FilterComparator;
 import com.kdg.fs24.references.application.currency.Currency;
-import com.kdg.fs24.references.api.AbstractRefRecord;
 import com.kdg.fs24.references.liases.baseassettype.LiasBaseAssetType;
+import com.kdg.fs24.references.liases.debtstate.LiasDebtState;
+import com.kdg.fs24.references.liases.kind.LiasKind;
+import com.kdg.fs24.references.liases.type.LiasType;
 
 /**
  *
@@ -55,7 +57,7 @@ public abstract class AbstractEntityServiceContract extends AbstractEntityContra
                                 // задолженность не найдена, создаем новую задолженность
                                 final int operDirection = operation.<BigDecimal>attr(LiasOpersConst.LIAS_SUMM_CLASS).signum();
 
-                                final LiasDebt liasDebt = (LiasDebt) NullSafe.create(this.findLiasDebt(operation, operDirection < 0))
+                                final LiasDebt liasDebt = NullSafe.create(this.findLiasDebt(operation, operDirection < 0))
                                         .whenIsNull(() -> {
                                             final LiasDebt newLiasDebt = this.createLiasDebt(operation);
                                             this.getContractDebts()
@@ -137,6 +139,14 @@ public abstract class AbstractEntityServiceContract extends AbstractEntityContra
         newLiasDebt.setCurrency(Currency.findCurrency(liasFinanceOper.<Integer>attr(LIAS_CURRENCY_ID.class)));
 
         newLiasDebt.setLiasBaseAssetType(LiasBaseAssetType.findLiasBaseAssetType(liasFinanceOper.<Integer>attr(LIAS_BASE_ASSET_TYPE_ID.class)));
+        newLiasDebt.setCounterparty(this.getCounterparty());
+        newLiasDebt.setDebtContract(this);
+        newLiasDebt.setLiasDebtState(LiasDebtState.findLiasDebtState(liasFinanceOper.<Integer>attr(DEBT_STATE_ID.class)));
+        newLiasDebt.setLiasKind(LiasKind.findLiasKind(liasFinanceOper.<Integer>attr(LIAS_KIND_ID.class)));
+        newLiasDebt.setLiasType(LiasType.findLiasType(liasFinanceOper.<Integer>attr(LIAS_TYPE_ID.class)));
+        newLiasDebt.setDebtStartDate(liasFinanceOper.<LocalDate>attr(LIAS_DATE.class));
+        newLiasDebt.setDebtFinalDate(liasFinanceOper.<LocalDate>attr(LIAS_FINAL_DATE.class));
+//        newLiasDebt.setLiasType(LiasType.findLiasType(liasFinanceOper.<Integer>attr(LIAS_TYPE_ID.class)));
 //        newLiasDebt.(LiasBaseAssetType.findLiasBaseAssetType(liasFinanceOper.<Integer>attr(LIAS_BASE_ASSET_TYPE_ID.class)));
 //                0,
 //                ServiceLocator.find(AppReferencesListService.class).getCurrency(liasFinanceOper.<Integer>attr(LIAS_CURRENCY_ID.class)),

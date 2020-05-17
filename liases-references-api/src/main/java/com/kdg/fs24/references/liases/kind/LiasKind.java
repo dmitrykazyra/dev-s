@@ -34,4 +34,9 @@ public class LiasKind extends AbstractRefRecord implements ReferenceRec {
     public void record2Map(final Map<String, Integer> map) {
         map.put(String.format("%d - %s", this.getLiasKindId(), this.toString()), this.getLiasKindId());
     }
+
+    public final static LiasKind findLiasKind(final Integer liasLiasKindId) {
+        return AbstractRefRecord.<LiasKind>getRefeenceRecord(LiasKind.class,
+                record -> record.getLiasKindId().equals(liasLiasKindId));
+    }
 }

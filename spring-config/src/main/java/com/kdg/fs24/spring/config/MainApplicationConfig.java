@@ -35,6 +35,7 @@ public abstract class MainApplicationConfig extends AbstractApplicationConfigura
     }
 
     @Bean
+    @Scope(value = "singleton")
     public MailManager mailManager() {
         return NullSafe.<MailManager>createObject(MailManager.class);
     }

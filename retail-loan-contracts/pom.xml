@@ -39,7 +39,12 @@
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-jpa</artifactId>
             <version>${spring.data.jpa}</version>
-        </dependency>    
+        </dependency>   
+        <dependency>
+            <groupId>com.kdg.fs24</groupId>
+            <artifactId>persistence-core</artifactId>
+            <version>${app.version}</version>            
+        </dependency>   
         <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>spring-core-api</artifactId>

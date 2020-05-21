@@ -15,11 +15,6 @@ import com.kdg.fs24.entity.core.api.AllowedMethod;
 import com.kdg.fs24.entity.core.api.LiasContractAction;
 
 import java.time.temporal.ChronoUnit;
-
-//import com.kdg.fs24.entity.contract.api.EntityContract;
-//import com.kdg.fs24.liases.templates.AbstractLiasOpersTemplate;
-import com.kdg.fs24.lias.opers.attrs.ROW_NUM;
-import com.kdg.fs24.lias.opers.attrs.DOC_TEMPLATE_ID;
 import com.kdg.fs24.application.core.nullsafe.NullSafe;
 import com.kdg.fs24.application.core.sysconst.SysConst;
 import lombok.Data;

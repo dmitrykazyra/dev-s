@@ -24,7 +24,6 @@ import com.kdg.fs24.spring.core.bean.AbstractApplicationBean;
 import java.util.Collection;
 import com.kdg.fs24.persistence.api.QueryExecutor;
 import com.kdg.fs24.persistence.api.PersistenceQuery;
-import javax.annotation.PostConstruct;
 import javax.persistence.Query;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;

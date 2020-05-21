@@ -19,8 +19,7 @@ import com.kdg.fs24.persistence.api.PersistenceEntity;
 import com.kdg.fs24.entity.document.Document;
 import javax.persistence.*;
 import lombok.Data;
-import com.kdg.fs24.entity.debts.Lias;
-import com.kdg.fs24.entity.debts.Lias;
+import com.kdg.fs24.references.liases.status.LiasOperStatus;
 
 /**
  *
@@ -39,6 +38,10 @@ public class LiasAction extends ObjectRoot implements PersistenceEntity {
     private Long liasActionId;
 
     @ManyToOne
+    @JoinColumn(name = "lias_id", referencedColumnName = "lias_id", updatable = false)
+    private Lias lias;
+    
+    @ManyToOne
     @JoinColumn(name = "fin_oper_code", referencedColumnName = "fin_oper_code", updatable = false)
     private LiasFinOperCode liasFinOperCode;
     // тип финансовой операции
@@ -56,14 +59,13 @@ public class LiasAction extends ObjectRoot implements PersistenceEntity {
     @JoinColumn(name = "doc_id", referencedColumnName = "doc_id", updatable = false)
     private Document document;
 
-    @ManyToOne
-    @JoinColumn(name = "lias_id", referencedColumnName = "lias_id", updatable = false)
-    private Lias lias;
-
     @Column(name = "server_date", updatable = false)
-    private LocalDateTime serverDate;
-    @Column(name = "status", updatable = false)
-    private Integer status;
+    private LocalDateTime serverDate = LocalDateTime.now();
+    
+    @ManyToOne
+    @JoinColumn(name = "fin_oper_status_id", referencedColumnName = "fin_oper_status_id")
+    private LiasOperStatus liasOperStatus;
+    
     @Transient
     private int liasOperHC;
 

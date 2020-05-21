@@ -30,6 +30,7 @@ import java.time.LocalDateTime;
 import java.util.stream.Collectors;
 import com.kdg.fs24.entity.counterparties.api.Counterparty;
 import com.kdg.fs24.entity.contracts.AbstractEntityContract;
+import com.kdg.fs24.entity.bondschedule.PmtSchedule;
 
 /**
  *
@@ -82,8 +83,10 @@ public class LiasDebt extends ObjectRoot implements PersistenceEntity {
     @Column(name = "debt_final_date")
     private LocalDate debtFinalDate;
     //--------------------------------------------------------------------------
-    @OneToMany
-    @JoinColumn(name = "debt_id", referencedColumnName = "debt_id")
+    //@OneToMany
+    //@JoinColumn(name = "debt_id", referencedColumnName = "debt_id")
+    @OneToMany(mappedBy = "liasDebt",
+            cascade = CascadeType.ALL)
     private Collection<Lias> liases;
 //    //--------------------------------------------------------------------------
 //    @OneToMany
@@ -94,6 +97,22 @@ public class LiasDebt extends ObjectRoot implements PersistenceEntity {
     // сервисная часть
     //==========================================================================
     public final void createOrUpdateLiases(final LiasFinanceOper liasFinanceOper) {
+
+        // график погашения обязательства
+        final Optional<PmtSchedule> pmtSchedule = ServiceFuncs.<PmtSchedule>getCollectionElement(debtContract.getPmtSchedules(),
+                bs -> (bs.getEntityKind().getEntityKindId().equals(liasFinanceOper.<Integer>attr(PMT_SCHEDULE.class))));
+
+        if (NullSafe.isNull(this.getLiases())) {
+            this.setLiases(ServiceFuncs.<Lias>getOrCreateCollection(ServiceFuncs.COLLECTION_NULL));
+        }
+        if (pmtSchedule.isPresent()) {
+            // обязательства формируются согласно графика
+            this.processBondSchedLiases(liasFinanceOper, pmtSchedule.get());
+        } else {
+            // обязательство без графика
+            this.processLias(liasFinanceOper);
+        }
+
 //        NullSafe.create(liasFinanceOper.<PmtSchedule>attr(PMT_SCHEDULE.class))
 //                .inititialize(() -> this.liases = ServiceFuncs.<Lias>getOrCreateCollection(this.liases))
 //                .safeExecute(() -> {
@@ -104,16 +123,15 @@ public class LiasDebt extends ObjectRoot implements PersistenceEntity {
 //                    // обязательство без графика
 //                    this.processLias(liasFinanceOper);
 //                });
-
     }
 
     //==========================================================================
-    private void processBondSchedLiases(final LiasFinanceOper liasFinanceOper) {
+    private void processBondSchedLiases(final LiasFinanceOper liasFinanceOper, final PmtSchedule pmtSchedule) {
 
         //----------------------------------------------------------------------
         // увеличение обязательств
         if (liasFinanceOper.<BigDecimal>attr(LiasOpersConst.LIAS_SUMM_CLASS).signum() > 0) {
-            this.incrementLiases(liasFinanceOper);
+            this.incrementLiases(liasFinanceOper, pmtSchedule);
         } else {
             // уменьшение обязательств
             this.decrementLiases(liasFinanceOper);
@@ -177,57 +195,49 @@ public class LiasDebt extends ObjectRoot implements PersistenceEntity {
     }
 
     //==========================================================================
-    private void incrementLiases(final LiasFinanceOper liasFinanceOper) {
+    private void incrementLiases(final LiasFinanceOper liasFinanceOper, final PmtSchedule pmtSchedule) {
         //----------------------------------------------------------------------
-        NullSafe.create()
-                .execute(() -> {
 
-//                    NullSafe.create(liasFinanceOper.<PmtSchedule>attr(PMT_SCHEDULE.class))
-//                            // увеличиваем обязательства согласно графиков погашения
-//                            .safeExecute(pmtSchedule -> {
-//
-//                                //анонимный класс для вычисления остатка
-//                                final LiasOperRest liasOperRest = new LiasOperRest() {
-//
-//                                    private BigDecimal liasOperRest = (BigDecimal) liasFinanceOper.<BigDecimal>attr(LiasOpersConst.LIAS_SUMM_CLASS);
-//                                    final private BigDecimal substrSum = liasOperRest.divide(BigDecimal.valueOf(((PmtSchedule) liasFinanceOper.<PmtSchedule>attr(PMT_SCHEDULE.class)).getPmtScheduleLines().size()), 2, 2);
-//
-//                                    @Override
-//                                    public BigDecimal getLiasOperSum() {
-//                                        final BigDecimal liasOperSum = liasOperRest.min(substrSum);
-//                                        liasOperRest = liasOperRest.subtract(substrSum);
-//                                        return liasOperSum;
-//                                    }
-//                                };
-//
-//                                ((PmtSchedule) pmtSchedule)
-//                                        .getPmtScheduleLines()
-//                                        .stream()
-//                                        .forEach((pmtScheduleLine) -> {
-//
-//                                            final Lias schedLias = NullSafe.create(this.findLias(pmtScheduleLine.getFrom_date(),
-//                                                    pmtScheduleLine.getTo_date(),
-//                                                    (liasFinanceOper.<BigDecimal>attr(LiasOpersConst.LIAS_SUMM_CLASS)).signum() < 0))
-//                                                    .whenIsNull(() -> {
-//                                                        return this.createLias(pmtScheduleLine.getFrom_date(),
-//                                                                pmtScheduleLine.getTo_date());
-//                                                    }).<Lias>getObject();
-//                                            liases.add(schedLias);
-//
-//                                            // создание финопераций
-//                                            schedLias.createLiasOper(liasOperRest.getLiasOperSum(),
-//                                                    liasFinanceOper.<LocalDate>attr(LiasOpersConst.LIAS_DATE_CLASS),
-//                                                    liasFinanceOper.<Integer>attr(LiasOpersConst.LIAS_FINOPER_CODE_CLASS),
-//                                                    liasFinanceOper.<Integer>attr(LIAS_TYPE_ID.class)
-//                                            );
-//
-//                                        });
-//                            })
-//                            // графика нет
-//                            .whenIsNull(() -> {
-//
-//                            });
+        // сумма операции
+        //анонимный класс для вычисления остатка
+        final LiasOperRest liasOperRest = new LiasOperRest() {
+
+            private BigDecimal liasOperRest = (BigDecimal) liasFinanceOper.<BigDecimal>attr(LiasOpersConst.LIAS_SUMM_CLASS);
+            final private BigDecimal substrSum = liasOperRest.divide(BigDecimal.valueOf(pmtSchedule.getPmtScheduleLines().size()), 2, 2);
+
+            @Override
+            public BigDecimal getLiasOperSum() {
+                final BigDecimal liasOperSum = liasOperRest.min(substrSum);
+                liasOperRest = liasOperRest.subtract(substrSum);
+                return liasOperSum;
+            }
+        };
+
+        pmtSchedule
+                .getPmtScheduleLines()
+                .stream()
+                .forEach((pmtScheduleLine) -> {
+
+                    final Lias schedLias = NullSafe.create(this.findLias(pmtScheduleLine.getFromDate(),
+                            pmtScheduleLine.getToDate(),
+                            (liasFinanceOper.<BigDecimal>attr(LiasOpersConst.LIAS_SUMM_CLASS)).signum() < 0))
+                            .whenIsNull(() -> {
+                                return this.createLias(pmtScheduleLine.getFromDate(),
+                                        pmtScheduleLine.getToDate());
+                            }).<Lias>getObject();
+                    schedLias.setLiasDebt(this);
+                    liases.add(schedLias);
+
+                    // создание финопераций
+                    schedLias.createLiasOper(liasOperRest.getLiasOperSum(),
+                            liasFinanceOper.<LocalDate>attr(LiasOpersConst.LIAS_DATE_CLASS),
+                            liasFinanceOper.<Integer>attr(LiasOpersConst.LIAS_FINOPER_CODE_CLASS),
+                            liasFinanceOper.<Integer>attr(LIAS_TYPE_ID.class),
+                            liasFinanceOper.<Integer>attr(LiasOpersConst.LIAS_ACTION_TYPE_ID_CLASS)
+                    );
+
                 });
+
     }
 
     //==========================================================================

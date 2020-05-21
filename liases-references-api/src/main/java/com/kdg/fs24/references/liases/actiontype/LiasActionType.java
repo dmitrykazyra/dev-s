@@ -17,7 +17,7 @@ import lombok.Data;
  */
 @Data
 @Entity
-@Table(name = "liasDebtStatesRef")
+@Table(name = "liasActionTypesRef")
 public class LiasActionType extends AbstractRefRecord implements ReferenceRec {
 
     @Id
@@ -31,5 +31,10 @@ public class LiasActionType extends AbstractRefRecord implements ReferenceRec {
     @Override
     public void record2Map(final Map<String, Integer> map) {
         map.put(String.format("%d - %s", this.getActionTypeId(), this.getActionTypeName()), this.getActionTypeId());
+    }
+    
+       public final static LiasActionType findLiasActionType(final Integer liasActionTypeId) {
+        return AbstractRefRecord.<LiasActionType>getRefeenceRecord(LiasActionType.class,
+                record -> record.getActionTypeId().equals(liasActionTypeId));
     }
 }

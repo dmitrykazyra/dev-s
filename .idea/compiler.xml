@@ -2,31 +2,32 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
       <profile name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="webmonitor-core" />
+        <module name="references-application" />
         <module name="entity-contracts" />
-        <module name="documents-references-api" />
+        <module name="application-core-api" />
         <module name="spring-boot-api" />
         <module name="spring-jdbc-api" />
-        <module name="spring-fw-test" />
         <module name="references-core" />
-        <module name="entity-references" />
+        <module name="documents-api" />
         <module name="querydsl-api" />
         <module name="retail-loan-contracts" />
         <module name="spring-core-api" />
         <module name="retail-loan-contracts-references-api" />
-        <module name="application-core-api" />
+        <module name="spring-security-api" />
+        <module name="entity-references" />
         <module name="test-api" />
         <module name="counterparties" />
         <module name="liases-api" />
-        <module name="references-application-api" />
+        <module name="spring-fw-test" />
         <module name="tariff-references" />
-        <module name="bond-schedule-references-api" />
         <module name="listeners-api" />
         <module name="entity-references-api" />
+        <module name="entity-marks-api" />
         <module name="bond-schedule-api" />
         <module name="rest-api" />
         <module name="test-core" />
@@ -36,23 +37,23 @@
         <module name="spring-security" />
         <module name="references-api" />
         <module name="lias-opers-api" />
+        <module name="entity-core-api" />
         <module name="tariff-core" />
-        <module name="persistence-api" />
+        <module name="references-application-api" />
         <module name="liases" />
-        <module name="entity-marks-api" />
+        <module name="webmonitor-core" />
         <module name="persistence-core" />
+        <module name="persistence-api" />
         <module name="entity-core" />
-        <module name="entity-contract-references-api" />
-        <module name="spring-security-api" />
+        <module name="documents-references-api" />
         <module name="test-junit-api" />
         <module name="tariff-core-api" />
         <module name="spring-orm-api" />
         <module name="entity-marks" />
         <module name="spring-config" />
         <module name="spring-core" />
-        <module name="documents-api" />
-        <module name="references-application" />
-        <module name="entity-core-api" />
+        <module name="entity-contract-references-api" />
+        <module name="bond-schedule-references-api" />
         <module name="liases-references-api" />
       </profile>
     </annotationProcessing>

@@ -15,12 +15,12 @@ import lombok.Data;
 import org.springframework.stereotype.Service;
 import com.kdg.fs24.entity.retail.loan.contracts.RetailLoanContract;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import com.kdg.fs24.references.liases.debtstate.LiasDebtState;
 import com.kdg.fs24.references.liases.kind.LiasKind;
 import com.kdg.fs24.references.liases.type.LiasType;
 import com.kdg.fs24.references.liases.baseassettype.LiasBaseAssetType;
-import com.kdg.fs24.references.tariffs.api.TariffConst;
+import com.kdg.fs24.references.liases.finopercode.LiasFinOperCode;
+import com.kdg.fs24.references.liases.status.LiasOperStatus;
 import com.kdg.fs24.entity.contract.subjects.ContractSubject;
 import com.kdg.fs24.entity.counterparties.api.Counterparty;
 import com.kdg.fs24.references.loan.api.LoanSource;
@@ -29,6 +29,7 @@ import com.kdg.fs24.entity.tariff.api.TariffPlan;
 import java.math.BigDecimal;
 import com.kdg.fs24.entity.core.api.CachedReferencesClasses;
 import com.kdg.fs24.entity.retail.loan.contracts.RetailLoanConstants;
+import com.kdg.fs24.references.liases.actiontype.LiasActionType;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -39,7 +40,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 @Service
 @EntityClassesPackages(pkgList = {"com.kdg.fs24.entity"})
 @CachedReferencesClasses(classes = {ContractSubject.class, LoanSource.class, PmtScheduleAlg.class,
-    PmtScheduleTerm.class, Currency.class, LiasDebtState.class, LiasKind.class, LiasType.class, LiasBaseAssetType.class})
+    PmtScheduleTerm.class, Currency.class, LiasDebtState.class, LiasKind.class, LiasType.class, 
+    LiasBaseAssetType.class, LiasFinOperCode.class, LiasOperStatus.class, LiasActionType.class})
 public class RetailLoanContractActionsService extends ActionExecutionService {
 
     @Autowired

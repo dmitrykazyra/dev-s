@@ -61,6 +61,7 @@ public abstract class AbstractEntityServiceContract extends AbstractEntityContra
                                 final LiasDebt liasDebt = NullSafe.create(this.findLiasDebt(operation, operDirection < 0))
                                         .whenIsNull(() -> {
                                             final LiasDebt newLiasDebt = this.createLiasDebt(operation);
+                                            // добавили новую задолженность
                                             this.getContractDebts()
                                                     .add(newLiasDebt);
                                             return newLiasDebt;

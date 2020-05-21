@@ -11,7 +11,6 @@ import com.kdg.fs24.entity.retail.loan.contracts.RetailLoanContract;
 import com.kdg.fs24.entity.tariff.AbstractTariffPlan;
 import com.kdg.fs24.entity.tariff.api.TariffPlan;
 import com.kdg.fs24.persistence.core.PersistanceEntityManager;
-import com.kdg.fs24.references.api.AbstractRefRecord;
 import com.kdg.fs24.references.application.currency.Currency;
 import com.kdg.fs24.references.bond.schedule.api.PmtScheduleAlg;
 import com.kdg.fs24.references.bond.schedule.api.PmtScheduleTerm;
@@ -19,10 +18,10 @@ import com.kdg.fs24.references.loan.api.LoanSource;
 import com.kdg.fs24.service.CounterpartyActionsService;
 import com.kdg.fs24.service.RetailLoanContractActionsService;
 import com.kdg.fs24.test.core.Utils4test;
-import java.math.BigDecimal;
-import java.time.LocalDate;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
+import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @Data
 public abstract class TestUtil4LoanContract extends Utils4test {

@@ -14,10 +14,10 @@ package com.kdg.fs24.entity.bondschedule;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
-import com.kdg.fs24.application.core.sysconst.SysConst;
+//import com.fasterxml.jackson.annotation.JsonFormat;
+//import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+//import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+//import com.kdg.fs24.application.core.sysconst.SysConst;
 import com.kdg.fs24.bond.schedule.api.BondScheduleConst;
 //import com.kdg.fs24.bond.schedule.collection.BondSchedulesActionClassesService;
 //import com.kdg.fs24.jdbc.api.exception.QueryExecutionException;
@@ -96,8 +96,7 @@ public class PmtSchedule extends AbstractActionEntity {
 
     @OneToMany(
             mappedBy = "pmtSchedule",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
+            cascade = CascadeType.ALL
     )
 //    @OneToMany(cascade = CascadeType.ALL)
 //    @JoinColumn(name = "schedule_id", referencedColumnName = "schedule_id")

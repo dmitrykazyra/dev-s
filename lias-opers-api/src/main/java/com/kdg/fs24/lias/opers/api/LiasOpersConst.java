@@ -19,6 +19,7 @@ public final class LiasOpersConst {
     public static final Class<LIAS_START_DATE> LIAS_START_DATE_CLASS = LIAS_START_DATE.class;
     public static final Class<LIAS_FINAL_DATE> LIAS_FINAL_DATE_CLASS = LIAS_FINAL_DATE.class;
     public static final Class<LIAS_TYPE_ID> LIAS_TYPE_ID_CLASS = LIAS_TYPE_ID.class;
+    public static final Class<LIAS_ACTION_TYPE_ID> LIAS_ACTION_TYPE_ID_CLASS =  LIAS_ACTION_TYPE_ID.class;
     
     
 

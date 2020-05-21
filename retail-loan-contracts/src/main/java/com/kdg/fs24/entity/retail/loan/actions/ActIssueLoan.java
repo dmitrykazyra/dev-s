@@ -13,10 +13,13 @@ import com.kdg.fs24.entity.core.api.ActionCodeId;
 import com.kdg.fs24.lias.opers.attrs.*;
 import com.kdg.fs24.lias.opers.napi.LiasFinanceOper;
 import com.kdg.fs24.application.core.service.funcs.ServiceFuncs;
+import com.kdg.fs24.entity.bondschedule.PmtSchedule;
 import java.time.LocalDate;
+import java.util.Optional;
 import java.math.BigDecimal;
 import lombok.Data;
 import com.kdg.fs24.references.api.LiasesConst;
+import com.kdg.fs24.bond.schedule.api.BondScheduleConst;
 
 /**
  *
@@ -43,7 +46,11 @@ public class ActIssueLoan extends AbstractLiasContractOper<AbstractRetailLoanCon
     //==========================================================================
     @Override
     protected void preCalculation() {
-
+        // график погашения ОД
+//        final Optional<PmtSchedule> pmtSchedule = ServiceFuncs.<PmtSchedule>getCollectionElement(this.getContractEntity().getPmtSchedules(),
+//                bs -> (bs.getEntityKind().getEntityKindId().equals(BondScheduleConst.EK_BONDSCHEDULE_MAIN_DEBT)));
+        
+        
         this.addNewLiasOper(NullSafe.createObject(LiasFinanceOper.class)
                 .<LIAS_SUMM>addAttr(() -> this.getLiasSum())
                 .<LIAS_CURRENCY_ID>addAttr(() -> this.getContractEntity().getCurrency().getCurrencyId())
@@ -57,6 +64,7 @@ public class ActIssueLoan extends AbstractLiasContractOper<AbstractRetailLoanCon
                 .<LIAS_BASE_ASSET_TYPE_ID>addAttr(() -> LiasesConst.LBAT_MONEYS)
                 .<LIAS_START_DATE>addAttr(() -> this.getContractEntity().getContractDate())
                 .<LIAS_FINAL_DATE>addAttr(() -> this.getContractEntity().getEndDate())
+                .<PMT_SCHEDULE>addAttr(() -> BondScheduleConst.EK_BONDSCHEDULE_MAIN_DEBT)
                 //                .<PMT_SCHEDULE>add(()
                 //                        -> ServiceFuncs.<PmtSchedule>getCollectionElement(
                 //                        this.getContractEntity().getPmtSchedules(),

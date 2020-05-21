@@ -31,4 +31,10 @@ public class LoanSource extends AbstractRefRecord implements ReferenceRec {
     public void record2Map(final Map<String, Integer> map) {
         map.put(String.format("%d - %s", this.getLoanSourceId(), this.toString()), this.getLoanSourceId());
     }
+
+    //==========================================================================
+    public final static LoanSource findLoanSource(final Integer LoanSourceId) {
+        return AbstractRefRecord.<LoanSource>getRefeenceRecord(LoanSource.class,
+                record -> record.getLoanSourceId().equals(LoanSourceId));
+    }
 }

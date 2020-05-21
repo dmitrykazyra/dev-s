@@ -37,5 +37,9 @@ public class EntityKind extends AbstractRefRecord implements ReferenceRec {
     public void record2Map(final Map<String, Integer> map) {
         map.put(this.toString(), this.getEntityKindId());
     }
-//    //==========================================================================
+    //==========================================================================
+    public final static EntityKind findEntityKind(final Integer EntityKindId) {
+        return AbstractRefRecord.<EntityKind>getRefeenceRecord(EntityKind.class,
+                record -> record.getEntityKindId().equals(EntityKindId));
+    }
 }

@@ -146,6 +146,8 @@
     <orderEntry type="library" name="Maven: org.springframework:spring-tx:5.2.4.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.aspectj:aspectjrt:1.9.5" level="project" />
     <orderEntry type="module" module-name="entity-core" />
+    <orderEntry type="module" module-name="entity-core-api" />
+    <orderEntry type="module" module-name="listeners-api" />
     <orderEntry type="module" module-name="entity-references-api" />
     <orderEntry type="module" module-name="references-application" />
     <orderEntry type="module" module-name="entity-references" />
@@ -154,11 +156,9 @@
     <orderEntry type="module" module-name="entity-marks" />
     <orderEntry type="module" module-name="entity-marks-api" />
     <orderEntry type="module" module-name="test-api" />
-    <orderEntry type="module" module-name="bond-schedule-api" />
-    <orderEntry type="module" module-name="entity-core-api" />
-    <orderEntry type="module" module-name="listeners-api" />
-    <orderEntry type="module" module-name="bond-schedule-references-api" />
     <orderEntry type="module" module-name="lias-opers-api" />
+    <orderEntry type="module" module-name="bond-schedule-api" />
+    <orderEntry type="module" module-name="bond-schedule-references-api" />
     <orderEntry type="module" module-name="documents-references-api" />
     <orderEntry type="module" module-name="attribute-api" />
     <orderEntry type="module" module-name="documents-api" />

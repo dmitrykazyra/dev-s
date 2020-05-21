@@ -22,7 +22,13 @@ import java.time.LocalDate;
 public class PmtScheduleLine implements PersistenceEntity {
 
     @Id
+    //@Column(name = "schedule_id")
+    @JoinColumn(name = "schedule_id", referencedColumnName = "schedule_id")
+    @ManyToOne(fetch = FetchType.LAZY)
     private PmtSchedule pmtSchedule;
+
+//    @Id
+//    private Long schedule_id;
 
     @Id
     @Column(name = "actual_date")

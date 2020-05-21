@@ -12,6 +12,10 @@ import com.kdg.fs24.spring.core.api.ApplicationBean;
  * @author N76VB
  */
 public abstract class AbstractApplicationBean implements ApplicationBean {
-    
+
+    @Override
+    public void initialize() {
+
+    }
 
 }

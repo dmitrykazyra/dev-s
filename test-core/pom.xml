@@ -23,6 +23,6 @@
             <groupId>com.kdg.fs24</groupId>
             <artifactId>entity-core</artifactId>
             <version>${app.version}</version>            
-        </dependency>        
-    </dependencies>    
+        </dependency>
+    </dependencies>
 </project>

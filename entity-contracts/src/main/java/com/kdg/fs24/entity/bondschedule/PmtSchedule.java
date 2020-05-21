@@ -17,6 +17,7 @@ package com.kdg.fs24.entity.bondschedule;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import com.kdg.fs24.application.core.sysconst.SysConst;
 import com.kdg.fs24.bond.schedule.api.BondScheduleConst;
 //import com.kdg.fs24.bond.schedule.collection.BondSchedulesActionClassesService;
 //import com.kdg.fs24.jdbc.api.exception.QueryExecutionException;
@@ -31,6 +32,9 @@ import com.kdg.fs24.entity.core.api.EntityTypeId;
 import com.kdg.fs24.entity.core.api.EntityKindsRef;
 import com.kdg.fs24.entity.kind.EntityKind;
 import com.kdg.fs24.entity.contracts.AbstractEntityContract;
+import com.kdg.fs24.entity.core.api.ActionClassesPackages;
+import com.kdg.fs24.entity.core.api.EntityStatusesRef;
+import com.kdg.fs24.entity.status.EntityStatusId;
 import javax.persistence.*;
 import lombok.Data;
 
@@ -53,12 +57,19 @@ import lombok.Data;
                     entity_type_id = BondScheduleConst.BONDSCHEDULE,
                     entity_kind_name = "График погашения комиссии")
         })
-//@ActionClassesCollectionLink(collection_service = BondSchedulesActionClassesService.class)
+@EntityStatusesRef(
+        entiy_status = {
+            @EntityStatusId(
+                    entity_type_id = BondScheduleConst.BONDSCHEDULE,
+                    entity_status_id = BondScheduleConst.ES_DEFAULT_STATUS,
+                    entity_status_name = "Действующий график")
+        })
 @DefaultEntityStatus(entity_status = BondScheduleConst.ES_DEFAULT_STATUS)
 @Data
 @Entity
 @Table(name = "core_PmtSchedules")
 @PrimaryKeyJoinColumn(name = "schedule_id", referencedColumnName = "entity_id")
+@ActionClassesPackages(pkgList = {"com.kdg.fs24.entity.bondschedule.actions"})
 public class PmtSchedule extends AbstractActionEntity {
 
     @ManyToOne
@@ -83,8 +94,13 @@ public class PmtSchedule extends AbstractActionEntity {
     @Column(name = "last_date")
     private LocalDate lastDate;
 
-    @OneToMany
-    @JoinColumn(name = "contract_id", referencedColumnName = "contract_id")
+    @OneToMany(
+            mappedBy = "pmtSchedule",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+//    @OneToMany(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "schedule_id", referencedColumnName = "schedule_id")
     private Collection<PmtScheduleLine> pmtScheduleLines;
 
     //==========================================================================

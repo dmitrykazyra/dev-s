@@ -17,6 +17,7 @@ import lombok.Data;
 public class PmtScheduleLinePK implements Serializable {
 
     private PmtSchedule pmtSchedule;
+    //private Long schedule_id;
     private LocalDate actualDate;
     private LocalDate fromDate;
     private LocalDate toDate;

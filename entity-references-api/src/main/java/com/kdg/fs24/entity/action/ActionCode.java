@@ -5,11 +5,9 @@
  */
 package com.kdg.fs24.entity.action;
 
-import com.kdg.fs24.application.core.service.funcs.ServiceFuncs;
 import java.util.Map;
 import com.kdg.fs24.references.api.ReferenceRec;
 import com.kdg.fs24.references.api.AbstractRefRecord;
-import java.util.stream.Collectors;
 import javax.persistence.*;
 import lombok.Data;
 
@@ -35,5 +33,11 @@ public class ActionCode extends AbstractRefRecord implements ReferenceRec {
     @Override
     public void record2Map(final Map<String, Integer> map) {
         map.put(this.toString(), this.getActionCode());
+    }
+
+    //==========================================================================
+    public final static ActionCode findActionCode(final Integer ActionCodeId) {
+        return AbstractRefRecord.<ActionCode>getRefeenceRecord(ActionCode.class,
+                record -> record.getActionCode().equals(ActionCodeId));
     }
 }

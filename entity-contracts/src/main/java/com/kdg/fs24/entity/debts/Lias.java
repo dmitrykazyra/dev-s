@@ -47,18 +47,29 @@ public class Lias extends ObjectRoot implements PersistenceEntity {
     @SequenceGenerator(name = "seq_lias_id", sequenceName = "seq_lias_id", allocationSize = 1)
     @Column(name = "lias_id")
     private Integer liasId;
+    //--------------------------------------------------------------------------
+    @OneToOne
+    @JoinColumn(name = "debt_id", referencedColumnName = "debt_id")
+    private LiasDebt liasDebt;
+    //--------------------------------------------------------------------------
     @Column(name = "start_date")
     private LocalDate startDate;
+    //--------------------------------------------------------------------------
     @Column(name = "allow_date")
     private LocalDate allowDate;
+    //--------------------------------------------------------------------------
     @Column(name = "final_date")
     private LocalDate finalDate;
+    //--------------------------------------------------------------------------
     @Column(name = "legal_date")
     private LocalDate legalDate;
+    //--------------------------------------------------------------------------
     @Column(name = "server_date")
     private LocalDateTime serverDate;
+    //--------------------------------------------------------------------------
     @Column(name = "inactive_date")
     private LocalDate inactiveDate;
+    //--------------------------------------------------------------------------
     @Column(name = "is_Cancelled")
     private Boolean isCancelled;
 

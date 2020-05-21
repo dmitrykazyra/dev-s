@@ -157,6 +157,7 @@
     <orderEntry type="module" module-name="entity-marks" />
     <orderEntry type="module" module-name="entity-marks-api" />
     <orderEntry type="module" module-name="persistence-api" />
+    <orderEntry type="library" name="Maven: org.jetbrains:annotations:19.0.0" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: javax:javaee-api:8.0" level="project" />
     <orderEntry type="library" name="Maven: com.sun.mail:javax.mail:1.6.0" level="project" />
     <orderEntry type="library" name="Maven: javax.activation:activation:1.1" level="project" />

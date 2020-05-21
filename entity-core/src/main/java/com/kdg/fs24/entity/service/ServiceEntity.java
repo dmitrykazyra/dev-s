@@ -23,7 +23,7 @@ import java.util.Collection;
 @DefaultEntityStatus(entity_status = SysConst.ES_VALID)
 @EntityTypeId(entity_type_id = 500, entity_type_name = "Сервисная энтити")
 //@ActionClassesCollectionLink(collection_service = ServiceActionClassesService.class)
-public class ServiceEntity extends AbstractActionEntity {
+public class ServiceEntity { // extends AbstractActionEntity {
 
     private Collection<FieldDescriptionImpl> settings;
     private Integer appId;

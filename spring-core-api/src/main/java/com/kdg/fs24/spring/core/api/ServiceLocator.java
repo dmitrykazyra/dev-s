@@ -32,7 +32,7 @@ public final class ServiceLocator {
     public static <T> T findService(final Class<T> clazz) {
         final Optional<ApplicationBean> service = ServiceFuncs.<ApplicationBean>getCollectionElement(
                 BEANS_LIST,
-                srv -> srv.getClass().equals(clazz));
+                srv -> srv.getClass().equals(clazz) || clazz.isAssignableFrom(srv.getClass()));
 
         if (!service.isPresent()) {
             class UnkonwnService extends InternalAppException {
@@ -41,7 +41,7 @@ public final class ServiceLocator {
                     super(message);
                 }
             }
-            throw new UnkonwnService(String.format("ServiceLocator: Unknown service '%s' ",
+            throw new UnkonwnService(String.format("ServiceLocator: Can't find bean/service '%s' ",
                     clazz.getCanonicalName()));
         }
 

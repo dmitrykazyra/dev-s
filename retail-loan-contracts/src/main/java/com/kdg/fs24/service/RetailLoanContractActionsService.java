@@ -28,8 +28,8 @@ import com.kdg.fs24.references.application.currency.Currency;
 import com.kdg.fs24.entity.tariff.api.TariffPlan;
 import java.math.BigDecimal;
 import com.kdg.fs24.entity.core.api.CachedReferencesClasses;
-import com.kdg.fs24.references.api.AbstractRefRecord;
 import com.kdg.fs24.entity.retail.loan.contracts.RetailLoanConstants;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
@@ -37,10 +37,13 @@ import com.kdg.fs24.entity.retail.loan.contracts.RetailLoanConstants;
  */
 @Data
 @Service
-@EntityClassesPackages(pkgList = {"com.kdg.fs24.entity.retail.loan.contracts"})
+@EntityClassesPackages(pkgList = {"com.kdg.fs24.entity"})
 @CachedReferencesClasses(classes = {ContractSubject.class, LoanSource.class, PmtScheduleAlg.class,
     PmtScheduleTerm.class, Currency.class, LiasDebtState.class, LiasKind.class, LiasType.class, LiasBaseAssetType.class})
 public class RetailLoanContractActionsService extends ActionExecutionService {
+
+    @Autowired
+    private ContractSchedulesBuilders contractSchedulesBuilders;
 
     public RetailLoanContract createRetailLoanContract(final ContractSubject contractSubject,
             final Counterparty counterparty,
@@ -56,7 +59,7 @@ public class RetailLoanContractActionsService extends ActionExecutionService {
             final PmtScheduleAlg pmtScheduleAlg,
             final PmtScheduleTerm pmtScheduleTerm) {
 
-        return this.<RetailLoanContract>createActionEntity(RetailLoanContract.class,
+        final RetailLoanContract rlc = this.<RetailLoanContract>createActionEntity(RetailLoanContract.class,
                 (retailLoanContract) -> {
                     retailLoanContract.setContractSubject(contractSubject);
                     retailLoanContract.setCounterparty(counterparty);
@@ -71,12 +74,13 @@ public class RetailLoanContractActionsService extends ActionExecutionService {
                     retailLoanContract.setEntityKind(entityKind);
                     retailLoanContract.setContractSumm(contractSumm);
                     retailLoanContract.setLoanSource(loanSource);
-                    retailLoanContract.setCreation_date(LocalDateTime.now());
-                    retailLoanContract.setEntityStatus(AbstractRefRecord.<EntityStatus>getRefeenceRecord(
-                            EntityStatus.class,
-                            record -> record.getEntityStatusId().equals(0)
-                            && record.getEntityTypeId().equals(RetailLoanConstants.LOAN2INDIVIDUAL)));
+                    //retailLoanContract.setCreation_date(LocalDateTime.now());
+                    retailLoanContract.setEntityStatus(EntityStatus.findEntityStatus(RetailLoanConstants.LOAN2INDIVIDUAL, 0));
                     //EntityStatus.getExistEntityStatus(TariffConst.ENTITY_TARIFF_PLAN, 0));
+                    // построить графики погашения
+                    //retailLoanContract.createBondschedules();
                 });
+
+        return rlc;
     }
 }

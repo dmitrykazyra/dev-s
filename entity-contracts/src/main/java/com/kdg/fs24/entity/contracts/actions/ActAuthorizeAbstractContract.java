@@ -51,7 +51,7 @@ public class ActAuthorizeAbstractContract extends AbstractContractAction<Abstrac
 
     //==========================================================================
     @Override
-    protected void createPersistenceEntities() {
+    public void doUpdate() {
 
         // отметка об авторизации
         final EntityMark entityMark = NullSafe.createObject(EntityMark.class);

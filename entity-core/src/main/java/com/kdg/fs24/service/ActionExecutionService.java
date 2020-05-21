@@ -120,10 +120,7 @@ public abstract class ActionExecutionService extends AbstractApplicationService 
         // экземплр действия
         final AbstractAction action = NullSafe.<AbstractAction>createObject(actClass);
 
-        final ActionCode ac
-                = AbstractRefRecord.<ActionCode>getRefeenceRecord(
-                        ActionCode.class,
-                        record -> record.getActionCode().equals(action_code));
+        final ActionCode ac = ActionCode.findActionCode(action_code);
 
 //        if (!ac.isPresent()) {
 //            throw new NoActionCodeDefined(String.format("Unknown actionCode (%d)", action_code));

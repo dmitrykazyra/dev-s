@@ -15,18 +15,24 @@ import javax.annotation.PreDestroy;
  */
 public interface ApplicationBean {
 
+    public default void initialize() {
+
+    }
+
     @PostConstruct
     public default void afterConstruction() {
         LogService.LogInfo(this.getClass(), () -> String.format("Been has been created (%s)", this.getClass().getCanonicalName()));
-        
+
         ServiceLocator.registerService(this);
-        
+
+        this.initialize();
+
     }
-    
+
     @PreDestroy
     public default void beforeDestroy() {
         LogService.LogInfo(this.getClass(), () -> String.format("Been has been destroyed (%s)", this.getClass().getCanonicalName()));
-        
+
         ServiceLocator.releaseService(this);
-    }    
+    }
 }

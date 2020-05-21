@@ -5,17 +5,14 @@
  */
 package com.kdg.fs24.spring.core.application.setup;
 
-import com.kdg.fs24.application.core.log.Log4jBox;
 import com.kdg.fs24.spring.core.bean.AbstractApplicationBean;
-import com.kdg.fs24.application.core.service.funcs.ServiceFuncs;
-import com.kdg.fs24.application.core.nullsafe.NullSafe;
-import java.util.Map;
+
 
 /**
  *
  * @author N76VB
  */
-public final class ExceptionsCollectorBean extends AbstractApplicationBean {
+public class ExceptionsCollectorBean extends AbstractApplicationBean {
 
 
 

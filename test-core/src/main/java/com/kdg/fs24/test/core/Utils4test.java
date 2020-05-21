@@ -12,7 +12,7 @@ import com.kdg.fs24.application.core.locale.NLS;
  *
  * @author kazyra_d
  */
-public final class Utils4test {
+public abstract class Utils4test {
 
     public static final String generateTestName(final Class clazz) {
         return String

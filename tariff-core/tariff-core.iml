@@ -62,9 +62,9 @@
     <orderEntry type="module" module-name="liases-references-api" />
     <orderEntry type="module" module-name="counterparties" />
     <orderEntry type="module" module-name="spring-security-api" />
+    <orderEntry type="module" module-name="lias-opers-api" />
     <orderEntry type="module" module-name="bond-schedule-api" />
     <orderEntry type="module" module-name="bond-schedule-references-api" />
-    <orderEntry type="module" module-name="lias-opers-api" />
     <orderEntry type="module" module-name="documents-references-api" />
     <orderEntry type="module" module-name="documents-api" />
     <orderEntry type="module" module-name="tariff-references" />

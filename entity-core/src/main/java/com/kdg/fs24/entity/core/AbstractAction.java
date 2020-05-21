@@ -75,8 +75,8 @@ public abstract class AbstractAction<T extends ActionEntity>
                                     // создание действия
                                     this.createPersistenceAction();
 
-                                    // сущности для создания\редакирования
-                                    this.createPersistenceEntities();
+                                    // модификация
+                                    this.doUpdate();
 
                                     persistenceEntities
                                             .forEach((obj) -> {
@@ -103,7 +103,7 @@ public abstract class AbstractAction<T extends ActionEntity>
                                     this.updatePersistenceAction();
                                     this.updateMainEntity();
                                 });
-                        getPersistanceEntityManager()
+                        this.getPersistanceEntityManager()
                                 .getEntityManager()
                                 .flush();
                     });
@@ -135,6 +135,9 @@ public abstract class AbstractAction<T extends ActionEntity>
     private void createMainEntity() {
 
         if (this.getEntity().justCreated()) {
+
+            ((AbstractPersistenceEntity) this.getEntity()).setCreation_date(LocalDateTime.now());
+
             getPersistanceEntityManager()
                     .getEntityManager()
                     .persist(this.getEntity());
@@ -180,7 +183,7 @@ public abstract class AbstractAction<T extends ActionEntity>
     }
 
     //==========================================================================
-    protected void createPersistenceEntities() {
+    protected void doUpdate() {
 
     }
 

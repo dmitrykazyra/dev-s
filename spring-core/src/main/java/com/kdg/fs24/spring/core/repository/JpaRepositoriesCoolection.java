@@ -16,7 +16,7 @@ import lombok.Data;
  */
 @Data
 @Deprecated
-public final class JpaRepositoriesCoolection extends AbstractApplicationBean {
+public final class JpaRepositoriesCoolection { //extends AbstractApplicationBean {
 
     private Collection<ApplicationJpaRepository> repositores;
 }

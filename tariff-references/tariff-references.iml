@@ -78,9 +78,9 @@
     <orderEntry type="library" name="Maven: com.sun.net.httpserver:http:20070405" level="project" />
     <orderEntry type="module" module-name="entity-marks" />
     <orderEntry type="module" module-name="entity-marks-api" />
+    <orderEntry type="module" module-name="lias-opers-api" />
     <orderEntry type="module" module-name="bond-schedule-api" />
     <orderEntry type="module" module-name="bond-schedule-references-api" />
-    <orderEntry type="module" module-name="lias-opers-api" />
     <orderEntry type="module" module-name="documents-references-api" />
     <orderEntry type="module" module-name="documents-api" />
     <orderEntry type="module" module-name="spring-config" />

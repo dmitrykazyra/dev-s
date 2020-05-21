@@ -48,13 +48,13 @@ public class PersistanceEntityManager extends AbstractApplicationBean {
     private String debugMode; // = SysConst.STRING_FALSE;
 
     //public PersistanceEntityManager(final String persistenceUnitName) {
-    @PostConstruct
-    public void postConstructEntityManager() {
+    @Override
+    public void initialize() {
 
         NullSafe.create(persistenceUnitName)
                 .execute(() -> {
 //sessionFactory = new Configuration().configure().buildSessionFactory();
-                    
+
                     SysConst.DEBUG_MODE.set(this.debugMode.toLowerCase().equals(SysConst.STRING_TRUE));
 
                     if (SysConst.DEBUG_MODE.get()) {
@@ -212,6 +212,9 @@ public class PersistanceEntityManager extends AbstractApplicationBean {
                                 this.executePersistAction(persistAction);
 
                                 if (!isActiveTransaction) {
+
+                                    this.getEntityManager().flush();
+
                                     entityTransaction.commit();
                                     if (SysConst.DEBUG_MODE.get()) {
                                         LogService.LogInfo(this.getClass(), () -> String.format("commit jpa transaction (%d)",

@@ -50,7 +50,7 @@ public class AbstractPersistenceEntity implements ActionEntity {
 
     @Override
     public Boolean justCreated() {
-        return NullSafe.isNull(this.entity_id);
+        return NullSafe.isNull(this.last_modify);
     }
 
     @Override

@@ -6,6 +6,7 @@
 package com.kdg.fs24.entity.retail.loan.contracts;
 
 import com.kdg.fs24.application.core.sysconst.SysConst;
+import com.kdg.fs24.bond.schedule.api.BondScheduleConst;
 import com.kdg.fs24.entity.core.api.ActionClassesPackages;
 import com.kdg.fs24.entity.core.api.DefaultEntityStatus;
 import com.kdg.fs24.entity.core.api.EntityKindId;
@@ -15,6 +16,8 @@ import com.kdg.fs24.entity.status.EntityStatusId;
 import com.kdg.fs24.references.loan.api.LoanSource;
 import com.kdg.fs24.references.bond.schedule.api.PmtScheduleAlg;
 import com.kdg.fs24.references.bond.schedule.api.PmtScheduleTerm;
+import com.kdg.fs24.service.ContractSchedulesBuilders;
+import com.kdg.fs24.spring.core.api.ServiceLocator;
 import javax.persistence.*;
 import lombok.Data;
 
@@ -62,4 +65,37 @@ public class RetailLoanContract extends AbstractRetailLoanContract {
     @ManyToOne
     @JoinColumn(name = "pmt_term_id", referencedColumnName = "pmt_term_id")
     private PmtScheduleTerm pmtScheduleTerm;
+
+    @Override
+    public void createBondschedules() {
+        super.createBondschedules();
+
+        final ContractSchedulesBuilders csb = ServiceLocator.<ContractSchedulesBuilders>findService(ContractSchedulesBuilders.class);
+
+        this.getPmtSchedules().add(csb.buildSchedule(
+                BondScheduleConst.BS_ALG_BYREST,
+                this.getPmtScheduleAlg(),
+                this.getPmtScheduleTerm(),
+                 BondScheduleConst.EK_BONDSCHEDULE_MAIN_DEBT,
+                 this.getBeginDate(),
+                 this.getEndDate()));
+
+        // график выплат основного долга
+//        loanContract.getPmtScheduleBuilders()
+//                .add(ServiceLocator.find(BondScheduleCalgAlgClassesService.class)
+//                        .getScheduleBuilder(loanContract.getScheduleAlg(),
+//                                loanContract.getScheduleTerm(),
+//                                BondScheduleConst.EK_BONDSCHEDULE_MAIN_DEBT,
+//                                loanContract.getContract_date(),
+//                                loanContract.getEnd_date()));
+//        // график выплат процентов
+//        loanContract.getPmtScheduleBuilders()
+//                .add(ServiceLocator.find(BondScheduleCalgAlgClassesService.class)
+//                        .getScheduleBuilder(loanContract.getScheduleAlg(),
+//                                loanContract.getScheduleTerm(),
+//                                BondScheduleConst.EK_BONDSCHEDULE_PERC,
+//                                loanContract.getContract_date(),
+//                                loanContract.getEnd_date()));
+
+    }
 }

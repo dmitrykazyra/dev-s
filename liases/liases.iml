@@ -25,27 +25,26 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="lias-opers-api" />
+    <orderEntry type="module" module-name="documents-references-api" />
+    <orderEntry type="module" module-name="attribute-api" />
+    <orderEntry type="module" module-name="tariff-references-api" />
+    <orderEntry type="module" module-name="entity-core-api" />
+    <orderEntry type="module" module-name="entity-references-api" />
+    <orderEntry type="module" module-name="test-api" />
+    <orderEntry type="module" module-name="listeners-api" />
     <orderEntry type="module" module-name="liases-api" />
     <orderEntry type="module" module-name="references-application-api" />
     <orderEntry type="module" module-name="counterparties" />
     <orderEntry type="module" module-name="spring-security-api" />
-    <orderEntry type="library" name="Maven: org.springframework.security:spring-security-core:5.3.1.RELEASE" level="project" />
-    <orderEntry type="module" module-name="documents-api" />
-    <orderEntry type="module" module-name="documents-references-api" />
     <orderEntry type="module" module-name="entity-core" />
-    <orderEntry type="module" module-name="entity-references-api" />
     <orderEntry type="module" module-name="references-application" />
     <orderEntry type="module" module-name="entity-references" />
     <orderEntry type="module" module-name="rest-api" />
     <orderEntry type="library" name="Maven: com.sun.net.httpserver:http:20070405" level="project" />
     <orderEntry type="module" module-name="entity-marks" />
     <orderEntry type="module" module-name="entity-marks-api" />
-    <orderEntry type="module" module-name="test-api" />
-    <orderEntry type="module" module-name="lias-opers-api" />
-    <orderEntry type="module" module-name="attribute-api" />
-    <orderEntry type="module" module-name="tariff-references-api" />
-    <orderEntry type="module" module-name="entity-core-api" />
-    <orderEntry type="module" module-name="listeners-api" />
+    <orderEntry type="module" module-name="documents-api" />
     <orderEntry type="module" module-name="liases-references-api" />
     <orderEntry type="module" module-name="references-api" />
     <orderEntry type="module" module-name="application-core-api" />
@@ -133,6 +132,7 @@
     <orderEntry type="library" name="Maven: com.sun.activation:jakarta.activation:1.2.1" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-security:2.2.6.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.security:spring-security-config:5.2.2.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.security:spring-security-core:5.2.2.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.security:spring-security-web:5.2.2.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.hibernate:hibernate-core:5.4.10.Final" level="project" />
     <orderEntry type="library" name="Maven: org.jboss.logging:jboss-logging:3.3.2.Final" level="project" />

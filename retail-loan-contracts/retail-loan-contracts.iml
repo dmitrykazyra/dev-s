@@ -29,9 +29,9 @@
     <orderEntry type="module" module-name="tariff-core-api" />
     <orderEntry type="module" module-name="tariff-references-api" />
     <orderEntry type="module" module-name="liases-api" />
+    <orderEntry type="module" module-name="lias-opers-api" />
     <orderEntry type="module" module-name="bond-schedule-api" />
     <orderEntry type="module" module-name="bond-schedule-references-api" />
-    <orderEntry type="module" module-name="lias-opers-api" />
     <orderEntry type="module" module-name="tariff-references" />
     <orderEntry type="module" module-name="references-api" />
     <orderEntry type="module" module-name="references-core" />

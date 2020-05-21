@@ -11,6 +11,12 @@
     <dependencies>
         <dependency>
             <groupId>com.kdg.fs24</groupId>
+            <artifactId>test-core</artifactId>
+            <version>${app.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.kdg.fs24</groupId>
             <artifactId>tariff-core</artifactId>
             <version>${app.version}</version>            
         </dependency>

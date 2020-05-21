@@ -49,6 +49,7 @@
     <file url="file://$PROJECT_DIR$/test-api" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/test-core" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/test-junit-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/test-utils" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/webmonitor-core" charset="UTF-8" />
   </component>
 </project>

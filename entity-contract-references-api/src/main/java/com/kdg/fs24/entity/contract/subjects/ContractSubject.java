@@ -37,5 +37,10 @@ public class ContractSubject extends AbstractRefRecord implements ReferenceRec {
     public void record2Map(final Map<String, Integer> map) {
         map.put(this.toString(), this.getContractSubjectId());
     }
+
     //==========================================================================
+    public final static ContractSubject findContractSubject(final Integer liasContractSubjectId) {
+        return AbstractRefRecord.<ContractSubject>getRefeenceRecord(ContractSubject.class,
+                record -> record.getContractSubjectId().equals(liasContractSubjectId));
+    }
 }

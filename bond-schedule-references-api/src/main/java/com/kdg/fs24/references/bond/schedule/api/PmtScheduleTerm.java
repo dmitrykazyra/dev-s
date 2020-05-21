@@ -5,7 +5,6 @@
  */
 package com.kdg.fs24.references.bond.schedule.api;
 
-
 import com.kdg.fs24.application.core.service.funcs.ServiceFuncs;
 import java.util.Map;
 import com.kdg.fs24.references.api.ReferenceRec;
@@ -22,18 +21,23 @@ import lombok.Data;
 @Entity
 @Table(name = "core_pmtScheduleTermsRef")
 public class PmtScheduleTerm extends AbstractRefRecord implements ReferenceRec {
-    @Id
-    @Column(name="pmt_term_id")
-    private Integer pmtTermId;
-    @Column(name="pmt_term_name")
-    private String pmtTermName;
-    @Column(name="is_actual")
-    private Boolean isActual;
 
+    @Id
+    @Column(name = "pmt_term_id")
+    private Integer pmtTermId;
+    @Column(name = "pmt_term_name")
+    private String pmtTermName;
+    @Column(name = "is_actual")
+    private Boolean isActual;
 
     @Override
     public void record2Map(final Map<String, Integer> map) {
         map.put(this.toString(), this.getPmtTermId());
     }
-      
+
+    //==========================================================================
+    public final static PmtScheduleTerm findPmtScheduleTerm(final Integer PmtScheduleTermId) {
+        return AbstractRefRecord.<PmtScheduleTerm>getRefeenceRecord(PmtScheduleTerm.class,
+                record -> record.getPmtTermId().equals(PmtScheduleTermId));
+    }
 }

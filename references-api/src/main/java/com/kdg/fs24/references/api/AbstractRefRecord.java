@@ -68,8 +68,8 @@ public abstract class AbstractRefRecord implements PersistenceEntity {
                     super(message);
                 }
             }
-            throw new ActRefeenceRecordIsNotFound(String.format("%s is not found ",
-                    clazz.getSimpleName()));
+            throw new ActRefeenceRecordIsNotFound(String.format("%s is not found (%s) ",
+                    clazz.getSimpleName(), filterComparator.toString()));
         }
 
         return optional.get();

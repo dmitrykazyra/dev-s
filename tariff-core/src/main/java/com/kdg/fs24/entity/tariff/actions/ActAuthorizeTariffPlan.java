@@ -29,7 +29,7 @@ import javax.persistence.Entity;
 public class ActAuthorizeTariffPlan extends AbstractAction<AbstractTariffPlan> {
 
     @Override
-    protected void createPersistenceEntities() {
+    protected void doUpdate() {
 //        this.getPersistenceObjects().add(this.getEntity());
 //        NullSafe.create()
 //                .execute(() -> {

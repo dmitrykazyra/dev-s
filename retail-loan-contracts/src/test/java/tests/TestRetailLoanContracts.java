@@ -5,36 +5,17 @@
  */
 package tests;
 
-import com.kdg.fs24.application.core.nullsafe.NullSafe;
-import com.kdg.fs24.application.core.service.funcs.TestFuncs;
-import com.kdg.fs24.application.core.sysconst.SysConst;
-import com.kdg.fs24.references.bond.schedule.api.PmtScheduleAlg;
-import com.kdg.fs24.references.bond.schedule.api.PmtScheduleTerm;
-import com.kdg.fs24.entity.counterparties.api.Counterparty;
-import com.kdg.fs24.entity.contract.subjects.ContractSubject;
-import com.kdg.fs24.entity.core.api.ActionEntity;
+import com.kdg.fs24.application.core.log.LogService;
 import com.kdg.fs24.entity.core.api.EntityContractConst;
-import com.kdg.fs24.persistence.core.PersistanceEntityManager;
 import lombok.Data;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringRunner;
 import config.TestRLCConfig;
-import com.kdg.fs24.service.RetailLoanContractActionsService;
-import com.kdg.fs24.service.CounterpartyActionsService;
-import com.kdg.fs24.entity.kind.EntityKind;
-import com.kdg.fs24.references.loan.api.LoanSource;
-import com.kdg.fs24.references.api.AbstractRefRecord;
-import com.kdg.fs24.references.application.currency.Currency;
 import org.junit.Test;
 import com.kdg.fs24.entity.retail.loan.contracts.RetailLoanContract;
 import com.kdg.fs24.entity.retail.loan.contracts.RetailLoanConstants;
-import com.kdg.fs24.entity.tariff.api.TariffPlan;
-import com.kdg.fs24.entity.tariff.AbstractTariffPlan;
-import java.math.BigDecimal;
-import java.time.LocalDate;
 
 /**
  *
@@ -45,74 +26,14 @@ import java.time.LocalDate;
 @Import(TestRLCConfig.class)
 //@DataJpaTest
 @Data
-public class TestRetailLoanContracts {
-
-    @Autowired
-    private PersistanceEntityManager persistanceEntityManager;
-
-    @Autowired
-    private RetailLoanContractActionsService retailLoanContractActionsService;
-
-    @Autowired
-    private CounterpartyActionsService counterpartyActionsService;
+public class TestRetailLoanContracts extends TestUtil4LoanContract {
 
     //final private Integer testEntityContractCurrency = 9999;
     @Test
     public void testRetailLoanContract() {
         //this.initializeTest();
 
-        final String testString = TestFuncs.generateTestString20();
-        final Integer kindId = RetailLoanConstants.LOAN2INDIVIDUAL_CARD;
-
-        final ContractSubject contractSubject
-                = AbstractRefRecord.<ContractSubject>getRefeenceRecord(
-                        ContractSubject.class,
-                        record -> record.getContractSubjectId().equals(210001));
-
-        final EntityKind entityKind = AbstractRefRecord.<EntityKind>getRefeenceRecord(
-                EntityKind.class,
-                record -> record.getEntityKindId().equals(RetailLoanConstants.LOAN2INDIVIDUAL_CARD));
-
-        final Counterparty counterparty = this.counterpartyActionsService.createCounterparty(testString, testString, testString);
-
-        final Currency currency
-                = AbstractRefRecord.<Currency>getRefeenceRecord(
-                        Currency.class,
-                        record -> record.getCurrencyId().equals(840));
-
-        final TariffPlan tariffPlan = retailLoanContractActionsService.<AbstractTariffPlan>findActionEntity(AbstractTariffPlan.class, Long.valueOf(68338)).get();
-        final String contractNum = testString;
-        final LocalDate contractDate = LocalDate.now();
-        final LocalDate beginDate = LocalDate.now();
-        final LocalDate endDate = LocalDate.now();
-        final BigDecimal contractSumm = SysConst.MAX_BIGDECIMAL;
-        final LoanSource loanSource
-                = AbstractRefRecord.<LoanSource>getRefeenceRecord(
-                        LoanSource.class,
-                        record -> record.getLoanSourceId().equals(102));
-        final PmtScheduleAlg pmtScheduleAlg
-                = AbstractRefRecord.<PmtScheduleAlg>getRefeenceRecord(
-                        PmtScheduleAlg.class,
-                        record -> record.getScheduleAlgId().equals(1));
-        final PmtScheduleTerm pmtScheduleTerm
-                = AbstractRefRecord.<PmtScheduleTerm>getRefeenceRecord(
-                        PmtScheduleTerm.class,
-                        record -> record.getPmtTermId().equals(30));
-
-        final RetailLoanContract retailLoanContract = retailLoanContractActionsService
-                .createRetailLoanContract(contractSubject,
-                        counterparty,
-                        entityKind,
-                        currency,
-                        tariffPlan,
-                        contractNum,
-                        contractDate,
-                        beginDate,
-                        endDate,
-                        contractSumm,
-                        loanSource,
-                        pmtScheduleAlg,
-                        pmtScheduleTerm);
+        final RetailLoanContract retailLoanContract = this.createTestContract_1Y_840();
 //        
 //        
 //            final Counterparty counterparty,
@@ -127,19 +48,35 @@ public class TestRetailLoanContracts {
 //            final LoanSource loanSource,
 //            final PmtScheduleAlg pmtScheduleAlg,
 //            final PmtScheduleTerm pmtScheduleTerm
-        retailLoanContractActionsService.executeAction(retailLoanContract, RetailLoanConstants.MODIFY_INDIVIDUAL_LOAN_CONTRACT);
-        retailLoanContractActionsService.executeAction(retailLoanContract, EntityContractConst.ACT_AUTHORIZE_CONTRACT);
-        retailLoanContractActionsService.executeAction(retailLoanContract, RetailLoanConstants.ACT_ISSUE_LOAN);
+        this.getRetailLoanContractActionsService().executeAction(retailLoanContract, RetailLoanConstants.MODIFY_INDIVIDUAL_LOAN_CONTRACT);
+        this.getRetailLoanContractActionsService().executeAction(retailLoanContract, EntityContractConst.ACT_AUTHORIZE_CONTRACT);
+        this.getRetailLoanContractActionsService().executeAction(retailLoanContract, RetailLoanConstants.ACT_ISSUE_LOAN);
 
         final Long entityId = retailLoanContract.getEntity_id();
 
-            // поиск сущности
-            final RetailLoanContract entity = persistanceEntityManager
-                    .getEntityManager()
-                    .find(RetailLoanContract.class, Long.valueOf(68833));        
-        
-        final Integer i = entity.getEntityMarks().size();
-        final Integer i1 = entity.getEntityActions().size();
+        LogService.LogInfo(this.getClass(), () -> String.format("try 2 refresh created entity (%d)",
+                entityId));
+
+        // поиск сущности
+        final RetailLoanContract entity = this.getPersistanceEntityManager()
+                .getEntityManager()
+                .find(RetailLoanContract.class, Long.valueOf(entityId));
+
+        this.getPersistanceEntityManager()
+                .getEntityManager()
+                .refresh(entity);
+        LogService.LogInfo(this.getClass(), () -> String.format("Refresh entity is finished (%d)",
+                entityId));
+
+        final Integer i1 = entity.getEntityMarks().size();
+        final Integer i2 = entity.getEntityActions().size();
+
+        entity.getPmtSchedules().stream().forEach((schedule) -> {
+
+            LogService.LogInfo(this.getClass(), () -> String.format("entity.getPmtSchedules(%s).size() =  (%d) records",
+                    schedule.getEntityKind().getEntityKindName(),
+                    schedule.getPmtScheduleLines().size()));
+        });
 
 //        persistanceEntityManager
 //                .getEntityManager()

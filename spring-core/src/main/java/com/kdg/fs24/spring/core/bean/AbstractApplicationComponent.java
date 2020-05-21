@@ -13,4 +13,9 @@ import com.kdg.fs24.spring.core.api.ApplicationComponent;
 
 public class AbstractApplicationComponent implements ApplicationComponent {
 
+    @Override
+    public void initialize() {
+
+    }
+
 }

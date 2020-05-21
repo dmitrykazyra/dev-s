@@ -2,10 +2,31 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="951c63d3-7285-4c30-9112-1ca7f7d449f8" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_jetbrains_annotations_19_0_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/retail-loan-contracts/src/test/java/tests/TestUtil4LoanContract.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__unknown_binary_hibernate_jpamodelgen_4_3_1_Final_SNAPSHOT.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/documents-api/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/documents-api/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/entity-core/src/main/java/com/kdg/fs24/entity/core/AbstractAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/entity-core/src/main/java/com/kdg/fs24/entity/core/AbstractAction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/entity-core/src/main/java/com/kdg/fs24/service/ActionExecutionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/entity-core/src/main/java/com/kdg/fs24/service/ActionExecutionService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/sql/entities.sql" beforeDir="false" afterPath="$PROJECT_DIR$/database/sql/entities.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/documents-api/documents-api.iml" beforeDir="false" afterPath="$PROJECT_DIR$/documents-api/documents-api.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entity-contracts/entity-contracts.iml" beforeDir="false" afterPath="$PROJECT_DIR$/entity-contracts/entity-contracts.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entity-contracts/src/main/java/com/kdg/fs24/entity/contracts/AbstractEntityServiceContract.java" beforeDir="false" afterPath="$PROJECT_DIR$/entity-contracts/src/main/java/com/kdg/fs24/entity/contracts/AbstractEntityServiceContract.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entity-contracts/src/main/java/com/kdg/fs24/entity/debts/Lias.java" beforeDir="false" afterPath="$PROJECT_DIR$/entity-contracts/src/main/java/com/kdg/fs24/entity/debts/Lias.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/liases-api/liases-api.iml" beforeDir="false" afterPath="$PROJECT_DIR$/liases-api/liases-api.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/liases/liases.iml" beforeDir="false" afterPath="$PROJECT_DIR$/liases/liases.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/retail-loan-contracts/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/retail-loan-contracts/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/retail-loan-contracts/retail-loan-contracts.iml" beforeDir="false" afterPath="$PROJECT_DIR$/retail-loan-contracts/retail-loan-contracts.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/retail-loan-contracts/src/test/java/tests/TestRetailLoanContracts.java" beforeDir="false" afterPath="$PROJECT_DIR$/retail-loan-contracts/src/test/java/tests/TestRetailLoanContracts.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tariff-core-api/tariff-core-api.iml" beforeDir="false" afterPath="$PROJECT_DIR$/tariff-core-api/tariff-core-api.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tariff-core/tariff-core.iml" beforeDir="false" afterPath="$PROJECT_DIR$/tariff-core/tariff-core.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tariff-references-api/tariff-references-api.iml" beforeDir="false" afterPath="$PROJECT_DIR$/tariff-references-api/tariff-references-api.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tariff-references/tariff-references.iml" beforeDir="false" afterPath="$PROJECT_DIR$/tariff-references/tariff-references.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test-core/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/test-core/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test-core/src/main/java/com/kdg/fs24/test/core/Utils4test.java" beforeDir="false" afterPath="$PROJECT_DIR$/test-core/src/main/java/com/kdg/fs24/test/core/Utils4test.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test-core/test-core.iml" beforeDir="false" afterPath="$PROJECT_DIR$/test-core/test-core.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webmonitor-core/webmonitor-core.iml" beforeDir="false" afterPath="$PROJECT_DIR$/webmonitor-core/webmonitor-core.iml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -26,6 +47,13 @@
     </option>
     <expand />
     <select />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -56,7 +84,22 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.WebMonitorBoot">
+  <component name="RunManager" selected="JUnit.TestRetailLoanContracts">
+    <configuration name="TestRetailLoanContracts" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="retail-loan-contracts" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="tests.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="tests" />
+      <option name="MAIN_CLASS_NAME" value="tests.TestRetailLoanContracts" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="TestSpringBootApp" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <module name="spring-fw-test" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.kdg.fs24.spring.fw.test.TestSpringBootApp" />
@@ -78,6 +121,11 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.TestRetailLoanContracts" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -98,6 +146,7 @@
       <workItem from="1589538735494" duration="1536000" />
       <workItem from="1589540482327" duration="1009000" />
       <workItem from="1589541953730" duration="902000" />
+      <workItem from="1589731866677" duration="9531000" />
     </task>
     <task id="LOCAL-00001" summary="!">
       <created>1589529838005</created>

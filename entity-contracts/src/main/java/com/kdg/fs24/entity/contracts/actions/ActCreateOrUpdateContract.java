@@ -41,12 +41,21 @@ public abstract class ActCreateOrUpdateContract<T extends AbstractEntityServiceC
             // сохранение графиков платежей
             if (NullSafe.notNull(t.getPmtSchedules())) {
                 final ActionExecutionService aes = ServiceLocator.<ActionExecutionService>findService(ActionExecutionService.class);
-
+                // инициализация
                 t.getPmtSchedules()
                         .stream()
                         .forEach(schedule -> {
                             schedule.setEntityStatus(EntityStatus.findEntityStatus(BondScheduleConst.BONDSCHEDULE, BondScheduleConst.ES_DEFAULT_STATUS));
                             schedule.setEntityContract((AbstractEntityContract) this.getEntity());
+                            schedule.setCreation_date(LocalDateTime.now());
+                            //aes.executeAction(schedule, BondScheduleConst.ACT_SAVE_BONDSCHEDULE);
+                        });
+                // выполнение
+                t.getPmtSchedules()
+                        .stream()
+                        .forEach(schedule -> {
+//                            schedule.setEntityStatus(EntityStatus.findEntityStatus(BondScheduleConst.BONDSCHEDULE, BondScheduleConst.ES_DEFAULT_STATUS));
+//                            schedule.setEntityContract((AbstractEntityContract) this.getEntity());
                             //schedule.setCreation_date(LocalDateTime.MIN);
                             aes.executeAction(schedule, BondScheduleConst.ACT_SAVE_BONDSCHEDULE);
                         });

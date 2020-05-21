@@ -49,6 +49,13 @@ public abstract class AbstractAction<T extends ActionEntity>
     private String errMsg;
     private AbstractPersistenceAction persistAction;
 
+    //==========================================================================
+    @Override
+    public AbstractPersistenceEntity getEntity() {
+        return (AbstractPersistenceEntity) super.getEntity();
+    }
+
+    //==========================================================================
     @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
     public void execute() {
 
@@ -136,7 +143,7 @@ public abstract class AbstractAction<T extends ActionEntity>
 
         if (this.getEntity().justCreated()) {
 
-            ((AbstractPersistenceEntity) this.getEntity()).setCreation_date(LocalDateTime.now());
+            this.getEntity().setCreation_date(LocalDateTime.now());
 
             getPersistanceEntityManager()
                     .getEntityManager()

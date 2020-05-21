@@ -79,6 +79,14 @@ public class RetailLoanContract extends AbstractRetailLoanContract {
                  BondScheduleConst.EK_BONDSCHEDULE_MAIN_DEBT,
                  this.getBeginDate(),
                  this.getEndDate()));
+        
+        this.getPmtSchedules().add(csb.buildSchedule(
+                BondScheduleConst.BS_ALG_BYREST,
+                this.getPmtScheduleAlg(),
+                this.getPmtScheduleTerm(),
+                BondScheduleConst.EK_BONDSCHEDULE_PERC,
+                this.getBeginDate(),
+                this.getEndDate()));      
 
         // график выплат основного долга
 //        loanContract.getPmtScheduleBuilders()

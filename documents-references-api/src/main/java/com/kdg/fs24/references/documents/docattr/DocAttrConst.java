@@ -36,6 +36,10 @@ public final class DocAttrConst {
     public final static String OPER_CURRENCY_CODE = "OPER_CURRENCY";
     public final static String OPER_CURRENCY_NAME = "Код валюты операции";
     
+    public final static int DOC_STATUS = 1000;
+    public final static String DOC_STATUS_CODE = "DOC_STATUS";
+    public final static String DOC_STATUS_NAME = "Код статуса документа";    
+    
 
     
     

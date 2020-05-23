@@ -44,12 +44,10 @@ public class DocTemplate extends AbstractRefRecord implements ReferenceRec {
         //map.put(String.format("%d - %s", this.getDoc_template_id(), this.getDoc_template_code()), this.getDoc_template_id());
     }
 
-//    public DocTemplateGroup getDocTemplateGroup() {
-//        return docTemplateGroup;
-//    }
-//
-//    public void setDocTemplateGroup(DocTemplateGroup docTemplateGroup) {
-//        this.docTemplateGroup = docTemplateGroup;
-//    }
+    //==========================================================================
+    public final static DocTemplate findDocTemplate(final Integer docTemplate) {
+        return AbstractRefRecord.<DocTemplate>getRefeenceRecord(DocTemplate.class,
+                record -> record.getDocTemplateId().equals(docTemplate));
+    }
     //==========================================================================
 }

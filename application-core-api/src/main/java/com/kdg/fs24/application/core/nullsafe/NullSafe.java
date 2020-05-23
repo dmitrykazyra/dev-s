@@ -13,7 +13,6 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 //import com.kdg.fs24.test.api.TestConst;
-
 /**
  *
  * @author N76VB
@@ -739,7 +738,7 @@ public class NullSafe { // implements NullSafe {
                 .<T>getObject();
     }
 
-    public static <T> T createObject(final Class<T> clazz, final ObjectBuilder objectBuilder) {
+    public static <T> T createObject(final Class<T> clazz, final ObjectBuilder<T> objectBuilder) {
         return NullSafe.create()
                 .execute2result(() -> {
                     final T newObject = NullSafe.createObject(clazz);

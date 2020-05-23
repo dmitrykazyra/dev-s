@@ -10,6 +10,7 @@ import java.lang.reflect.Field;
 import com.kdg.fs24.application.core.nullsafe.NullSafe;
 import com.kdg.fs24.application.core.service.funcs.FilterComparator;
 import com.kdg.fs24.application.core.service.funcs.ServiceFuncs;
+import com.kdg.fs24.application.core.sysconst.SysConst;
 import com.kdg.fs24.persistence.api.PersistenceEntity;
 import java.util.Collection;
 import java.util.Map;
@@ -47,31 +48,40 @@ public abstract class AbstractRefRecord implements PersistenceEntity {
     }
 
     //==========================================================================
+    static class RefCollectionIsNotFound extends InternalAppException {
+
+        public RefCollectionIsNotFound(final String message) {
+            super(message);
+        }
+    }
+
+    static class ActRefeenceRecordIsNotFound extends InternalAppException {
+
+        public ActRefeenceRecordIsNotFound(final String message) {
+            super(message);
+        }
+    }
+
     public static <T extends AbstractRefRecord> T getRefeenceRecord(
             final Class<T> clazz,
             final FilterComparator<T> filterComparator) {
-        final Optional<T> optional
-                = ServiceFuncs.getMapValue(AbstractRefRecord.REF_CACHE, mapEntry -> mapEntry.getKey().equals(clazz))
-                        .get()
-                        .stream()
-                        .map(x -> (T) x)
-                        .collect(Collectors.toList())
-                        .stream()
-                        .filter((fltr) -> filterComparator.getFilter(fltr))
-                        .findFirst();
 
-        if (!optional.isPresent()) {
+        return (T) ServiceFuncs.getMapValue(AbstractRefRecord.REF_CACHE, mapEntry -> mapEntry.getKey().equals(clazz))
+                .orElseThrow(() -> new RefCollectionIsNotFound(String.format("Reference collection is not found (%s)", clazz.getCanonicalName())))
+                .stream()
+                .map(x -> (T) x)
+                .collect(Collectors.toList())
+                .stream()
+                .filter((fltr) -> filterComparator.getFilter(fltr))
+                .findFirst()
+                .orElseThrow(() -> new ActRefeenceRecordIsNotFound(String.format("%s is not found (%s) ",
+                clazz.getSimpleName(), filterComparator.toString())));
 
-            class ActRefeenceRecordIsNotFound extends InternalAppException {
+    }
+    //==========================================================================
+    public static String getTranslatedValue(final LangStrValue langStrValue) {
 
-                public ActRefeenceRecordIsNotFound(final String message) {
-                    super(message);
-                }
-            }
-            throw new ActRefeenceRecordIsNotFound(String.format("%s is not found (%s) ",
-                    clazz.getSimpleName(), filterComparator.toString()));
-        }
-
-        return optional.get();
+        return (SysConst.RUSSIAN_REF_LANG.get()
+                ? langStrValue.getRu() : langStrValue.getEn()); // 
     }
 }

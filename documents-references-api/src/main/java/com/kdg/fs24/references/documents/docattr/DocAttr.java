@@ -32,4 +32,10 @@ public class DocAttr extends AbstractRefRecord implements ReferenceRec {
     public void record2Map(final Map<String, Integer> map) {
         //map.put(String.format("%s - %s", this.getDoc_attr_code(), this.getDoc_attr_name()), 0);
     }
+
+    //==========================================================================
+    public final static DocAttr findDocAttr(final Integer attrId) {
+        return AbstractRefRecord.<DocAttr>getRefeenceRecord(DocAttr.class,
+                record -> record.getDocAttrId().equals(attrId));
+    }
 }

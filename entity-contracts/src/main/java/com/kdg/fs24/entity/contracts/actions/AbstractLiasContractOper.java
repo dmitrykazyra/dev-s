@@ -17,6 +17,7 @@ import com.kdg.fs24.entity.core.api.LiasContractAction;
 import java.time.temporal.ChronoUnit;
 import com.kdg.fs24.application.core.nullsafe.NullSafe;
 import com.kdg.fs24.application.core.sysconst.SysConst;
+import com.kdg.fs24.lias.opers.api.LiasOpersConst;
 import lombok.Data;
 import com.kdg.fs24.lias.opers.napi.LiasFinanceOper;
 
@@ -74,13 +75,6 @@ public abstract class AbstractLiasContractOper<T extends AbstractEntityServiceCo
 //                String.format("LiasDate:%s, AccretionDate:%s", liasDate, accretionDate));
         this.preCalculation();
 
-        // код для тестирования действия
-//        if (TestConst.TEST_MODE_RUNNING) {
-//            this.getEntity().processActionTest_afterCalculation(this);
-//        }
-//        if (!(NullSafe.notNull(this.getOpers4creation()) && (!this.getOpers4creation().isEmpty()))) {
-//            throw new LiasActionsNotSpecified("Нет операций для выполнения!");
-//        }
         if (!(NullSafe.notNull(this.getNewOpers()) && (!this.getNewOpers().isEmpty()))) {
 
             throw new LiasActionsNotSpecified("Нет операций для выполнения!");
@@ -108,13 +102,15 @@ public abstract class AbstractLiasContractOper<T extends AbstractEntityServiceCo
         lio.<ROW_NUM>addAttr(() -> Integer.valueOf(this.getNewOpers().size() /*+ 1*/));
 
         // код шаблона документа не задан
-        if ((NullSafe.isNull(lio.<Integer>attr(DOC_TEMPLATE_ID.class)))
-                && (NullSafe.notNull(this.getDefaultDocTemplateId()))) {
+        if ((NullSafe.isNull(lio.<Integer>attr(LiasOpersConst.DOC_TEMPLATE_ID_CLASS)))
+                && (NullSafe.notNull(this.getDefaultDocTemplate()))) {
             // берем код документа по умолчанию
 //            lio.<DOC_TEMPLATE_ID>addAttr(() -> Integer.valueOf(ServiceLocator
 //                    .find(DocumentReferencesService.class)
 //                    .getDocTemplateById(this.getDefaultDocTemplateId())
 //                    .getDoc_template_id()));
+            lio.<DOC_TEMPLATE_ID>addAttr(() -> this.getDefaultDocTemplate());
+
         }
         this.getNewOpers().add(lio);
 
@@ -210,6 +206,14 @@ public abstract class AbstractLiasContractOper<T extends AbstractEntityServiceCo
 //    protected void setNewOpers(final Collection<NewLiasOper> newOpers) {
 //        this.newOpers = newOpers;
 //    }
+    // присвоение финансовой операции кода шаблона
+    // может быть перекрыто в наследнике
+    protected Integer getDefaultDocTemplate() {
+        // по умолчанию - 1 операция - 1 документ
+        // берем из аннотации на классе
+        //liasOperInfo.setDocTemplateId(1);
+        return Integer.valueOf(1);
+    }
 }
 
 class LiasActionsNotSpecified extends RuntimeException {

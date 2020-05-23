@@ -59,8 +59,8 @@ public class Document implements PersistenceEntity {
     @Column(name = "user_id")
     private Integer userId;
 
-    @OneToMany
-    @JoinTable(name = "docAttrs", joinColumns = @JoinColumn(name = "doc_id"))    
+    @OneToMany(mappedBy = "document",
+            cascade = CascadeType.ALL)    
     private Collection<DocAttrValue> docAttrs;
 
 }

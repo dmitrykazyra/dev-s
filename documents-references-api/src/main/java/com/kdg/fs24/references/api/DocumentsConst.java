@@ -16,6 +16,7 @@ public class DocumentsConst {
     public static final Integer DS_CANCELLED = Integer.valueOf(-1);
     public static final Integer DS_CREATED = Integer.valueOf(0);
     public static final Integer DS_POSTPONED = Integer.valueOf(4001);
+    public static final Integer DS_EXECUTED = Integer.valueOf(1);
 
     public static final Integer PS_SWIFT = Integer.valueOf(1000);
     public static final Integer PS_BISC = Integer.valueOf(10000);
@@ -37,6 +38,7 @@ public class DocumentsConst {
     public static final Class<DocTemplateId> DOC_TEMPLATE_ID_ANN = DocTemplateId.class;
     //public static final Class<DOC_TEMPLATE_ID> DOC_TEMPLATE_ID_CLASS = DOC_TEMPLATE_ID.class;
 
+    public static final int DTR_BASE = 1;
     public static final int DTR_1001 = 1001;
 
 }

@@ -43,6 +43,7 @@ import java.util.stream.Collectors;
 import com.kdg.fs24.entity.core.api.CachedReferencesClasses;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import java.lang.reflect.Method;
 
 /**
  *
@@ -342,8 +343,32 @@ public abstract class ActionExecutionService extends AbstractApplicationService 
                 Arrays.stream(classes)
                         .forEach(clazz -> {
 
-//                            final Optional<AbstractRefRecord> ref ServiceFuncs.getMapValue(AbstractRefRecord.REF_CACHE, mapEntry -> mapEntry.getKey().equals(clazz));
                             if (!ServiceFuncs.getMapValue(AbstractRefRecord.REF_CACHE, mapEntry -> mapEntry.getKey().equals(clazz)).isPresent()) {
+
+                                // синхронизировать справочник в БД
+                                if (SysConst.BOOLEAN_FALSE) {
+                                    NullSafe.create(this.findRegisterMethod(clazz, "getActualReferencesList"))
+                                            .safeExecute((ns_method) -> {
+                                                synchronized (clazz) {
+
+                                                    final String key = String.format("%s_%s",
+                                                            LogService.getCurrentObjProcName(this),
+                                                            clazz.getCanonicalName());
+                                                    LogService.LogInfo(this.getClass(), key, () -> clazz.getCanonicalName());
+                                                    // коллекция записей справочника
+                                                    final Collection collection = (Collection) ((Method) ns_method).invoke(null);
+                                                    // сохранение в бд
+                                                    getPersistanceEntityManager()
+                                                            .executeTransaction(em -> {
+                                                                collection
+                                                                        .stream()
+                                                                        .forEach(record -> {
+                                                                            em.merge(record);
+                                                                        });
+                                                            });
+                                                }
+                                            }).throwException();
+                                }
 
                                 //final String tableName = AnnotationFuncs.<Table>getAnnotation(clazz, Table.class).name();
                                 NullSafe.create()
@@ -372,6 +397,27 @@ public abstract class ActionExecutionService extends AbstractApplicationService 
         LogService.LogInfo(this.getClass(), () -> String.format("There are [%d] system reference(s) loaded '%s' ",
                 AbstractRefRecord.REF_CACHE.size(),
                 this.getClass().getCanonicalName()));
+    }
+
+    //--------------------------------------------------------------------------
+    private Method findRegisterMethod(final Class clazz, final String methodName) {
+        final String key = String.format("%s_%s.%s",
+                LogService.getCurrentObjProcName(this),
+                clazz.getCanonicalName(),
+                methodName);
+
+        return (NullSafe.create()
+                .execute2result(() -> {
+                    return clazz.getMethod(methodName);
+                })
+                .catchMsgException((errMsg) -> {
+                    LogService.LogErr(clazz, key,
+                            () -> String.format("methodName not found ('%s', class='%s') (%s)",
+                                    methodName,
+                                    clazz.getCanonicalName(),
+                                    errMsg));
+                }))
+                .<Method>getObject();
     }
 
     //==========================================================================

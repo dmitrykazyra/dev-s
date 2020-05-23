@@ -18,4 +18,9 @@ public abstract class AbstractApplicationBean implements ApplicationBean {
 
     }
 
+    @Override
+    public void destroy() {
+
+    }    
+    
 }

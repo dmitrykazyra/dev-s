@@ -45,6 +45,8 @@ public class PersistanceEntityManager extends AbstractApplicationBean {
     //private static final QueryExecutor QUERY_EXECUTOR_NULL = null;
     @Value("${debug}")
     private String debugMode; // = SysConst.STRING_FALSE;
+    @Value("${russian_ref_lang}")
+    private String russianRefLan; // = SysConst.STRING_FALSE;
 
     //public PersistanceEntityManager(final String persistenceUnitName) {
     @Override
@@ -55,6 +57,7 @@ public class PersistanceEntityManager extends AbstractApplicationBean {
 //sessionFactory = new Configuration().configure().buildSessionFactory();
 
                     SysConst.DEBUG_MODE.set(this.debugMode.toLowerCase().equals(SysConst.STRING_TRUE));
+                    SysConst.RUSSIAN_REF_LANG.set(!this.russianRefLan.toLowerCase().equals(SysConst.STRING_FALSE));
 
                     if (SysConst.DEBUG_MODE.get()) {
                         LogService.LogInfo(this.getClass(), () -> String.format("Try 2 create persistence '%s'",

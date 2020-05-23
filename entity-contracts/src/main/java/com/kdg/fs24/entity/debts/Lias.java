@@ -28,6 +28,7 @@ import lombok.Data;
 import com.kdg.fs24.references.liases.finopercode.LiasFinOperCode;
 import com.kdg.fs24.references.liases.status.LiasOperStatus;
 import com.kdg.fs24.references.liases.actiontype.LiasActionType;
+import com.kdg.fs24.entity.document.Document;
 
 /**
  *
@@ -37,7 +38,7 @@ import com.kdg.fs24.references.liases.actiontype.LiasActionType;
 @Entity
 @Table(name = "liases")
 public class Lias extends ObjectRoot implements PersistenceEntity {
-
+    
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_lias_id")
     @SequenceGenerator(name = "seq_lias_id", sequenceName = "seq_lias_id", allocationSize = 1)
@@ -74,7 +75,7 @@ public class Lias extends ObjectRoot implements PersistenceEntity {
     @OneToMany(mappedBy = "lias",
             cascade = CascadeType.ALL)
     private Collection<LiasAction> liasActions;
-
+    
     @OneToMany
     @JoinColumn(name = "lias_id", referencedColumnName = "lias_id")
     private Collection<LiasRest> liasRests;
@@ -86,22 +87,26 @@ public class Lias extends ObjectRoot implements PersistenceEntity {
             final LocalDate operDate,
             final Integer liasFinOperCode,
             final Integer liasTypeID,
-            final Integer liasActionTypeId) {
-
+            final Integer liasActionTypeId,
+            final Document document) {
+        
         NullSafe.create(this.liasActions)
                 .whenIsNull(() -> {
                     this.liasActions = ServiceFuncs.<LiasAction>getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);
                 })
                 .execute(() -> {
-
+                    
                     final LiasAction newLiasAction = NullSafe.createObject(LiasAction.class);
-
+                    
                     newLiasAction.setLias(this);
                     newLiasAction.setLiasSum(liasSum);
                     newLiasAction.setLiasFinOperCode(LiasFinOperCode.findLiasFinOperCode(liasFinOperCode));
                     newLiasAction.setLiasOperStatus(LiasOperStatus.findLiasOperStatus(1));
                     newLiasAction.setLiasDate(operDate);
                     newLiasAction.setLiasActionType(LiasActionType.findLiasActionType(liasActionTypeId));
+
+                    // документ на операции
+                    newLiasAction.setDocument(document);
 
 //                    new LiasAction(
 //                            SysConst.LONG_ZERO,
@@ -133,7 +138,8 @@ public class Lias extends ObjectRoot implements PersistenceEntity {
                 liasFinanceOper.attr(LiasOpersConst.LIAS_DATE_CLASS),
                 liasFinanceOper.attr(LiasOpersConst.LIAS_FINOPER_CODE_CLASS),
                 liasFinanceOper.attr(LiasOpersConst.LIAS_TYPE_ID_CLASS),
-                liasFinanceOper.attr(LiasOpersConst.LIAS_ACTION_TYPE_ID_CLASS));
+                liasFinanceOper.attr(LiasOpersConst.LIAS_ACTION_TYPE_ID_CLASS),
+                null);
     }
-
+    
 }

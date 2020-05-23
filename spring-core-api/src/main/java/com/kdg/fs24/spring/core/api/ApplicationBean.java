@@ -19,6 +19,10 @@ public interface ApplicationBean {
 
     }
 
+    public default void destroy() {
+
+    }
+
     @PostConstruct
     public default void afterConstruction() {
         LogService.LogInfo(this.getClass(), () -> String.format("Been has been created (%s)", this.getClass().getCanonicalName()));
@@ -34,5 +38,7 @@ public interface ApplicationBean {
         LogService.LogInfo(this.getClass(), () -> String.format("Been has been destroyed (%s)", this.getClass().getCanonicalName()));
 
         ServiceLocator.releaseService(this);
+
+        this.destroy();
     }
 }

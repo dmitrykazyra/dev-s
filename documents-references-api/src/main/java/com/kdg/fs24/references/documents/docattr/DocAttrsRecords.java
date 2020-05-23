@@ -20,7 +20,8 @@ import com.kdg.fs24.references.api.DocAttrsListId;
             @DocAttrId(doc_attr_id = DocAttrConst.LIASSUM, doc_attr_code = DocAttrConst.LIASSUM_CODE, doc_attr_name = DocAttrConst.LIASSUM_NAME),
             @DocAttrId(doc_attr_id = DocAttrConst.OPER_NOTES, doc_attr_code = DocAttrConst.OPER_NOTES_CODE, doc_attr_name = DocAttrConst.OPER_NOTES_NAME),
             @DocAttrId(doc_attr_id = DocAttrConst.OPER_NOTES_TMPL, doc_attr_code = DocAttrConst.OPER_NOTES_TMPL_CODE, doc_attr_name = DocAttrConst.OPER_NOTES_TMPL_NAME),
-            @DocAttrId(doc_attr_id = DocAttrConst.OPER_CURRENCY, doc_attr_code = DocAttrConst.OPER_CURRENCY_CODE, doc_attr_name = DocAttrConst.OPER_CURRENCY_NAME)
+            @DocAttrId(doc_attr_id = DocAttrConst.OPER_CURRENCY, doc_attr_code = DocAttrConst.OPER_CURRENCY_CODE, doc_attr_name = DocAttrConst.OPER_CURRENCY_NAME),
+            @DocAttrId(doc_attr_id = DocAttrConst.DOC_STATUS, doc_attr_code = DocAttrConst.DOC_STATUS_CODE, doc_attr_name = DocAttrConst.DOC_STATUS_NAME)            
         }
 )
 public class DocAttrsRecords {

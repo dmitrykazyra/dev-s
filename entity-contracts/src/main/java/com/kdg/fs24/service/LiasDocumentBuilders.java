@@ -1,0 +1,160 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.kdg.fs24.service;
+
+import com.kdg.fs24.application.core.exception.api.InternalAppException;
+import com.kdg.fs24.application.core.nullsafe.NullSafe;
+import com.kdg.fs24.spring.core.bean.AbstractApplicationBean;
+import org.springframework.stereotype.Service;
+import com.kdg.fs24.references.api.DocTemplateId;
+import java.util.Collection;
+import java.util.Optional;
+import java.util.Arrays;
+import com.kdg.fs24.application.core.service.funcs.ServiceFuncs;
+import com.kdg.fs24.application.core.service.funcs.ReflectionFuncs;
+import com.kdg.fs24.references.api.DocumentsConst;
+import com.kdg.fs24.application.core.service.funcs.AnnotationFuncs;
+import com.kdg.fs24.entity.document.Document;
+import com.kdg.fs24.entity.document.DocAttrValue;
+import com.kdg.fs24.lias.opers.napi.LiasFinanceOper;
+import com.kdg.fs24.lias.opers.attrs.DOC_TEMPLATE_ID;
+import com.kdg.fs24.application.core.locale.NLS;
+import com.kdg.fs24.application.core.sysconst.SysConst;
+import com.kdg.fs24.lias.opers.api.LiasOpersConst;
+import com.kdg.fs24.references.documents.docattr.DocAttr;
+import com.kdg.fs24.references.documents.docstatus.DocStatus;
+import com.kdg.fs24.references.documents.doctemplate.DocTemplate;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
+/**
+ *
+ * @author N76VB
+ */
+@Service
+public class LiasDocumentBuilders extends AbstractApplicationBean {
+    
+    private final Collection<DocTemplateId> templatesList
+            = ServiceFuncs.<DocTemplateId>getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);
+
+    //==========================================================================
+    @Override
+    public void initialize() {
+
+        // регистрируем коллекцию шаблонов
+        ReflectionFuncs.createPkgClassesCollection(DocumentsConst.DOCS_TEMPLATES_CLASSES_PACKAGE, DocumentsConst.DOC_TEMPLATE_CLASS)
+                .stream()
+                .unordered()
+                .filter(p -> AnnotationFuncs.isAnnotated(p, DocumentsConst.DOC_TEMPLATE_ID_ANN))
+                .forEach((c_clazz) -> {
+                    
+                    templatesList.add(AnnotationFuncs.getAnnotation(c_clazz, DocumentsConst.DOC_TEMPLATE_ID_ANN));
+                    
+                });
+    }
+
+    //==========================================================================
+    public DocTemplateId getDocTemplateById(final Integer template_id) {
+        
+        final Optional<DocTemplateId> docTemplateId = ServiceFuncs.<DocTemplateId>getCollectionElement(this.templatesList,
+                p -> template_id.equals(p.doc_template_id()));
+        
+        if (!docTemplateId.isPresent()) {
+            class DocTemplateDoesNotExists extends InternalAppException {
+                
+                public DocTemplateDoesNotExists(final String message) {
+                    super(message);
+                }
+            }
+            throw new DocTemplateDoesNotExists(String.format("DocTemplate does not exists (%d)", template_id));
+        }
+        
+        return docTemplateId.get();
+    }
+
+    //==========================================================================
+    public Document createDocument(final DocBuilder docBuilder, final LiasFinanceOper liasFinanceOper) {
+        
+        final Document document = NullSafe.createObject(Document.class);
+        
+        final Collection<DocAttrValue> dav = this.createNewDocAttrs(liasFinanceOper, document);
+        
+        document.setDocStatus(DocStatus.findDocStatus(liasFinanceOper.<Integer>attrDef(LiasOpersConst.DOC_STATUS_ID_CLASS, DocumentsConst.DS_EXECUTED)));
+        document.setDocTemplate(DocTemplate.findDocTemplate(liasFinanceOper.<Integer>attrDef(LiasOpersConst.DOC_TEMPLATE_ID_CLASS, DocumentsConst.DTR_BASE)));
+        document.setDocServerDate(LocalDateTime.now());
+        document.setDocDate(liasFinanceOper.<LocalDate>attrDef(LiasOpersConst.LIAS_DATE_CLASS, LocalDate.now()));
+        document.setUserId(1);
+        document.setDocAttrs(dav);
+        
+        docBuilder.buldDocument(document);
+        
+        return document;
+        
+    }
+
+    //==========================================================================
+    protected Collection<DocAttrValue> createNewDocAttrs(final LiasFinanceOper liasFinanceOper, final Document document) {
+        final DocTemplateId dti = this.getDocTemplateById(liasFinanceOper.<Integer>attr(DOC_TEMPLATE_ID.class));
+        
+        return this.processDocAttrs(dti, liasFinanceOper, document);
+        
+    }
+
+    //==========================================================================
+    private Collection<DocAttrValue> processDocAttrs(
+            final DocTemplateId dti,
+            final LiasFinanceOper liasFinanceOper,
+            final Document document) {
+        
+        final Collection<DocAttrValue> dac = ServiceFuncs.<DocAttrValue>getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);
+        
+        NullSafe.create(dti)
+                .safeExecute(() -> {
+                    
+                    NullSafe.create()
+                            .execute(() -> {
+
+                                // добавляем в коллекцию
+                                Arrays.stream(dti.attrsList())
+                                        .unordered()
+                                        .forEach((ai) -> {
+                                            liasFinanceOper.linkedFields
+                                                    .entrySet()
+                                                    .stream()
+                                                    .unordered()
+                                                    .filter(s -> s.getKey().equals(ai))
+                                                    .forEach((field) -> {
+                                                        
+                                                        final String attrValue = (String) NLS.getObject2String(
+                                                                NullSafe.create()
+                                                                        .execute2result(() -> {
+                                                                            //return fields.getValue().get(liasOperInfo);
+                                                                            return liasFinanceOper.attr((Class) field.getValue().getClass());
+                                                                        })
+                                                                        .whenIsNull(() -> {
+                                                                            return SysConst.NOT_DEFINED;
+                                                                        })
+                                                                        .<String>getObject());
+                                                        
+                                                        final DocAttrValue dav = NullSafe.createObject(DocAttrValue.class);
+                                                        dav.setDocAttr(DocAttr.findDocAttr(ai));
+                                                        dav.setDocAttrValue(attrValue);
+                                                        dav.setDocument(document);
+                                                        dac.add(dav);
+                                                    });
+                                        });
+                            });
+                });
+        return dac;
+    }
+
+//==========================================================================
+    @Override
+    public void destroy() {
+        templatesList.clear();
+    }
+    //==========================================================================
+}

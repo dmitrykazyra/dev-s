@@ -55,7 +55,7 @@ public class LiasAction extends ObjectRoot implements PersistenceEntity {
     @Column(name = "lias_date", updatable = false)
     private LocalDate liasDate;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "doc_id", referencedColumnName = "doc_id", updatable = false)
     private Document document;
 

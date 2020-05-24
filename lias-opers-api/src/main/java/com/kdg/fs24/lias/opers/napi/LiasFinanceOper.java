@@ -41,7 +41,7 @@ public class LiasFinanceOper {
             if (attrValue.getClass().getInterfaces()[0].isAnnotationPresent(DocAttrLinkProperty.class)) {
                 synchronized (LiasFinanceOper.LINKED_FIELDS) {
                     final DocAttrLinkProperty dal = ((DocAttrLinkProperty) attrValue.getClass().getInterfaces()[0].getAnnotation(DocAttrLinkProperty.class));
-                    LiasFinanceOper.LINKED_FIELDS.put(dal.docAttr(), attrValue.getClass());
+                    LiasFinanceOper.LINKED_FIELDS.put(dal.docAttr(), (Class) attrValue.getClass().getInterfaces()[0]);
                 }
             }
         });

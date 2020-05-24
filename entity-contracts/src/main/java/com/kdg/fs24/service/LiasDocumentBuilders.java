@@ -118,20 +118,11 @@ public class LiasDocumentBuilders extends AbstractApplicationBean {
                                                     .filter(s -> s.getKey().equals(ai))
                                                     .forEach((field) -> {
 
-                                                        final String attrValue = (String) NLS.getObject2String(
-                                                                NullSafe.create()
-                                                                        .execute2result(() -> {
-                                                                            //return fields.getValue().get(liasOperInfo);
-                                                                            return liasFinanceOper.attr((Class) field.getValue().getClass());
-                                                                        })
-                                                                        .whenIsNull(() -> {
-                                                                            return SysConst.NOT_DEFINED;
-                                                                        })
-                                                                        .<String>getObject());
-
                                                         final DocAttrValue dav = NullSafe.createObject(DocAttrValue.class);
                                                         dav.setDocAttr(DocAttr.findDocAttr(ai));
-                                                        dav.setDocAttrValue(attrValue);
+                                                        dav.setDocAttrValue((String) NLS.getObject2String(
+                                                                liasFinanceOper.attrDef(field.getValue(),
+                                                                        SysConst.NOT_DEFINED)));
                                                         dav.setDocument(document);
                                                         dac.add(dav);
                                                     });

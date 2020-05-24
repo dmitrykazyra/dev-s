@@ -115,6 +115,14 @@ public abstract class AbstractAction<T extends ActionEntity>
                                 .flush();
                     });
 
+            if (SysConst.DEBUG_MODE.get()) {
+                final String msg = String.format("%s: executed in %s ms",
+                        this.getClass().getSimpleName(),
+                        stopWatcher.getTimeExecMillis());
+
+                LogService.LogInfo(this.getClass(), () -> msg);
+            }
+
             if (NullSafe.notNull(this.getErrMsg())) {
 
                 throw new ActionExecutionException(this.getErrMsg());
@@ -206,6 +214,14 @@ public abstract class AbstractAction<T extends ActionEntity>
 
         if (AnnotationFuncs.isAnnotated(this.getClass(), SkipRefresh.class)) {
             needRefresh = !AnnotationFuncs.<SkipRefresh>getAnnotation(this.getClass(), SkipRefresh.class).skipRefresh();
+        }
+
+        if (SysConst.DEBUG_MODE.get()) {
+            final String msg = String.format("(Refresh after '%s' = %b)",
+                    this.getClass().getCanonicalName(),
+                    needRefresh);
+
+            LogService.LogInfo(this.getClass(), () -> msg);
         }
 
         if (needRefresh) {

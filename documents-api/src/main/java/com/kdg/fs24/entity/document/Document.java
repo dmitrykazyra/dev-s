@@ -34,7 +34,6 @@ public class Document implements PersistenceEntity {
 //    @ManyToOne
 //    @JoinColumn(name = "doc_id", referencedColumnName = "doc_id")
 //    private Document parentDocId;
-
     @ManyToOne
     @JoinColumn(name = "doc_template_id", referencedColumnName = "doc_template_id", updatable = false)
     private DocTemplate docTemplate;
@@ -60,7 +59,7 @@ public class Document implements PersistenceEntity {
     private Long userId;
 
     @OneToMany(mappedBy = "document",
-            cascade = CascadeType.ALL)    
+            cascade = CascadeType.ALL)
     private Collection<DocAttrValue> docAttrs;
 
 }

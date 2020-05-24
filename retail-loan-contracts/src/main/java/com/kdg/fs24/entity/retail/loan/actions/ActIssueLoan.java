@@ -18,6 +18,7 @@ import java.math.BigDecimal;
 import lombok.Data;
 import com.kdg.fs24.references.api.LiasesConst;
 import com.kdg.fs24.bond.schedule.api.BondScheduleConst;
+import com.kdg.fs24.entity.core.api.SkipRefresh;
 
 /**
  *
@@ -26,6 +27,7 @@ import com.kdg.fs24.bond.schedule.api.BondScheduleConst;
 @Data
 @ActionCodeId(action_code = RetailLoanConstants.ACT_ISSUE_LOAN,
         action_name = "Выдача кредита")
+@SkipRefresh
 public class ActIssueLoan extends AbstractLiasContractOper<AbstractRetailLoanContract> {
 
     // сумма выдачи кредита
@@ -47,8 +49,7 @@ public class ActIssueLoan extends AbstractLiasContractOper<AbstractRetailLoanCon
         // график погашения ОД
 //        final Optional<PmtSchedule> pmtSchedule = ServiceFuncs.<PmtSchedule>getCollectionElement(this.getContractEntity().getPmtSchedules(),
 //                bs -> (bs.getEntityKind().getEntityKindId().equals(BondScheduleConst.EK_BONDSCHEDULE_MAIN_DEBT)));
-        
-        
+
         this.addNewLiasOper(NullSafe.createObject(LiasFinanceOper.class)
                 .<LIAS_SUMM>addAttr(() -> this.getLiasSum())
                 .<LIAS_CURRENCY_ID>addAttr(() -> this.getContractEntity().getCurrency().getCurrencyId())

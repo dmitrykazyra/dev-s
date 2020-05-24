@@ -6,6 +6,7 @@
 package tests;
 
 import com.kdg.fs24.application.core.log.LogService;
+import com.kdg.fs24.application.core.nullsafe.StopWatcher;
 import com.kdg.fs24.entity.core.api.EntityContractConst;
 import lombok.Data;
 import org.junit.runner.RunWith;
@@ -16,6 +17,8 @@ import config.TestRLCConfig;
 import org.junit.Test;
 import com.kdg.fs24.entity.retail.loan.contracts.RetailLoanContract;
 import com.kdg.fs24.entity.retail.loan.contracts.RetailLoanConstants;
+import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 
 /**
  *
@@ -52,9 +55,16 @@ public class TestRetailLoanContracts extends TestUtil4LoanContract {
         this.getRetailLoanContractActionsService().executeAction(retailLoanContract, EntityContractConst.ACT_AUTHORIZE_CONTRACT);
         this.getRetailLoanContractActionsService().executeAction(retailLoanContract, RetailLoanConstants.ACT_ISSUE_LOAN);
 
-        final Long entityId = retailLoanContract.getEntity_id();
+        //final Long entityId = retailLoanContract.getEntity_id();
+        final Long entityId = Long.valueOf(70533);
 
-        LogService.LogInfo(this.getClass(), () -> String.format("try 2 refresh created entity (%d)",
+        this.getPersistanceEntityManager()
+                .getEntityManager()
+                .clear();
+
+        final StopWatcher stopWatcher = StopWatcher.create();
+
+        LogService.LogInfo(this.getClass(), () -> String.format("try 2 reload created entity (%d)",
                 entityId));
 
         // поиск сущности
@@ -65,8 +75,9 @@ public class TestRetailLoanContracts extends TestUtil4LoanContract {
         this.getPersistanceEntityManager()
                 .getEntityManager()
                 .refresh(entity);
-        LogService.LogInfo(this.getClass(), () -> String.format("Refresh entity is finished (%d)",
-                entityId));
+        LogService.LogInfo(this.getClass(), () -> String.format("Refresh entity is finished (%d, %d ms)",
+                entityId,
+                stopWatcher.getTimeExecMillis()));
 
         final Integer i1 = entity.getEntityMarks().size();
         final Integer i2 = entity.getEntityActions().size();

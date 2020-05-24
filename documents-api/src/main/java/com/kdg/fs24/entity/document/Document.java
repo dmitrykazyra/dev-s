@@ -57,7 +57,7 @@ public class Document implements PersistenceEntity {
     private LocalDate docCloseDate;
 
     @Column(name = "user_id")
-    private Integer userId;
+    private Long userId;
 
     @OneToMany(mappedBy = "document",
             cascade = CascadeType.ALL)    

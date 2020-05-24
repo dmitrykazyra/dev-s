@@ -71,23 +71,14 @@ public class ContractSchedulesBuilders extends AbstractApplicationBean {
             final LocalDate D2
     ) {
 
-        final Optional<Class<PmtScheduleBuilder>> builder = ServiceFuncs.<Class<PmtScheduleBuilder>>getCollectionElement(
+        final Class<PmtScheduleBuilder> builder = ServiceFuncs.<Class<PmtScheduleBuilder>>findCollectionElement(
                 scheduleBuilders,
-                srv -> algId.equals(AnnotationFuncs.getAnnotation(srv, PmtScheduleCalcAlgId.class).calcAlgId()));
+                srv -> algId.equals(AnnotationFuncs.getAnnotation(srv, PmtScheduleCalcAlgId.class).calcAlgId()),
+                String.format("%s: Can't find schedule builder 'algId=%d' ",
+                        this.getClass().getSimpleName(),
+                        algId));
 
-        if (!builder.isPresent()) {
-            class UnkonwnBuilder extends InternalAppException {
-
-                public UnkonwnBuilder(final String message) {
-                    super(message);
-                }
-            }
-            throw new UnkonwnBuilder(String.format("%s: Can't find schedule builder 'algId=%d' ",
-                    this.getClass().getSimpleName(),
-                    algId));
-        }
-
-        final PmtScheduleBuilder pmtScheduleBuilder = NullSafe.createObject(builder.get());
+        final PmtScheduleBuilder pmtScheduleBuilder = NullSafe.createObject(builder);
 
         pmtScheduleBuilder.setPmtScheduleAlg(pmtScheduleAlg);
         pmtScheduleBuilder.setPmtScheduleTerm(pmtScheduleTerm);

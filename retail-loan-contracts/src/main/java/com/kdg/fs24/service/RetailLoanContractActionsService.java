@@ -33,6 +33,7 @@ import com.kdg.fs24.references.liases.actiontype.LiasActionType;
 import com.kdg.fs24.references.documents.docstatus.DocStatus;
 import com.kdg.fs24.references.documents.doctemplate.DocTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import com.kdg.fs24.references.documents.docattr.DocAttr;
 
 /**
  *
@@ -44,7 +45,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 @CachedReferencesClasses(classes = {ContractSubject.class, LoanSource.class, PmtScheduleAlg.class,
     PmtScheduleTerm.class, Currency.class, LiasDebtState.class, LiasKind.class, LiasType.class,
     LiasBaseAssetType.class, LiasFinOperCode.class, LiasOperStatus.class, LiasActionType.class,
-    DocStatus.class, DocTemplate.class})
+    DocStatus.class, DocTemplate.class, DocAttr.class})
 public class RetailLoanContractActionsService extends ActionExecutionService {
 
     @Autowired

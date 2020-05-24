@@ -5,6 +5,7 @@
  */
 package com.kdg.fs24.application.core.service.funcs;
 
+import com.kdg.fs24.application.core.exception.api.InternalAppException;
 import com.kdg.fs24.application.core.nullsafe.NullSafe;
 import com.kdg.fs24.application.core.sysconst.SysConst;
 
@@ -103,42 +104,6 @@ public final class ServiceFuncs {
     }
 
     //==========================================================================
-    @Deprecated
-    public static <T> T getCollectionElement(final Collection<T> collection,
-            final FilterComparator<T> filterComparator,
-            final SortedBy<T> sortedBy,
-            final String exceptionMessage,
-            final Boolean raiseException) {
-
-        synchronized (collection) {
-
-            return (T) NullSafe.create(SysConst.OBJECT_NULL, !raiseException)
-                    .execute2result(() -> {
-
-                        return collection
-                                .stream()
-                                .unordered()
-                                .filter((fltr) -> filterComparator.getFilter(fltr))
-                                .sorted((d1, d2) -> sortedBy.sortBy(d1, d2))
-                                .collect(Collectors.toList())
-                                .get(0);
-
-                    }).catchException(e -> {
-                throw new RuntimeException(String.format("%s ('%s')",
-                        exceptionMessage,
-                        NullSafe.getErrorMessage(e)));
-            })
-                    .throwException()
-                    .<T>getObject();
-//            if (!raiseException) {
-//                return ServiceFuncs.getCollectionElement(collection, filterComparator, exceptionMessage);
-//            } else {
-//                return ServiceFuncs.getCollectionElement_silent(collection, filterComparator);
-//            }
-
-        }
-    }
-
     //==========================================================================    
     public static <T> Collection<T> filterCollection_Silent(final Collection<T> collection,
             final FilterComparator<T> filterComparator) {
@@ -312,6 +277,34 @@ public final class ServiceFuncs {
 
                     })
                     .<T>getObject());
+        }
+    }
+
+    //==========================================================================
+    static class ElementNotFound extends InternalAppException {
+
+        public ElementNotFound(final String message) {
+            super(message);
+        }
+    }
+
+    public static <T> T findCollectionElement(final Collection<T> collection,
+            final FilterComparator<T> filterComparator,
+            final String excMsg) {
+
+        synchronized (collection) {
+
+            return NullSafe.create(SysConst.OBJECT_NULL, !ServiceFuncs.SF_DONT_THROW_EXC)
+                    .execute2result(() -> {
+
+                        return collection
+                                .stream()
+                                .unordered()
+                                .filter((fltr) -> filterComparator.getFilter(fltr))
+                                .findFirst()
+                                .orElseThrow(() -> new ElementNotFound(excMsg));
+                    })
+                    .<T>getObject();
         }
     }
 

@@ -36,7 +36,7 @@ import java.time.LocalDateTime;
  */
 @Service
 public class LiasDocumentBuilders extends AbstractApplicationBean {
-    
+
     private final Collection<DocTemplateId> templatesList
             = ServiceFuncs.<DocTemplateId>getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);
 
@@ -50,57 +50,47 @@ public class LiasDocumentBuilders extends AbstractApplicationBean {
                 .unordered()
                 .filter(p -> AnnotationFuncs.isAnnotated(p, DocumentsConst.DOC_TEMPLATE_ID_ANN))
                 .forEach((c_clazz) -> {
-                    
+
                     templatesList.add(AnnotationFuncs.getAnnotation(c_clazz, DocumentsConst.DOC_TEMPLATE_ID_ANN));
-                    
+
                 });
     }
 
     //==========================================================================
     public DocTemplateId getDocTemplateById(final Integer template_id) {
-        
-        final Optional<DocTemplateId> docTemplateId = ServiceFuncs.<DocTemplateId>getCollectionElement(this.templatesList,
-                p -> template_id.equals(p.doc_template_id()));
-        
-        if (!docTemplateId.isPresent()) {
-            class DocTemplateDoesNotExists extends InternalAppException {
-                
-                public DocTemplateDoesNotExists(final String message) {
-                    super(message);
-                }
-            }
-            throw new DocTemplateDoesNotExists(String.format("DocTemplate does not exists (%d)", template_id));
-        }
-        
-        return docTemplateId.get();
+
+        return ServiceFuncs.<DocTemplateId>findCollectionElement(this.templatesList,
+                p -> template_id.equals(p.doc_template_id()),
+                String.format("DocTemplate does not exists (%d)", template_id));
+
     }
 
     //==========================================================================
     public Document createDocument(final DocBuilder docBuilder, final LiasFinanceOper liasFinanceOper) {
-        
+
         final Document document = NullSafe.createObject(Document.class);
-        
+
         final Collection<DocAttrValue> dav = this.createNewDocAttrs(liasFinanceOper, document);
-        
+
         document.setDocStatus(DocStatus.findDocStatus(liasFinanceOper.<Integer>attrDef(LiasOpersConst.DOC_STATUS_ID_CLASS, DocumentsConst.DS_EXECUTED)));
         document.setDocTemplate(DocTemplate.findDocTemplate(liasFinanceOper.<Integer>attrDef(LiasOpersConst.DOC_TEMPLATE_ID_CLASS, DocumentsConst.DTR_BASE)));
         document.setDocServerDate(LocalDateTime.now());
         document.setDocDate(liasFinanceOper.<LocalDate>attrDef(LiasOpersConst.LIAS_DATE_CLASS, LocalDate.now()));
-        document.setUserId(1);
+        document.setUserId(SysConst.SERVICE_USER_ID);
         document.setDocAttrs(dav);
-        
+
         docBuilder.buldDocument(document);
-        
+
         return document;
-        
+
     }
 
     //==========================================================================
     protected Collection<DocAttrValue> createNewDocAttrs(final LiasFinanceOper liasFinanceOper, final Document document) {
         final DocTemplateId dti = this.getDocTemplateById(liasFinanceOper.<Integer>attr(DOC_TEMPLATE_ID.class));
-        
+
         return this.processDocAttrs(dti, liasFinanceOper, document);
-        
+
     }
 
     //==========================================================================
@@ -108,12 +98,12 @@ public class LiasDocumentBuilders extends AbstractApplicationBean {
             final DocTemplateId dti,
             final LiasFinanceOper liasFinanceOper,
             final Document document) {
-        
+
         final Collection<DocAttrValue> dac = ServiceFuncs.<DocAttrValue>getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);
-        
+
         NullSafe.create(dti)
                 .safeExecute(() -> {
-                    
+
                     NullSafe.create()
                             .execute(() -> {
 
@@ -121,13 +111,13 @@ public class LiasDocumentBuilders extends AbstractApplicationBean {
                                 Arrays.stream(dti.attrsList())
                                         .unordered()
                                         .forEach((ai) -> {
-                                            liasFinanceOper.linkedFields
+                                            liasFinanceOper.LINKED_FIELDS
                                                     .entrySet()
                                                     .stream()
                                                     .unordered()
                                                     .filter(s -> s.getKey().equals(ai))
                                                     .forEach((field) -> {
-                                                        
+
                                                         final String attrValue = (String) NLS.getObject2String(
                                                                 NullSafe.create()
                                                                         .execute2result(() -> {
@@ -138,7 +128,7 @@ public class LiasDocumentBuilders extends AbstractApplicationBean {
                                                                             return SysConst.NOT_DEFINED;
                                                                         })
                                                                         .<String>getObject());
-                                                        
+
                                                         final DocAttrValue dav = NullSafe.createObject(DocAttrValue.class);
                                                         dav.setDocAttr(DocAttr.findDocAttr(ai));
                                                         dav.setDocAttrValue(attrValue);

@@ -42,7 +42,7 @@ import com.kdg.fs24.spring.core.api.ServiceLocator;
 @Entity
 @Table(name = "liasDebts")
 public class LiasDebt extends ObjectRoot implements PersistenceEntity {
-    
+
     @Transient
     private Integer rowNum;
     @Id
@@ -103,7 +103,7 @@ public class LiasDebt extends ObjectRoot implements PersistenceEntity {
         // график погашения обязательства
         final Optional<PmtSchedule> pmtSchedule = ServiceFuncs.<PmtSchedule>getCollectionElement(debtContract.getPmtSchedules(),
                 bs -> (bs.getEntityKind().getEntityKindId().equals(liasFinanceOper.<Integer>attr(PMT_SCHEDULE.class))));
-        
+
         if (NullSafe.isNull(this.getLiases())) {
             this.setLiases(ServiceFuncs.<Lias>getOrCreateCollection(ServiceFuncs.COLLECTION_NULL));
         }
@@ -143,7 +143,7 @@ public class LiasDebt extends ObjectRoot implements PersistenceEntity {
     // обязательство без графика
     //==========================================================================
     private void processLias(final LiasFinanceOper liasFinanceOper) {
-        
+
         if (liasFinanceOper.<BigDecimal>attr(LiasOpersConst.LIAS_SUMM_CLASS).signum() > 0) {
             Lias lias = this.findLias(liasFinanceOper.<LocalDate>attr(LiasOpersConst.LIAS_START_DATE_CLASS),
                     liasFinanceOper.<LocalDate>attr(LiasOpersConst.LIAS_FINAL_DATE_CLASS),
@@ -172,27 +172,27 @@ public class LiasDebt extends ObjectRoot implements PersistenceEntity {
             LocalDate startDate,
             LocalDate finalDate,
             Boolean throwExcWhenNotFound) {
-        
+
         final FilterComparator<Lias> filterComparator = l -> (l.getStartDate().equals(startDate) && l.getFinalDate().equals(finalDate));
         final Optional<Lias> lias = ServiceFuncs.<Lias>getCollectionElement(this.getLiases(),
                 filterComparator);
-        
+
         if (throwExcWhenNotFound && !lias.isPresent()) {
-            
+
             class LiasDoesNotExists extends InternalAppException {
-                
+
                 public LiasDoesNotExists(final String message) {
                     super(message);
                 }
             }
             throw new LiasDoesNotExists(String.format("Обязательство не существует(%s,%s)", startDate, finalDate));
         }
-        
+
         return lias.orElse(null);
     }
-    
+
     interface LiasOperRest {
-        
+
         BigDecimal getLiasOperSum();
     }
 
@@ -203,10 +203,10 @@ public class LiasDebt extends ObjectRoot implements PersistenceEntity {
         // сумма операции
         //анонимный класс для вычисления остатка
         final LiasOperRest liasOperRest = new LiasOperRest() {
-            
+
             private BigDecimal liasOperRest = (BigDecimal) liasFinanceOper.<BigDecimal>attr(LiasOpersConst.LIAS_SUMM_CLASS);
             final private BigDecimal substrSum = liasOperRest.divide(BigDecimal.valueOf(pmtSchedule.getPmtScheduleLines().size()), 2, 2);
-            
+
             @Override
             public BigDecimal getLiasOperSum() {
                 final BigDecimal liasOperSum = liasOperRest.min(substrSum);
@@ -214,14 +214,14 @@ public class LiasDebt extends ObjectRoot implements PersistenceEntity {
                 return liasOperSum;
             }
         };
-        
+
         final LiasDocumentBuilders db = ServiceLocator.<LiasDocumentBuilders>findService(LiasDocumentBuilders.class);
-        
+
         pmtSchedule
                 .getPmtScheduleLines()
                 .stream()
                 .forEach((pmtScheduleLine) -> {
-                    
+
                     final Lias schedLias = NullSafe.create(this.findLias(pmtScheduleLine.getFromDate(),
                             pmtScheduleLine.getToDate(),
                             (liasFinanceOper.<BigDecimal>attr(LiasOpersConst.LIAS_SUMM_CLASS)).signum() < 0))
@@ -240,9 +240,7 @@ public class LiasDebt extends ObjectRoot implements PersistenceEntity {
                             db.createDocument((doc) -> {
                                 doc.setEntity(this.getDebtContract());
                             }, liasFinanceOper));
-                    
                 });
-        
     }
 
     //==========================================================================
@@ -250,16 +248,16 @@ public class LiasDebt extends ObjectRoot implements PersistenceEntity {
     private Lias createLias(final LiasFinanceOper liasFinanceOper) {
         //LogService.LogInfo(this.getClass(), LogService.getCurrentObjProcName(this));
         final Lias lias = NullSafe.createObject(Lias.class);
-        
+
         lias.setStartDate(liasFinanceOper.<LocalDate>attr(LiasOpersConst.LIAS_START_DATE_CLASS));
         lias.setAllowDate(liasFinanceOper.<LocalDate>attr(LiasOpersConst.LIAS_START_DATE_CLASS));
         lias.setFinalDate(liasFinanceOper.<LocalDate>attr(LiasOpersConst.LIAS_FINAL_DATE_CLASS));
         lias.setLegalDate(liasFinanceOper.<LocalDate>attr(LiasOpersConst.LIAS_START_DATE_CLASS));
         lias.setServerDate(LocalDateTime.now());
         lias.setIsCancelled(Boolean.FALSE);
-        
+
         return lias;
-        
+
     }
 
     //==========================================================================
@@ -267,37 +265,28 @@ public class LiasDebt extends ObjectRoot implements PersistenceEntity {
         //LogService.LogInfo(this.getClass(), LogService.getCurrentObjProcName(this));
 
         final Lias lias = NullSafe.createObject(Lias.class);
-        
+
         lias.setStartDate(liasStartDate);
         lias.setAllowDate(liasStartDate);
         lias.setFinalDate(liasFinalDate);
         lias.setLegalDate(liasFinalDate);
         lias.setServerDate(LocalDateTime.now());
         lias.setIsCancelled(Boolean.FALSE);
-        
+
         return lias;
-        
+
     }
 
     //==========================================================================  
     public Lias findFirstLias() {
-        
-        class LiasNotFound extends InternalAppException {
-            
-            public LiasNotFound(final String message) {
-                super(message);
-            }
-        }
-        
-        final FilterComparator<Lias> filterComparator = l -> ((NullSafe.isNull(l.getInactiveDate())));
-        final Optional<Lias> lias = ServiceFuncs.<Lias>getCollectionElement(
+
+        return ServiceFuncs.<Lias>findCollectionElement(
                 this.getLiases()
                         .stream()
                         .sorted((lias1, lias2) -> lias1.getStartDate().compareTo(lias2.getStartDate()))
                         .collect(Collectors.toList()),
-                filterComparator);
-        
-        return lias.orElseThrow(() -> new LiasNotFound(String.format("Не найдено подходящее обязательство (DebtId=%d)", this.debtId)));
+                l -> (NullSafe.isNull(l.getInactiveDate())),
+                String.format("Не найдено подходящее обязательство (DebtId=%d)", this.debtId));
 
 //        return ServiceFuncs.<L>getCollectionElement(this.getLiases(),
 //                (l -> ((NullSafe.isNull(l.getInactive_date())))),
@@ -320,7 +309,7 @@ public class LiasDebt extends ObjectRoot implements PersistenceEntity {
 
     //==========================================================================
     public final void createOrUpdateDebtRests(final LiasFinanceOper liasFinanceOper) {
-        
+
     }
-    
+
 }

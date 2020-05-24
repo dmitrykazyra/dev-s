@@ -12,7 +12,6 @@ import com.kdg.fs24.lias.opers.api.DocAttrLinkProperty;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.Map;
-import java.util.function.Function;
 import lombok.Data;
 
 /**
@@ -25,7 +24,7 @@ public class LiasFinanceOper {
     final private Collection<OperAttr> operAttrsCollection
             = ServiceFuncs.<OperAttr>getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);
 
-    final public static Map<Integer, Class<? extends OperAttr>> linkedFields
+    final public static Map<Integer, Class<? extends OperAttr>> LINKED_FIELDS
             = ServiceFuncs.<Integer, Class<? extends OperAttr>>getOrCreateMap(ServiceFuncs.MAP_NULL);
 
     //==========================================================================
@@ -39,10 +38,10 @@ public class LiasFinanceOper {
 //
 //        LogService.LogInfo(attrValue.getClass(), () -> logRecord);
         NullSafe.runNewThread(() -> {
-            if (attrValue.getClass().isAnnotationPresent(DocAttrLinkProperty.class)) {
-                synchronized (LiasFinanceOper.linkedFields) {
-                    final DocAttrLinkProperty dal = ((DocAttrLinkProperty) attrValue.getClass().getAnnotation(DocAttrLinkProperty.class));
-                    LiasFinanceOper.linkedFields.put(dal.docAttr(), attrValue.getClass());
+            if (attrValue.getClass().getInterfaces()[0].isAnnotationPresent(DocAttrLinkProperty.class)) {
+                synchronized (LiasFinanceOper.LINKED_FIELDS) {
+                    final DocAttrLinkProperty dal = ((DocAttrLinkProperty) attrValue.getClass().getInterfaces()[0].getAnnotation(DocAttrLinkProperty.class));
+                    LiasFinanceOper.LINKED_FIELDS.put(dal.docAttr(), attrValue.getClass());
                 }
             }
         });

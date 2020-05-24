@@ -81,6 +81,13 @@ public abstract class ActionExecutionService extends AbstractApplicationService 
     private EntityReferencesService entityReferencesService;
 
     //==========================================================================
+    class IllegalActionForEntity extends InternalAppException {
+
+        public IllegalActionForEntity(final String message) {
+            super(message);
+        }
+    }
+
     // выполнение действия над сущностью
     @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
     public void executeAction(final AbstractActionEntity entity, final Integer action_code) {
@@ -100,24 +107,14 @@ public abstract class ActionExecutionService extends AbstractApplicationService 
         final Class actClass = optActClass.get();
 
         // находим класс среди допустимых
-        final Optional<Pair> isLegalAction = CLASS_ENT2ACTION
+        CLASS_ENT2ACTION
                 .stream()
                 .filter(pair -> pair.getEntClass().equals(entity.getClass()))
                 .filter(pair -> pair.getActClass().equals(actClass))
-                .findFirst();
+                .findFirst()
+                .orElseThrow(() -> new IllegalActionForEntity(String.format("Action '%s' is not allowed for entity (%s)",
+                entity, actClass)));
 
-        if (!isLegalAction.isPresent()) {
-
-            class IllegalActionForEntity extends InternalAppException {
-
-                public IllegalActionForEntity(final String message) {
-                    super(message);
-                }
-            }
-            throw new IllegalActionForEntity(String.format("Action '%s' is not allowed for entity (%s)",
-                    entity, actClass));
-
-        }
         // экземплр действия
         final AbstractAction action = NullSafe.<AbstractAction>createObject(actClass);
 

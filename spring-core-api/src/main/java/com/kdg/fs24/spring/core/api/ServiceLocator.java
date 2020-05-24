@@ -9,11 +9,9 @@ package com.kdg.fs24.spring.core.api;
  *
  * @author N76VB
  */
-import com.kdg.fs24.application.core.exception.api.InternalAppException;
 import com.kdg.fs24.application.core.service.funcs.ServiceFuncs;
 import lombok.Data;
 import java.util.Collection;
-import java.util.Optional;
 
 @Data
 public final class ServiceLocator {
@@ -30,22 +28,12 @@ public final class ServiceLocator {
     }
 
     public static <T> T findService(final Class<T> clazz) {
-        final Optional<ApplicationBean> service = ServiceFuncs.<ApplicationBean>getCollectionElement(
+        return (T) ServiceFuncs.<ApplicationBean>findCollectionElement(
                 BEANS_LIST,
-                srv -> srv.getClass().equals(clazz) || clazz.isAssignableFrom(srv.getClass()));
-
-        if (!service.isPresent()) {
-            class UnkonwnService extends InternalAppException {
-
-                public UnkonwnService(final String message) {
-                    super(message);
-                }
-            }
-            throw new UnkonwnService(String.format("ServiceLocator: Can't find bean/service '%s' ",
-                    clazz.getCanonicalName()));
-        }
-
-        return (T) service.get();
+                srv -> srv.getClass().equals(clazz) || clazz.isAssignableFrom(srv.getClass()),
+                String.format("%s: Can't find bean/service '%s' ",
+                        ServiceLocator.class.getSimpleName(),
+                        clazz.getCanonicalName()));
     }
 
 }

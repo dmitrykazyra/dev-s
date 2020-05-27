@@ -11,22 +11,17 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.kdg.fs24.entity.tariff.api.TariffPlan;
 import com.kdg.fs24.entity.core.api.ActionClassesCollectionLink;
 import com.kdg.fs24.entity.core.api.DefaultEntityStatus;
-import com.kdg.fs24.entity.core.api.EntityKindId;
 import com.kdg.fs24.entity.core.api.EntityStatusesRef;
 import com.kdg.fs24.entity.core.api.EntityTypeId;
 import com.kdg.fs24.entity.kind.EntityKind;
-import com.kdg.fs24.entity.reference.EntityReferencesService;
 import com.kdg.fs24.entity.status.EntityStatusId;
-import com.kdg.fs24.application.core.log.LogService;
 import com.kdg.fs24.references.tariffs.api.TariffConst;
 import com.kdg.fs24.references.tariffs.kind.TariffKind;
-import com.kdg.fs24.application.core.service.funcs.AnnotationFuncs;
 import com.kdg.fs24.application.core.service.funcs.ServiceFuncs;
 import com.kdg.fs24.entity.core.AbstractActionEntity;
 import com.kdg.fs24.application.core.sysconst.SysConst;
 import com.kdg.fs24.entity.tariff.api.TariffKindProcessor;
 //import com.kdg.fs24.tariffs.references.TariffReferencesService;
-import com.kdg.fs24.application.core.nullsafe.NullSafe;
 import com.kdg.fs24.entity.core.api.ActionClassesPackages;
 import java.util.Collection;
 import java.time.LocalDate;
@@ -106,7 +101,7 @@ public class AbstractTariffPlan extends AbstractActionEntity
     public TariffKind getTariffKind(final Integer serv_id) {
 
         return (TariffKind) ServiceFuncs.<TariffKind>getCollectionElement(this.getTariffKinds(),
-                tk -> tk.getTariff_serv_id().equals(serv_id),
+                tk -> tk.getTariffServ().getTariffServId().equals(serv_id),
                 String.format("ServId is not found (%d)", serv_id)
         );
     }

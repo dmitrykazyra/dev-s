@@ -55,8 +55,8 @@ public class TestRetailLoanContracts extends TestUtil4LoanContract {
         this.getRetailLoanContractActionsService().executeAction(retailLoanContract, EntityContractConst.ACT_AUTHORIZE_CONTRACT);
         this.getRetailLoanContractActionsService().executeAction(retailLoanContract, RetailLoanConstants.ACT_ISSUE_LOAN);
 
-        //final Long entityId = retailLoanContract.getEntity_id();
-        final Long entityId = Long.valueOf(70533);
+        final Long entityId = retailLoanContract.getEntity_id();
+        //final Long entityId = Long.valueOf(70533);
 
         this.getPersistanceEntityManager()
                 .getEntityManager()
@@ -72,22 +72,12 @@ public class TestRetailLoanContracts extends TestUtil4LoanContract {
                 .getEntityManager()
                 .find(RetailLoanContract.class, Long.valueOf(entityId));
 
-        this.getPersistanceEntityManager()
-                .getEntityManager()
-                .refresh(entity);
+//        this.getPersistanceEntityManager()
+//                .getEntityManager()
+//                .refresh(entity);
         LogService.LogInfo(this.getClass(), () -> String.format("Refresh entity is finished (%d, %d ms)",
                 entityId,
                 stopWatcher.getTimeExecMillis()));
-
-        final Integer i1 = entity.getEntityMarks().size();
-        final Integer i2 = entity.getEntityActions().size();
-
-        entity.getPmtSchedules().stream().forEach((schedule) -> {
-
-            LogService.LogInfo(this.getClass(), () -> String.format("entity.getPmtSchedules(%s).size() =  (%d) records",
-                    schedule.getEntityKind().getEntityKindName(),
-                    schedule.getPmtScheduleLines().size()));
-        });
 
 //        persistanceEntityManager
 //                .getEntityManager()

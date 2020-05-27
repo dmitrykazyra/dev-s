@@ -18,8 +18,8 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import lombok.Data;
-import com.kdg.fs24.entity.core.api.SkipRefresh;
 import com.kdg.fs24.spring.core.api.ServiceLocator;
+import com.kdg.fs24.entity.core.api.RefreshEntity;
 
 /**
  *
@@ -210,10 +210,10 @@ public abstract class AbstractAction<T extends ActionEntity>
     //==========================================================================
     public void refreshModifiedEntities() {
 
-        Boolean needRefresh = SysConst.BOOLEAN_TRUE;
+        Boolean needRefresh = SysConst.BOOLEAN_FALSE;
 
-        if (AnnotationFuncs.isAnnotated(this.getClass(), SkipRefresh.class)) {
-            needRefresh = !AnnotationFuncs.<SkipRefresh>getAnnotation(this.getClass(), SkipRefresh.class).skipRefresh();
+        if (AnnotationFuncs.isAnnotated(this.getClass(), RefreshEntity.class)) {
+            needRefresh = AnnotationFuncs.<RefreshEntity>getAnnotation(this.getClass(), RefreshEntity.class).refresh();
         }
 
         if (SysConst.DEBUG_MODE.get()) {

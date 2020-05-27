@@ -18,7 +18,7 @@ import com.kdg.fs24.entity.marks.EntityMark;
 import com.kdg.fs24.entity.marks.MarkValue;
 import com.kdg.fs24.references.api.AbstractRefRecord;
 import lombok.Data;
-import com.kdg.fs24.entity.core.api.SkipRefresh;
+import com.kdg.fs24.entity.core.api.RefreshEntity;
 
 /**
  *

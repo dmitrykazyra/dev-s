@@ -7,8 +7,8 @@ package com.kdg.fs24.entity.calculations;
 
 import com.kdg.fs24.entity.debts.LiasAction;
 import com.kdg.fs24.application.core.sysconst.SysConst;
-import com.kdg.fs24.references.tariffs.kind.TariffRate;
-import com.kdg.fs24.references.tariffs.kind.TariffRateRecord;
+import com.kdg.fs24.entity.tariff.TariffRate_1;
+import com.kdg.fs24.entity.tariff.TariffRateRecord_1;
 import com.kdg.fs24.references.tariffs.kind.TariffRowCalculator;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -31,11 +31,11 @@ public class TariffTurnOverBox extends TariffBoxAbstract {
     //==========================================================================
     public void createCalculations(
             final Collection<LiasAction> liasActions,
-            final TariffRate tariffRate,
+            final TariffRate_1 tariffRate,
             final TariffRowCalculator tariffRowCalculator) {
 
         Collections.sort((List<LiasAction>) liasActions, this.LAC);
-        Collections.sort((List<TariffRateRecord>) tariffRate.getRateRecords(), this.TRRC);
+        Collections.sort((List<TariffRateRecord_1>) tariffRate.getCalcRecords(), this.TRRC);
 
         final LiasAction firstOper = liasActions.iterator().next();
 
@@ -45,17 +45,17 @@ public class TariffTurnOverBox extends TariffBoxAbstract {
 
         final LocalDate d1 = firstOper.getLiasDate();
         //final Iterator<LiasAction> laIterator = liasActions.iterator();
-        final Iterator<TariffRateRecord> rateIterator = tariffRate.getRateRecords().iterator();
+        final Iterator<TariffRateRecord_1> rateIterator = tariffRate.getCalcRecords().iterator();
 
         BigDecimal percRate;
 
         // начальная ставка     
-        TariffRateRecord v_tariffRateRecord = rateIterator.next();
-        percRate = v_tariffRateRecord.getRate_value();
+        TariffRateRecord_1 v_tariffRateRecord = rateIterator.next();
+        percRate = v_tariffRateRecord.getRateValue();
 
         if (rateIterator.hasNext()) {
-            while (v_tariffRateRecord.getRate_date().isBefore(d1)) {
-                percRate = v_tariffRateRecord.getRate_value();
+            while (v_tariffRateRecord.getRateDate().isBefore(d1)) {
+                percRate = v_tariffRateRecord.getRateValue();
                 if (rateIterator.hasNext()) {
                     v_tariffRateRecord = rateIterator.next();
                 }
@@ -65,8 +65,8 @@ public class TariffTurnOverBox extends TariffBoxAbstract {
         //LogService.LogInfo(this.getClass(), String.format(" liasActions size = %d ", liasActions.size()));
         for (final LiasAction liasAction : liasActions) {
 
-            if (liasAction.getLiasDate().equals(v_tariffRateRecord.getRate_date())) {
-                percRate = v_tariffRateRecord.getRate_value();
+            if (liasAction.getLiasDate().equals(v_tariffRateRecord.getRateDate())) {
+                percRate = v_tariffRateRecord.getRateValue();
                 if (rateIterator.hasNext()) {
                     v_tariffRateRecord = rateIterator.next();
                 }
@@ -83,8 +83,8 @@ public class TariffTurnOverBox extends TariffBoxAbstract {
 
             this.addOrReplaceTariffSum(liasAction.getLiasDate(), liasAction.getLiasSum().abs(), accrualRate, accrualSum, SysConst.BIGDECIMAL_NULL);
 
-            if (liasAction.getLiasDate().equals(v_tariffRateRecord.getRate_date())) {
-                percRate = v_tariffRateRecord.getRate_value();
+            if (liasAction.getLiasDate().equals(v_tariffRateRecord.getRateDate())) {
+                percRate = v_tariffRateRecord.getRateValue();
                 if (rateIterator.hasNext()) {
                     v_tariffRateRecord = rateIterator.next();
                 }

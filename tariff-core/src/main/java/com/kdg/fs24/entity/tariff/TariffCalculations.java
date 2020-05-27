@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.kdg.fs24.references.tariffs.kind;
+package com.kdg.fs24.entity.tariff;
 
 import com.kdg.fs24.application.core.nullsafe.NullSafe;
 import java.time.LocalDate;
@@ -23,7 +23,7 @@ import com.kdg.fs24.application.core.nullsafe.NullSafe;
 public final class TariffCalculations {
 
     private Long entity_id;
-    private Map<TariffRate, Collection<TariffCalcSum>> tariffCalsSums;
+    private Map<TariffRate_1, Collection<TariffCalcSum>> tariffCalsSums;
     private Integer tariff_calc_id;
 
     //==========================================================================
@@ -31,15 +31,15 @@ public final class TariffCalculations {
         this.entity_id = entity_id;
     }
 
-    public Map<TariffRate, Collection<TariffCalcSum>> getTariffCalsSums() {
+    public Map<TariffRate_1, Collection<TariffCalcSum>> getTariffCalsSums() {
         return NullSafe.create(this.tariffCalsSums)
                 .whenIsNull(() -> {
-                    this.tariffCalsSums = ServiceFuncs.<TariffRate, Collection<TariffCalcSum>>getOrCreateMap(ServiceFuncs.MAP_NULL);
+                    this.tariffCalsSums = ServiceFuncs.<TariffRate_1, Collection<TariffCalcSum>>getOrCreateMap(ServiceFuncs.MAP_NULL);
                     return this.tariffCalsSums;
-                }).<Map<TariffRate, Collection<TariffCalcSum>>>getObject();
+                }).<Map<TariffRate_1, Collection<TariffCalcSum>>>getObject();
     }
 
-    public void setTariffCalsSums(final Map<TariffRate, Collection<TariffCalcSum>> tariffCalsSums) {
+    public void setTariffCalsSums(final Map<TariffRate_1, Collection<TariffCalcSum>> tariffCalsSums) {
         this.tariffCalsSums = tariffCalsSums;
     }
 
@@ -48,7 +48,7 @@ public final class TariffCalculations {
 //    }
     //==========================================================================
     private BigDecimal getInternalCalculationSum(
-            final TariffRate tariffRate,
+            final TariffRate_1 tariffRate,
             final LocalDate D1,
             final LocalDate D2) {
 
@@ -60,23 +60,21 @@ public final class TariffCalculations {
                     .entrySet()
                     .stream()
                     .unordered()
-                    .filter(tr -> tr.getKey().getRate_id().equals(tariffRate.getRate_id()))
+                    .filter(tr -> tr.getKey().getRateId().equals(tariffRate.getRateId()))
                     .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue))
                     .get(tariffRate))
                     .stream()
                     .unordered()
-                    .filter(tcs -> tcs.getTariff_calc_date().isAfter(D1.minusDays(1))
-                    && tcs.getTariff_calc_date().isBefore(D2.plusDays(1)))
-                    .map(mapper -> mapper.getTariff_sum())
-                    .reduce(BigDecimal.ZERO, (x, y) -> {
-                        return x.add(y);
-                    });
+                    .filter(tcs -> tcs.getTariffCalcDate().isAfter(D1.minusDays(1))
+                    && tcs.getTariffCalcDate().isBefore(D2.plusDays(1)))
+                    .map(mapper -> mapper.getTariffSumm())
+                    .reduce(BigDecimal.ZERO, (x, y) -> x.add(y));
         }
     }
 
     //==========================================================================
     public BigDecimal getCalculationSum(
-            final TariffRate tariffRate,
+            final TariffRate_1 tariffRate,
             final TarrifGenerator tarrifGenerator,
             final LocalDate D1,
             final LocalDate D2) {
@@ -108,7 +106,6 @@ public final class TariffCalculations {
 //        this.setTariff_calc_id(newTariff_calc_id);
 //        //};
 //    }
-
     //==========================================================================
 //    public void store(final LocalDate D1, final LocalDate D2) {
 //
@@ -136,7 +133,6 @@ public final class TariffCalculations {
 //                            });
 //                });
 //    }
-
     //==========================================================================
     public TariffCalculations merge(final TariffCalculations tc, final LocalDate D1, final LocalDate D2) {
 
@@ -145,7 +141,7 @@ public final class TariffCalculations {
                 .stream()
                 .forEach(calc -> {
 
-                    final Map<TariffRate, Collection<TariffCalcSum>> mapExistTariffRate
+                    final Map<TariffRate_1, Collection<TariffCalcSum>> mapExistTariffRate
                             = this.getTariffCalsSums()
                                     .entrySet()
                                     .stream()
@@ -179,7 +175,7 @@ public final class TariffCalculations {
     }
 
     //==========================================================================
-    public void add(final TariffRate tariffRate, final Collection<TariffCalcSum> cs) {
+    public void add(final TariffRate_1 tariffRate, final Collection<TariffCalcSum> cs) {
         //this.getTariffCalsSums().putIfAbsent(tariffRate, cs);
         NullSafe.create(cs)
                 .safeExecute(() -> {

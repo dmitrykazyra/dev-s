@@ -9,7 +9,7 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-import com.kdg.fs24.references.tariffs.serv.TariffServAbs;
+import com.kdg.fs24.references.tariffs.serv.TariffServ;
 
 /**
  *
@@ -19,7 +19,7 @@ import com.kdg.fs24.references.tariffs.serv.TariffServAbs;
 @Target(ElementType.TYPE) //on class level
 public @interface TariffKindId {
 
-    Class<? extends TariffServAbs> tariff_serv_class();
+    Class<? extends TariffServ> tariff_serv_class();
     
     int tariff_kind_id();
     

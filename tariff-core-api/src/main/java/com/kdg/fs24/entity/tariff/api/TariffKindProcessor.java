@@ -5,7 +5,7 @@
  */
 package com.kdg.fs24.entity.tariff.api;
 
-import com.kdg.fs24.references.tariffs.kind.TariffKind;
+import com.kdg.fs24.references.tariffs.kind.TariffKindOld;
 
 /**
  *
@@ -13,5 +13,5 @@ import com.kdg.fs24.references.tariffs.kind.TariffKind;
  */
 public interface TariffKindProcessor {
 
-     void processTariffKind(TariffKind tariffKind);
+     void processTariffKind(TariffKindOld tariffKind);
 }

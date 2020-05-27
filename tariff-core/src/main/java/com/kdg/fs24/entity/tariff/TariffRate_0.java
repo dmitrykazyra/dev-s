@@ -3,14 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.kdg.fs24.references.tariffs.kind;
+package com.kdg.fs24.entity.tariff;
 
-import java.util.Collection;
+import java.math.BigDecimal;
+import java.time.LocalDate;
 
 /**
  *
  * @author kazyra_d
  */
-public interface TarrifGenerator {
-    Collection<TariffCalcSum> execute();
+public class TariffRate_0 { //implements TariffRateRecord {
+
 }

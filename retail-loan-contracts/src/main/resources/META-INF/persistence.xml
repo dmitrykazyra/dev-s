@@ -16,6 +16,7 @@
         <jar-file>file:///D:\fs24\DEV-S\libs\liases-references-api.jar</jar-file>        
         <jar-file>file:///D:\fs24\DEV-S\libs\documents-api.jar</jar-file>  
         <jar-file>file:///D:\fs24\DEV-S\libs\documents-references-api.jar</jar-file>  
+        <jar-file>file:///D:\fs24\DEV-S\libs\tariff-references-api.jar</jar-file>          
         <properties>
             <property name="hibernate.hbm2ddl.auto" value="none"/>
             <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/fs24"/>

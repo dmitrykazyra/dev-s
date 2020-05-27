@@ -27,8 +27,8 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE) //on class level
 
-public @interface SkipRefresh {
+public @interface RefreshEntity {
     
-    boolean skipRefresh() default true; // Признак действия доступного из формы
+    boolean refresh() default true; // Признак действия доступного из формы
     
 }

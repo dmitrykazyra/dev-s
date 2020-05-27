@@ -12,7 +12,8 @@ package com.kdg.fs24.references.tariffs.kind;
 import java.time.LocalDate;
 import java.math.BigDecimal;
 
-public interface TariffCalcSum {
+@Deprecated
+public interface TariffCalcSumOld {
 
     LocalDate getTariff_calc_date();
 

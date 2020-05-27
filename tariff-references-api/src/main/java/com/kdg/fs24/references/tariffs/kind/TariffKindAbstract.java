@@ -19,6 +19,8 @@ import com.kdg.fs24.application.core.service.funcs.GenericFuncs;
 import com.kdg.fs24.application.core.api.ObjectRoot;
 import java.math.BigDecimal;
 import com.kdg.fs24.application.core.nullsafe.NullSafe;
+import javax.persistence.*;
+import lombok.Data;
 
 /**
  *
@@ -26,7 +28,7 @@ import com.kdg.fs24.application.core.nullsafe.NullSafe;
  */
 public abstract class TariffKindAbstract<TS extends TariffServ, E extends ActionEntity, TR extends TariffRateRecord, TB extends TariffBox>
         extends AbstractRefRecord
-        implements TariffKind<TS, E, TR>, ReferenceRec {
+        implements TariffKindOld<TS, E, TR>, ReferenceRec {
 
     private Integer tariff_calc_id;
     private Integer tariff_kind_id;
@@ -43,11 +45,11 @@ public abstract class TariffKindAbstract<TS extends TariffServ, E extends Action
     // тарифицируемая услуга
     private TS tariffServ;
     // ставки тарифа
-    private TariffRate<TR> tariffRate;
+//    private TariffRate<TR> tariffRate;
 
     public <ANN extends TariffKindId> TariffKindAbstract() {
         super();
-        this.tariffRate = null;
+//        this.tariffRate = null;
     }
 
 //    public TariffKindAbs(E entity) {
@@ -126,16 +128,16 @@ public abstract class TariffKindAbstract<TS extends TariffServ, E extends Action
     }
 
     //==========================================================================
-    @Override
-    public TariffRate<TR> getTariffRate() {
-
-        return NullSafe.create(this.tariffRate)
-                .whenIsNull(() -> {
-                    this.tariffRate = NullSafe.createObject(TariffRateImpl.class, tariff_serv_id);
-                    this.tariffRate.setKind_id(tariff_kind_id);
-                    return this.tariffRate;
-                }).<TariffRate<TR>>getObject();
-    }
+//    @Override
+//    public TariffRate<TR> getTariffRate() {
+//
+//        return NullSafe.create(this.tariffRate)
+//                .whenIsNull(() -> {
+//                    this.tariffRate = NullSafe.createObject(TariffRate.class, tariff_serv_id);
+//                    this.tariffRate.setKind_id(tariff_kind_id);
+//                    return this.tariffRate;
+//                }).<TariffRate<TR>>getObject();
+//    }
 
     //==========================================================================
     @Override
@@ -176,12 +178,12 @@ public abstract class TariffKindAbstract<TS extends TariffServ, E extends Action
 
     //==========================================================================
     @Override
-    public TariffKind createTariffKindCopy() throws CloneNotSupportedException {
+    public TariffKindOld createTariffKindCopy() throws CloneNotSupportedException {
 
 //        Entity newEntity;
 //
 //        newEntity = (Entity) super.clone();
-        return (TariffKind) super.clone();
+        return (TariffKindOld) super.clone();
 
     }
 
@@ -271,15 +273,15 @@ public abstract class TariffKindAbstract<TS extends TariffServ, E extends Action
     }
 
     //==========================================================================
-    protected TariffCalcSum addTariffCalcSum(final LocalDate ld, final BigDecimal bd) {
-        return new TariffCalcSumImpl()
-                .setTariff_calc_date(ld)
-                .setAccrualBasis(SysConst.BIGDECIMAL_ZERO)
-                .setPercRate(SysConst.BIGDECIMAL_ZERO)
-                .setTariff_sum(bd)
-                .setTax_sum(SysConst.BIGDECIMAL_NULL);
-
-    }
+//    protected TariffCalcSumOld addTariffCalcSum(final LocalDate ld, final BigDecimal bd) {
+//        return new TariffCalcSumImpl()
+//                .setTariff_calc_date(ld)
+//                .setAccrualBasis(SysConst.BIGDECIMAL_ZERO)
+//                .setPercRate(SysConst.BIGDECIMAL_ZERO)
+//                .setTariff_sum(bd)
+//                .setTax_sum(SysConst.BIGDECIMAL_NULL);
+//
+//    }
 
     //==========================================================================
 //    protected TariffBoxStd createTariffCalcTable(

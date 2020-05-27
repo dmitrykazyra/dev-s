@@ -18,7 +18,7 @@ import java.math.BigDecimal;
 import lombok.Data;
 import com.kdg.fs24.references.api.LiasesConst;
 import com.kdg.fs24.bond.schedule.api.BondScheduleConst;
-import com.kdg.fs24.entity.core.api.SkipRefresh;
+import com.kdg.fs24.entity.core.api.RefreshEntity;
 
 /**
  *
@@ -27,7 +27,6 @@ import com.kdg.fs24.entity.core.api.SkipRefresh;
 @Data
 @ActionCodeId(action_code = RetailLoanConstants.ACT_ISSUE_LOAN,
         action_name = "Выдача кредита")
-@SkipRefresh
 public class ActIssueLoan extends AbstractLiasContractOper<AbstractRetailLoanContract> {
 
     // сумма выдачи кредита
@@ -46,10 +45,6 @@ public class ActIssueLoan extends AbstractLiasContractOper<AbstractRetailLoanCon
     //==========================================================================
     @Override
     protected void preCalculation() {
-        // график погашения ОД
-//        final Optional<PmtSchedule> pmtSchedule = ServiceFuncs.<PmtSchedule>getCollectionElement(this.getContractEntity().getPmtSchedules(),
-//                bs -> (bs.getEntityKind().getEntityKindId().equals(BondScheduleConst.EK_BONDSCHEDULE_MAIN_DEBT)));
-
         this.addNewLiasOper(NullSafe.createObject(LiasFinanceOper.class)
                 .<LIAS_SUMM>addAttr(() -> this.getLiasSum())
                 .<LIAS_CURRENCY_ID>addAttr(() -> this.getContractEntity().getCurrency().getCurrencyId())
@@ -64,11 +59,6 @@ public class ActIssueLoan extends AbstractLiasContractOper<AbstractRetailLoanCon
                 .<LIAS_START_DATE>addAttr(() -> this.getContractEntity().getContractDate())
                 .<LIAS_FINAL_DATE>addAttr(() -> this.getContractEntity().getEndDate())
                 .<PMT_SCHEDULE>addAttr(() -> BondScheduleConst.EK_BONDSCHEDULE_MAIN_DEBT)
-                //                .<PMT_SCHEDULE>add(()
-                //                        -> ServiceFuncs.<PmtSchedule>getCollectionElement(
-                //                        this.getContractEntity().getPmtSchedules(),
-                //                        bs -> (bs.getEntityKindId().equals(BondScheduleConst.EK_BONDSCHEDULE_MAIN_DEBT)),
-                //                        String.format("BondSchedule is not found(%d)", BondScheduleConst.EK_BONDSCHEDULE_MAIN_DEBT)));
                 .<OPER_NOTES>addAttr(() -> "Issue loann")
         );
 

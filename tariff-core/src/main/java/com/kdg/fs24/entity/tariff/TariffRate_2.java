@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.kdg.fs24.references.tariffs.kind;
+package com.kdg.fs24.entity.tariff;
 
 import com.kdg.fs24.application.core.api.ObjectRoot;
 import java.math.BigDecimal;
@@ -14,7 +14,8 @@ import java.util.Collection;
  *
  * @author N76VB
  */
-public final class TariffRate_2 implements TariffRateRecord {
+@Deprecated
+public final class TariffRate_2 { //implements TariffRateRecord {
 
     // диапазонный тариф
     private LocalDate rate_date;
@@ -23,15 +24,6 @@ public final class TariffRate_2 implements TariffRateRecord {
     private BigDecimal min_sum;
     private BigDecimal max_sum;
 
-    public TariffRate_2(final Integer currency_id, final LocalDate rate_date, final BigDecimal rate_value, final BigDecimal min_sum, final BigDecimal max_sum) {
-
-        this.setRate_date(rate_date);
-        this.setRate_value(rate_value);
-        this.setCurrency_id(currency_id);
-        this.setMin_sum(min_sum);
-        this.setMax_sum(max_sum);
-
-    }
     //==========================================================================
 
 //    public static void store(final Collection<TariffRate_2> collection, final Integer rate_id) {
@@ -56,46 +48,5 @@ public final class TariffRate_2 implements TariffRateRecord {
 //                });
 //    }
 
-    @Override
-    public LocalDate getRate_date() {
-        return rate_date;
-    }
-
-    public void setRate_date(final LocalDate rate_date) {
-        this.rate_date = rate_date;
-    }
-
-    @Override
-    public BigDecimal getRate_value() {
-        return rate_value;
-    }
-
-    public void setRate_value(final BigDecimal rate_value) {
-        this.rate_value = rate_value;
-    }
-
-    public Integer getCurrency_id() {
-        return currency_id;
-    }
-
-    public void setCurrency_id(final Integer currency_id) {
-        this.currency_id = currency_id;
-    }
-
-    public BigDecimal getMin_sum() {
-        return min_sum;
-    }
-
-    public void setMin_sum(final BigDecimal min_sum) {
-        this.min_sum = min_sum;
-    }
-
-    public BigDecimal getMax_sum() {
-        return max_sum;
-    }
-
-    public void setMax_sum(final BigDecimal max_sum) {
-        this.max_sum = max_sum;
-    }
 
 }

@@ -12,11 +12,10 @@ package com.kdg.fs24.entity.bondschedule.actions;
 import com.kdg.fs24.entity.core.AbstractAction;
 import com.kdg.fs24.entity.core.api.ActionCodeId;
 import com.kdg.fs24.bond.schedule.api.BondScheduleConst;
-import com.kdg.fs24.entity.core.api.SkipRefresh;
+import com.kdg.fs24.entity.core.api.RefreshEntity;
 
 @ActionCodeId(action_code = BondScheduleConst.ACT_SAVE_BONDSCHEDULE,
         action_name = "Редактировать график")
-@SkipRefresh
 public class ActSaveBondSchedule extends AbstractAction {
 
 //    @Override

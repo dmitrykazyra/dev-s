@@ -5,42 +5,35 @@
  */
 package com.kdg.fs24.references.tariffs.kind;
 
-import com.kdg.fs24.entity.core.api.ActionEntity;
-import java.math.BigDecimal;
+import com.kdg.fs24.references.api.AbstractRefRecord;
+import com.kdg.fs24.references.api.ReferenceRec;
 import com.kdg.fs24.references.tariffs.serv.TariffServ;
-import java.time.LocalDate;
-import java.util.Collection;
+import java.util.Map;
+import javax.persistence.*;
+import lombok.Data;
 
 /**
  *
  * @author N76VB
  */
-public interface TariffKind<T extends TariffServ, E extends ActionEntity, TR extends TariffRateRecord>
-        extends Cloneable {
-
-//    TariffRate getTariffRate();
-//    BigDecimal getTariffSum(final TariffCalculations tc, final E entity, final LocalDate D1, final LocalDate D2);
-
-    Integer getTariff_serv_id();
-
-    Integer getTariff_scheme_id();
-
-    Integer getTariff_kind_id();
-
-    LocalDate getActual_date();
-
-    LocalDate getClose_date();
-
-    TariffRate<TR> getTariffRate();
-
-    <TR1 extends TariffRateRecord> TR1 buildTariffRateRecord();
-
-    void store(Long plan_id);
-
-    TariffKind createTariffKindCopy() throws CloneNotSupportedException;
-
-    Collection<TariffCalcSum> calculateTariff(E entity, LocalDate D1, LocalDate D2);
-
-    //void storeTariffSums(final LocalDate D1, final LocalDate D2);
-
+@Data
+@Entity
+@Table(name = "TariffKindsRef")
+public class TariffKind extends AbstractRefRecord implements ReferenceRec {
+    
+    @Id
+    @Column(name="tariff_kind_id")
+    private Integer tariffKindId;
+    
+    @ManyToOne
+    @JoinColumn(name = "tariff_serv_id", referencedColumnName = "tariff_serv_id") 
+    private TariffServ tariffServ;    
+   
+    @Column(name="tariff_kind_name")
+    private Integer tariffKindName;
+    
+    @Override
+    public void record2Map(final Map<String, Integer> map) {
+        //map.put(String.format("%d - %s", this.getTariff_group_id(), this.getTariff_group_name()), this.getTariff_group_id());
+    }    
 }

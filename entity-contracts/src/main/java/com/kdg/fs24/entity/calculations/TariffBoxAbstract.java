@@ -17,10 +17,10 @@ import java.util.Collection;
 import java.util.Comparator;
 import com.kdg.fs24.application.core.nullsafe.NullSafe;
 import com.kdg.fs24.references.tariffs.kind.TariffBox;
-import com.kdg.fs24.references.tariffs.kind.TariffCalcSum;
 import com.kdg.fs24.references.tariffs.kind.TariffCalcSumImpl;
-import com.kdg.fs24.references.tariffs.kind.TariffKind;
 import com.kdg.fs24.references.tariffs.kind.TariffRateRecord;
+import com.kdg.fs24.references.tariffs.kind.TariffKindOld;
+import com.kdg.fs24.references.tariffs.kind.TariffCalcSumOld;
 
 /**
  *
@@ -28,17 +28,13 @@ import com.kdg.fs24.references.tariffs.kind.TariffRateRecord;
  */
 public abstract class TariffBoxAbstract implements TariffBox {
 
-    private final Collection<TariffCalcSum> tariffSums;
+    private final Collection<TariffCalcSumOld> tariffSums = ServiceFuncs.<TariffCalcSumOld>getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);
     protected final Comparator<LiasDebtRest> RDC = (LiasDebtRest rd1, LiasDebtRest rd2) -> rd1.getRestDate().compareTo(rd2.getRestDate());
     protected final Comparator<LiasAction> LAC = (LiasAction la1, LiasAction la2) -> la1.getLiasDate().compareTo(la2.getLiasDate());
-    protected final Comparator<TariffRateRecord> TRRC = (TariffRateRecord rd1, TariffRateRecord rd2) -> rd1.getRate_date().compareTo(rd2.getRate_date());
-
-    TariffBoxAbstract() {
-        tariffSums = ServiceFuncs.<TariffCalcSum>getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);
-    }
+    protected final Comparator<TariffRateRecord> TRRC = (TariffRateRecord rd1, TariffRateRecord rd2) -> rd1.getRateDate().compareTo(rd2.getRateDate());
 
     @Override
-    public void printCalculations(final TariffKind tariffKind) {
+    public void printCalculations(final TariffKindOld tariffKind) {
 
         //анонимный класс для принтования списка остатков
         final CustomCollectionImpl customCollection = NullSafe.createObject(CustomCollectionImpl.class,
@@ -64,7 +60,7 @@ public abstract class TariffBoxAbstract implements TariffBox {
     //==========================================================================
 
     @Override
-    public Collection<TariffCalcSum> getTariffSums() {
+    public Collection<TariffCalcSumOld> getTariffSums() {
         return tariffSums;
     }
 
@@ -76,12 +72,12 @@ public abstract class TariffBoxAbstract implements TariffBox {
             final BigDecimal accrualSum,
             final BigDecimal taxSum) {
 
-        tariffSums.add(new TariffCalcSumImpl()
-                .setTariff_calc_date(calc_date)
-                .setAccrualBasis(accrualBasis)
-                .setPercRate(accrualRate)
-                .setTariff_sum(accrualSum)
-                .setTax_sum(taxSum));
+//        tariffSums.add(new TariffCalcSumImpl()
+//                .setTariff_calc_date(calc_date)
+//                .setAccrualBasis(accrualBasis)
+//                .setPercRate(accrualRate)
+//                .setTariff_sum(accrualSum)
+//                .setTax_sum(taxSum));
     }
 
     //==========================================================================
@@ -92,20 +88,20 @@ public abstract class TariffBoxAbstract implements TariffBox {
             final BigDecimal accrualSum,
             final BigDecimal taxSum) {
 
-        NullSafe.create(ServiceFuncs.<TariffCalcSum>getCollectionElement_silent(this.tariffSums,
+        NullSafe.create(ServiceFuncs.<TariffCalcSumOld>getCollectionElement_silent(this.tariffSums,
                 ts -> ts.getTariff_calc_date().equals(calc_date)))
                 .whenIsNull(() -> {
 
-                    tariffSums.add(new TariffCalcSumImpl()
-                            .setTariff_calc_date(calc_date)
-                            .setAccrualBasis(accrualBasis)
-                            .setPercRate(accrualRate)
-                            .setTariff_sum(accrualSum)
-                            .setTax_sum(taxSum)
-                    );
+//                    tariffSums.add(new TariffCalcSumImpl()
+//                            .setTariff_calc_date(calc_date)
+//                            .setAccrualBasis(accrualBasis)
+//                            .setPercRate(accrualRate)
+//                            .setTariff_sum(accrualSum)
+//                            .setTax_sum(taxSum)
+//                    );
                 })
                 .safeExecute((ns_TariffSumm) -> {
-                    ((TariffCalcSum) ns_TariffSumm).incTariff_sum(accrualSum);
+                    ((TariffCalcSumOld) ns_TariffSumm).incTariff_sum(accrualSum);
                 });
     }
 

@@ -26,6 +26,7 @@ import com.kdg.fs24.entity.counterparties.api.Counterparty;
 import com.kdg.fs24.references.loan.api.LoanSource;
 import com.kdg.fs24.references.application.currency.Currency;
 import com.kdg.fs24.entity.tariff.api.TariffPlan;
+import com.kdg.fs24.references.tariffs.accretionscheme.TariffAccretionScheme;
 import java.math.BigDecimal;
 import com.kdg.fs24.entity.core.api.CachedReferencesClasses;
 import com.kdg.fs24.entity.retail.loan.contracts.RetailLoanConstants;
@@ -45,7 +46,7 @@ import com.kdg.fs24.references.documents.docattr.DocAttr;
 @CachedReferencesClasses(classes = {ContractSubject.class, LoanSource.class, PmtScheduleAlg.class,
     PmtScheduleTerm.class, Currency.class, LiasDebtState.class, LiasKind.class, LiasType.class,
     LiasBaseAssetType.class, LiasFinOperCode.class, LiasOperStatus.class, LiasActionType.class,
-    DocStatus.class, DocTemplate.class, DocAttr.class})
+    DocStatus.class, DocTemplate.class, DocAttr.class, TariffAccretionScheme.class})
 public class RetailLoanContractActionsService extends ActionExecutionService {
 
     @Autowired

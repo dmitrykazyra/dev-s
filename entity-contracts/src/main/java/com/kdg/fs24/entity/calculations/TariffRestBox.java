@@ -11,32 +11,29 @@ import java.util.Collection;
 import java.util.Collections;
 import com.kdg.fs24.entity.liases.api.LiasDebtRest;
 import com.kdg.fs24.application.core.sysconst.SysConst;
-import com.kdg.fs24.references.tariffs.kind.TariffRate;
-import com.kdg.fs24.references.tariffs.kind.TariffRateRecord;
+import com.kdg.fs24.entity.tariff.TariffRate_1;
+import com.kdg.fs24.entity.tariff.TariffRateRecord_1;
 import com.kdg.fs24.references.tariffs.kind.TariffRowCalculator;
 import java.util.Iterator;
 import java.util.List;
+import lombok.Data;
 
 /**
  *
  * @author kazyra_d
  */
+@Data
 public final class TariffRestBox extends TariffBoxAbstract {
-
-
-    public TariffRestBox() {
-        super();
-    }
 
     //==========================================================================
     public void createCalculations(final LocalDate D1,
             final LocalDate D2,
             final Collection<LiasDebtRest> liasDebtRest,
-            final TariffRate tariffRate,
+            final TariffRate_1 tariffRate,
             final TariffRowCalculator tariffRowCalculator) {
 
         Collections.sort((List<LiasDebtRest>) liasDebtRest, this.RDC);
-        Collections.sort((List<TariffRateRecord>) tariffRate.getRateRecords(), this.TRRC);
+        Collections.sort((List<TariffRateRecord_1>) tariffRate.getCalcRecords(), this.TRRC);
 
         LocalDate ld1 = D1;
         LocalDate ld2 = D2.plusDays(1);
@@ -44,7 +41,7 @@ public final class TariffRestBox extends TariffBoxAbstract {
         BigDecimal percRate;
 
         final Iterator<LiasDebtRest> restsIterator = liasDebtRest.iterator();
-        final Iterator<TariffRateRecord> rateIterator = tariffRate.getRateRecords().iterator();
+        final Iterator<TariffRateRecord_1> rateIterator = tariffRate.getCalcRecords().iterator();
 
         // начальный базис
         LiasDebtRest v_liasDebtRest = restsIterator.next();
@@ -60,12 +57,12 @@ public final class TariffRestBox extends TariffBoxAbstract {
         }
 
         // начальная ставка     
-        TariffRateRecord v_tariffRateRecord = rateIterator.next();
-        percRate = v_tariffRateRecord.getRate_value();
+        TariffRateRecord_1 v_tariffRateRecord = rateIterator.next();
+        percRate = v_tariffRateRecord.getRateValue();
 
         if (rateIterator.hasNext()) {
-            while (v_tariffRateRecord.getRate_date().isBefore(ld1)) {
-                percRate = v_tariffRateRecord.getRate_value();
+            while (v_tariffRateRecord.getRateDate().isBefore(ld1)) {
+                percRate = v_tariffRateRecord.getRateValue();
                 if (rateIterator.hasNext()) {
                     v_tariffRateRecord = rateIterator.next();
                 }
@@ -80,8 +77,8 @@ public final class TariffRestBox extends TariffBoxAbstract {
                 }
             }
 
-            if (ld1.equals(v_tariffRateRecord.getRate_date())) {
-                percRate = v_tariffRateRecord.getRate_value();
+            if (ld1.equals(v_tariffRateRecord.getRateDate())) {
+                percRate = v_tariffRateRecord.getRateValue();
                 if (rateIterator.hasNext()) {
                     v_tariffRateRecord = rateIterator.next();
                 }

@@ -16,7 +16,7 @@
             <artifactId>entity-core-api</artifactId>
             <version>${app.version}</version>            
         </dependency>
-<!--        <dependency>
+        <!--        <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>log-mgmt</artifactId>
             <version>${app.version}</version>            
@@ -31,12 +31,12 @@
             <artifactId>references-api</artifactId>
             <version>${app.version}</version>            
         </dependency>
-<!--        <dependency>
+        <!--        <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>thread-api</artifactId>
             <version>${app.version}</version>            
         </dependency>        -->
-<!--        <dependency>
+        <!--        <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>security-manager-api</artifactId>
             <version>${app.version}</version>            
@@ -46,7 +46,7 @@
             <artifactId>entity-references-api</artifactId>
             <version>${app.version}</version>            
         </dependency>
-<!--        <dependency>
+        <!--        <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>references-application-api</artifactId>
             <version>${app.version}</version>            
@@ -61,12 +61,13 @@
             <artifactId>entity-references</artifactId>
             <version>${app.version}</version>            
         </dependency>
-<!--        <dependency>
+     
+        <!--        <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>abs-controller</artifactId>
             <version>${app.version}</version>            
         </dependency>-->
-<!--        <dependency>
+        <!--        <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>reflection-api</artifactId>
             <version>${app.version}</version>            
@@ -92,7 +93,7 @@
             <artifactId>entity-marks</artifactId>
             <version>${app.version}</version>            
         </dependency>     
-<!--        <dependency>
+        <!--        <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>tce-api</artifactId>
             <version>${app.version}</version>            
@@ -102,12 +103,12 @@
             <artifactId>test-api</artifactId>
             <version>${app.version}</version>            
         </dependency>                  
-<!--        <dependency>
+        <!--        <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>object-api</artifactId>
             <version>${app.version}</version>            
         </dependency>   -->
-<!--        <dependency>
+        <!--        <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>listeners-api</artifactId>
             <version>${app.version}</version>            
@@ -117,17 +118,17 @@
             <artifactId>gson</artifactId>
             <version>2.8.5</version>
         </dependency>         -->
-<!--        <dependency>
+        <!--        <dependency>
             <groupId>org.reflections</groupId>
             <artifactId>reflections</artifactId>
             <version>0.9.11</version>
         </dependency>-->
-<!--        <dependency>
+        <!--        <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>registry-api</artifactId>
             <version>${app.version}</version>            
         </dependency>        -->
-<!--        <dependency>
+        <!--        <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>log-gate</artifactId>
             <version>${app.version}</version>            
@@ -142,7 +143,7 @@
             <artifactId>services-api</artifactId>
             <version>${app.version}</version>            
         </dependency>  -->
-<!--        <dependency>
+        <!--        <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>annotation-api</artifactId>
             <version>${app.version}</version>            

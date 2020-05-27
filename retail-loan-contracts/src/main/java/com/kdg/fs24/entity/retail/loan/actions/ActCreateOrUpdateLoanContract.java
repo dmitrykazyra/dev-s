@@ -9,6 +9,7 @@ import com.kdg.fs24.entity.contracts.actions.ActCreateOrUpdateContract;
 import com.kdg.fs24.entity.core.api.ActionCodeId;
 import com.kdg.fs24.entity.retail.loan.contracts.AbstractRetailLoanContract;
 import com.kdg.fs24.entity.retail.loan.contracts.RetailLoanConstants;
+import com.kdg.fs24.entity.core.api.RefreshEntity;
 import lombok.Data;
 
 /**
@@ -18,6 +19,7 @@ import lombok.Data;
 @Data
 @ActionCodeId(action_code = RetailLoanConstants.MODIFY_INDIVIDUAL_LOAN_CONTRACT,
         action_name = "Редактировать кредитную сделку с физическим лицом")
+@RefreshEntity
 public class ActCreateOrUpdateLoanContract extends ActCreateOrUpdateContract<AbstractRetailLoanContract> {
 
 }

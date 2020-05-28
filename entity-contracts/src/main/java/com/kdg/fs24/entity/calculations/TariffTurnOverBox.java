@@ -7,8 +7,8 @@ package com.kdg.fs24.entity.calculations;
 
 import com.kdg.fs24.entity.debts.LiasAction;
 import com.kdg.fs24.application.core.sysconst.SysConst;
-import com.kdg.fs24.entity.tariff.TariffRate_1;
-import com.kdg.fs24.entity.tariff.TariffRateRecord_1;
+import com.kdg.fs24.entity.tariff.TariffRate;
+import com.kdg.fs24.entity.tariff.TariffRecordAbstract;
 import com.kdg.fs24.references.tariffs.kind.TariffRowCalculator;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -31,11 +31,11 @@ public class TariffTurnOverBox extends TariffBoxAbstract {
     //==========================================================================
     public void createCalculations(
             final Collection<LiasAction> liasActions,
-            final TariffRate_1 tariffRate,
+            final TariffRate tariffRate,
             final TariffRowCalculator tariffRowCalculator) {
 
         Collections.sort((List<LiasAction>) liasActions, this.LAC);
-        Collections.sort((List<TariffRateRecord_1>) tariffRate.getCalcRecords(), this.TRRC);
+        Collections.sort((List<TariffRecordAbstract>) tariffRate.getTariffRates(), this.TRRC);
 
         final LiasAction firstOper = liasActions.iterator().next();
 
@@ -45,12 +45,12 @@ public class TariffTurnOverBox extends TariffBoxAbstract {
 
         final LocalDate d1 = firstOper.getLiasDate();
         //final Iterator<LiasAction> laIterator = liasActions.iterator();
-        final Iterator<TariffRateRecord_1> rateIterator = tariffRate.getCalcRecords().iterator();
+        final Iterator<TariffRecordAbstract> rateIterator = tariffRate.getTariffRates().iterator();
 
         BigDecimal percRate;
 
         // начальная ставка     
-        TariffRateRecord_1 v_tariffRateRecord = rateIterator.next();
+        TariffRecordAbstract v_tariffRateRecord = rateIterator.next();
         percRate = v_tariffRateRecord.getRateValue();
 
         if (rateIterator.hasNext()) {

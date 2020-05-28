@@ -18,11 +18,11 @@ import lombok.Data;
  */
 @Data
 @MappedSuperclass
-public abstract class TariffRateRecordAbstract extends TariffRateRecord {
+public abstract class TariffRecordAbstract extends TariffRateRecord {
 
     @Id
     @ManyToOne
-    private TariffRate_1 tariffRate;
+    private TariffRate tariffRate;
     @Id
     private LocalDate rateDate;
     @Id

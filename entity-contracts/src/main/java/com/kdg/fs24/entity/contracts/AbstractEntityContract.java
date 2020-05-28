@@ -36,7 +36,7 @@ import com.kdg.fs24.entity.tariff.TariffCalculations;
 @Entity
 @Table(name = "core_EntityContracts")
 @PrimaryKeyJoinColumn(name = "contract_id", referencedColumnName = "entity_id")
-public class AbstractEntityContract extends AbstractActionEntity {
+public abstract class AbstractEntityContract extends AbstractActionEntity {
 
     @ManyToOne
     //@JoinColumn(name = "entity_type_id", updatable = false, insertable = true)

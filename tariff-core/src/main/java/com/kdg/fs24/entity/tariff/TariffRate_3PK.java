@@ -5,20 +5,15 @@
  */
 package com.kdg.fs24.entity.tariff;
 
-import java.io.Serializable;
+import java.math.BigDecimal;
 import lombok.Data;
-import java.time.LocalDate;
-import com.kdg.fs24.references.application.currency.Currency;
 
 /**
  *
  * @author N76VB
  */
 @Data
-public class TariffRate_1PK implements Serializable {
+public class TariffRate_3PK extends TariffRate_1PK {
 
-    private TariffRate tariffRate;
-    private LocalDate rateDate;
-    private Currency currency;
 
 }

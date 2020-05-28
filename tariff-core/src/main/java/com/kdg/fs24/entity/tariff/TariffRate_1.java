@@ -9,23 +9,18 @@ package com.kdg.fs24.entity.tariff;
  *
  * @author N76VB
  */
-import com.kdg.fs24.references.tariffs.kind.TariffRateRecord;
-import com.kdg.fs24.references.tariffs.accretionscheme.TariffAccretionScheme;
-import com.kdg.fs24.application.core.service.funcs.ServiceFuncs;
-import com.kdg.fs24.application.core.api.ObjectRoot;
-import com.kdg.fs24.persistence.api.PersistenceEntity;
-import java.util.Collection;
-import com.kdg.fs24.references.tariffs.kind.TariffKind;
-import com.kdg.fs24.references.tariffs.serv.TariffServ;
+import java.math.BigDecimal;
 import javax.persistence.*;
-import java.time.LocalDate;
 import lombok.Data;
 
+//import com.kdg.fs24.application.core.api.ObjectRoot;
 @Data
 @Entity
-//@Table(name = "TariffRates")
-public class TariffRate_1 extends TariffRateAbstract {
+@Table(name = "TariffRates_1")
+@IdClass(TariffRate_1PK.class)
+public class TariffRate_1 extends TariffRecordAbstract {
 
-    @OneToMany(cascade = CascadeType.ALL)
-    private final Collection<TariffRateRecord_1> calcRecords = ServiceFuncs.<TariffRateRecord_1>getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);
+    // одноставочный тариф 
+    private BigDecimal rateValue;
+
 }

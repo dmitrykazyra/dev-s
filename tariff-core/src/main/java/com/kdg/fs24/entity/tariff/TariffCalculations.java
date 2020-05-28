@@ -23,7 +23,7 @@ import com.kdg.fs24.application.core.nullsafe.NullSafe;
 public final class TariffCalculations {
 
     private Long entity_id;
-    private Map<TariffRate_1, Collection<TariffCalcSum>> tariffCalsSums;
+    private Map<TariffRate, Collection<TariffCalcSum>> tariffCalsSums;
     private Integer tariff_calc_id;
 
     //==========================================================================
@@ -31,15 +31,16 @@ public final class TariffCalculations {
         this.entity_id = entity_id;
     }
 
-    public Map<TariffRate_1, Collection<TariffCalcSum>> getTariffCalsSums() {
+    public Map<TariffRate, Collection<TariffCalcSum>> getTariffCalsSums() {
         return NullSafe.create(this.tariffCalsSums)
                 .whenIsNull(() -> {
-                    this.tariffCalsSums = ServiceFuncs.<TariffRate_1, Collection<TariffCalcSum>>getOrCreateMap(ServiceFuncs.MAP_NULL);
+                    this.tariffCalsSums = ServiceFuncs.<TariffRate, Collection<TariffCalcSum>>
+                    getOrCreateMap(ServiceFuncs.MAP_NULL);
                     return this.tariffCalsSums;
-                }).<Map<TariffRate_1, Collection<TariffCalcSum>>>getObject();
+                }).<Map<TariffRate, Collection<TariffCalcSum>>>getObject();
     }
 
-    public void setTariffCalsSums(final Map<TariffRate_1, Collection<TariffCalcSum>> tariffCalsSums) {
+    public void setTariffCalsSums(final Map<TariffRate, Collection<TariffCalcSum>> tariffCalsSums) {
         this.tariffCalsSums = tariffCalsSums;
     }
 
@@ -48,7 +49,7 @@ public final class TariffCalculations {
 //    }
     //==========================================================================
     private BigDecimal getInternalCalculationSum(
-            final TariffRate_1 tariffRate,
+            final TariffRate tariffRate,
             final LocalDate D1,
             final LocalDate D2) {
 
@@ -74,7 +75,7 @@ public final class TariffCalculations {
 
     //==========================================================================
     public BigDecimal getCalculationSum(
-            final TariffRate_1 tariffRate,
+            final TariffRate tariffRate,
             final TarrifGenerator tarrifGenerator,
             final LocalDate D1,
             final LocalDate D2) {
@@ -141,7 +142,7 @@ public final class TariffCalculations {
                 .stream()
                 .forEach(calc -> {
 
-                    final Map<TariffRate_1, Collection<TariffCalcSum>> mapExistTariffRate
+                    final Map<TariffRate, Collection<TariffCalcSum>> mapExistTariffRate
                             = this.getTariffCalsSums()
                                     .entrySet()
                                     .stream()
@@ -175,7 +176,7 @@ public final class TariffCalculations {
     }
 
     //==========================================================================
-    public void add(final TariffRate_1 tariffRate, final Collection<TariffCalcSum> cs) {
+    public void add(final TariffRate tariffRate, final Collection<TariffCalcSum> cs) {
         //this.getTariffCalsSums().putIfAbsent(tariffRate, cs);
         NullSafe.create(cs)
                 .safeExecute(() -> {

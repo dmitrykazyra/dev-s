@@ -5,41 +5,19 @@
  */
 package com.kdg.fs24.entity.tariff;
 
-import com.kdg.fs24.application.core.api.ObjectRoot;
 import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.util.Collection;
+import javax.persistence.*;
+import lombok.Data;
 
-/**
- *
- * @author kazyra_d
- */
-public class TariffRate_3 { //implements TariffRateRecord {
+//import com.kdg.fs24.application.core.api.ObjectRoot;
+@Data
+@Entity
+@Table(name = "TariffRates_3")
+@IdClass(TariffRate_1PK.class)
+public class TariffRate_3 extends TariffRecordAbstract {
 
-    // тариф c фиксированной суммой
-    private LocalDate rate_date;
+    // фиксированная величина
     private BigDecimal rate_value;
-    private Integer currency_id;
     private BigDecimal fix_sum;
 
-//    public static void store(final Collection<TariffRate_3> collection, final Integer rate_id) {
-//        // сохранение тарифицируемых услуг на плане
-//        ObjectRoot.getStaticDbService()
-//                .createCallBath("{call tariff_insertorupdate_tariff_rates_3(:RATE, :DATE, :CURR, :PERC, :FS)}")
-//                .execBatch(stmt -> {
-//
-//                    collection
-//                            .stream()
-//                            .forEach((tariffRate_3) -> {
-//                                stmt.setParamByName("RATE", rate_id);
-//                                stmt.setParamByName("DATE", tariffRate_3.getRate_date());
-//                                stmt.setParamByName("CURR", tariffRate_3.getCurrency_id());
-//                                stmt.setParamByName("PERC", tariffRate_3.getRate_value());
-//                                stmt.setParamByName("FS", tariffRate_3.getFix_sum());
-//                                stmt.addBatch();
-//
-//                                //tariffKind.getTariffRates().
-//                            });
-//                });
-//    }
 }

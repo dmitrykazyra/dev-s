@@ -11,8 +11,8 @@ import java.util.Collection;
 import java.util.Collections;
 import com.kdg.fs24.entity.liases.api.LiasDebtRest;
 import com.kdg.fs24.application.core.sysconst.SysConst;
-import com.kdg.fs24.entity.tariff.TariffRate_1;
-import com.kdg.fs24.entity.tariff.TariffRateRecord_1;
+import com.kdg.fs24.entity.tariff.TariffRate;
+import com.kdg.fs24.entity.tariff.TariffRecordAbstract;
 import com.kdg.fs24.references.tariffs.kind.TariffRowCalculator;
 import java.util.Iterator;
 import java.util.List;
@@ -29,11 +29,11 @@ public final class TariffRestBox extends TariffBoxAbstract {
     public void createCalculations(final LocalDate D1,
             final LocalDate D2,
             final Collection<LiasDebtRest> liasDebtRest,
-            final TariffRate_1 tariffRate,
+            final TariffRate tariffRate,
             final TariffRowCalculator tariffRowCalculator) {
 
         Collections.sort((List<LiasDebtRest>) liasDebtRest, this.RDC);
-        Collections.sort((List<TariffRateRecord_1>) tariffRate.getCalcRecords(), this.TRRC);
+        Collections.sort((List<TariffRecordAbstract>) tariffRate.getTariffRates(), this.TRRC);
 
         LocalDate ld1 = D1;
         LocalDate ld2 = D2.plusDays(1);
@@ -41,7 +41,7 @@ public final class TariffRestBox extends TariffBoxAbstract {
         BigDecimal percRate;
 
         final Iterator<LiasDebtRest> restsIterator = liasDebtRest.iterator();
-        final Iterator<TariffRateRecord_1> rateIterator = tariffRate.getCalcRecords().iterator();
+        final Iterator<TariffRecordAbstract> rateIterator = tariffRate.getTariffRates().iterator();
 
         // начальный базис
         LiasDebtRest v_liasDebtRest = restsIterator.next();
@@ -57,7 +57,7 @@ public final class TariffRestBox extends TariffBoxAbstract {
         }
 
         // начальная ставка     
-        TariffRateRecord_1 v_tariffRateRecord = rateIterator.next();
+        TariffRecordAbstract v_tariffRateRecord = rateIterator.next();
         percRate = v_tariffRateRecord.getRateValue();
 
         if (rateIterator.hasNext()) {

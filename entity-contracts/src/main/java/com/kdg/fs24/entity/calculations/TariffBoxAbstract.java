@@ -7,7 +7,7 @@ package com.kdg.fs24.entity.calculations;
 
 import com.kdg.fs24.application.core.service.funcs.CustomCollectionImpl;
 import com.kdg.fs24.application.core.service.funcs.ServiceFuncs;
-import com.kdg.fs24.entity.liases.api.LiasDebtRest;
+import com.kdg.fs24.entity.debts.LiasDebtRest;
 import com.kdg.fs24.entity.debts.LiasAction;
 import com.kdg.fs24.application.core.locale.NLS;
 import com.kdg.fs24.application.core.log.LogService;

@@ -18,6 +18,7 @@ import com.kdg.fs24.references.tariffs.serv.TariffServ;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.stream.Collectors;
 import lombok.Data;
 
 @Data
@@ -67,9 +68,48 @@ public class TariffRate extends ObjectRoot implements PersistenceEntity {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "tariffRate")
     private Collection<TariffRate_3> tariffRates_3;
 
+    //==========================================================================
+    @Transient
+    private Collection<TariffRecordAbstract> tariffRates;
+
     public Collection<TariffRecordAbstract> getTariffRates() {
-        return null;
+        // приведение к типу TariffRecordAbstract
+        if (NullSafe.isNull(tariffRates)) {
+
+            if (NullSafe.notNull(tariffRates_1)) {
+                tariffRates = tariffRates_1
+                        .stream()
+                        .map(mapper -> (TariffRecordAbstract) mapper)
+                        .collect(Collectors.toList());
+            }
+
+            if (NullSafe.isNull(tariffRates)) {
+                if (NullSafe.notNull(tariffRates_2)) {
+                    tariffRates = tariffRates_2
+                            .stream()
+                            .map(mapper -> (TariffRecordAbstract) mapper)
+                            .collect(Collectors.toList());
+                }
+            }
+
+            if (NullSafe.isNull(tariffRates)) {
+                if (NullSafe.notNull(tariffRates_3)) {
+                    tariffRates = tariffRates_3
+                            .stream()
+                            .map(mapper -> (TariffRecordAbstract) mapper)
+                            .collect(Collectors.toList());
+                }
+            }
+
+            // ставки не заданы
+            if (NullSafe.isNull(tariffRates)) {
+                throw new RuntimeException("Ставки не заданы!");
+            }
+
+        }
+
+        return tariffRates;
     }
 
-    //==========================================================================
+//==========================================================================
 }

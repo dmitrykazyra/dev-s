@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Collections;
-import com.kdg.fs24.entity.liases.api.LiasDebtRest;
+import com.kdg.fs24.entity.debts.LiasDebtRest;
 import com.kdg.fs24.application.core.sysconst.SysConst;
 import com.kdg.fs24.entity.tariff.TariffRate;
 import com.kdg.fs24.entity.tariff.TariffRecordAbstract;

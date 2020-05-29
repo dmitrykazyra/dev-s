@@ -25,6 +25,7 @@ import com.kdg.fs24.lias.opers.attrs.*;
 import javax.persistence.*;
 import lombok.Data;
 import java.util.Optional;
+import java.util.List;
 import com.kdg.fs24.application.core.service.funcs.FilterComparator;
 import java.time.LocalDateTime;
 import java.util.stream.Collectors;
@@ -33,6 +34,7 @@ import com.kdg.fs24.entity.contracts.AbstractEntityContract;
 import com.kdg.fs24.entity.bondschedule.PmtSchedule;
 import com.kdg.fs24.service.LiasDocumentBuilders;
 import com.kdg.fs24.spring.core.api.ServiceLocator;
+import com.kdg.fs24.application.core.sysconst.SysConst;
 
 /**
  *
@@ -89,11 +91,11 @@ public class LiasDebt extends ObjectRoot implements PersistenceEntity {
     //@JoinColumn(name = "debt_id", referencedColumnName = "debt_id")
     @OneToMany(mappedBy = "liasDebt",
             cascade = CascadeType.ALL)
-    private Collection<Lias> liases;
-//    //--------------------------------------------------------------------------
-//    @OneToMany
-//    @JoinColumn(name = "debt_id", referencedColumnName = "debt_id")
-//    private Collection<LiasDebtRest> debtRests;
+    private Collection<Lias> liases = ServiceFuncs.<Lias>getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);
+    //--------------------------------------------------------------------------
+    @OneToMany(mappedBy = "liasDebt",
+            cascade = CascadeType.ALL)
+    private Collection<LiasDebtRest> liasDebtRests = ServiceFuncs.<LiasDebtRest>getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);
 
     //==========================================================================
     // сервисная часть
@@ -114,17 +116,6 @@ public class LiasDebt extends ObjectRoot implements PersistenceEntity {
             // обязательство без графика
             this.processLias(liasFinanceOper);
         }
-
-//        NullSafe.create(liasFinanceOper.<PmtSchedule>attr(PMT_SCHEDULE.class))
-//                .inititialize(() -> this.liases = ServiceFuncs.<Lias>getOrCreateCollection(this.liases))
-//                .safeExecute(() -> {
-//                    // обязательства формируются согласно графика
-//                    this.processBondSchedLiases(liasFinanceOper);
-//                })
-//                .whenIsNull(() -> {
-//                    // обязательство без графика
-//                    this.processLias(liasFinanceOper);
-//                });
     }
 
     //==========================================================================
@@ -287,15 +278,6 @@ public class LiasDebt extends ObjectRoot implements PersistenceEntity {
                         .collect(Collectors.toList()),
                 l -> (NullSafe.isNull(l.getInactiveDate())),
                 String.format("Не найдено подходящее обязательство (DebtId=%d)", this.debtId));
-
-//        return ServiceFuncs.<L>getCollectionElement(this.getLiases(),
-//                (l -> ((NullSafe.isNull(l.getInactive_date())))),
-//                (lias1, lias2) -> {
-//                    // сортировка по getStart_date
-//                    return lias1.getStart_date().compareTo(lias2.getStart_date());
-//                },
-//                String.format("Не найдено подходящее обязательство (DebtId=%d)", this.debtId),
-//                ServiceFuncs.THROW_WHEN_NOT_FOUND);
     }
 
     //==========================================================================
@@ -309,7 +291,50 @@ public class LiasDebt extends ObjectRoot implements PersistenceEntity {
 
     //==========================================================================
     public final void createOrUpdateDebtRests(final LiasFinanceOper liasFinanceOper) {
+        // находим остаток за дату операции
 
+        final LocalDate operDate = liasFinanceOper.<LocalDate>attr(LiasOpersConst.LIAS_DATE_CLASS);
+        final BigDecimal operSum = liasFinanceOper.<BigDecimal>attr(LiasOpersConst.LIAS_SUMM_CLASS);
+
+        if (!ServiceFuncs.getCollectionElement(this.getLiasDebtRests(),
+                ldr -> ldr.getRestDate().equals(operDate)).isPresent()) {
+
+            // предыдущий остаток
+            final List<LiasDebtRest> lastRest = this.getLiasDebtRests()
+                    .stream()
+                    .unordered()
+                    .filter(ldr -> ldr.getRestDate().isBefore(operDate))
+                    .sorted((rd1, rd2) -> rd2.getRestDate().compareTo(rd1.getRestDate()))
+                    .collect(Collectors.toList());
+
+            final BigDecimal newRest;
+            // остатки найдены
+            if (!lastRest.isEmpty()) {
+                newRest = lastRest.get(0).getRest();
+            } else {
+                newRest = SysConst.BIGDECIMAL_ZERO;
+            }
+
+            final LiasDebtRest liasDebtRest = NullSafe.createObject(LiasDebtRest.class);
+
+            liasDebtRest.setRest(newRest);
+            liasDebtRest.setRestType(SysConst.INTEGER_ONE);
+            liasDebtRest.setRestDate(operDate);
+            liasDebtRest.setLiasDebt(this);
+
+            // добавили новый остаток в коллекцию остатков
+            this.getLiasDebtRests().add(liasDebtRest);
+
+        }
+        // Группа остатков для увеличения\уменьшения       
+        this.getLiasDebtRests()
+                .stream()
+                .unordered()
+                .filter(ldr -> ldr.getRestDate().isAfter(operDate)
+                || ldr.getRestDate().equals(operDate))
+                .forEach(rest -> {
+                    //увеличить/уменьшить остаток
+                    rest.incRest(operSum);
+                });
     }
-
 }

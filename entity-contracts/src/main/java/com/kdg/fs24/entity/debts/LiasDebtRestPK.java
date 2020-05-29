@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.kdg.fs24.entity.liases.api;
+package com.kdg.fs24.entity.debts;
 
 
 import java.io.Serializable;
@@ -17,7 +17,7 @@ import java.time.LocalDate;
 @Data
 public class LiasDebtRestPK implements Serializable {
 
-    private Integer debtId;
+    private LiasDebt liasDebt;
     private Integer restType;
     private LocalDate restDate;
 }

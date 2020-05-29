@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.kdg.fs24.entity.liases.api;
+package com.kdg.fs24.entity.debts;
 
 /**
  *
@@ -23,14 +23,20 @@ import lombok.Data;
 public class LiasDebtRest extends ObjectRoot implements PersistenceEntity {
 
     @Id
-    @Column(name = "debt_id")
-    private Integer debtId;
+    @ManyToOne
+    @JoinColumn(name = "debt_id")
+    private LiasDebt liasDebt;
     @Id
-    @Column(name = "rest_typed")
+    @Column(name = "rest_type")
     private Integer restType;
     @Id
-    @Column(name = "rest_dated")
+    @Column(name = "rest_date")
     private LocalDate restDate;
     private BigDecimal rest;
+
+    //==========================================================================
+    public void incRest(final BigDecimal rest) {
+        this.rest = this.rest.add(rest);
+    }
 
 }

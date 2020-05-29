@@ -3,12 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.kdg.fs24.entity.liases.api;
+package com.kdg.fs24.entity.debts;
 
 import java.io.Serializable;
 import lombok.Data;
 import java.time.LocalDate;
-import java.math.BigDecimal;
 
 /**
  *
@@ -17,7 +16,7 @@ import java.math.BigDecimal;
 @Data
 public class LiasRestPK implements Serializable {
 
-    private Integer lias_id;
-    private Integer rest_type;
-    private LocalDate rest_date;
+    private Lias lias;
+    private Integer restType;
+    private LocalDate restDate;
 }

@@ -41,6 +41,7 @@ import com.kdg.fs24.references.api.AbstractRefRecord;
 import java.lang.annotation.Annotation;
 import java.util.stream.Collectors;
 import com.kdg.fs24.entity.core.api.CachedReferencesClasses;
+import com.kdg.fs24.references.api.ReferenceSyncOrder;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import java.lang.reflect.Method;
@@ -338,12 +339,29 @@ public abstract class ActionExecutionService extends AbstractApplicationService 
                 ).classes();
 
                 Arrays.stream(classes)
+                        .sorted((refClass1, refClass2) -> { // достаем признак порядкового номера из аннотации
+
+                            final Integer order_num1 = (NullSafe.create(SysConst.OBJECT_NULL, NullSafe.DONT_THROW_EXCEPTION)
+                                    .execute2result(() -> {
+                                        return ((ReferenceSyncOrder) AnnotationFuncs.getAnnotation(refClass1, ReferenceSyncOrder.class
+                                        )).order_num();
+                                    }, Integer.valueOf("10000"))).<Integer>getObject();
+
+                            final Integer order_num2 = (NullSafe.create(SysConst.OBJECT_NULL, NullSafe.DONT_THROW_EXCEPTION)
+                                    .execute2result(() -> {
+                                        return ((ReferenceSyncOrder) AnnotationFuncs.getAnnotation(refClass2, ReferenceSyncOrder.class
+                                        )).order_num();
+                                    }, Integer.valueOf("10000"))).<Integer>getObject();
+
+                            return order_num1.compareTo(order_num2);
+                        })
                         .forEach(clazz -> {
 
                             if (!ServiceFuncs.getMapValue(AbstractRefRecord.REF_CACHE, mapEntry -> mapEntry.getKey().equals(clazz)).isPresent()) {
 
                                 // синхронизировать справочник в БД
                                 if (SysConst.BOOLEAN_FALSE) {
+//                                if (SysConst.BOOLEAN_TRUE) {                                    
                                     NullSafe.create(this.findRegisterMethod(clazz, "getActualReferencesList"))
                                             .safeExecute((ns_method) -> {
                                                 synchronized (clazz) {

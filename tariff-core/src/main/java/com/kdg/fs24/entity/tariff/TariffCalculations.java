@@ -20,7 +20,7 @@ import com.kdg.fs24.application.core.nullsafe.NullSafe;
  *
  * @author N76VB
  */
-public final class TariffCalculations {
+public class TariffCalculations {
 
     private Long entity_id;
     private Map<TariffRate, Collection<TariffCalcSum>> tariffCalsSums;

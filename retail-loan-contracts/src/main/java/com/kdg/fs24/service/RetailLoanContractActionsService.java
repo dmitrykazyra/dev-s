@@ -32,6 +32,8 @@ import com.kdg.fs24.entity.core.api.CachedReferencesClasses;
 import com.kdg.fs24.entity.retail.loan.contracts.RetailLoanConstants;
 import com.kdg.fs24.references.liases.actiontype.LiasActionType;
 import com.kdg.fs24.references.documents.docstatus.DocStatus;
+import com.kdg.fs24.references.tariffs.serv.TariffServ;
+import com.kdg.fs24.references.tariffs.kind.TariffKind;
 import com.kdg.fs24.references.documents.doctemplate.DocTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.kdg.fs24.references.documents.docattr.DocAttr;
@@ -46,7 +48,7 @@ import com.kdg.fs24.references.documents.docattr.DocAttr;
 @CachedReferencesClasses(classes = {ContractSubject.class, LoanSource.class, PmtScheduleAlg.class,
     PmtScheduleTerm.class, Currency.class, LiasDebtState.class, LiasKind.class, LiasType.class,
     LiasBaseAssetType.class, LiasFinOperCode.class, LiasOperStatus.class, LiasActionType.class,
-    DocStatus.class, DocTemplate.class, DocAttr.class, TariffAccretionScheme.class})
+    DocStatus.class, DocTemplate.class, DocAttr.class, TariffAccretionScheme.class, TariffServ.class, TariffKind.class})
 public class RetailLoanContractActionsService extends ActionExecutionService {
 
     @Autowired

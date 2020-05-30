@@ -72,14 +72,10 @@ public class Lias extends ObjectRoot implements PersistenceEntity {
     @Column(name = "is_canceled")
     private Boolean isCancelled;
 
-//    @OneToMany
-//    @JoinColumn(name = "lias_id", referencedColumnName = "lias_id")
-    @OneToMany(mappedBy = "lias",
-            cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "lias", cascade = CascadeType.ALL)
     private Collection<LiasAction> liasActions = ServiceFuncs.<LiasAction>getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);
 
-    @OneToMany(mappedBy = "lias",
-            cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "lias", cascade = CascadeType.ALL)
     private Collection<LiasRest> liasRests = ServiceFuncs.<LiasRest>getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);
 
     //==========================================================================
@@ -126,7 +122,7 @@ public class Lias extends ObjectRoot implements PersistenceEntity {
     private void createOrUpdateLiasRests(final BigDecimal liasSum, final LocalDate operDate) {
 
         if (!ServiceFuncs.getCollectionElement(this.getLiasRests(),
-                ldr -> ldr.getRestDate().equals(operDate)).isPresent()) {
+                lr -> lr.getRestDate().equals(operDate)).isPresent()) {
 
             // предыдущий остаток
             final List<LiasRest> lastRest = this.getLiasRests()
@@ -176,5 +172,4 @@ public class Lias extends ObjectRoot implements PersistenceEntity {
                 liasFinanceOper.attr(LiasOpersConst.LIAS_ACTION_TYPE_ID_CLASS),
                 null);
     }
-
 }

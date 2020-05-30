@@ -7,6 +7,8 @@ select * from liases order by debt_id desc;
 select * from liasactions order by lias_id desc;
 SELECT * FROM liasdebtrests order by debt_id desc;
 SELECT * FROM liasrests order by lias_id desc;
+SELECT * FROM tariffplans order by tariff_plan_id desc;
+SELECT * FROM tariffrates order by rate_id desc;
 select * from documents order by doc_id desc;
 select * from docattrs order by doc_id desc;
 SELECT * FROM core_pmtschedules order by contract_id desc;

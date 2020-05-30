@@ -94,10 +94,7 @@ public class PmtSchedule extends AbstractActionEntity {
     @Column(name = "last_date")
     private LocalDate lastDate;
 
-    @OneToMany(
-            mappedBy = "pmtSchedule",
-            cascade = CascadeType.ALL
-    )
+    @OneToMany(mappedBy = "pmtSchedule", cascade = CascadeType.ALL)
 //    @OneToMany(cascade = CascadeType.ALL)
 //    @JoinColumn(name = "schedule_id", referencedColumnName = "schedule_id")
     private Collection<PmtScheduleLine> pmtScheduleLines;

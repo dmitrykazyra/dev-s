@@ -26,7 +26,7 @@ import com.kdg.fs24.entity.debts.LiasDebt;
 import com.kdg.fs24.lias.opers.napi.LiasFinanceOper;
 import com.kdg.fs24.lias.opers.api.LiasOpersConst;
 import com.kdg.fs24.entity.bondschedule.PmtSchedule;
-import com.kdg.fs24.entity.tariff.TariffCalculations;
+import com.kdg.fs24.entity.tariff.TariffCalcRecord;
 
 /**
  *
@@ -95,19 +95,24 @@ public abstract class AbstractEntityContract extends AbstractActionEntity {
     private Collection<EntityMark> entityMarks;
     // исполенные действия
     //--------------------------------------------------------------------------
-    @OneToMany(targetEntity = AbstractPersistenceAction.class)
-    @JoinColumn(name = "entity_id", referencedColumnName = "entity_id")
+    @OneToMany(targetEntity = AbstractPersistenceAction.class, mappedBy = "entity")
+//    @JoinColumn(name = "entity_id", referencedColumnName = "entity_id")
     private Collection<Action> entityActions;
     //==========================================================================
     // задолженности по договору
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "contract_id", referencedColumnName = "contract_id")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "debtContract")
+    //@JoinColumn(name = "contract_id", referencedColumnName = "contract_id")
 //    @OneToMany(mappedBy = "debtContract", cascade = CascadeType.ALL)
     private Collection<LiasDebt> contractDebts;
     //==========================================================================
     //графики по договору
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "contract_id", referencedColumnName = "contract_id")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "entityContract")
+    //@JoinColumn(name = "contract_id", referencedColumnName = "contract_id")
     private Collection<PmtSchedule> pmtSchedules;
+    //==========================================================================
+    // рассчеты сумм калькуляций
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "entity")
+    //@JoinColumn(name = "entity_id", referencedColumnName = "entity_id")
+    private Collection<TariffCalcRecord> tariffCalculations;
 
 }

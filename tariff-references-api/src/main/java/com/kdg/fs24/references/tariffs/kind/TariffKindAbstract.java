@@ -26,6 +26,7 @@ import lombok.Data;
  *
  * @author kazyra_d
  */
+@Deprecated
 public abstract class TariffKindAbstract<TS extends TariffServ, E extends ActionEntity, TR extends TariffRateRecord, TB extends TariffBox>
         extends AbstractRefRecord
         implements TariffKindOld<TS, E, TR>, ReferenceRec {

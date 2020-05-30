@@ -21,6 +21,7 @@ import com.kdg.fs24.application.core.nullsafe.NullSafe;
  *
  * @author kazyra_d
  */
+@Deprecated
 public abstract class AbstractReferencesList<T extends AbstractReference> extends ObjectList {
 
     // язык справочника

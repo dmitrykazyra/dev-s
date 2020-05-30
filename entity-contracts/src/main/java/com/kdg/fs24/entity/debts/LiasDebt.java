@@ -89,12 +89,10 @@ public class LiasDebt extends ObjectRoot implements PersistenceEntity {
     //--------------------------------------------------------------------------
     //@OneToMany
     //@JoinColumn(name = "debt_id", referencedColumnName = "debt_id")
-    @OneToMany(mappedBy = "liasDebt",
-            cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "liasDebt", cascade = CascadeType.ALL)
     private Collection<Lias> liases = ServiceFuncs.<Lias>getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);
     //--------------------------------------------------------------------------
-    @OneToMany(mappedBy = "liasDebt",
-            cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "liasDebt", cascade = CascadeType.ALL)
     private Collection<LiasDebtRest> liasDebtRests = ServiceFuncs.<LiasDebtRest>getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);
 
     //==========================================================================

@@ -20,20 +20,20 @@ import lombok.Data;
 @Entity
 @Table(name = "TariffKindsRef")
 public class TariffKind extends AbstractRefRecord implements ReferenceRec {
-    
+
     @Id
-    @Column(name="tariff_kind_id")
+    @Column(name = "tariff_kind_id")
     private Integer tariffKindId;
-    
+
     @ManyToOne
-    @JoinColumn(name = "tariff_serv_id", referencedColumnName = "tariff_serv_id") 
-    private TariffServ tariffServ;    
-   
-    @Column(name="tariff_kind_name")
-    private Integer tariffKindName;
-    
+    @JoinColumn(name = "tariff_serv_id", referencedColumnName = "tariff_serv_id")
+    private TariffServ tariffServ;
+
+    @Column(name = "tariff_kind_name")
+    private String tariffKindName;
+
     @Override
     public void record2Map(final Map<String, Integer> map) {
         //map.put(String.format("%d - %s", this.getTariff_group_id(), this.getTariff_group_name()), this.getTariff_group_id());
-    }    
+    }
 }

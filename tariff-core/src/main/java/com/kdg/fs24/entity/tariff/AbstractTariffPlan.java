@@ -89,9 +89,10 @@ public class AbstractTariffPlan extends AbstractActionEntity
     }
 
     //==========================================================================
-    public void addServKind(final TariffKind tariffKind,
+    public void addServKindId(final TariffKind tariffKind,
             final LocalDate aDate,
-            final LocalDate fDate) {
+            final LocalDate fDate,
+            final ServProcessor servProcessor) {
 
         final TariffPlan2Serv tariffPlan2Serv = NullSafe.createObject(TariffPlan2Serv.class);
 
@@ -100,7 +101,9 @@ public class AbstractTariffPlan extends AbstractActionEntity
         tariffPlan2Serv.setTariffKind(tariffKind);
         tariffPlan2Serv.setTariffServ(tariffKind.getTariffServ());
         tariffPlan2Serv.setTariffPlan(this);
-
+        
+        servProcessor.processServ(tariffPlan2Serv);
+        
         tariffServs.add(tariffPlan2Serv);
 
     }

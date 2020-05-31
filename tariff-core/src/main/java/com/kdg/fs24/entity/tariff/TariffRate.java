@@ -12,9 +12,9 @@ package com.kdg.fs24.entity.tariff;
 import com.kdg.fs24.references.tariffs.accretionscheme.TariffAccretionScheme;
 import com.kdg.fs24.application.core.api.ObjectRoot;
 import com.kdg.fs24.application.core.nullsafe.NullSafe;
+import com.kdg.fs24.application.core.service.funcs.ServiceFuncs;
 import com.kdg.fs24.persistence.api.PersistenceEntity;
 import com.kdg.fs24.references.tariffs.kind.TariffKind;
-import com.kdg.fs24.references.tariffs.serv.TariffServ;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Collection;
@@ -29,19 +29,15 @@ public class TariffRate extends ObjectRoot implements PersistenceEntity {
 
     @Id
     @Column(name = "rate_id")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_rate_id")
-    @SequenceGenerator(name = "seq_rate_id", sequenceName = "seq_rate_id", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_TariffRates")
+    @SequenceGenerator(name = "seq_TariffRates", sequenceName = "seq_TariffRates", allocationSize = 1)
     private Integer rateId;
 
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy="tariffRate")
-//    private final Collection<? extends TariffRateRecordAbstract> calcRecords = ServiceFuncs.<TariffRateRecordAbstract>getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);
     @ManyToOne
-    @JoinColumn(name = "tariff_plan_id", referencedColumnName = "tariff_plan_id")
-    AbstractTariffPlan tariffPlan;
-
-    @ManyToOne
-    @JoinColumn(name = "tariff_serv_id", referencedColumnName = "tariff_serv_id")
-    private TariffServ tariffServ;
+    @JoinColumns({
+        @JoinColumn(name = "tariff_plan_id", referencedColumnName = "tariff_plan_id")
+        , @JoinColumn(name = "tariff_serv_id", referencedColumnName = "tariff_serv_id")})
+    private TariffPlan2Serv tariffPlan2Serv;
 
     @ManyToOne
     @JoinColumn(name = "tariff_kind_id", referencedColumnName = "tariff_kind_id")
@@ -62,7 +58,7 @@ public class TariffRate extends ObjectRoot implements PersistenceEntity {
     //==========================================================================
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "tariffRate")
-    private Collection<TariffRate_1> tariffRates_1;
+    private Collection<TariffRate_1> tariffRates_1 = ServiceFuncs.<TariffRate_1>getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "tariffRate")
     private Collection<TariffRate_2> tariffRates_2;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "tariffRate")
@@ -109,6 +105,11 @@ public class TariffRate extends ObjectRoot implements PersistenceEntity {
         }
 
         return tariffRates;
+    }
+
+    //--------------------------------------------------------------------------
+    public void addTariffRate_1(final TariffRate_1 tariffRate_1) {
+        this.tariffRates_1.add(tariffRate_1);
     }
 
 //==========================================================================

@@ -20,7 +20,8 @@ import lombok.Data;
 @IdClass(TariffRate_1PK.class)
 public class TariffRate_1 extends TariffRecordAbstract {
 
-    // одноставочный тариф 
+    // одноставочный тариф
+    @Column(name="rate_value")
     private BigDecimal rateValue;
 
 }

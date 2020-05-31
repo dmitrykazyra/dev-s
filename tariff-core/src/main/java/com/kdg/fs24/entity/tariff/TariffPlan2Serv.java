@@ -9,12 +9,16 @@ package com.kdg.fs24.entity.tariff;
  *
  * @author N76VB
  */
+import com.kdg.fs24.application.core.nullsafe.NullSafe;
+import com.kdg.fs24.application.core.service.funcs.ServiceFuncs;
 import com.kdg.fs24.persistence.api.PersistenceEntity;
 import com.kdg.fs24.references.tariffs.serv.TariffServ;
 import com.kdg.fs24.references.tariffs.kind.TariffKind;
 import java.time.LocalDate;
 import javax.persistence.*;
 import lombok.Data;
+import java.util.Collection;
+import com.kdg.fs24.references.tariffs.accretionscheme.TariffAccretionScheme;
 
 @Data
 @Entity
@@ -24,16 +28,16 @@ public class TariffPlan2Serv implements PersistenceEntity {
 
     @Id
     @ManyToOne
-    @JoinColumn(name="tariff_plan_id")
+    @JoinColumn(name = "tariff_plan_id")
     private AbstractTariffPlan tariffPlan;
-    
+
     @Id
     @ManyToOne
-    @JoinColumn(name="tariff_serv_id")
+    @JoinColumn(name = "tariff_serv_id")
     private TariffServ tariffServ;
 
     @ManyToOne
-    @JoinColumn(name="tariff_kind_id")
+    @JoinColumn(name = "tariff_kind_id")
     private TariffKind tariffKind;
 
     @Column(name = "actual_date")
@@ -42,4 +46,28 @@ public class TariffPlan2Serv implements PersistenceEntity {
     @Column(name = "close_date")
     private LocalDate closeDate;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tariffPlan2Serv")
+    private Collection<TariffRate> tariffRates = ServiceFuncs.<TariffRate>getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);
+
+    //==========================================================================
+    public void addTariffRate(final TariffAccretionScheme tariffAccretionScheme,
+            final TariffKind tariffKind,
+            final LocalDate actualDate,
+            final LocalDate closeDate,
+            final String rateName,
+            final TariffRateProcessor tariffRateProcessor) {
+        
+        final TariffRate tariffRate = NullSafe.createObject(TariffRate.class);
+        
+        tariffRate.setTariffAccretionScheme(tariffAccretionScheme);
+        tariffRate.setTariffPlan2Serv(this);
+        tariffRate.setTariffKind(tariffKind);
+        tariffRate.setRateName(rateName);
+        tariffRate.setActualDate(actualDate);
+        tariffRate.setCloseDate(closeDate);
+        
+        tariffRateProcessor.processTariffRate(tariffRate);
+        
+        tariffRates.add(tariffRate);
+    }
 }

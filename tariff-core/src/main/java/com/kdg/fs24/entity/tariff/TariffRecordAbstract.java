@@ -22,10 +22,13 @@ public abstract class TariffRecordAbstract extends TariffRateRecord {
 
     @Id
     @ManyToOne
+    @JoinColumn(name="rate_id")
     private TariffRate tariffRate;
     @Id
+    @Column(name="rate_date")
     private LocalDate rateDate;
     @Id
     @ManyToOne
+    @JoinColumn(name="currency_id")
     private Currency currency;
 }

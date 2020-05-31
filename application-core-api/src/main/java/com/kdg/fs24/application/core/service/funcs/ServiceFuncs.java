@@ -104,7 +104,8 @@ public final class ServiceFuncs {
     }
 
     //==========================================================================
-    //==========================================================================    
+    //==========================================================================
+    @Deprecated
     public static <T> Collection<T> filterCollection_Silent(final Collection<T> collection,
             final FilterComparator<T> filterComparator) {
 

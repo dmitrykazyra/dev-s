@@ -13,7 +13,7 @@ import java.util.Collection;
  */
 public interface TariffBox {
 
-    Collection<TariffCalcSumOld> getTariffSums();
+    Collection<TariffCalcSumImpl> getTariffSums();
     
-    void printCalculations(TariffKindOld tariffKind);
+    void printCalculations(TariffKind tariffKind);
 }

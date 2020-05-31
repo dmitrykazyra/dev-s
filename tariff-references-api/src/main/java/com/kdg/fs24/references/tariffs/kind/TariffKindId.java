@@ -19,7 +19,8 @@ import com.kdg.fs24.references.tariffs.serv.TariffServ;
 @Target(ElementType.TYPE) //on class level
 public @interface TariffKindId {
 
-    Class<? extends TariffServ> tariff_serv_class();
+    //Class<? extends TariffServ> tariff_serv_class();
+    int tariff_serv_id();
     
     int tariff_kind_id();
     

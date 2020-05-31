@@ -19,8 +19,8 @@ import com.kdg.fs24.application.core.nullsafe.NullSafe;
 import com.kdg.fs24.references.tariffs.kind.TariffBox;
 import com.kdg.fs24.references.tariffs.kind.TariffCalcSumImpl;
 import com.kdg.fs24.references.tariffs.kind.TariffRateRecord;
-import com.kdg.fs24.references.tariffs.kind.TariffKindOld;
-import com.kdg.fs24.references.tariffs.kind.TariffCalcSumOld;
+import com.kdg.fs24.references.tariffs.kind.TariffKind;
+import com.kdg.fs24.references.tariffs.kind.TariffCalcSumImpl;
 
 /**
  *
@@ -28,13 +28,13 @@ import com.kdg.fs24.references.tariffs.kind.TariffCalcSumOld;
  */
 public abstract class TariffBoxAbstract implements TariffBox {
 
-    private final Collection<TariffCalcSumOld> tariffSums = ServiceFuncs.<TariffCalcSumOld>getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);
+    private final Collection<TariffCalcSumImpl> tariffSums = ServiceFuncs.<TariffCalcSumImpl>getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);
     protected final Comparator<LiasDebtRest> RDC = (LiasDebtRest rd1, LiasDebtRest rd2) -> rd1.getRestDate().compareTo(rd2.getRestDate());
     protected final Comparator<LiasAction> LAC = (LiasAction la1, LiasAction la2) -> la1.getLiasDate().compareTo(la2.getLiasDate());
     protected final Comparator<TariffRateRecord> TRRC = (TariffRateRecord rd1, TariffRateRecord rd2) -> rd1.getRateDate().compareTo(rd2.getRateDate());
 
     @Override
-    public void printCalculations(final TariffKindOld tariffKind) {
+    public void printCalculations(final TariffKind tariffKind) {
 
         //анонимный класс для принтования списка остатков
         final CustomCollectionImpl customCollection = NullSafe.createObject(CustomCollectionImpl.class,
@@ -60,7 +60,7 @@ public abstract class TariffBoxAbstract implements TariffBox {
     //==========================================================================
 
     @Override
-    public Collection<TariffCalcSumOld> getTariffSums() {
+    public Collection<TariffCalcSumImpl> getTariffSums() {
         return tariffSums;
     }
 
@@ -88,7 +88,7 @@ public abstract class TariffBoxAbstract implements TariffBox {
             final BigDecimal accrualSum,
             final BigDecimal taxSum) {
 
-        NullSafe.create(ServiceFuncs.<TariffCalcSumOld>getCollectionElement_silent(this.tariffSums,
+        NullSafe.create(ServiceFuncs.<TariffCalcSumImpl>getCollectionElement_silent(this.tariffSums,
                 ts -> ts.getTariff_calc_date().equals(calc_date)))
                 .whenIsNull(() -> {
 
@@ -101,7 +101,7 @@ public abstract class TariffBoxAbstract implements TariffBox {
 //                    );
                 })
                 .safeExecute((ns_TariffSumm) -> {
-                    ((TariffCalcSumOld) ns_TariffSumm).incTariff_sum(accrualSum);
+                   // ((TariffCalcSumImpl) ns_TariffSumm).incTariff_sum(accrualSum);
                 });
     }
 

@@ -33,7 +33,7 @@ public class TariffCoreActionsService extends ActionExecutionService {
 
         return this.<AbstractTariffPlan>createActionEntity(AbstractTariffPlan.class,
                 (tariffPlan) -> {
-                    tariffPlan.setEntityKind(entityKind);
+                    tariffPlan.setPlanKind(entityKind);
                     tariffPlan.setTariffPlanCode(tariffPlanCode);
                     tariffPlan.setTariffPlanName(tariffPlanName);
                     tariffPlan.setActualDate(actualDate);
@@ -45,4 +45,6 @@ public class TariffCoreActionsService extends ActionExecutionService {
                             && record.getEntityTypeId().equals(TariffConst.ENTITY_TARIFF_PLAN)));
                 });
     }
+    //==========================================================================
+    
 }

@@ -23,8 +23,6 @@ import com.kdg.fs24.entity.tariff.AbstractTariffPlan;
 import java.util.Collection;
 import com.kdg.fs24.entity.marks.EntityMark;
 import com.kdg.fs24.entity.debts.LiasDebt;
-import com.kdg.fs24.lias.opers.napi.LiasFinanceOper;
-import com.kdg.fs24.lias.opers.api.LiasOpersConst;
 import com.kdg.fs24.entity.bondschedule.PmtSchedule;
 import com.kdg.fs24.entity.tariff.TariffCalcRecord;
 
@@ -113,6 +111,6 @@ public abstract class AbstractEntityContract extends AbstractActionEntity {
     // рассчеты сумм калькуляций
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "entity")
     //@JoinColumn(name = "entity_id", referencedColumnName = "entity_id")
-    private Collection<TariffCalcRecord> tariffCalculations;
+    private Collection<TariffCalcRecord> tariffCalcRecords;
 
 }

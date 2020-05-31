@@ -361,7 +361,7 @@ public abstract class ActionExecutionService extends AbstractApplicationService 
 
                                 // синхронизировать справочник в БД
                                 if (SysConst.BOOLEAN_FALSE) {
-//                                if (SysConst.BOOLEAN_TRUE) {                                    
+//                               if (SysConst.BOOLEAN_TRUE) {
                                     NullSafe.create(this.findRegisterMethod(clazz, "getActualReferencesList"))
                                             .safeExecute((ns_method) -> {
                                                 synchronized (clazz) {

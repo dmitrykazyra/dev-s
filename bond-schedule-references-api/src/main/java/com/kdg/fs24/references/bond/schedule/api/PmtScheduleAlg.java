@@ -5,12 +5,9 @@
  */
 package com.kdg.fs24.references.bond.schedule.api;
 
-import com.kdg.fs24.application.core.service.funcs.ServiceFuncs;
 import java.util.Map;
 import com.kdg.fs24.references.api.ReferenceRec;
 import com.kdg.fs24.references.api.AbstractRefRecord;
-import static com.kdg.fs24.references.api.AbstractRefRecord.REF_CACHE;
-import java.util.stream.Collectors;
 import javax.persistence.*;
 import lombok.Data;
 

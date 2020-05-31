@@ -30,9 +30,9 @@ import lombok.Data;
 @Table(name = "TariffServsRef")
 @ReferenceSyncOrder(order_num = 1)
 public class TariffServ extends AbstractRefRecord implements ReferenceRec {
-
+    
     @Id
-    @Column(name = "tariff_serv_id")
+    @Column(name = "tariff_serv_id", updatable = false)
     private Integer tariffServId;
     @Column(name = "tariff_group_id")
     private Integer tariffGroupId;
@@ -40,26 +40,26 @@ public class TariffServ extends AbstractRefRecord implements ReferenceRec {
     private String tariffServName;
     @Column(name = "client_pay")
     private Boolean clientPay;
-
+    
     @Override
     public void record2Map(final Map<String, Integer> map) {
         map.put(String.format("%d - %s", this.tariffServId, this.tariffServName), this.getTariffServId());
     }
-
+    //==========================================================================
     public static <T extends TariffServ> Collection<T> getActualReferencesList() {
-
+        
         final Collection<T> actualList = ServiceFuncs.<T>getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);
         final Class<T> clazz = (Class<T>) (TariffServ.class);
-
+        
         ReflectionFuncs.createPkgClassesCollection("com.kdg.fs24.references", clazz)
                 .stream()
                 .filter(p -> !p.isInterface())
                 .filter(p -> !Modifier.isAbstract(p.getModifiers()))
                 .filter(p -> AnnotationFuncs.isAnnotated(p, TariffServId.class))
                 .forEach((refClazz) -> {
-
+                    
                     final TariffServId tariffServId = AnnotationFuncs.getAnnotation(refClazz, TariffServId.class);
-
+                    
                     actualList.add((T) NullSafe.<T>createObject(clazz, (object) -> {
                         object.setTariffGroupId(tariffServId.group_id());
                         object.setTariffServName(AbstractRefRecord.getTranslatedValue(

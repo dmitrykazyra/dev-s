@@ -8,6 +8,7 @@ package com.kdg.fs24.entity.tariff;
 import com.kdg.fs24.application.core.api.ObjectRoot;
 import com.kdg.fs24.entity.core.AbstractPersistenceEntity;
 import com.kdg.fs24.persistence.api.PersistenceEntity;
+import java.util.Collection;
 import javax.persistence.*;
 import lombok.Data;
 
@@ -32,4 +33,7 @@ public class TariffCalcRecord extends ObjectRoot implements PersistenceEntity {
     @ManyToOne
     @JoinColumn(name = "entity_id", referencedColumnName = "entity_id")
     private AbstractPersistenceEntity entity;
+    //--------------------------------------------------------------------------
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tariffCalcRecord")
+    private Collection<TariffCalcSum> tariffSums;
 }

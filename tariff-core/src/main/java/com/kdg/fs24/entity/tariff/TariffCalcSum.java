@@ -6,11 +6,13 @@
 package com.kdg.fs24.entity.tariff;
 
 import com.kdg.fs24.application.core.api.ObjectRoot;
+import com.kdg.fs24.application.core.nullsafe.NullSafe;
 import com.kdg.fs24.persistence.api.PersistenceEntity;
 import javax.persistence.*;
 import lombok.Data;
 import java.time.LocalDate;
 import java.math.BigDecimal;
+import com.kdg.fs24.references.tariffs.kind.TariffCalcSumExtended;
 
 /**
  *
@@ -33,4 +35,15 @@ public class TariffCalcSum extends ObjectRoot implements PersistenceEntity {
 
     @Column(name = "tariff_summ")
     private BigDecimal tariffSumm;
+
+    //==========================================================================
+    public static TariffCalcSum create(final TariffCalcSumExtended tariffCalcSumExtended) {
+        final TariffCalcSum tariffCalcSum = NullSafe.createObject(TariffCalcSum.class);
+
+        tariffCalcSum.setTariffCalcDate(tariffCalcSumExtended.getTariff_calc_date());
+        tariffCalcSum.setTariffSumm(tariffCalcSumExtended.getTariff_sum());
+
+        return tariffCalcSum;
+    }
+
 }

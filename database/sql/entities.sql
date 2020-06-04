@@ -9,6 +9,8 @@ SELECT * FROM liasdebtrests order by debt_id desc;
 SELECT * FROM liasrests order by lias_id desc;
 SELECT * FROM tariffplans order by tariff_plan_id desc;
 SELECT * FROM tariffplan2servid order by tariff_plan_id desc;
+SELECT * FROM tariffcalcrecords order by tariff_calc_id desc;
+SELECT * FROM tariffcalcsum order by tariff_calc_id desc;
 SELECT * FROM tariffrates order by rate_id desc;
 SELECT * FROM tariffrates_1 order by rate_id desc LIMIT 100;
 select * from documents order by doc_id desc;

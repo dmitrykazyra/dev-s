@@ -10,18 +10,17 @@ import com.kdg.fs24.entity.core.api.EntityContractConst;
 import com.kdg.fs24.entity.core.api.PreViewDialog;
 import com.kdg.fs24.entity.core.api.ViewAction;
 import com.kdg.fs24.entity.contracts.AbstractEntityServiceContract;
-import com.kdg.fs24.entity.tariff.TariffCalculations;
 import lombok.Data;
 import java.time.LocalDate;
-import com.kdg.fs24.application.core.sysconst.SysConst;
+import java.time.Period;
 import com.kdg.fs24.application.core.nullsafe.NullSafe;
 import com.kdg.fs24.application.core.service.funcs.ServiceFuncs;
 import com.kdg.fs24.entity.tariff.TariffCalcRecord;
 import com.kdg.fs24.entity.tariff.TariffRate;
 import com.kdg.fs24.references.tariffs.serv.TariffServ;
-import com.kdg.fs24.references.tariffs.kind.TariffKind;
 import java.util.Collection;
 import com.kdg.fs24.entity.tariff.TariffKindService;
+import org.hibernate.Session;
 
 /**
  *
@@ -80,6 +79,12 @@ public class ActCalculateTariffSums<T extends AbstractEntityServiceContract> ext
                     newTariffCalcRecords.add(tariffCalcRecord);
 
                 });
+
+        this.getPersistanceEntityManager()
+                .getEntityManager()
+                .unwrap(Session.class)
+                .setJdbcBatchSize(Period.between(D2, D1).getDays());
+
     }
 
     //==========================================================================
@@ -99,10 +104,35 @@ public class ActCalculateTariffSums<T extends AbstractEntityServiceContract> ext
 
         super.doUpdate();
         // синхронизация с основными рассчетами
-        
+        this.newTariffCalcRecords
+                .stream()
+                .forEach(record -> {
+                    // находим существующий расчет по услуге
+                    final TariffCalcRecord tariffCalcRecord
+                            = this.getContractEntity()
+                                    .getTariffCalcRecords()
+                                    .stream()
+                                    .filter(existsRecord -> existsRecord
+                                    .getTariffRate()
+                                    .getTariffPlan2Serv()
+                                    .getTariffServ()
+                                    .getTariffServId()
+                                    .equals(record.getTariffRate().getTariffPlan2Serv().getTariffServ().getTariffServId()))
+                                    .findFirst()
+                                    .orElse(NullSafe.createObject(TariffCalcRecord.class));
+
+                    tariffCalcRecord.mergeRecord(record, D1, D2);
+
+                    if (NullSafe.isNull(tariffCalcRecord.getTariffCalcId())) {
+                        this.getContractEntity()
+                                .getTariffCalcRecords()
+                                .add(tariffCalcRecord);
+                    }
+
+                });
+
 //        this.getEntity()
 //                .getTariffCalculations()
 //                .store(D1, D2);
-
     }
 }

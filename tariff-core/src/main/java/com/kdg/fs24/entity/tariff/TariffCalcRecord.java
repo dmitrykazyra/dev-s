@@ -6,12 +6,18 @@
 package com.kdg.fs24.entity.tariff;
 
 import com.kdg.fs24.application.core.api.ObjectRoot;
+import com.kdg.fs24.application.core.nullsafe.NullSafe;
 import com.kdg.fs24.application.core.service.funcs.ServiceFuncs;
 import com.kdg.fs24.entity.core.AbstractPersistenceEntity;
 import com.kdg.fs24.persistence.api.PersistenceEntity;
 import java.util.Collection;
 import javax.persistence.*;
 import lombok.Data;
+import java.time.LocalDate;
+import com.kdg.fs24.application.core.service.funcs.FilterComparator;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -23,12 +29,13 @@ import lombok.Data;
 public class TariffCalcRecord extends ObjectRoot implements PersistenceEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_tariff_calc_id")
-    @SequenceGenerator(name = "seq_tariff_calc_id", sequenceName = "seq_tariff_calc_id", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_TariffCalcRecords")
+    @SequenceGenerator(name = "seq_TariffCalcRecords", sequenceName = "seq_TariffCalcRecords", allocationSize = 1)
     @Column(name = "tariff_calc_id")
     private Integer tariffCalcId;
     //--------------------------------------------------------------------------
     @ManyToOne
+    @JoinColumn(name = "rate_id", referencedColumnName = "rate_id")    
     private TariffRate tariffRate;
     //--------------------------------------------------------------------------
     @ManyToOne
@@ -37,4 +44,39 @@ public class TariffCalcRecord extends ObjectRoot implements PersistenceEntity {
     //--------------------------------------------------------------------------
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "tariffCalcRecord")
     private Collection<TariffCalcSum> tariffSums = ServiceFuncs.<TariffCalcSum>createCollection();
+
+    //==========================================================================
+    public void mergeRecord(final TariffCalcRecord tariffCalcRecord, final LocalDate D1, final LocalDate D2) {
+        if (NullSafe.isNull(this.getTariffRate())) {
+            this.setTariffRate(tariffCalcRecord.getTariffRate());
+        }
+        if (NullSafe.isNull(this.getEntity())) {
+            this.setEntity(tariffCalcRecord.getEntity());
+        }
+
+        final LocalDate d1 = D1.minusDays(1);
+        final LocalDate d2 = D2.plusDays(1);
+
+        final FilterComparator<TariffCalcSum> TCSC = (TariffCalcSum tcs) -> (tcs.getTariffCalcDate().isAfter(d1) && tcs.getTariffCalcDate().isBefore(d2));
+
+        // коллекция элементов для удаления
+        final Collection<TariffCalcSum> forDelete
+                = this.getTariffSums()
+                        .stream()
+                        .filter(tcs -> TCSC.getFilter(tcs))
+                        .collect(Collectors.toList());
+        forDelete
+                .stream()
+                .forEach(sum -> this.getTariffSums().remove(sum));
+        // Добавить новые
+        tariffCalcRecord
+                .getTariffSums()
+                .stream()
+                .filter(tcs -> TCSC.getFilter(tcs))
+                .forEach(sum -> { 
+                    sum.setTariffCalcRecord(this);
+                    this.getTariffSums().add(sum);                     
+                });
+    }
+
 }

@@ -20,21 +20,23 @@ import com.kdg.fs24.references.tariffs.kind.TariffBox;
 import com.kdg.fs24.references.tariffs.kind.TariffRateRecord;
 import com.kdg.fs24.references.tariffs.kind.TariffKind;
 import com.kdg.fs24.references.tariffs.kind.TariffCalcSumExtended;
+import com.kdg.fs24.entity.tariff.TariffCalcSum;
+import java.util.stream.Collectors;
 
 /**
  *
  * @author N76VB
  */
 public abstract class TariffBoxAbstract implements TariffBox {
-    
+
     private final Collection<TariffCalcSumExtended> tariffSums = ServiceFuncs.<TariffCalcSumExtended>createCollection();
     protected final Comparator<LiasDebtRest> RDC = (LiasDebtRest rd1, LiasDebtRest rd2) -> rd1.getRestDate().compareTo(rd2.getRestDate());
     protected final Comparator<LiasAction> LAC = (LiasAction la1, LiasAction la2) -> la1.getLiasDate().compareTo(la2.getLiasDate());
     protected final Comparator<TariffRateRecord> TRRC = (TariffRateRecord rd1, TariffRateRecord rd2) -> rd1.getRateDate().compareTo(rd2.getRateDate());
-    
+
     @Override
     public void printCalculations(final TariffKind tariffKind) {
-        
+
         LogService.LogInfo(this.getClass(), () -> this.tariffSums
                 .stream()
                 .sorted((r1, r2) -> r1.getTariff_calc_date().compareTo(r2.getTariff_calc_date()))
@@ -58,15 +60,24 @@ public abstract class TariffBoxAbstract implements TariffBox {
     }
 
     //==========================================================================
+    public Collection<TariffCalcSum> getTariffCalcSum() {
+        return tariffSums
+                .stream()
+                .map(mapper -> TariffCalcSum.create(mapper))
+                .collect(Collectors.toList());
+
+    }
+
+    //==========================================================================
     protected void addTariffSum(
             final LocalDate calc_date,
             final BigDecimal accrualBasis,
             final BigDecimal accrualRate,
             final BigDecimal accrualSum,
             final BigDecimal taxSum) {
-        
+
         tariffSums.add(TariffCalcSumExtended.create(calc_date, accrualBasis, accrualRate, accrualSum, taxSum));
-        
+
     }
 
     //==========================================================================
@@ -76,7 +87,7 @@ public abstract class TariffBoxAbstract implements TariffBox {
             final BigDecimal accrualRate,
             final BigDecimal accrualSum,
             final BigDecimal taxSum) {
-        
+
         NullSafe.create(ServiceFuncs.<TariffCalcSumExtended>getCollectionElement(this.tariffSums,
                 ts -> ts.getTariff_calc_date().equals(calc_date)).orElse(null))
                 .whenIsNull(() -> {
@@ -86,5 +97,6 @@ public abstract class TariffBoxAbstract implements TariffBox {
                     ((TariffCalcSumExtended) ns_TariffSumm).incTariff_sum(accrualSum);
                 });
     }
-    
+    //==========================================================================
+
 }

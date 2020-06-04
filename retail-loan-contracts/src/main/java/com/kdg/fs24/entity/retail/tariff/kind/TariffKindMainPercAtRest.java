@@ -75,6 +75,6 @@ public class TariffKindMainPercAtRest extends TariffKindService<TariffServMainPe
         }
 
         //return tariffBoxStd.getTariffSums();
-        return null;
+        return tariffBoxStd.getTariffCalcSum();
     }
 }

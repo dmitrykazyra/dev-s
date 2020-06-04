@@ -32,7 +32,7 @@ public abstract class AbstractAction<T extends ActionEntity>
     // объекты для персистенса
     private PersistanceEntityManager persistanceEntityManager;
 
-    private PersistanceEntityManager getPersistanceEntityManager() {
+    protected PersistanceEntityManager getPersistanceEntityManager() {
 
         if (NullSafe.isNull(this.persistanceEntityManager)) {
             persistanceEntityManager = ServiceLocator.<PersistanceEntityManager>findService(PersistanceEntityManager.class);

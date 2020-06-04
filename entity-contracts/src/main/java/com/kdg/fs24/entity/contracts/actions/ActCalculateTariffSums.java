@@ -79,12 +79,11 @@ public class ActCalculateTariffSums<T extends AbstractEntityServiceContract> ext
                     newTariffCalcRecords.add(tariffCalcRecord);
 
                 });
+    }
 
-        this.getPersistanceEntityManager()
-                .getEntityManager()
-                .unwrap(Session.class)
-                .setJdbcBatchSize(Period.between(D2, D1).getDays());
-
+    @Override
+    protected Integer getJdbcBatchSize() {
+        return (Period.between(D2, D1).getDays());
     }
 
     //==========================================================================

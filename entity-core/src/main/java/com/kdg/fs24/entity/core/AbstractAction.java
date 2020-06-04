@@ -20,6 +20,8 @@ import java.time.temporal.ChronoUnit;
 import lombok.Data;
 import com.kdg.fs24.spring.core.api.ServiceLocator;
 import com.kdg.fs24.entity.core.api.RefreshEntity;
+import java.time.Period;
+import org.hibernate.Session;
 
 /**
  *
@@ -30,15 +32,15 @@ public abstract class AbstractAction<T extends ActionEntity>
         extends AbstractPersistenceAction {
 
     // объекты для персистенса
-    private PersistanceEntityManager persistanceEntityManager;
+    private static PersistanceEntityManager persistanceEntityManager;
 
-    protected PersistanceEntityManager getPersistanceEntityManager() {
+    protected static PersistanceEntityManager getPersistanceEntityManager() {
 
-        if (NullSafe.isNull(this.persistanceEntityManager)) {
-            persistanceEntityManager = ServiceLocator.<PersistanceEntityManager>findService(PersistanceEntityManager.class);
+        if (NullSafe.isNull(AbstractAction.persistanceEntityManager)) {
+            AbstractAction.persistanceEntityManager = ServiceLocator.<PersistanceEntityManager>findService(PersistanceEntityManager.class);
         }
 
-        return this.persistanceEntityManager;
+        return persistanceEntityManager;
     }
 
     //==========================================================================
@@ -66,6 +68,11 @@ public abstract class AbstractAction<T extends ActionEntity>
         if (this.isValid()) {
             this.stopWatcher = StopWatcher.create();
             this.beforeUpdate();
+
+            AbstractAction.getPersistanceEntityManager()
+                    .getEntityManager()
+                    .unwrap(Session.class)
+                    .setJdbcBatchSize(this.getJdbcBatchSize());//AbstractAction.getPersistanceEntityManager().getDefaultJdbcBatchSize());
             // наполнение в предках объектов для персистенса
             //this.doUpdate();
 
@@ -205,6 +212,11 @@ public abstract class AbstractAction<T extends ActionEntity>
     //==========================================================================
     protected void afterCommit() {
 
+    }
+
+    //==========================================================================
+    protected Integer getJdbcBatchSize() {
+        return (AbstractAction.getPersistanceEntityManager().getDefaultJdbcBatchSize());
     }
 
     //==========================================================================

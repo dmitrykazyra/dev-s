@@ -47,7 +47,9 @@ public class PersistanceEntityManager extends AbstractApplicationBean {
     private String debugMode; // = SysConst.STRING_FALSE;
     @Value("${russian_ref_lang}")
     private String russianRefLan; // = SysConst.STRING_FALSE;
-
+    @Value("${defaultJdbcBatchSize}")
+    private Integer defaultJdbcBatchSize; // = SysConst.STRING_FALSE;
+    
     //public PersistanceEntityManager(final String persistenceUnitName) {
     @Override
     public void initialize() {

@@ -54,7 +54,7 @@ import com.kdg.fs24.application.core.nullsafe.NullSafe;
 public abstract class RestProcessor {// extends ObjectRoot {
 
     // коллекция подтвердающих сообщений
-    protected final static Collection<ReqInfo> REQUESTS_LIST = ServiceFuncs.<ReqInfo>getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);
+    protected final static Collection<ReqInfo> REQUESTS_LIST = ServiceFuncs.<ReqInfo>createCollection();
 
     private String targetServer;
     private String serverReadTimeout;

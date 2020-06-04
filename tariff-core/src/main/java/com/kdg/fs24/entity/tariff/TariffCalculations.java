@@ -20,6 +20,7 @@ import com.kdg.fs24.application.core.nullsafe.NullSafe;
  *
  * @author N76VB
  */
+@Deprecated
 public class TariffCalculations {
 
     private Long entity_id;
@@ -218,7 +219,7 @@ public class TariffCalculations {
 //        // получили список повторяющихся аннотаций
 //        final Collection<LiasOper2Tariff> col = AnnotationFuncs.<LiasOper2Tariff>getRepeatedAnnotation(lot.getClass(), LiasOper2Tariff.class);
 //        // список новых финопераций
-//        final Collection<NewLiasOper> loc = ServiceFuncs.<NewLiasOper>getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);
+//        final Collection<NewLiasOper> loc = ServiceFuncs.<NewLiasOper>createCollection();
 //
 //        // пробежали по списку и получили значения аннотиаций
 //        col.stream()

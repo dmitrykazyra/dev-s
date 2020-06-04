@@ -25,6 +25,7 @@ import com.kdg.fs24.entity.marks.EntityMark;
 import com.kdg.fs24.entity.debts.LiasDebt;
 import com.kdg.fs24.entity.bondschedule.PmtSchedule;
 import com.kdg.fs24.entity.tariff.TariffCalcRecord;
+import com.kdg.fs24.entity.tariff.TariffPlan2Serv;
 
 /**
  *
@@ -85,7 +86,7 @@ public abstract class AbstractEntityContract extends AbstractActionEntity {
     //--------------------------------------------------------------------------    
     @ManyToOne(targetEntity = AbstractTariffPlan.class)
     @JoinColumn(name = "tariff_plan_id", referencedColumnName = "tariff_plan_id")
-    private TariffPlan tariffPlan;
+    private AbstractTariffPlan tariffPlan;
     // отметки на сущности
     //--------------------------------------------------------------------------
     @OneToMany
@@ -111,6 +112,6 @@ public abstract class AbstractEntityContract extends AbstractActionEntity {
     // рассчеты сумм калькуляций
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "entity")
     //@JoinColumn(name = "entity_id", referencedColumnName = "entity_id")
-    private Collection<TariffCalcRecord> tariffCalcRecords;
+    private Collection<TariffCalcRecord> tariffCalcRecords = ServiceFuncs.<TariffCalcRecord>createCollection();
 
 }

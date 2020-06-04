@@ -130,6 +130,7 @@ public final class SysConst {
     public final static Class<String> STRING_CLASS = String.class;
     public final static Class<Boolean> BOOLEAN_CLASS = Boolean.class;
     public final static Class<Integer> INTEGER_CLASS = Integer.class;
+    //==========================================================================
 
     //==========================================================================
     public static final String getCurrentIp() {

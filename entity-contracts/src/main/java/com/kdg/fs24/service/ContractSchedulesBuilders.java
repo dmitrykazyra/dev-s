@@ -21,6 +21,8 @@ import com.kdg.fs24.bond.schedule.api.PmtScheduleCalcAlgId;
 import com.kdg.fs24.entity.bondschedule.PmtSchedule;
 import com.kdg.fs24.references.bond.schedule.api.PmtScheduleAlg;
 import com.kdg.fs24.references.bond.schedule.api.PmtScheduleTerm;
+import com.kdg.fs24.references.tariffs.serv.TariffServ;
+import com.kdg.fs24.references.tariffs.serv.TariffServId;
 import java.util.Optional;
 
 /**
@@ -35,19 +37,18 @@ import java.util.Optional;
 public class ContractSchedulesBuilders extends AbstractApplicationBean {
 
     // коллекция алгоритмов-построителей графиков
-    private final Collection<Class<PmtScheduleBuilder>> scheduleBuilders = ServiceFuncs.getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);
+    private final Collection<Class<PmtScheduleBuilder>> scheduleBuilders = ServiceFuncs.createCollection();
 
     @Override
     public void initialize() {
-        ReflectionFuncs.createPkgClassesCollection("com.kdg.fs24.entity", PmtScheduleBuilder.class)
-                .stream()
-                .filter(p -> !p.isInterface())
-                .filter(p -> !Modifier.isAbstract(p.getModifiers()))
-                .filter(p -> AnnotationFuncs.isAnnotated(p, PmtScheduleCalcAlgId.class))
-                .forEach((entClazz) -> {
 
+        final Class<PmtScheduleBuilder> clazz = (PmtScheduleBuilder.class);
+        final Class<PmtScheduleCalcAlgId> annClazz = PmtScheduleCalcAlgId.class;
+
+        // значения для справочника берутся из аннотаций классов
+        ReflectionFuncs.processPkgClassesCollection("com.kdg.fs24.entity", clazz, annClazz,
+                (entClazz) -> {
                     scheduleBuilders.add(entClazz);
-
                 });
 
         if (scheduleBuilders.isEmpty()) {

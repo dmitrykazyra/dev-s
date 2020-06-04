@@ -22,9 +22,9 @@ import java.util.Map;
 public class NewLiasOperImpl implements OldLiasOper {
 
     final private Collection<OperAttr> operAttrsCollection
-            = ServiceFuncs.<OperAttr>getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);
+            = ServiceFuncs.<OperAttr>createCollection();
     final private Collection<LiasOperActionExt> advancedActions
-            = ServiceFuncs.<LiasOperActionExt>getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);
+            = ServiceFuncs.<LiasOperActionExt>createCollection();
 
     private static Map<Integer, Class<? extends OperAttr>> linkedFields;
 

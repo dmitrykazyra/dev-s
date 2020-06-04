@@ -18,6 +18,7 @@ import java.time.LocalDate;
 import java.util.Collection;
 import com.kdg.fs24.application.core.api.ObjectRoot;
 import com.kdg.fs24.application.core.exception.api.InternalAppException;
+import com.kdg.fs24.application.core.log.LogService;
 import com.kdg.fs24.persistence.api.PersistenceEntity;
 import com.kdg.fs24.lias.opers.napi.LiasFinanceOper;
 import java.math.BigDecimal;
@@ -35,6 +36,7 @@ import com.kdg.fs24.entity.bondschedule.PmtSchedule;
 import com.kdg.fs24.service.LiasDocumentBuilders;
 import com.kdg.fs24.spring.core.api.ServiceLocator;
 import com.kdg.fs24.application.core.sysconst.SysConst;
+import com.kdg.fs24.application.core.locale.NLS;
 
 /**
  *
@@ -90,10 +92,10 @@ public class LiasDebt extends ObjectRoot implements PersistenceEntity {
     //@OneToMany
     //@JoinColumn(name = "debt_id", referencedColumnName = "debt_id")
     @OneToMany(mappedBy = "liasDebt", cascade = CascadeType.ALL)
-    private Collection<Lias> liases = ServiceFuncs.<Lias>getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);
+    private Collection<Lias> liases = ServiceFuncs.<Lias>createCollection();
     //--------------------------------------------------------------------------
     @OneToMany(mappedBy = "liasDebt", cascade = CascadeType.ALL)
-    private Collection<LiasDebtRest> liasDebtRests = ServiceFuncs.<LiasDebtRest>getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);
+    private Collection<LiasDebtRest> liasDebtRests = ServiceFuncs.<LiasDebtRest>createCollection();
 
     //==========================================================================
     // сервисная часть
@@ -335,4 +337,19 @@ public class LiasDebt extends ObjectRoot implements PersistenceEntity {
                     rest.incRest(operSum);
                 });
     }
+
+    //==========================================================================
+    public void printLiasDebtRests() {
+        LogService.LogInfo(this.getClass(), () -> this.liasDebtRests
+                .stream()
+                .sorted((r1, r2) -> r1.getRestDate().compareTo(r2.getRestDate()))
+                .map(rest
+                        -> String.format("restDate: %s; restSum: %f\n",
+                        NLS.getStringDate(rest.getRestDate()),
+                        rest.getRest()))
+                .reduce(String.format("Debts rests (%d): \n",
+                        this.liasDebtRests.size()),
+                        (x, y) -> x.concat(y)));
+    }
+    //==========================================================================
 }

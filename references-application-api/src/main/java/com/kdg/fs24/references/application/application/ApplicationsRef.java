@@ -109,7 +109,7 @@ public class ApplicationsRef<T extends Application> extends AbstractReference<Ap
 //            return NullSafe.create()
 //                    .execute2result(() -> {
 //
-//                        final Collection<T> refCollection = ServiceFuncs.<T>getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);
+//                        final Collection<T> refCollection = ServiceFuncs.<T>createCollection();
 //
 //                        refCollection.add((T) NullSafe.createObject(clazz)
 //                                .setApp_id(100)

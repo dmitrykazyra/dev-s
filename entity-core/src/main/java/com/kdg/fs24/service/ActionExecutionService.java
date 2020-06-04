@@ -24,7 +24,6 @@ import com.kdg.fs24.application.core.sysconst.SysConst;
 import com.kdg.fs24.entity.core.AbstractAction;
 import com.kdg.fs24.entity.core.api.ActionCodeId;
 import com.kdg.fs24.entity.core.api.EntityTypeId;
-import java.lang.reflect.Modifier;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Collection;
@@ -57,10 +56,10 @@ public abstract class ActionExecutionService extends AbstractApplicationService 
 
     //==========================================================================
     private final Collection<Pair> CLASS_ENT2ACTION
-            = ServiceFuncs.getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);
+            = ServiceFuncs.createCollection();
 
     private final Collection<? extends AbstractActionEntity> enityCollection
-            = ServiceFuncs.getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);
+            = ServiceFuncs.createCollection();
 
     // сущность - действие
 //    private final Map<Class<ENT>, Class<ACT>> CLASS_ENT2ACTION
@@ -156,12 +155,13 @@ public abstract class ActionExecutionService extends AbstractApplicationService 
         // классы сущностей
         Arrays.stream(entityClassesPackages)
                 .forEach(entPkg -> {
-                    ReflectionFuncs.createPkgClassesCollection(entPkg, AbstractActionEntity.class)
-                            .stream()
-                            .filter(p -> !p.isInterface())
-                            .filter(p -> !Modifier.isAbstract(p.getModifiers()))
-                            .filter(p -> AnnotationFuncs.isAnnotated(p, EntityTypeId.class))
-                            .forEach((entClazz) -> {
+
+                    final Class<AbstractActionEntity> clazz = (AbstractActionEntity.class);
+                    final Class<EntityTypeId> annClazz = EntityTypeId.class;
+
+                    // значения для справочника берутся из аннотаций классов
+                    ReflectionFuncs.processPkgClassesCollection(entPkg, clazz, annClazz,
+                            (entClazz) -> {
 
                                 // действия на сущности
                                 if (!AnnotationFuncs.isAnnotated(entClazz, ActionClassesPackages.class)) {
@@ -180,15 +180,15 @@ public abstract class ActionExecutionService extends AbstractApplicationService 
                                 Arrays.stream(actionsClassesPackages)
                                         .forEach(actPkg -> {
 
-                                            ReflectionFuncs.createPkgClassesCollection(actPkg, AbstractAction.class)
-                                                    .stream()
-                                                    .filter(p -> !p.isInterface())
-                                                    .filter(p -> !Modifier.isAbstract(p.getModifiers()))
-                                                    .filter(p -> AnnotationFuncs.isAnnotated(p, ActionCodeId.class))
-                                                    .forEach((actClazz) -> {
+                                            final Class<AbstractAction> clazzAct = (AbstractAction.class);
+                                            final Class<ActionCodeId> annActClazz = ActionCodeId.class;
+
+                                            // значения для справочника берутся из аннотаций классов
+                                            ReflectionFuncs.processPkgClassesCollection(actPkg, clazzAct, annActClazz,
+                                                    (actClazz) -> {
                                                         this.registerEntClass(entClazz,
                                                                 actClazz,
-                                                                AnnotationFuncs.getAnnotation(actClazz, ActionCodeId.class).action_code());
+                                                                AnnotationFuncs.getAnnotation(actClazz, annActClazz).action_code());
                                                     });
                                         });
 
@@ -211,7 +211,8 @@ public abstract class ActionExecutionService extends AbstractApplicationService 
                                             this.registerEntStatus(entClazz, entityStatus);
                                         });
                             });
-                });
+                }
+                );
 
         if (this.CLASS_ENT2ACTION.isEmpty()) {
             class NoActionClassesDefined extends InternalAppException {
@@ -225,7 +226,8 @@ public abstract class ActionExecutionService extends AbstractApplicationService 
         }
 
         // post
-        LogService.LogInfo(this.getClass(),
+        LogService.LogInfo(
+                this.getClass(),
                 () -> String.format("There [%d] pair(s) (entities/action): '%s' ",
                         this.CLASS_ENT2ACTION.size(),
                         this.getClass().getCanonicalName()));

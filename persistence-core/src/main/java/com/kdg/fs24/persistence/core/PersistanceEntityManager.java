@@ -275,7 +275,7 @@ public class PersistanceEntityManager extends AbstractApplicationBean {
         return NullSafe.create()
                 .execute2result(() -> {
 
-                    //final Collection<T> result; // = ServiceFuncs.<T>getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);
+                    //final Collection<T> result; // = ServiceFuncs.<T>createCollection();
                     final Query query = this.getEntityManager()
                             .createNativeQuery(sql, clazz.getSimpleName());
 

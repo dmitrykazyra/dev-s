@@ -6,6 +6,7 @@
 package com.kdg.fs24.entity.tariff;
 
 import com.kdg.fs24.application.core.api.ObjectRoot;
+import com.kdg.fs24.application.core.service.funcs.ServiceFuncs;
 import com.kdg.fs24.entity.core.AbstractPersistenceEntity;
 import com.kdg.fs24.persistence.api.PersistenceEntity;
 import java.util.Collection;
@@ -35,5 +36,5 @@ public class TariffCalcRecord extends ObjectRoot implements PersistenceEntity {
     private AbstractPersistenceEntity entity;
     //--------------------------------------------------------------------------
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "tariffCalcRecord")
-    private Collection<TariffCalcSum> tariffSums;
+    private Collection<TariffCalcSum> tariffSums = ServiceFuncs.<TariffCalcSum>createCollection();
 }

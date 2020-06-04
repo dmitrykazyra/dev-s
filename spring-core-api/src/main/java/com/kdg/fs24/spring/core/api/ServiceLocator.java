@@ -17,7 +17,7 @@ import java.util.Collection;
 public final class ServiceLocator {
 
     private static final Collection<ApplicationBean> BEANS_LIST
-            = ServiceFuncs.<ApplicationBean>getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);
+            = ServiceFuncs.<ApplicationBean>createCollection();
 
     public static void registerService(final ApplicationBean applicationBean) {
         BEANS_LIST.add(applicationBean);

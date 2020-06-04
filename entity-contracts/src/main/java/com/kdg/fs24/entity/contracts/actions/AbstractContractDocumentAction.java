@@ -24,7 +24,7 @@ public abstract class AbstractContractDocumentAction<T extends AbstractEntitySer
         extends AbstractContractAction<T> {
 
     // коллекция для создания документов
-    private final Collection<Document> document4creation = ServiceFuncs.<Document>getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);
+    private final Collection<Document> document4creation = ServiceFuncs.<Document>createCollection();
 
     private Integer defaultDocTemplateId; // код шаблона документа по умолчанию
     private Integer defaultPmtSysId; // код платежной системы по умолчанию

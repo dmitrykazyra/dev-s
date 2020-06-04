@@ -37,7 +37,7 @@ import com.kdg.fs24.spring.core.bean.AbstractApplicationBean;
 public class MainMonitorBean extends AbstractApplicationBean {
 
 //==========================================================================
-    private volatile Collection<AbstractSpyEntity> jobsList; // ServiceFuncs.<AbstractSpyEntity>getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);
+    private volatile Collection<AbstractSpyEntity> jobsList; // ServiceFuncs.<AbstractSpyEntity>createCollection();
     private volatile Boolean inProgess = Boolean.FALSE;
     //==========================================================================
     // мониторинг состояния БД через отправку почтой     
@@ -114,7 +114,7 @@ public class MainMonitorBean extends AbstractApplicationBean {
 
             NullSafe.create(this.jobsList)
                     .whenIsNull(() -> {
-                        this.jobsList = ServiceFuncs.<AbstractSpyEntity>getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);
+                        this.jobsList = ServiceFuncs.<AbstractSpyEntity>createCollection();
                     })
                     .execute(() -> {
 

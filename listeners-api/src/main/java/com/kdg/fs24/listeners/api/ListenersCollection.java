@@ -15,7 +15,7 @@ import com.kdg.fs24.application.core.service.funcs.AnnotationFuncs;
  */
 public final class ListenersCollection<T extends EventListener> {
 
-    private final Collection<T> listeners = ServiceFuncs.<T>getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);
+    private final Collection<T> listeners = ServiceFuncs.<T>createCollection();
 
     public static ListenersCollection createListenersCollection() {
         return new ListenersCollection();

@@ -73,10 +73,10 @@ public class Lias extends ObjectRoot implements PersistenceEntity {
     private Boolean isCancelled;
 
     @OneToMany(mappedBy = "lias", cascade = CascadeType.ALL)
-    private Collection<LiasAction> liasActions = ServiceFuncs.<LiasAction>getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);
+    private Collection<LiasAction> liasActions = ServiceFuncs.<LiasAction>createCollection();
 
     @OneToMany(mappedBy = "lias", cascade = CascadeType.ALL)
-    private Collection<LiasRest> liasRests = ServiceFuncs.<LiasRest>getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);
+    private Collection<LiasRest> liasRests = ServiceFuncs.<LiasRest>createCollection();
 
     //==========================================================================
     // создание новой финоперации

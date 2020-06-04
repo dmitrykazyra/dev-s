@@ -51,7 +51,7 @@ public class FunctionsGroupsRef<T extends FunctionGroup> extends AbstractReferen
 //            return NullSafe.create()
 //                    .execute2result(() -> {
 //
-//                        final Collection<T> refCollection = ServiceFuncs.<T>getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);
+//                        final Collection<T> refCollection = ServiceFuncs.<T>createCollection();
 //
 //                        refCollection.add((T) NullSafe.createObject(clazz)
 //                                .setFunction_group_id(AppConst.fnc_group_1)

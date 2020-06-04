@@ -32,7 +32,7 @@ public class Onliner extends AbstractSpyEntity<HibernateItem> {
     @Override
     public Collection<HibernateItem> createDocuments(final Document document, final String keyWords) {
 
-        final Collection<HibernateItem> collection = ServiceFuncs.<HibernateItem>getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);
+        final Collection<HibernateItem> collection = ServiceFuncs.<HibernateItem>createCollection();
 
         // разбираем документ
         final Element item = document.getElementsByClass("ba-tbl-list fleamarket__1").first();

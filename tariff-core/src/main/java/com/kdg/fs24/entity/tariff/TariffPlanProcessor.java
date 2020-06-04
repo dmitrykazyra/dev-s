@@ -3,17 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.kdg.fs24.references.tariffs.kind;
-
-import java.util.Collection;
+package com.kdg.fs24.entity.tariff;
 
 /**
  *
  * @author N76VB
  */
-public interface TariffBox {
 
-    Collection<TariffCalcSumExtended> getTariffSums();
-    
-    void printCalculations(TariffKind tariffKind);
+@FunctionalInterface
+public interface TariffPlanProcessor {
+    void processTariffPlan(AbstractTariffPlan abstractTariffPlan);
 }

@@ -14,7 +14,7 @@ import com.kdg.fs24.application.core.service.funcs.ServiceFuncs;
 
 public abstract class ObjectList<T extends Object> implements Serializable {
 
-    private final Collection<T> objectList = ServiceFuncs.<T>getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);
+    private final Collection<T> objectList = ServiceFuncs.<T>createCollection();
 
     // конструктор по умолчанию
     public ObjectList() {

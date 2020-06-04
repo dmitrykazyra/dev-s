@@ -11,7 +11,7 @@ import com.kdg.fs24.entity.retail.loan.contracts.RetailLoanConstants;
 import com.kdg.fs24.entity.retail.loan.contracts.RetailLoanContract;
 import com.kdg.fs24.entity.tariff.AbstractTariffPlan;
 import com.kdg.fs24.entity.tariff.TariffRate_1;
-import com.kdg.fs24.entity.tariff.api.TariffPlan;
+import com.kdg.fs24.entity.tariff.AbstractTariffPlan;
 import com.kdg.fs24.persistence.core.PersistanceEntityManager;
 import com.kdg.fs24.references.application.currency.Currency;
 import com.kdg.fs24.references.bond.schedule.api.PmtScheduleAlg;
@@ -56,7 +56,7 @@ public abstract class TestUtil4LoanContract extends Utils4test {
 
         final Currency currency = Currency.findCurrency(840);
 
-        final TariffPlan tariffPlan = this.createTestTariffPlan(); //this.getRetailLoanContractActionsService().<AbstractTariffPlan>findActionEntity(AbstractTariffPlan.class, Long.valueOf(68338)).get();
+        final AbstractTariffPlan tariffPlan = this.createTestTariffPlan_rate_1(); //this.getRetailLoanContractActionsService().<AbstractTariffPlan>findActionEntity(AbstractTariffPlan.class, Long.valueOf(68338)).get();
         final String contractNum = testString;
         final LocalDate contractDate = LocalDate.now();
         final LocalDate beginDate = LocalDate.now();
@@ -86,7 +86,7 @@ public abstract class TestUtil4LoanContract extends Utils4test {
     }
 
     //==========================================================================
-    protected AbstractTariffPlan createTestTariffPlan() {
+    protected AbstractTariffPlan createTestTariffPlan_rate_1() {
         final String testString = TestFuncs.generateTestString20();
         final Integer kindId = TariffConst.EK_TP_FOR_RETAIL_LOAN_CONTRACT;
 
@@ -100,28 +100,30 @@ public abstract class TestUtil4LoanContract extends Utils4test {
         }
 
         final AbstractTariffPlan tariffPlanImpl = tariffCoreActionsService
-                .createTariffPlan(testString, testString, entityKind, LocalDate.now(), LocalDate.now());
+                .createTariffPlan(testString, testString, entityKind, LocalDate.now(), LocalDate.now(),
+                        (plan) -> {
 
-        tariffPlanImpl.addServKindId(TariffKind.findTariffKind(TariffConst.TK_CURRENT_RESTS),
-                LocalDate.now(),
-                SysConst.LOCALDATE_NULL,
-                (tariffPlan2Serv) -> {
-                    // добавление услуги в тарифный план
-                    tariffPlan2Serv.addTariffRate(TariffAccretionScheme.findTariffAccretionScheme(1),
-                            TariffKind.findTariffKind(TariffConst.TK_CURRENT_RESTS), LocalDate.now(), SysConst.LOCALDATE_NULL, testString,
-                            (tariffRate)-> {
-                            
-                                final TariffRate_1 tariffRate_1 = NullSafe.createObject(TariffRate_1.class);
-                                
-                                tariffRate_1.setRateDate(LocalDate.now());
-                                tariffRate_1.setRateValue(BigDecimal.valueOf(1.9));
-                                tariffRate_1.setTariffRate(tariffRate);
-                                tariffRate_1.setCurrency(Currency.findCurrency(840));
-                                
-                                tariffRate.addTariffRate_1(tariffRate_1);
-                            
-                            });
-                });
+                            plan.addServKindId(TariffKind.findTariffKind(TariffConst.TK_CURRENT_RESTS),
+                                    LocalDate.now(),
+                                    SysConst.LOCALDATE_NULL,
+                                    (tariffPlan2Serv) -> {
+                                        // добавление услуги в тарифный план
+                                        tariffPlan2Serv.addTariffRate(TariffAccretionScheme.findTariffAccretionScheme(1),
+                                                TariffKind.findTariffKind(TariffConst.TK_CURRENT_RESTS), LocalDate.now(), SysConst.LOCALDATE_NULL, testString,
+                                                (tariffRate_1) -> {
+
+                                                    final LocalDate ld = LocalDate.now();
+
+                                                    tariffRate_1.addTariffRate_1(ld.minusDays(50), BigDecimal.valueOf(1.9), Currency.findCurrency(840));
+                                                    tariffRate_1.addTariffRate_1(ld.minusDays(40), BigDecimal.valueOf(2.9), Currency.findCurrency(840));
+                                                    tariffRate_1.addTariffRate_1(ld, BigDecimal.valueOf(3.3), Currency.findCurrency(840));
+                                                    tariffRate_1.addTariffRate_1(ld.plusDays(30), BigDecimal.valueOf(3.9), Currency.findCurrency(840));
+                                                    tariffRate_1.addTariffRate_1(ld.plusDays(40), BigDecimal.valueOf(4.9), Currency.findCurrency(840));
+                                                    tariffRate_1.addTariffRate_1(ld.plusDays(60), BigDecimal.valueOf(5.9), Currency.findCurrency(840));
+
+                                                });
+                                    });
+                        });
 
         tariffCoreActionsService.executeAction(tariffPlanImpl, TariffConst.ACT_MODIFY_TARIFF_PLAN);
         tariffCoreActionsService.executeAction(tariffPlanImpl, TariffConst.ACT_AUTHORIZE_TARIFF_PLAN);

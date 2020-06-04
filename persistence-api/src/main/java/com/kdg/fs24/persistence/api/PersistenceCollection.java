@@ -20,7 +20,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class PersistenceCollection<T extends PersistenceEntity> {
 
     private final AtomicBoolean isValid = NullSafe.createObject(AtomicBoolean.class);
-    private final Collection<T> persistenceCollection = ServiceFuncs.getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);
+    private final Collection<T> persistenceCollection = ServiceFuncs.createCollection();
 
     public Collection<T> getPersistenceCollection() {
 

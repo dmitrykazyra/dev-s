@@ -25,7 +25,7 @@ import com.kdg.fs24.entity.contract.subjects.ContractSubject;
 import com.kdg.fs24.entity.counterparties.api.Counterparty;
 import com.kdg.fs24.references.loan.api.LoanSource;
 import com.kdg.fs24.references.application.currency.Currency;
-import com.kdg.fs24.entity.tariff.api.TariffPlan;
+import com.kdg.fs24.entity.tariff.AbstractTariffPlan;
 import com.kdg.fs24.references.tariffs.accretionscheme.TariffAccretionScheme;
 import java.math.BigDecimal;
 import com.kdg.fs24.entity.core.api.CachedReferencesClasses;
@@ -61,7 +61,7 @@ public class RetailLoanContractActionsService extends ActionExecutionService {
             final Counterparty counterparty,
             final EntityKind entityKind,
             final Currency currency,
-            final TariffPlan tariffPlan,
+            final AbstractTariffPlan tariffPlan,
             final String contractNum,
             final LocalDate contractDate,
             final LocalDate beginDate,

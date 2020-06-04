@@ -57,7 +57,7 @@ public class TestTariffCore {
         }
 
         final AbstractTariffPlan tariffPlanImpl = tariffCoreActionsService
-                .createTariffPlan(testString, testString, entityKind, LocalDate.now(), LocalDate.now());
+                .createTariffPlan(testString, testString, entityKind, LocalDate.now(), LocalDate.now(), (plan) -> {});
 
         tariffCoreActionsService.executeAction(tariffPlanImpl, TariffConst.ACT_MODIFY_TARIFF_PLAN);
         tariffCoreActionsService.executeAction(tariffPlanImpl, TariffConst.ACT_AUTHORIZE_TARIFF_PLAN);

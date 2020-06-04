@@ -30,7 +30,7 @@ public class EntAttrTemplatesRef extends AbstractReference<EntAttrTemplate> {
 //            return NullSafe.create(EntityReferenceConst.ENT_ATTR_TEMPLATE_CLASS.getCanonicalName())
 //                    .execute2result(() -> {
 //
-//                        final Collection<T> refCollection = ServiceFuncs.<T>getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);
+//                        final Collection<T> refCollection = ServiceFuncs.<T>createCollection();
 //
 //                        ReflectionFuncs.createPkgClassesCollection(EntityReferenceConst.ENTITY_ATTR_TEMPLATE_CLASSES_PACKAGE,
 //                                EntityReferenceConst.ENT_LIST_ATTR_TEMPLATE_CLASS)

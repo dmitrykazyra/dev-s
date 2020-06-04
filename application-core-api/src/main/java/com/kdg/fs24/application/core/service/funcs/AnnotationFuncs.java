@@ -79,7 +79,7 @@ public final class AnnotationFuncs {
             final Boolean checkParentClass) {
 
         Annotation[] annotation = null;
-        final Collection<T> annCollection = ServiceFuncs.<T>getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);
+        final Collection<T> annCollection = ServiceFuncs.<T>createCollection();
         //result = (Boolean) annViewAction.isView();
         Class clAss = checkedClass;
 

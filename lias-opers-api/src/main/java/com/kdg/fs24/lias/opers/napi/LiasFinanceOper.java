@@ -22,7 +22,7 @@ import lombok.Data;
 public class LiasFinanceOper {
 
     final private Collection<OperAttr> operAttrsCollection
-            = ServiceFuncs.<OperAttr>getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);
+            = ServiceFuncs.<OperAttr>createCollection();
 
     final public static Map<Integer, Class<? extends OperAttr>> LINKED_FIELDS
             = ServiceFuncs.<Integer, Class<? extends OperAttr>>getOrCreateMap(ServiceFuncs.MAP_NULL);

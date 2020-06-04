@@ -24,7 +24,7 @@ public abstract class AbstractActionEntity
         extends AbstractPersistenceEntity {
 //    
 //    private final Collection<Class<? extends AbstractAction>> actClasses = 
-//            ServiceFuncs.getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);    
+//            ServiceFuncs.createCollection();    
 //    
 //    public void executeAction(final Integer actionId) {
 //        

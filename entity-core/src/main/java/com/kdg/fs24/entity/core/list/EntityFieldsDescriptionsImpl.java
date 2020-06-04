@@ -17,7 +17,7 @@ import com.kdg.fs24.application.core.nullsafe.NullSafe;
 
 public class EntityFieldsDescriptionsImpl implements EntityFieldsDescriptions {
 
-    private final Collection<FieldDescription> fieldsList = ServiceFuncs.<FieldDescription>getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);
+    private final Collection<FieldDescription> fieldsList = ServiceFuncs.<FieldDescription>createCollection();
 
     public Collection<FieldDescription> getFieldsList() {
         return fieldsList;

@@ -47,7 +47,7 @@ public class TariffPlan2Serv implements PersistenceEntity {
     private LocalDate closeDate;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "tariffPlan2Serv")
-    private Collection<TariffRate> tariffRates = ServiceFuncs.<TariffRate>getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);
+    private Collection<TariffRate> tariffRates = ServiceFuncs.<TariffRate>createCollection();
 
     //==========================================================================
     public void addTariffRate(final TariffAccretionScheme tariffAccretionScheme,

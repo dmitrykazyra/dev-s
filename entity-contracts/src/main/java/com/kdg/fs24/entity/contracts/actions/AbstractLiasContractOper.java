@@ -36,7 +36,7 @@ public abstract class AbstractLiasContractOper<T extends AbstractEntityServiceCo
 
     // коллекция для создания финопераций
     final private Collection<LiasFinanceOper> newOpers
-            = ServiceFuncs.<LiasFinanceOper>getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);
+            = ServiceFuncs.<LiasFinanceOper>createCollection();
     // дата начисления
     private LocalDate accretionDate;
     // дата исполнения

@@ -29,7 +29,7 @@ public class TargetsRef extends AbstractReference<AbstractSpyEntity> {
 //            return NullSafe.create(WMonitorConst.SPY_ENTITY_CLASS.getCanonicalName())
 //                    .execute2result(() -> {
 //
-//                        final Collection<T> refCollection = ServiceFuncs.<T>getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);
+//                        final Collection<T> refCollection = ServiceFuncs.<T>createCollection();
 //
 //                        ReflectionFuncs.createPkgClassesCollection(WMonitorConst.ENTITY_SPY_CLASSES_PACKAGE, WMonitorConst.SPY_ENTITY_CLASS)
 //                                .stream()

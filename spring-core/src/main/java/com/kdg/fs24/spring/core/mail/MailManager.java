@@ -72,7 +72,7 @@ public class MailManager extends AbstractApplicationBean {
         }
     }
 
-    private final static Collection<String> RED_WORDS = ServiceFuncs.<String>getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);
+    private final static Collection<String> RED_WORDS = ServiceFuncs.<String>createCollection();
 
     private String format2htmlmail(final String body) {
 

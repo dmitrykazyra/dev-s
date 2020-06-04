@@ -43,7 +43,7 @@ public abstract class AbstractAction<T extends ActionEntity>
 
     //==========================================================================
     private final Collection<PersistenceEntity> persistenceEntities
-            = ServiceFuncs.<PersistenceEntity>getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);
+            = ServiceFuncs.<PersistenceEntity>createCollection();
 
     private StopWatcher stopWatcher;
     private String errMsg;

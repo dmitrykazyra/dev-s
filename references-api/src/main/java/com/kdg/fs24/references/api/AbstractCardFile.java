@@ -28,7 +28,7 @@ public abstract class AbstractCardFile<T extends ReferenceRec> {
     //==========================================================================
     public Collection<T> getCardFiles() {
         if (NullSafe.isNull(cardFiles)) {
-            cardFiles = (Collection<T>) ServiceFuncs.<T>getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);
+            cardFiles = (Collection<T>) ServiceFuncs.<T>createCollection();
         }
         return cardFiles;
     }

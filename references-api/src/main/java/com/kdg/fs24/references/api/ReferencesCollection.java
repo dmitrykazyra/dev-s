@@ -33,7 +33,7 @@ public final class ReferencesCollection<T extends AbstractRefRecord> {
     public final Collection<T> fillRefCollection(AbsReference absReference) {
 
         if (NullSafe.isNull(this.refCollection)) {
-            this.refCollection = ServiceFuncs.<T>getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);
+            this.refCollection = ServiceFuncs.<T>createCollection();
         }
         NullSafe.create(this.referenceClassName)
                 .execute(() -> {

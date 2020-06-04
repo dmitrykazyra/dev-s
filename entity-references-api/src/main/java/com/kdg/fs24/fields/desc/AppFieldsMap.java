@@ -100,7 +100,7 @@ public class AppFieldsMap {
         return NullSafe.create(SysConst.OBJECT_NULL)
                 .execute2result(() -> {
 
-                    final Collection<FieldDescription> col = ServiceFuncs.<FieldDescription>getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);
+                    final Collection<FieldDescription> col = ServiceFuncs.<FieldDescription>createCollection();
 
                     final AppFieldsCaptions afc = ServiceFuncs.
                             <Integer, AppFieldsCaptions>getMapValue_silent(getFieldsList(),
@@ -173,7 +173,7 @@ public class AppFieldsMap {
 //            lstFltr = ((List<AppFieldCaption>) afc.getCardFiles()).stream().filter(p -> p.getUser_id().equals(SysConst.SERVICE_USER_ID)).collect(Collectors.toList());
 //        }
 //
-//        List<FieldDescription> answer = (List<FieldDescription>) ServiceFuncs.<FieldDescription>getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);
+//        List<FieldDescription> answer = (List<FieldDescription>) ServiceFuncs.<FieldDescription>createCollection();
 //
 //        // переконвертировали в List<FieldDescription>
 //        for (AppFieldCaption a : lstFltr) {

@@ -54,7 +54,7 @@ public class FunctionsRef<T extends Function> extends AbstractReference<Function
 //            return NullSafe.create()
 //                    .execute2result(() -> {
 //
-//                        final Collection<T> refCollection = ServiceFuncs.<T>getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);
+//                        final Collection<T> refCollection = ServiceFuncs.<T>createCollection();
 //
 //                        refCollection.add((T) NullSafe.createObject(clazz)
 //                                .setFunction_id(AppConst.fnc_1)

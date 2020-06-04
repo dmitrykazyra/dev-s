@@ -15,6 +15,8 @@ import com.kdg.fs24.application.core.nullsafe.NullSafe;
 import com.kdg.fs24.application.core.service.funcs.ServiceFuncs;
 import com.kdg.fs24.persistence.api.PersistenceEntity;
 import com.kdg.fs24.references.tariffs.kind.TariffKind;
+import com.kdg.fs24.references.application.currency.Currency;
+import java.math.BigDecimal;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Collection;
@@ -58,7 +60,7 @@ public class TariffRate extends ObjectRoot implements PersistenceEntity {
     //==========================================================================
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "tariffRate")
-    private Collection<TariffRate_1> tariffRates_1 = ServiceFuncs.<TariffRate_1>getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);
+    private Collection<TariffRate_1> tariffRates_1 = ServiceFuncs.<TariffRate_1>createCollection();
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "tariffRate")
     private Collection<TariffRate_2> tariffRates_2;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "tariffRate")
@@ -101,16 +103,24 @@ public class TariffRate extends ObjectRoot implements PersistenceEntity {
             if (NullSafe.isNull(tariffRates)) {
                 throw new RuntimeException("Ставки не заданы!");
             }
-
         }
 
         return tariffRates;
     }
 
     //--------------------------------------------------------------------------
-    public void addTariffRate_1(final TariffRate_1 tariffRate_1) {
+    public void addTariffRate_1(final LocalDate rateDate, final BigDecimal rateValue, final Currency rateCurrency) {
+        final TariffRate_1 tariffRate_1 = NullSafe.createObject(TariffRate_1.class);
+
+        tariffRate_1.setRateDate(rateDate);
+        tariffRate_1.setRateValue(rateValue);
+        tariffRate_1.setTariffRate(this);
+        tariffRate_1.setCurrency(rateCurrency);
+
         this.tariffRates_1.add(tariffRate_1);
     }
-
-//==========================================================================
+    //==========================================================================
+    public void printRates() {
+        
+    }
 }

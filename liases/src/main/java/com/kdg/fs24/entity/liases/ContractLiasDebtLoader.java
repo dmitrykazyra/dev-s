@@ -25,7 +25,7 @@ public class ContractLiasDebtLoader extends ObjectRoot {
 //    public Collection<T> loadLiasDebts(final Long entity_id) {
 //
 //        //List<T> liasDebts = new ArrayList<>();
-//        final Collection<T> liasDebts = ServiceFuncs.<T>getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);
+//        final Collection<T> liasDebts = ServiceFuncs.<T>createCollection();
 //
 //        // список задолженностей по договору
 //        this.getDbService()

@@ -36,7 +36,7 @@ public class Olx extends AbstractSpyEntity {
     @Override
     public Collection<HibernateItem> createDocuments(final Document document, final String keyWords) {
 
-        final Collection<HibernateItem> collection = ServiceFuncs.<Item>getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);
+        final Collection<HibernateItem> collection = ServiceFuncs.<HibernateItem>createCollection();
 
         // разбираем документ
         final Elements items = document.getElementsByClass("offer-wrapper");

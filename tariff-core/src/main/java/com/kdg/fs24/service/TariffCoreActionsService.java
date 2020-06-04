@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 import com.kdg.fs24.references.tariffs.api.TariffConst;
 import com.kdg.fs24.entity.status.EntityStatus;
 import com.kdg.fs24.references.api.AbstractRefRecord;
+import com.kdg.fs24.entity.tariff.TariffPlanProcessor;
 
 /**
  *
@@ -29,9 +30,10 @@ public class TariffCoreActionsService extends ActionExecutionService {
             final String tariffPlanCode,
             final EntityKind entityKind,
             final LocalDate actualDate,
-            final LocalDate finishDate) {
+            final LocalDate finishDate,
+            final TariffPlanProcessor tariffPlanProcessor) {
 
-        return this.<AbstractTariffPlan>createActionEntity(AbstractTariffPlan.class,
+        final AbstractTariffPlan abstractTariffPlan = this.<AbstractTariffPlan>createActionEntity(AbstractTariffPlan.class,
                 (tariffPlan) -> {
                     tariffPlan.setPlanKind(entityKind);
                     tariffPlan.setTariffPlanCode(tariffPlanCode);
@@ -44,6 +46,10 @@ public class TariffCoreActionsService extends ActionExecutionService {
                             record -> record.getEntityStatusId().equals(0)
                             && record.getEntityTypeId().equals(TariffConst.ENTITY_TARIFF_PLAN)));
                 });
+        
+        tariffPlanProcessor.processTariffPlan(abstractTariffPlan);
+        
+        return abstractTariffPlan;
     }
     //==========================================================================
     

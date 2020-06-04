@@ -10,6 +10,7 @@ SELECT * FROM liasrests order by lias_id desc;
 SELECT * FROM tariffplans order by tariff_plan_id desc;
 SELECT * FROM tariffplan2servid order by tariff_plan_id desc;
 SELECT * FROM tariffrates order by rate_id desc;
+SELECT * FROM tariffrates_1 order by rate_id desc LIMIT 100;
 select * from documents order by doc_id desc;
 select * from docattrs order by doc_id desc;
 SELECT * FROM core_pmtschedules order by contract_id desc;

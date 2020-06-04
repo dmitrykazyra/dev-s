@@ -38,7 +38,7 @@ import java.time.LocalDateTime;
 public class LiasDocumentBuilders extends AbstractApplicationBean {
 
     private final Collection<DocTemplateId> templatesList
-            = ServiceFuncs.<DocTemplateId>getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);
+            = ServiceFuncs.<DocTemplateId>createCollection();
 
     //==========================================================================
     @Override
@@ -99,7 +99,7 @@ public class LiasDocumentBuilders extends AbstractApplicationBean {
             final LiasFinanceOper liasFinanceOper,
             final Document document) {
 
-        final Collection<DocAttrValue> dac = ServiceFuncs.<DocAttrValue>getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);
+        final Collection<DocAttrValue> dac = ServiceFuncs.<DocAttrValue>createCollection();
 
         NullSafe.create(dti)
                 .safeExecute(() -> {

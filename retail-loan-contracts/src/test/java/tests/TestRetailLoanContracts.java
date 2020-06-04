@@ -54,6 +54,8 @@ public class TestRetailLoanContracts extends TestUtil4LoanContract {
         this.getRetailLoanContractActionsService().executeAction(retailLoanContract, RetailLoanConstants.MODIFY_INDIVIDUAL_LOAN_CONTRACT);
         this.getRetailLoanContractActionsService().executeAction(retailLoanContract, EntityContractConst.ACT_AUTHORIZE_CONTRACT);
         this.getRetailLoanContractActionsService().executeAction(retailLoanContract, RetailLoanConstants.ACT_ISSUE_LOAN);
+        this.getRetailLoanContractActionsService().executeAction(retailLoanContract, EntityContractConst.ACT_CALCULATE_TARIFFS);
+//        this.getRetailLoanContractActionsService().executeAction(retailLoanContract, EntityContractConst.ACT_FINISH_CONTRACT);
 
         final Long entityId = retailLoanContract.getEntity_id();
         //final Long entityId = Long.valueOf(70533);

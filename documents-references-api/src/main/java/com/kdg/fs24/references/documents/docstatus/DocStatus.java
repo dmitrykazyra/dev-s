@@ -46,7 +46,7 @@ public class DocStatus extends AbstractRefRecord implements ReferenceRec {
     //==========================================================================
     public static <T extends DocStatus> Collection<T> getActualReferencesList() {
 
-        final Collection<T> actualList = ServiceFuncs.<T>getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);
+        final Collection<T> actualList = ServiceFuncs.<T>createCollection();
         final Class<T> clazz = (Class<T>) (DocStatus.class);
 
         actualList.add((T) NullSafe.<T>createObject(clazz, (object) -> {

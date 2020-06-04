@@ -36,7 +36,7 @@ public class Ay extends AbstractSpyEntity {
     @Override
     public Collection<HibernateItem> createDocuments(final Document document, final String keyWords) {
 
-        final Collection<HibernateItem> collection = ServiceFuncs.<Item>getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);
+        final Collection<HibernateItem> collection = ServiceFuncs.<HibernateItem>createCollection();
 
         NullSafe.create(SysConst.NOT_DEFINED, SysConst.IS_SILENT_EXECUTE)
                 .execute(() -> {

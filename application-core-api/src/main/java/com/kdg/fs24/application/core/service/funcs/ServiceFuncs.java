@@ -40,6 +40,12 @@ public final class ServiceFuncs {
     }
 
     //==========================================================================
+    public static <T> Collection<T> createCollection() {
+
+        return NullSafe.createObject(ArrayList.class);
+    }
+
+    //==========================================================================
     public static <T> Collection<T> getOrCreateCollection_Safe(final Collection<T> existCollection) {
 
         final Collection<T> collection;

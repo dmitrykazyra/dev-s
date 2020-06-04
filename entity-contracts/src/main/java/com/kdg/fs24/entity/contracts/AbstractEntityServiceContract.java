@@ -209,7 +209,7 @@ public abstract class AbstractEntityServiceContract extends AbstractEntityContra
         NullSafe.create(this.accretionHistory)
                 .whenIsNull(() -> {
                     
-                    this.accretionHistory = ServiceFuncs.<TariffAccretionHisory>getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);
+                    this.accretionHistory = ServiceFuncs.<TariffAccretionHisory>createCollection();
 
                     //this.refreshAccretionHistory();
                     return this.accretionHistory;

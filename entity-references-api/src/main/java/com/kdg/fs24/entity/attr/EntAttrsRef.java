@@ -46,7 +46,7 @@ public class EntAttrsRef<T extends EntAttr> extends AbstractReference<EntAttr> {
 //            return NullSafe.create(EntityReferenceConst.ENT_ATTR_CLASS.getCanonicalName())
 //                    .execute2result(() -> {
 //
-//                        final Collection<T> refCollection = ServiceFuncs.<T>getOrCreateCollection(ServiceFuncs.COLLECTION_NULL);
+//                        final Collection<T> refCollection = ServiceFuncs.<T>createCollection();
 //
 //                        ReflectionFuncs.createPkgClassesCollection(EntityReferenceConst.ENTITY_ATTRS_CLASSES_PACKAGE, EntityReferenceConst.ENT_ATTRIBUTE_CLASS)
 //                                .stream()

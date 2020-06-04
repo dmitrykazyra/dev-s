@@ -25,6 +25,6 @@ public interface TariffCalcSumOld {
 
     BigDecimal getTax_sum();
 
-    TariffCalcSumImpl incTariff_sum(BigDecimal tariff_sum);
+    TariffCalcSumExtended incTariff_sum(BigDecimal tariff_sum);
 
 }

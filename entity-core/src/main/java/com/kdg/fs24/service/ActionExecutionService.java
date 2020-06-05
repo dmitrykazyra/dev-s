@@ -10,7 +10,7 @@ import com.kdg.fs24.application.core.service.funcs.AnnotationFuncs;
 //import com.kdg.fs24.spring.core.api.ApplicationRepositoryService;
 import lombok.Data;
 import lombok.AllArgsConstructor;
-import com.kdg.fs24.entity.core.AbstractActionEntity;
+import com.kdg.fs24.entity.core.AbstractPersistenceEntity;
 import com.kdg.fs24.persistence.core.PersistanceEntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import javax.annotation.PostConstruct;
@@ -18,6 +18,7 @@ import com.kdg.fs24.entity.core.api.EntityClassesPackages;
 import com.kdg.fs24.entity.core.api.ActionClassesPackages;
 import com.kdg.fs24.application.core.exception.api.InternalAppException;
 import com.kdg.fs24.application.core.nullsafe.NullSafe;
+import com.kdg.fs24.application.core.nullsafe.StopWatcher;
 import com.kdg.fs24.application.core.service.funcs.ReflectionFuncs;
 import com.kdg.fs24.application.core.service.funcs.ServiceFuncs;
 import com.kdg.fs24.application.core.sysconst.SysConst;
@@ -27,7 +28,7 @@ import com.kdg.fs24.entity.core.api.EntityTypeId;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Collection;
-import java.util.Optional;
+import com.kdg.fs24.entity.core.AbstractActionEntity;
 import com.kdg.fs24.entity.action.ActionCode;
 import com.kdg.fs24.entity.core.api.EntityKindId;
 import com.kdg.fs24.entity.core.api.EntityStatusesRef;
@@ -38,7 +39,6 @@ import com.kdg.fs24.entity.marks.MarkValue;
 import com.kdg.fs24.entity.status.EntityStatusId;
 import com.kdg.fs24.references.api.AbstractRefRecord;
 import java.lang.annotation.Annotation;
-import java.util.stream.Collectors;
 import com.kdg.fs24.entity.core.api.CachedReferencesClasses;
 import com.kdg.fs24.references.api.ReferenceSyncOrder;
 import org.springframework.transaction.annotation.Propagation;
@@ -88,23 +88,32 @@ public abstract class ActionExecutionService extends AbstractApplicationService 
         }
     }
 
+    class UnknownActionCode extends InternalAppException {
+
+        public UnknownActionCode(final String message) {
+            super(message);
+        }
+    }
+
+    // выполнение действия над сущностью
+    public void executeAction(
+            final AbstractActionEntity entity,
+            final Integer action_code) {
+
+        this.<AbstractAction>executeAction(entity, action_code, (action) -> {
+        });
+    }
+
     // выполнение действия над сущностью
     @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
-    public void executeAction(final AbstractActionEntity entity, final Integer action_code) {
-        final Optional<Class<ACT>> optActClass = ServiceFuncs.getMapValue(CLASS_INT2ACTION, mapEntry -> mapEntry.getKey().equals(action_code));
-
-        if (!optActClass.isPresent()) {
-
-            class UnknownActionCode extends InternalAppException {
-
-                public UnknownActionCode(final String message) {
-                    super(message);
-                }
-            }
-            throw new UnknownActionCode(String.format("Unknown action_code (%d)", action_code));
-        }
-
-        final Class actClass = optActClass.get();
+    public <T extends AbstractAction> void executeAction(
+            final AbstractActionEntity entity,
+            final Integer action_code,
+            final ActionInitializer<T> actionInitializer) {
+        final Class actClass = ServiceFuncs.getMapValue(
+                CLASS_INT2ACTION,
+                mapEntry -> mapEntry.getKey().equals(action_code))
+                .orElseThrow(() -> new UnknownActionCode(String.format("Unknown action_code (%d)", action_code)));
 
         // находим класс среди допустимых
         CLASS_ENT2ACTION
@@ -116,7 +125,7 @@ public abstract class ActionExecutionService extends AbstractApplicationService 
                 entity, actClass)));
 
         // экземплр действия
-        final AbstractAction action = NullSafe.<AbstractAction>createObject(actClass);
+        final AbstractAction action = NullSafe.<T>createObject(actClass);
 
         final ActionCode ac = ActionCode.findActionCode(action_code);
 
@@ -126,6 +135,9 @@ public abstract class ActionExecutionService extends AbstractApplicationService 
         //action.setPersistanceEntityManager(persistanceEntityManager);
         action.setEntity(entity);
         action.setActionCode(ac);
+
+        // дополнительная инициализация действия
+        actionInitializer.initialize((T) action);
 
         //action.execute(entity, ac.get());
         NullSafe.create()
@@ -438,34 +450,60 @@ public abstract class ActionExecutionService extends AbstractApplicationService 
     }
 
     //==========================================================================
-    public <T extends AbstractActionEntity> Optional<T> findActionEntity(
-            final Class<T> entClass,
+//    public <T extends AbstractActionEntity> Optional<T> findActionEntity(
+//            final Class<T> entClass,
+//            final Long entityId) {
+//
+//        final Optional<T> optEntity = ServiceFuncs.<T>getCollectionElement(enityCollection
+//                .stream()
+//                .filter(entity -> entity.getClass().equals(entClass))
+//                .map(entity -> (T) entity)
+//                .collect(Collectors.toList()),
+//                entity -> entity.getEntity_id().equals(entityId)
+//        );
+//
+//        final T entity;
+//
+//        if (optEntity.isPresent()) {
+//            // найдено в кэше
+//            entity = (T) optEntity.get();
+//        } else {
+//            // ищем в БД
+//            entity = persistanceEntityManager
+//                    .getEntityManager()
+//                    .find(entClass, entityId);
+//        }
+//
+//        return Optional.ofNullable(entity);
+//
+//    }
+    public <T extends AbstractPersistenceEntity> T reloadTestedEntity(final Class<T> entClass,
             final Long entityId) {
+        
+        this.getPersistanceEntityManager()
+                .getEntityManager()
+                .clear();
 
-        final Optional<T> optEntity = ServiceFuncs.<T>getCollectionElement(enityCollection
-                .stream()
-                .filter(entity -> entity.getClass().equals(entClass))
-                .map(entity -> (T) entity)
-                .collect(Collectors.toList()),
-                entity -> entity.getEntity_id().equals(entityId)
-        );
+        final StopWatcher stopWatcher = StopWatcher.create();
 
-        final T entity;
+        LogService.LogInfo(this.getClass(), () -> String.format("try 2 reload created entity (%d)",
+                entityId));
 
-        if (optEntity.isPresent()) {
-            // найдено в кэше
-            entity = (T) optEntity.get();
-        } else {
-            // ищем в БД
-            entity = persistanceEntityManager
-                    .getEntityManager()
-                    .find(entClass, entityId);
-        }
+        // поиск сущности
+        final T entity = this.getPersistanceEntityManager()
+                .getEntityManager()
+                .<T>find(entClass, entityId);
 
-        return Optional.ofNullable(entity);
+//        this.getPersistanceEntityManager()
+//                .getEntityManager()
+//                .refresh(entity);
+        LogService.LogInfo(this.getClass(), () -> String.format("Refresh entity is finished (%d, %d ms)",
+                entity.entityId(),
+                stopWatcher.getTimeExecMillis()));
+
+        return entity;
 
     }
-
 }
 //==============================================================================
 

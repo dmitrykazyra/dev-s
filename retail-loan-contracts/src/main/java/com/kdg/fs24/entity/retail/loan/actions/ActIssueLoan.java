@@ -38,8 +38,8 @@ public class ActIssueLoan extends AbstractLiasContractOper<AbstractRetailLoanCon
         //this.setAccretionDate(null);
         super.initialize();
 
-        this.setLiasDate(LocalDate.now());
-        this.setLiasSum(BigDecimal.valueOf(3.14 * 2));
+        //this.setLiasDate(LocalDate.now());
+        //this.setLiasSum(BigDecimal.valueOf(3.14 * 2));
     }
 
     //==========================================================================

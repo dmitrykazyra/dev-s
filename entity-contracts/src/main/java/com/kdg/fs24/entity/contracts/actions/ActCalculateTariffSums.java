@@ -20,14 +20,14 @@ import com.kdg.fs24.entity.tariff.TariffRate;
 import com.kdg.fs24.references.tariffs.serv.TariffServ;
 import java.util.Collection;
 import com.kdg.fs24.entity.tariff.TariffKindService;
-import org.hibernate.Session;
 
 /**
  *
  * @author N76VB
  */
 @ActionCodeId(action_code = EntityContractConst.ACT_CALCULATE_TARIFFS,
-        action_name = "Пересчет тарифицируемых сумм")
+        action_name = "Пересчет тарифицируемых сумм",
+        en_action_name = "Recalculate tariff records")
 @Data
 @ViewAction
 @PreViewDialog
@@ -83,7 +83,7 @@ public class ActCalculateTariffSums<T extends AbstractEntityServiceContract> ext
 
     @Override
     protected Integer getJdbcBatchSize() {
-        return (Period.between(D2, D1).getDays());
+        return (Period.between(D2, D1).getDays() / 2);
     }
 
     //==========================================================================
@@ -111,12 +111,13 @@ public class ActCalculateTariffSums<T extends AbstractEntityServiceContract> ext
                             = this.getContractEntity()
                                     .getTariffCalcRecords()
                                     .stream()
-                                    .filter(existsRecord -> existsRecord
-                                    .getTariffRate()
-                                    .getTariffPlan2Serv()
-                                    .getTariffServ()
-                                    .getTariffServId()
-                                    .equals(record.getTariffRate().getTariffPlan2Serv().getTariffServ().getTariffServId()))
+                                    .filter(existsRecord
+                                            -> existsRecord
+                                            .getTariffRate()
+                                            .getTariffPlan2Serv()
+                                            .getTariffServ()
+                                            .getTariffServId()
+                                            .equals(record.getTariffRate().getTariffPlan2Serv().getTariffServ().getTariffServId()))
                                     .findFirst()
                                     .orElse(NullSafe.createObject(TariffCalcRecord.class));
 
@@ -129,9 +130,5 @@ public class ActCalculateTariffSums<T extends AbstractEntityServiceContract> ext
                     }
 
                 });
-
-//        this.getEntity()
-//                .getTariffCalculations()
-//                .store(D1, D2);
     }
 }

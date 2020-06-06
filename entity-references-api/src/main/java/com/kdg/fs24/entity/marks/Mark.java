@@ -10,6 +10,7 @@ import com.kdg.fs24.references.api.ReferenceRec;
 import com.kdg.fs24.references.api.AbstractRefRecord;
 import javax.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  *
@@ -17,6 +18,8 @@ import lombok.Data;
  */
 @Entity
 @Data
+@Cacheable
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
 @Table(name = "core_marksRef")
 public class Mark extends AbstractRefRecord implements ReferenceRec {
 

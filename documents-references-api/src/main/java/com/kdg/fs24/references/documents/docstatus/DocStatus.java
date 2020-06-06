@@ -15,6 +15,8 @@ import com.kdg.fs24.references.api.LangStrValue;
 import com.kdg.fs24.references.api.DocumentsConst;
 import javax.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Cache;
 
 /**
  *
@@ -22,6 +24,8 @@ import lombok.Data;
  */
 @Data
 @Entity
+@Cacheable
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @Table(name = "docStatusesRef")
 public class DocStatus extends AbstractRefRecord implements ReferenceRec {
 

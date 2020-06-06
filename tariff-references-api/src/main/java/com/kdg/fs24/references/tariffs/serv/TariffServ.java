@@ -17,6 +17,7 @@ import java.util.Collection;
 import java.util.Map;
 import javax.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  *
@@ -26,6 +27,8 @@ import lombok.Data;
 @Entity
 @Table(name = "TariffServsRef")
 @ReferenceSyncOrder(order_num = 1)
+@Cacheable
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
 public class TariffServ extends AbstractRefRecord implements ReferenceRec {
 
     @Id

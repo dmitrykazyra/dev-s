@@ -11,6 +11,7 @@ import com.kdg.fs24.references.api.AbstractRefRecord;
 
 import javax.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  *
@@ -18,6 +19,8 @@ import lombok.Data;
  */
 @Data
 @Entity
+@Cacheable
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
 @Table(name = "liasDebtStatesRef")
 public class LiasGroup extends AbstractRefRecord implements ReferenceRec {
 

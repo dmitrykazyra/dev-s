@@ -11,6 +11,8 @@ import com.kdg.fs24.references.api.AbstractRefRecord;
 import com.kdg.fs24.references.api.ReferenceSyncOrder;
 import javax.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  *
@@ -20,6 +22,8 @@ import lombok.Data;
 @Entity
 @Table(name = "TariffAccretionSchemeRef")
 @ReferenceSyncOrder(order_num = 1)
+@Cacheable
+@Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
 public class TariffAccretionScheme extends AbstractRefRecord implements ReferenceRec {
 
     @Id

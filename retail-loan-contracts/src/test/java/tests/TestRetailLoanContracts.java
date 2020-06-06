@@ -17,7 +17,7 @@ import config.TestRLCConfig;
 import org.junit.Test;
 import com.kdg.fs24.entity.retail.loan.contracts.RetailLoanContract;
 import com.kdg.fs24.entity.retail.loan.contracts.RetailLoanConstants;
-import com.kdg.fs24.entity.retail.loan.actions.ActIssueLoan;
+import com.kdg.fs24.entity.retail.loan.actions.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -70,25 +70,33 @@ public class TestRetailLoanContracts extends TestUtil4LoanContract {
                 retailLoanContract,
                 RetailLoanConstants.ACT_ISSUE_LOAN,
                 (action) -> {
-                    action.setLiasSum(BigDecimal.valueOf(100.15));
+                    action.setLiasIssueSum(BigDecimal.valueOf(100.15));
                     action.setLiasDate(LocalDate.now());
                 });
         this.getRetailLoanContractActionsService().<ActIssueLoan>executeAction(
                 retailLoanContract,
                 RetailLoanConstants.ACT_ISSUE_LOAN,
                 (action) -> {
-                    action.setLiasSum(BigDecimal.valueOf(2100.13));
+                    action.setLiasIssueSum(BigDecimal.valueOf(2100.13));
                     action.setLiasDate(LocalDate.now().plusDays(10));
                 });
-        
+
         this.getRetailLoanContractActionsService().<ActIssueLoan>executeAction(
                 retailLoanContract,
                 RetailLoanConstants.ACT_ISSUE_LOAN,
                 (action) -> {
-                    action.setLiasSum(BigDecimal.valueOf(2301.13));
+                    action.setLiasIssueSum(BigDecimal.valueOf(2301.13));
                     action.setLiasDate(LocalDate.now().plusDays(20));
                 });
-        
+
+        this.getRetailLoanContractActionsService().<ActRepaymentLoan>executeAction(
+                retailLoanContract,
+                RetailLoanConstants.ACT_REPAYMENT_LOAN,
+                (action) -> {
+                    action.setLiasRepaymentSum(BigDecimal.valueOf(-120.24));
+                    action.setLiasDate(LocalDate.now().plusDays(25));
+                });
+
         this.getRetailLoanContractActionsService().executeAction(
                 retailLoanContract,
                 EntityContractConst.ACT_CALCULATE_TARIFFS);

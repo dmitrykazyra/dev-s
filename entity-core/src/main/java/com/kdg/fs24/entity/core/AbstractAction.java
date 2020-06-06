@@ -61,6 +61,13 @@ public abstract class AbstractAction<T extends ActionEntity>
     @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
     public void execute() {
 
+        if (SysConst.DEBUG_MODE.get()) {
+            final String msg = String.format("%s: START",
+                    this.getClass().getSimpleName());
+
+            LogService.LogInfo(this.getClass(), () -> msg);
+        }
+
         this.initialize();
         this.doCalculation();
         this.afterCalculation();
@@ -123,7 +130,7 @@ public abstract class AbstractAction<T extends ActionEntity>
                     });
 
             if (SysConst.DEBUG_MODE.get()) {
-                final String msg = String.format("%s: executed in %s ms",
+                final String msg = String.format("%s: FINISH (executed in %s ms)",
                         this.getClass().getSimpleName(),
                         stopWatcher.getTimeExecMillis());
 

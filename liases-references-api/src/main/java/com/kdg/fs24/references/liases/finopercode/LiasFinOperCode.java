@@ -10,6 +10,8 @@ import com.kdg.fs24.references.api.ReferenceRec;
 import com.kdg.fs24.references.api.AbstractRefRecord;
 import javax.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Cache;
 
 /**
  *
@@ -17,6 +19,8 @@ import lombok.Data;
  */
 @Data
 @Entity
+@Cacheable
+@Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
 @Table(name = "liasFinOperCodesRef")
 public class LiasFinOperCode extends AbstractRefRecord implements ReferenceRec {
 

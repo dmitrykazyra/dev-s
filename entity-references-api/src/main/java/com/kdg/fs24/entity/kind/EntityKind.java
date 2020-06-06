@@ -14,6 +14,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  *
@@ -21,6 +22,8 @@ import lombok.Data;
  */
 @Entity
 @Table(name = "core_EntityKindsRef")
+@Cacheable
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @Data
 public class EntityKind extends AbstractRefRecord implements ReferenceRec {
 

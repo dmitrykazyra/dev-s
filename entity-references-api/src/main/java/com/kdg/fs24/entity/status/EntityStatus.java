@@ -10,6 +10,7 @@ import com.kdg.fs24.references.api.ReferenceRec;
 import com.kdg.fs24.references.api.AbstractRefRecord;
 import javax.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  *
@@ -17,6 +18,8 @@ import lombok.Data;
  */
 @Entity
 @Table(name = "core_EntityStatusesRef")
+@Cacheable
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @Data
 @IdClass(EntityStatusPK.class)
 public class EntityStatus extends AbstractRefRecord implements ReferenceRec {

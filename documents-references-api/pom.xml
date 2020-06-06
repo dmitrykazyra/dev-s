@@ -16,11 +16,11 @@
             <artifactId>references-api</artifactId>
             <version>${app.version}</version>          
         </dependency>      
-<!--        <dependency>
-            <groupId>com.kdg.fs24</groupId>
-            <artifactId>retail-loan-contracts-api</artifactId>
-            <version>${app.version}</version>            
-        </dependency>            -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-ehcache</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
         <dependency>
             <groupId>com.kdg.fs24</groupId>
             <artifactId>liases-references-api</artifactId>

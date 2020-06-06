@@ -11,6 +11,8 @@ import com.kdg.fs24.references.api.AbstractRefRecord;
 import com.kdg.fs24.references.liases.kind.LiasKind;
 import javax.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Cache;
 
 /**
  *
@@ -19,6 +21,8 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "liasTypesRef")
+@Cacheable
+@Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
 public class LiasType extends AbstractRefRecord implements ReferenceRec {
 
     @Id

@@ -11,8 +11,7 @@ import com.kdg.fs24.lias.opers.attrs.*;
 import java.time.LocalDate;
 import java.util.Collection;
 //import com.kdg.fs24.entity.liases.references.LiasesReferencesService;
-import com.kdg.fs24.application.core.locale.NLS;
-import com.kdg.fs24.application.core.log.LogService;
+import com.kdg.fs24.entity.contracts.AbstractEntityContract;
 import com.kdg.fs24.application.core.api.ObjectRoot;
 //import com.kdg.fs24.services.api.ServiceLocator;
 import java.math.BigDecimal;
@@ -29,6 +28,8 @@ import com.kdg.fs24.references.liases.finopercode.LiasFinOperCode;
 import com.kdg.fs24.references.liases.status.LiasOperStatus;
 import com.kdg.fs24.references.liases.actiontype.LiasActionType;
 import com.kdg.fs24.entity.document.Document;
+import com.kdg.fs24.service.LiasDocumentBuilders;
+import com.kdg.fs24.spring.core.api.ServiceLocator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -164,12 +165,29 @@ public class Lias extends ObjectRoot implements PersistenceEntity {
     }
 
     //==========================================================================
-    public void createLiasOper(final LiasFinanceOper liasFinanceOper) {
-        this.createLiasOper(liasFinanceOper.attr(LiasOpersConst.LIAS_SUMM_CLASS),
-                liasFinanceOper.attr(LiasOpersConst.LIAS_DATE_CLASS),
-                liasFinanceOper.attr(LiasOpersConst.LIAS_FINOPER_CODE_CLASS),
-                liasFinanceOper.attr(LiasOpersConst.LIAS_TYPE_ID_CLASS),
-                liasFinanceOper.attr(LiasOpersConst.LIAS_ACTION_TYPE_ID_CLASS),
-                null);
+//    @Deprecated
+//    public void createLiasOper(final LiasFinanceOper liasFinanceOper) {
+//        this.createLiasOper(liasFinanceOper.attr(LiasOpersConst.LIAS_SUMM_CLASS),
+//                liasFinanceOper.attr(LiasOpersConst.LIAS_DATE_CLASS),
+//                liasFinanceOper.attr(LiasOpersConst.LIAS_FINOPER_CODE_CLASS),
+//                liasFinanceOper.attr(LiasOpersConst.LIAS_TYPE_ID_CLASS),
+//                liasFinanceOper.attr(LiasOpersConst.LIAS_ACTION_TYPE_ID_CLASS),
+//                null);
+//    }
+
+    //==========================================================================
+    public void createLiasOper(
+            final BigDecimal liasOperSum,
+            final LiasFinanceOper liasFinanceOper,
+            final AbstractEntityContract contract) {
+
+        final LiasDocumentBuilders db = ServiceLocator.<LiasDocumentBuilders>findService(LiasDocumentBuilders.class);
+
+        this.createLiasOper(liasOperSum,
+                liasFinanceOper.<LocalDate>attr(LiasOpersConst.LIAS_DATE_CLASS),
+                liasFinanceOper.<Integer>attr(LiasOpersConst.LIAS_FINOPER_CODE_CLASS),
+                liasFinanceOper.<Integer>attr(LiasOpersConst.LIAS_TYPE_ID_CLASS),
+                liasFinanceOper.<Integer>attr(LiasOpersConst.LIAS_ACTION_TYPE_ID_CLASS),
+                db.createDocument(doc -> doc.setEntity(contract), liasFinanceOper));
     }
 }

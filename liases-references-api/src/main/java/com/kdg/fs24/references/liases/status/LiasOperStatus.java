@@ -8,19 +8,20 @@ package com.kdg.fs24.references.liases.status;
 import com.kdg.fs24.references.api.AbstractRefRecord;
 import com.kdg.fs24.references.api.ReferenceRec;
 import java.util.Map;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import lombok.Data;
-
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Cache;
 /**
  *
  * @author N76VB
  */
 @Data
 @Entity
+@Cacheable
+@Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
 @Table(name = "liasFinOperStatusesRef")
+
 public class LiasOperStatus extends AbstractRefRecord implements ReferenceRec {
 
     @Id

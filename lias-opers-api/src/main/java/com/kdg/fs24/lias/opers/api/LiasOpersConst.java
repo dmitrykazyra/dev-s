@@ -21,6 +21,6 @@ public final class LiasOpersConst {
     public static final Class<LIAS_TYPE_ID> LIAS_TYPE_ID_CLASS = LIAS_TYPE_ID.class;
     public static final Class<LIAS_ACTION_TYPE_ID> LIAS_ACTION_TYPE_ID_CLASS = LIAS_ACTION_TYPE_ID.class;
     public static final Class<DOC_TEMPLATE_ID> DOC_TEMPLATE_ID_CLASS = DOC_TEMPLATE_ID.class;
-    public static final Class<DOC_STATUS_ID> DOC_STATUS_ID_CLASS = DOC_STATUS_ID.class;    
+    public static final Class<DOC_STATUS_ID> DOC_STATUS_ID_CLASS = DOC_STATUS_ID.class; 
 
 }

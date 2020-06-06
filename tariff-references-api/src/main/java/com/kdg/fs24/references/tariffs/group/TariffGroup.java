@@ -16,6 +16,7 @@ import com.kdg.fs24.references.api.LangStrValue;
 import java.util.Collection;
 import javax.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  *
@@ -25,6 +26,8 @@ import lombok.Data;
 @Entity
 @Table(name = "TariffGroupsRef")
 @ReferenceSyncOrder(order_num = 1)
+@Cacheable
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
 public class TariffGroup extends AbstractRefRecord implements ReferenceRec {
 
     @Id

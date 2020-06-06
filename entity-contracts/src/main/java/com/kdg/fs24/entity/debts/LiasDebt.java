@@ -151,7 +151,9 @@ public class LiasDebt extends ObjectRoot implements PersistenceEntity {
                     }).<Lias>getObject();
 
             // создаем действие по обязательству
-            lias.createLiasOper(liasFinanceOper);
+            lias.createLiasOper(liasFinanceOper.<BigDecimal>attr(LiasOpersConst.LIAS_SUMM_CLASS),
+                    liasFinanceOper,
+                    this.getDebtContract());
         } else {
             //this.findFirstLias().createLiasOper(liasFinanceOper);
             this.decrementLiases(liasFinanceOper);
@@ -206,8 +208,6 @@ public class LiasDebt extends ObjectRoot implements PersistenceEntity {
             }
         };
 
-        final LiasDocumentBuilders db = ServiceLocator.<LiasDocumentBuilders>findService(LiasDocumentBuilders.class);
-
         pmtSchedule
                 .getPmtScheduleLines()
                 .stream()
@@ -223,14 +223,20 @@ public class LiasDebt extends ObjectRoot implements PersistenceEntity {
                     liases.add(schedLias);
 
                     // создание финопераций
-                    schedLias.createLiasOper(liasOperRest.getLiasOperSum(),
-                            liasFinanceOper.<LocalDate>attr(LiasOpersConst.LIAS_DATE_CLASS),
-                            liasFinanceOper.<Integer>attr(LiasOpersConst.LIAS_FINOPER_CODE_CLASS),
-                            liasFinanceOper.<Integer>attr(LIAS_TYPE_ID.class),
-                            liasFinanceOper.<Integer>attr(LiasOpersConst.LIAS_ACTION_TYPE_ID_CLASS),
-                            db.createDocument((doc) -> {
-                                doc.setEntity(this.getDebtContract());
-                            }, liasFinanceOper));
+                    schedLias.createLiasOper(liasOperRest.getLiasOperSum(), liasFinanceOper, this.getDebtContract());
+                });
+    }
+    //==========================================================================
+    // уменьшение обязательства
+    private void decrementLiases(final LiasFinanceOper liasFinanceOper) {
+        NullSafe.create()
+                .execute(() -> {
+                    // ищем обязаетельство для его уменьшения
+                    //this.findFirstLias().createLiasOper(liasFinanceOper);
+                    this.findFirstLias().createLiasOper(
+                            liasFinanceOper.<BigDecimal>attr(LiasOpersConst.LIAS_SUMM_CLASS), 
+                            liasFinanceOper, 
+                            this.getDebtContract());
                 });
     }
 
@@ -279,16 +285,6 @@ public class LiasDebt extends ObjectRoot implements PersistenceEntity {
                 l -> (NullSafe.isNull(l.getInactiveDate())),
                 String.format("Не найдено подходящее обязательство (DebtId=%d)", this.debtId));
     }
-
-    //==========================================================================
-    private void decrementLiases(final LiasFinanceOper liasFinanceOper) {
-        NullSafe.create()
-                .execute(() -> {
-                    // ищем обязаетельство для его уменьшения
-                    this.findFirstLias().createLiasOper(liasFinanceOper);
-                });
-    }
-
     //==========================================================================
     public final void createOrUpdateDebtRests(final LiasFinanceOper liasFinanceOper) {
         // находим остаток за дату операции

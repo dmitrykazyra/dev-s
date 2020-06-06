@@ -30,7 +30,7 @@ import com.kdg.fs24.entity.core.api.RefreshEntity;
 public class ActIssueLoan extends AbstractLiasContractOper<AbstractRetailLoanContract> {
 
     // сумма выдачи кредита
-    private BigDecimal liasSum;
+    private BigDecimal liasIssueSum;
 
     @Override
     public void initialize() {
@@ -46,7 +46,7 @@ public class ActIssueLoan extends AbstractLiasContractOper<AbstractRetailLoanCon
     @Override
     protected void preCalculation() {
         this.addNewLiasOper(NullSafe.createObject(LiasFinanceOper.class)
-                .<LIAS_SUMM>addAttr(() -> this.getLiasSum())
+                .<LIAS_SUMM>addAttr(() -> this.getLiasIssueSum())
                 .<LIAS_CURRENCY_ID>addAttr(() -> this.getContractEntity().getCurrency().getCurrencyId())
                 .<COUNTERPARTY_ID>addAttr(() -> this.getContractEntity().entityId())
                 .<LIAS_DATE>addAttr(() -> this.getLiasDate())

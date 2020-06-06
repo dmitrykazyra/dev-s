@@ -56,7 +56,7 @@ public class ActIssueLoan extends AbstractLiasContractOper<AbstractRetailLoanCon
                 .<LIAS_KIND_ID>addAttr(() -> LiasesConst.LKI_RETURN_MAIN_DEBT)
                 .<LIAS_TYPE_ID>addAttr(() -> LiasesConst.LTI_CURRENT_LIASES)
                 .<LIAS_BASE_ASSET_TYPE_ID>addAttr(() -> LiasesConst.LBAT_MONEYS)
-                .<LIAS_START_DATE>addAttr(() -> this.getContractEntity().getContractDate())
+                .<LIAS_START_DATE>addAttr(() -> this.getContractEntity().getBeginDate())
                 .<LIAS_FINAL_DATE>addAttr(() -> this.getContractEntity().getEndDate())
                 .<PMT_SCHEDULE>addAttr(() -> BondScheduleConst.EK_BONDSCHEDULE_MAIN_DEBT)
                 .<OPER_NOTES>addAttr(() -> "Issue loann")

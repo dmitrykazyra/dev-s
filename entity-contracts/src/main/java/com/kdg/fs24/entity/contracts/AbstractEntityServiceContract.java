@@ -31,16 +31,16 @@ import com.kdg.fs24.references.liases.type.LiasType;
  */
 @Data
 public abstract class AbstractEntityServiceContract extends AbstractEntityContract {
-    
+
     private Collection<TariffAccretionHisory> accretionHistory;
 
     //==========================================================================
     // изменение задолженностей или обязательств через операции над контрактом
     public void applyNewLiasOpers(final Collection<LiasFinanceOper> opers) {
-        
+
         NullSafe.create(this.getContractDebts())
                 .whenIsNull(() -> {
-                    
+
                     this.setContractDebts(ServiceFuncs.<LiasDebt>getOrCreateCollection(ServiceFuncs.COLLECTION_NULL));
                 })
                 .safeExecute(() -> {
@@ -57,7 +57,7 @@ public abstract class AbstractEntityServiceContract extends AbstractEntityContra
                                 // ищем нужную задолженность по типу задолженности
                                 // задолженность не найдена, создаем новую задолженность
                                 final int operDirection = operation.<BigDecimal>attr(LiasOpersConst.LIAS_SUMM_CLASS).signum();
-                                
+
                                 final LiasDebt liasDebt = NullSafe.create(this.findLiasDebt(operation, operDirection < 0))
                                         .whenIsNull(() -> {
                                             final LiasDebt newLiasDebt = this.createLiasDebt(operation);
@@ -137,43 +137,48 @@ public abstract class AbstractEntityServiceContract extends AbstractEntityContra
         //LogService.LogInfo(this.getClass(), () -> LogService.getCurrentObjProcName(this));
 
         final LiasDebt newLiasDebt = new LiasDebt();
-        
+
         newLiasDebt.setCurrency(Currency.findCurrency(liasFinanceOper.<Integer>attr(LIAS_CURRENCY_ID.class)));
-        
+
         newLiasDebt.setLiasBaseAssetType(LiasBaseAssetType.findLiasBaseAssetType(liasFinanceOper.<Integer>attr(LIAS_BASE_ASSET_TYPE_ID.class)));
         newLiasDebt.setCounterparty(this.getCounterparty());
         newLiasDebt.setDebtContract(this);
         newLiasDebt.setLiasDebtState(LiasDebtState.findLiasDebtState(liasFinanceOper.<Integer>attr(DEBT_STATE_ID.class)));
         newLiasDebt.setLiasKind(LiasKind.findLiasKind(liasFinanceOper.<Integer>attr(LIAS_KIND_ID.class)));
         newLiasDebt.setLiasType(LiasType.findLiasType(liasFinanceOper.<Integer>attr(LIAS_TYPE_ID.class)));
-        newLiasDebt.setDebtStartDate(liasFinanceOper.<LocalDate>attr(LIAS_DATE.class));
+        newLiasDebt.setDebtStartDate(liasFinanceOper.<LocalDate>attr(LIAS_START_DATE.class));
         newLiasDebt.setDebtFinalDate(liasFinanceOper.<LocalDate>attr(LIAS_FINAL_DATE.class));
-        
+
         return newLiasDebt;
     }
 
     //==========================================================================
     private LiasDebt findLiasDebt(final LiasFinanceOper liasFinanceOper, final Boolean throwExcWhenNotFound) {
-        
-        final Optional<LiasDebt> ld = ServiceFuncs.<LiasDebt>getCollectionElement(this.getContractDebts(),
-                d -> (d.getLiasKind().getLiasKindId().equals(liasFinanceOper.<Integer>attr(LIAS_KIND_ID.class))
+
+        final FilterComparator<LiasDebt> ldCmp = d -> ((d.getLiasKind().getLiasKindId().equals(liasFinanceOper.<Integer>attr(LIAS_KIND_ID.class)))
                 && (d.getCurrency().getCurrencyId().equals(liasFinanceOper.<Integer>attr(LIAS_CURRENCY_ID.class)))
                 && ((NullSafe.isNull(liasFinanceOper.<Integer>attr(LIAS_TYPE_ID.class))) || d.getLiasType().getLiasTypeId().equals(liasFinanceOper.<Integer>attr(LIAS_TYPE_ID.class)))
                 && ((NullSafe.isNull(liasFinanceOper.<Integer>attr(LIAS_BASE_ASSET_TYPE_ID.class))) || d.getLiasBaseAssetType().getBaseAssetTypeId().equals(liasFinanceOper.<Integer>attr(LIAS_BASE_ASSET_TYPE_ID.class)))
                 && ((NullSafe.isNull(liasFinanceOper.<Integer>attr(DEBT_STATE_ID.class))) || d.getLiasDebtState().getDebtStateId().equals(liasFinanceOper.<Integer>attr(DEBT_STATE_ID.class)))
                 && ((NullSafe.isNull(liasFinanceOper.<LocalDate>attr(LiasOpersConst.LIAS_START_DATE_CLASS))) || d.getDebtStartDate().equals(liasFinanceOper.<LocalDate>attr(LiasOpersConst.LIAS_START_DATE_CLASS)))
-                && ((NullSafe.isNull(liasFinanceOper.<LocalDate>attr(LiasOpersConst.LIAS_FINAL_DATE_CLASS))) || d.getDebtFinalDate().equals(liasFinanceOper.<LocalDate>attr(LiasOpersConst.LIAS_FINAL_DATE_CLASS)))));
-        
-        if (!ld.isPresent() && throwExcWhenNotFound) {
-            throw new RuntimeException(String.format("Задолженность не существует(liasType=%s, LiasSumm=%f, lsd=%s, lfd=%s)",
+                && ((NullSafe.isNull(liasFinanceOper.<LocalDate>attr(LiasOpersConst.LIAS_FINAL_DATE_CLASS))) || d.getDebtFinalDate().equals(liasFinanceOper.<LocalDate>attr(LiasOpersConst.LIAS_FINAL_DATE_CLASS))));
+
+        final LiasDebt ld;
+
+        if (throwExcWhenNotFound) {
+            ld = ServiceFuncs.<LiasDebt>getCollectionElement(this.getContractDebts(), ldCmp)
+                    .orElseThrow(() -> new RuntimeException(String.format("Задолженность не существует(liasType=%s, LiasSumm=%f, lsd=%s, lfd=%s)",
                     liasFinanceOper.<Integer>attr(LIAS_TYPE_ID.class),
                     liasFinanceOper.<BigDecimal>attr(LiasOpersConst.LIAS_SUMM_CLASS),
                     liasFinanceOper.<LocalDate>attr(LiasOpersConst.LIAS_START_DATE_CLASS),
-                    liasFinanceOper.<LocalDate>attr(LiasOpersConst.LIAS_FINAL_DATE_CLASS)));
+                    liasFinanceOper.<LocalDate>attr(LiasOpersConst.LIAS_FINAL_DATE_CLASS))));
+        } else {
+            ld = ServiceFuncs.<LiasDebt>getCollectionElement(this.getContractDebts(), ldCmp)
+                    .orElse(null);
         }
-        
-        return ld.orElse(null);
-        
+
+        return ld;
+
     }
     //==========================================================================
 
@@ -185,7 +190,7 @@ public abstract class AbstractEntityServiceContract extends AbstractEntityContra
             final LocalDate debtStartDate,
             final LocalDate debtFinalDate,
             final Boolean throwExcWhenNotFound) {
-        
+
         final FilterComparator<LiasDebt> filterComparator = d -> (d.getLiasKind().getLiasKindId().equals(lias_kind_id)
                 && d.getLiasType().getLiasTypeId().equals(lias_type_id)
                 && d.getLiasBaseAssetType().getBaseAssetTypeId().equals(base_asset_type_id)
@@ -193,22 +198,22 @@ public abstract class AbstractEntityServiceContract extends AbstractEntityContra
                 && d.getCurrency().getCurrencyId().equals(currency_id)
                 && d.getDebtStartDate().equals(debtStartDate)
                 && d.getDebtFinalDate().equals(debtFinalDate));
-        
+
         final Optional<LiasDebt> ld = ServiceFuncs.<LiasDebt>getCollectionElement(this.getContractDebts(), filterComparator);
-        
+
         if (!ld.isPresent() && throwExcWhenNotFound) {
             throw new RuntimeException(String.format("Задолженность не существует(liasType=%d)", lias_type_id));
         }
-        
+
         return ld.get();
-        
+
     }
 
     //==========================================================================
     public Collection<TariffAccretionHisory> getAccretionHistory() {
         NullSafe.create(this.accretionHistory)
                 .whenIsNull(() -> {
-                    
+
                     this.accretionHistory = ServiceFuncs.<TariffAccretionHisory>createCollection();
 
                     //this.refreshAccretionHistory();
@@ -250,28 +255,28 @@ public abstract class AbstractEntityServiceContract extends AbstractEntityContra
                         // заменили последнюю дату начисления
                         final LocalDate newAccretionDate = newAccretion.getAccretion_date();
                         final Long newLias_action_id = newAccretion.getLias_action_id();
-                        
+
                         exists.setAccretion_date(newAccretionDate);
                         exists.setLias_action_id(newLias_action_id);
                     }
-                    
+
                 });
-        
+
         collection.clear();
-        
+
     }
-    
+
     public LocalDate getLastAccretionDate(final Integer tariff_serv_id, final Integer tariff_kind_id) {
-        
+
         final LocalDate lastAccretionDate;
-        
+
         synchronized (this) {
-            
+
             lastAccretionDate = ServiceFuncs.<TariffAccretionHisory>getCollectionElement_silent(this.accretionHistory,
                     a -> a.getTariff_serv_id().equals(tariff_serv_id) && a.getTariff_kind_id().equals(tariff_kind_id))
                     .getAccretion_date();
         }
-        
+
         return lastAccretionDate;
     }
 
@@ -298,6 +303,6 @@ public abstract class AbstractEntityServiceContract extends AbstractEntityContra
         } else {
             this.setPmtSchedules(ServiceFuncs.<PmtSchedule>getOrCreateCollection(ServiceFuncs.COLLECTION_NULL));
         }
-        
+
     }
 }

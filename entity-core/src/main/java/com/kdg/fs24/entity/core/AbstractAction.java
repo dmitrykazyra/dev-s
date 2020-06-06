@@ -73,9 +73,9 @@ public abstract class AbstractAction<T extends ActionEntity>
                     .getEntityManager()
                     .unwrap(Session.class)
                     .setJdbcBatchSize(this.getJdbcBatchSize());//AbstractAction.getPersistanceEntityManager().getDefaultJdbcBatchSize());
+
             // наполнение в предках объектов для персистенса
             //this.doUpdate();
-
             //final AbstractPersistenceAction<T> ent2persist = NullSafe.createObject(AbstractPersistenceAction.class); 
             // сохранили объекты
             getPersistanceEntityManager()
@@ -137,6 +137,7 @@ public abstract class AbstractAction<T extends ActionEntity>
 
             this.afterCommit();
             this.refreshModifiedEntities();
+            this.afterExecute();
         }
     }
 
@@ -212,6 +213,12 @@ public abstract class AbstractAction<T extends ActionEntity>
     //==========================================================================
     protected void afterCommit() {
 
+    }
+
+    protected void afterExecute() {
+//        this.getPersistanceEntityManager()
+//                .getEntityManager()
+//                .clear();
     }
 
     //==========================================================================

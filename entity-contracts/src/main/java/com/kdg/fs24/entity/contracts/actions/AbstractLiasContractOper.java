@@ -38,9 +38,9 @@ public abstract class AbstractLiasContractOper<T extends AbstractEntityServiceCo
     final private Collection<LiasFinanceOper> newOpers
             = ServiceFuncs.<LiasFinanceOper>createCollection();
     // дата начисления
-    private LocalDate accretionDate;
+    private LocalDate accretionDate = LocalDate.now();
     // дата исполнения
-    private LocalDate liasDate;
+    private LocalDate liasDate = LocalDate.now();
     // коллекция шаблонов для создания финопераций
 //    private final Collection<Class<AbstractLiasOpersTemplate>> liasOpersTemplates
 //            = ReflectionFuncs.<Class<AbstractLiasOpersTemplate>>createPkgClassesCollection(LiasesConst.LIASES_TEMLATE_PKG, AbstractLiasOpersTemplate.class);
@@ -58,8 +58,6 @@ public abstract class AbstractLiasContractOper<T extends AbstractEntityServiceCo
 
         super.initialize();
         // запрос даты расчета операции
-        accretionDate = LocalDate.now(); // получить дату последнего начисления
-        liasDate = LocalDate.now().plus(2, ChronoUnit.DAYS);
 
         // код для дополниельной инициализации действия при тестировании
 //        if (TestConst.TEST_MODE_RUNNING) {

@@ -49,7 +49,7 @@ public class PersistanceEntityManager extends AbstractApplicationBean {
     private String russianRefLan; // = SysConst.STRING_FALSE;
     @Value("${defaultJdbcBatchSize}")
     private Integer defaultJdbcBatchSize; // = SysConst.STRING_FALSE;
-    
+
     //public PersistanceEntityManager(final String persistenceUnitName) {
     @Override
     public void initialize() {
@@ -220,6 +220,9 @@ public class PersistanceEntityManager extends AbstractApplicationBean {
                                     this.getEntityManager().flush();
 
                                     entityTransaction.commit();
+                                    
+                                    //this.getEntityManager().clear();
+                                    
                                     if (SysConst.DEBUG_MODE.get()) {
                                         LogService.LogInfo(this.getClass(), () -> String.format("commit jpa transaction (%d)",
                                                 this.getEntityManager().getTransaction().hashCode()).toUpperCase());

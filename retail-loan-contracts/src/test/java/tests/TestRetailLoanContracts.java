@@ -54,14 +54,24 @@ public class TestRetailLoanContracts extends TestUtil4LoanContract {
 //            final LoanSource loanSource,
 //            final PmtScheduleAlg pmtScheduleAlg,
 //            final PmtScheduleTerm pmtScheduleTerm
-        this.getRetailLoanContractActionsService().executeAction(retailLoanContract, RetailLoanConstants.MODIFY_INDIVIDUAL_LOAN_CONTRACT);
-        this.getRetailLoanContractActionsService().executeAction(retailLoanContract, EntityContractConst.ACT_AUTHORIZE_CONTRACT);
+        this.getRetailLoanContractActionsService().executeAction(
+                retailLoanContract,
+                RetailLoanConstants.MODIFY_INDIVIDUAL_LOAN_CONTRACT);
+        this.getRetailLoanContractActionsService().executeAction(
+                retailLoanContract,
+                EntityContractConst.ACT_AUTHORIZE_CONTRACT);
+
+        final Long entityId = retailLoanContract.getEntity_id();
+
+//        final RetailLoanContract entityNew
+//                = this.getRetailLoanContractActionsService()
+//                        .reloadCreatedEntity(RetailLoanContract.class, entityId);
         this.getRetailLoanContractActionsService().<ActIssueLoan>executeAction(
                 retailLoanContract,
                 RetailLoanConstants.ACT_ISSUE_LOAN,
                 (action) -> {
                     action.setLiasSum(BigDecimal.valueOf(100.15));
-                    action.setLiasDate(LocalDate.now().plusDays(2));
+                    action.setLiasDate(LocalDate.now());
                 });
         this.getRetailLoanContractActionsService().<ActIssueLoan>executeAction(
                 retailLoanContract,
@@ -69,36 +79,23 @@ public class TestRetailLoanContracts extends TestUtil4LoanContract {
                 (action) -> {
                     action.setLiasSum(BigDecimal.valueOf(2100.13));
                     action.setLiasDate(LocalDate.now().plusDays(10));
-                });        
-        this.getRetailLoanContractActionsService().executeAction(retailLoanContract, EntityContractConst.ACT_CALCULATE_TARIFFS);
+                });
+        
+        this.getRetailLoanContractActionsService().<ActIssueLoan>executeAction(
+                retailLoanContract,
+                RetailLoanConstants.ACT_ISSUE_LOAN,
+                (action) -> {
+                    action.setLiasSum(BigDecimal.valueOf(2301.13));
+                    action.setLiasDate(LocalDate.now().plusDays(20));
+                });
+        
+        this.getRetailLoanContractActionsService().executeAction(
+                retailLoanContract,
+                EntityContractConst.ACT_CALCULATE_TARIFFS);
 //        this.getRetailLoanContractActionsService().executeAction(retailLoanContract, EntityContractConst.ACT_FINISH_CONTRACT);
 
-        final Long entityId = retailLoanContract.getEntity_id();
-        //final Long entityId = Long.valueOf(70533);
-
-        
-        final RetailLoanContract entityNew 
-                = this.getRetailLoanContractActionsService()
-                .reloadTestedEntity(RetailLoanContract.class, entityId);
-        
-        
-//        this.getPersistanceEntityManager()
-//                .getEntityManager()
-//                .clear();
-//
-//        final StopWatcher stopWatcher = StopWatcher.create();
-//
-//        LogService.LogInfo(this.getClass(), () -> String.format("try 2 reload created entity (%d)",
-//                entityId));
-//
-//        // поиск сущности
-//        final RetailLoanContract entity = this.getPersistanceEntityManager()
-//                .getEntityManager()
-//                .find(RetailLoanContract.class, entityId);
-//
-//        LogService.LogInfo(this.getClass(), () -> String.format("Refresh entity is finished (%d, %d ms)",
-//                entity.entityId(),
-//                stopWatcher.getTimeExecMillis()));
+        this.getRetailLoanContractActionsService()
+                .reloadCreatedEntity(RetailLoanContract.class, retailLoanContract.getEntity_id());
 
     }
 }

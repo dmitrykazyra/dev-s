@@ -21,7 +21,12 @@
             <property name="hibernate.hbm2ddl.auto" value="none"/>
             <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/fs24"/>
             <property name="show_sql" value="true"/>
-            <property name="hibernate.jdbc.batch_size" value="10000"/>
+            <property name="format_sql" value="true"/>
+            <property name="hibernate.use_sql_comments" value="true"/>
+            <property name="hibernate.jdbc.batch_size" value="20"/>
+            <property name="hibernate.generate_statistics" value="true"/>
+            <property name="hibernate.order_inserts" value="true"/>
+            <property name="hibernate.order_updates" value="true"/>       
             <property name="javax.persistence.jdbc.user" value="admin"/>
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
             <property name="javax.persistence.jdbc.password" value="admin"/>

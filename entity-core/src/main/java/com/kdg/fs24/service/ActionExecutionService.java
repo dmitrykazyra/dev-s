@@ -477,17 +477,17 @@ public abstract class ActionExecutionService extends AbstractApplicationService 
 //        return Optional.ofNullable(entity);
 //
 //    }
-    public <T extends AbstractPersistenceEntity> T reloadTestedEntity(final Class<T> entClass,
+    public <T extends AbstractPersistenceEntity> T reloadCreatedEntity(final Class<T> entClass,
             final Long entityId) {
-        
-        this.getPersistanceEntityManager()
-                .getEntityManager()
-                .clear();
-
-        final StopWatcher stopWatcher = StopWatcher.create();
 
         LogService.LogInfo(this.getClass(), () -> String.format("try 2 reload created entity (%d)",
                 entityId));
+
+//        this.getPersistanceEntityManager()
+//                .getEntityManager()
+//                .clear();
+
+        final StopWatcher stopWatcher = StopWatcher.create();
 
         // поиск сущности
         final T entity = this.getPersistanceEntityManager()

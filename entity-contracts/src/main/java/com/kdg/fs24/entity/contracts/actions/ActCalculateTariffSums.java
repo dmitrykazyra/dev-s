@@ -15,6 +15,7 @@ import java.time.LocalDate;
 import java.time.Period;
 import com.kdg.fs24.application.core.nullsafe.NullSafe;
 import com.kdg.fs24.application.core.service.funcs.ServiceFuncs;
+import com.kdg.fs24.entity.core.api.RefreshEntity;
 import com.kdg.fs24.entity.tariff.TariffCalcRecord;
 import com.kdg.fs24.entity.tariff.TariffRate;
 import com.kdg.fs24.references.tariffs.serv.TariffServ;

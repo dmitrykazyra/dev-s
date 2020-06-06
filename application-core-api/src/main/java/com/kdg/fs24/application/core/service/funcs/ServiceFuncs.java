@@ -272,18 +272,11 @@ public final class ServiceFuncs {
 
         synchronized (collection) {
 
-            return Optional.ofNullable(NullSafe.create(SysConst.OBJECT_NULL, !ServiceFuncs.SF_DONT_THROW_EXC)
-                    .execute2result(() -> {
-
-                        return collection
-                                .stream()
-                                .unordered()
-                                .filter((fltr) -> filterComparator.getFilter(fltr))
-                                .collect(Collectors.toList())
-                                .get(0);
-
-                    })
-                    .<T>getObject());
+            return collection
+                    .stream()
+                    .unordered()
+                    .filter((fltr) -> filterComparator.getFilter(fltr))
+                    .findFirst();
         }
     }
 
